@@ -1,0 +1,36 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" />
+
+{% if employer_list %}
+    <table>
+        <tr>
+            <th>Country</th>
+            <th>Company Username</th>
+            <th>Company Registration</th>
+            <th>Company Type</th>
+            <th>Sector</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Website</th>
+        </tr>
+        {% for employer in employer_list %}
+        <tr>
+            <td>{{ employer.country }}</td>
+            <td>{{ employer.company_username }}</td>
+            <td>{{ employer.company_registration }}</td>
+            <td>{{ employer.company_type }}</td>
+            <td>{{ employer.sector }}</td>
+            <td>{{ employer.email }}</td>
+            <td>{{ employer.address }}</td>
+            <td><a href="{{ employer.website }}">Website</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No contributions are available.</p>
+{% endif %}
+{% endblock %}
+

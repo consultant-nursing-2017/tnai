@@ -1,0 +1,11 @@
+li a {
+    color: green;
+}
+table, th, td {
+    border: 1px solid black;
+}
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}

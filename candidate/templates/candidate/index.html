@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
+
+{% if candidate_list %}
+    <table>
+        <tr>
+            <th>Name</th>
+        </tr>
+        {% for candidate in candidate_list %}
+        <tr>
+            <td>{{ candidate.name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No candidates are available.</p>
+{% endif %}
+{% endblock %}
+
