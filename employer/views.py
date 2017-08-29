@@ -10,7 +10,22 @@ from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
 from .models import Employer
 from .forms import SubmitForm
+#from .forms import RegistrationForm
 from django.core.mail import send_mail
+import hashlib
+import random
+from django.utils.crypto import get_random_string
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from .forms import SignupForm
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
 
 ##from django.contrib.auth.decorators import permission_required
 
@@ -69,3 +84,117 @@ class DetailView(generic.DetailView):
         Excludes any questions that aren't published yet.
         """
         return Employer.objects.all()
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            message = render_to_string('acc_active_email.html', {
+                'user':user, 
+                'domain':current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            mail_subject = 'Activate your blog account.'
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(mail_subject, message, to=[to_email])
+            email.send()
+            return HttpResponse('Please confirm your email address to complete the registration')
+    
+    else:
+        form = SignupForm()
+    
+    return render(request, 'signup.html', {'form': form})
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
+
+#def register(request):
+#    if request.user.is_authenticated():
+#        return redirect(home)
+#    registration_form = RegistrationForm()
+#    if request.method == 'POST':
+#        form = RegistrationForm(request.POST)
+#        if form.is_valid():
+#            datas={}
+#            datas['username']=form.cleaned_data['username']
+#            datas['email']=form.cleaned_data['email']
+#            datas['password1']=form.cleaned_data['password1']
+#
+#            #We generate a random activation key
+#            usernamesalt1 = datas['username']
+#            datas['activation_key']=usernamesalt1
+#
+#            datas['email_path']="/ActivationEmail.txt"
+#            datas['email_subject']="Activation de votre compte yourdomain"
+#
+#            form.sendEmail(datas)
+#            form.save(datas) #Save the user and his profile
+#
+#            request.session['registered']=True #For display purposes
+#            return redirect(home)
+#        else:
+#            registration_form = form #Display form with error messages (incorrect fields, etc)
+#    return render(request, 'employer/register.html', {'form': registration_form})
+#
+##View called from activation email. Activate user if link didn't expire (48h default), or offer to
+##send a second link if the first expired.
+#def activation(request, key):
+#    activation_expired = False
+#    already_active = False
+#    profile = get_object_or_404(Profile, activation_key=key)
+#    if profile.user.is_active == False:
+#        if timezone.now() > profile.key_expires:
+#            activation_expired = True #Display: offer the user to send a new activation link
+#            id_user = profile.user.id
+#        else: #Activation successful
+#            profile.user.is_active = True
+#            profile.user.save()
+#
+#    #If user is already active, simply display error message
+#    else:
+#        already_active = True #Display : error message
+#    return render(request, 'employer/activation.html', locals())
+#
+#def new_activation_link(request, user_id):
+#    form = RegistrationForm()
+#    datas={}
+#    user = User.objects.get(id=user_id)
+#    if user is not None and not user.is_active:
+#        datas['username']=user.username
+#        datas['email']=user.email
+#        datas['email_path']="/ResendEmail.txt"
+#        datas['email_subject']="Nouveau lien d'activation yourdomain"
+#
+#        salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
+#        usernamesalt = datas['username']
+#        if isinstance(usernamesalt, unicode):
+#            usernamesalt = usernamesalt.encode('utf8')
+#        datas['activation_key']= hashlib.sha1(salt+usernamesalt).hexdigest()
+#
+#        profile = Profile.objects.get(user=user)
+#        profile.activation_key = datas['activation_key']
+#        profile.key_expires = datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=2), "%Y-%m-%d %H:%M:%S")
+#        profile.save()
+#
+#        form.sendEmail(datas)
+#        request.session['new_link']=True #Display: new link sent
+#
+#    return redirect(home)

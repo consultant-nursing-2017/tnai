@@ -38,3 +38,8 @@ class Employer(models.Model):
     pathologists = models.IntegerField(default=0)
 #    def __str__(self):
 #        return self.contributor + ", " + self.sponsor + ", " + self.url + ", " + self.date_submitted + ", " + self.approved
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, related_name='profile') #1 to 1 link with Django User
+    activation_key = models.CharField(max_length=40)
+    key_expires = models.DateTimeField()

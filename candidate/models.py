@@ -16,11 +16,11 @@ class Candidate(models.Model):
             ('Single', 'Single'),
     )
     name = models.CharField(max_length=200, default="Name")
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(default=timezone.now)
     gender = models.CharField(max_length=200, choices=GENDER_CHOICES, default="Male")
-    marital_status = models.CharField(max_length=200, choice=MARITAL_STATUS_CHOICES, default="Single")
+    marital_status = models.CharField(max_length=200, choices=MARITAL_STATUS_CHOICES, default="Single")
     email = models.CharField(max_length=200, default="nursing.consultant.2017@gmail.com")
-    district = models.CharField(max_length=200, choice=DISTRICT_CHOICES, default="Single")
+    district = models.CharField(max_length=200, choices=DISTRICT_CHOICES, default="Single")
 #    COUNTRY_CHOICES = (
 #            ('Indian', 'Indian'),
 #            ('Foreign', 'Foreign'),
