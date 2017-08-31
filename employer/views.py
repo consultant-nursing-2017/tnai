@@ -26,6 +26,7 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
+from django.contrib.auth.models import Group
 
 ##from django.contrib.auth.decorators import permission_required
 
@@ -100,7 +101,7 @@ def signup(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
-            mail_subject = 'Activate your blog account.'
+            mail_subject = 'Activate your employer account.'
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
@@ -122,6 +123,10 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         # return redirect('home')
+
+        g = Group.objects.get(name='Employer') 
+        g.user_set.add(user)
+
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')

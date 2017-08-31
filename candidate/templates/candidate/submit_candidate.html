@@ -1,13 +1,32 @@
-{% extends "base_generic.html" %}
+{# {% extends "base_generic.html" %} #}
 
 {% block content %}
 <h1>Candidate form</h1>
 <form enctype="multipart/form-data" action="/candidate/submit_candidate/" method="post">
     {% csrf_token %}
-    <table>
-    {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit" />
+        <h2>Personal Data</h2>
+        <table>
+        {{ personal_form.as_table }}
+        </table>
+        <h2>SNC Data</h2>
+        <table>
+        {{ state_nursing_council_form.as_table }}
+        </table>
+        <h3>Educational Data</h2>
+        <table>
+            <tr>
+                {% for field in educational_qualifications_form_instance %}
+                    <th>{{field.errors}} {{ field.label }}</th>
+                {% endfor %}
+            </tr>
+            {% for form in educational_qualifications_formset %}
+            <tr>
+                {% for field in form %}
+                    <td> {{field.errors}} {{field}} </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    <input type="submit" name="done" value="Done" />
 </form>
 {% endblock %}
-

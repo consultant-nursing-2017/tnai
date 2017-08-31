@@ -1,0 +1,37 @@
+{# {% extends "base_generic.html" %} #}
+
+{% block content %}
+<h1>Candidate form</h1>
+<form enctype="multipart/form-data" action="/candidate/submit_candidate/" method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <table>
+        {{ form }}
+        <tr>
+            {% for field in form_instance %}
+            {# {% if not field.is_hidden %} #}
+            <th>{{field.errors}} {{ field.label }}</th>
+                {# {% endif %} #}
+            {% endfor %}
+        </tr>
+        {% for form in formset %}
+        <tr>
+            {% for field in form %}
+                <td>
+                    {# {% if not field.is_hidden %} #}
+                    {{field.errors}} {{field}}
+                    {# {% endif %} #}
+                </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</form>
+{% if not personal_form %}
+    <input type="submit" name="personal_tab" value="Personal data" />
+{% endif %}
+{% if not student_nursing_council_form %}
+    <input type="submit" name="student_nursing_council_tab" value="SNC data" />
+{% endif %}
+</form>
+{% endblock %}
