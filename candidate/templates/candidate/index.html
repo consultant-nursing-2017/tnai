@@ -12,6 +12,8 @@
         {% for candidate in candidate_list %}
         <tr>
             <td>{{ candidate.name }}</td>
+            <td>{{ candidate.degree_recognized_by_INC }}</td>
+            <td>{{ candidate.passport_number }}</td>
         </tr>
         {% endfor %}
     </table>

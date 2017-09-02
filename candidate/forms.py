@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Candidate, EducationalQualifications, EligibilityTests
+from .models import Candidate, EducationalQualifications, EligibilityTests, Experience
 #from django.contrib.auth.models import User, Group
 #from django.contrib.admin import widgets 
 
@@ -12,6 +12,24 @@ from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
     
+class SubmitForm(ModelForm):
+#    def __init__(self, *args, **kwargs):
+#        super (SubmitForm,self ).__init__(*args, **kwargs) # populates the post
+#        self.fields['candidate_username'].disabled=True
+#        self.fields['registration_certification'].required = False
+#        self.fields['authorized_signatory_id_proof'].required = False
+#        self.fields['total_employees'].required = False
+#        self.fields['authorized_signatory_ID_proof'].required = False
+#        self.fields['authorized_signatory_ID_proof'].required = False
+#        sponsorsQS = Group.objects.filter(name='Sponsors')
+#        self.fields['sponsor'].queryset = User.objects.filter(groups__in=sponsorsQS)
+#        contributorsQS = Group.objects.filter(name='Contributors')
+#        self.fields['contributor'].queryset = User.objects.filter(groups__in=contributorsQS)
+
+    class Meta:
+        model = Candidate
+        exclude = []
+
 class PersonalForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super (PersonalForm,self ).__init__(*args, **kwargs) # populates the post
@@ -39,11 +57,28 @@ class EducationalQualificationsForm(ModelForm):
     class Meta:
         model = EducationalQualifications
         fields = '__all__'
+#    def __init__(self, *args, **kwargs):
+#        super(EducationalQualificationsForm, self).__init__(*args, **kwargs) # populates the post
+#        try:
+#            instance = kwargs.pop('instance')
+#            self.fields['candidate'] = instance
+#        except:
+#            self.fields['user'] = self.fields['user']
+#            #do nothing
 
 class EligibilityTestsForm(ModelForm):
     class Meta:
         model = EligibilityTests
         fields = '__all__'
+#    def __init__(self, *args, **kwargs):
+#        super (EligibilityTestsForm,self ).__init__(*args, **kwargs) # populates the post
+#        self.fields['user'] = self.instance.candidate_username
+
+class ExperienceForm(ModelForm):
+    class Meta:
+        model = Experience
+        fields = '__all__'
+        labels = {'starting_from': 'From', 'upto': 'To'}
 
 class PassportAndMiscForm(ModelForm):
     class Meta:

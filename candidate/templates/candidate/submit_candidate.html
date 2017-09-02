@@ -1,18 +1,36 @@
-{# {% extends "base_generic.html" %} #}
+{% extends "base_generic.html" %}
 
 {% block content %}
 <h1>Candidate form</h1>
 <form enctype="multipart/form-data" action="/candidate/submit_candidate/" method="post">
     {% csrf_token %}
+        {{ educational_qualifications_formset.management_form }}
+        {{ eligibility_tests_formset.management_form }}
+        {{ experience_formset.management_form }}
+        {% if new_profile %}
+        <h2>New profile</h2>
+        {% else %}
+        <h2>Update profile</h2>
+        {% endif %}
         <h2>Personal Data</h2>
         <table>
-        {{ personal_form.as_table }}
+        {% for field in submit_form.visible_fields|slice:":11" %}
+            <tr> 
+                <td> {{field.label_tag}} </td>
+                <td>{{field.errors}} {{field}} </td>
+            </tr>
+        {% endfor %}
         </table>
         <h2>SNC Data</h2>
         <table>
-        {{ state_nursing_council_form.as_table }}
+        {% for field in submit_form.visible_fields|slice:"11:16" %}
+            <tr> 
+                <td> {{field.label_tag}} </td>
+                <td>{{field.errors}} {{field}} </td>
+            </tr>
+        {% endfor %}
         </table>
-        <h3>Educational Data</h2>
+        <h2>Educational Data</h2>
         <table>
             <tr>
                 {% for field in educational_qualifications_form_instance %}
@@ -26,6 +44,45 @@
                 {% endfor %}
             </tr>
             {% endfor %}
+        </table>
+        <h2>Eligibility Tests Data</h2>
+        <table>
+            <tr>
+                {% for field in eligibility_tests_form_instance %}
+                    <th>{{field.errors}} {{ field.label }}</th>
+                {% endfor %}
+            </tr>
+            {% for form in eligibility_tests_formset %}
+            <tr>
+                {% for field in form %}
+                    <td> {{field.errors}} {{field}} </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <h2>Experience Data</h2>
+        <table>
+            <tr>
+                {% for field in experience_form_instance %}
+                    <th>{{field.errors}} {{ field.label }}</th>
+                {% endfor %}
+            </tr>
+            {% for form in experience_formset %}
+            <tr>
+                {% for field in form %}
+                    <td> {{field.errors}} {{field}} </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <h2>Passport and miscellaneous data</h2>
+        <table>
+        {% for field in submit_form.visible_fields|slice:"16:" %}
+            <tr> 
+                <td> {{field.label_tag}} </td>
+                <td>{{field.errors}} {{field}} </td>
+            </tr>
+        {% endfor %}
         </table>
     <input type="submit" name="done" value="Done" />
 </form>
