@@ -35,7 +35,6 @@ class Candidate(models.Model):
     fathers_name = models.CharField(max_length=200, default="Father's Name")
     date_of_birth = models.DateField(default=timezone.now)
     gender = models.CharField(max_length=200, choices=GENDER_CHOICES, default="Male")
-    tnai_number = models.CharField(max_length=200, default="TNAI number")
     marital_status = models.CharField(max_length=200, choices=MARITAL_STATUS_CHOICES, default="Single")
     email = models.CharField(max_length=200, default="consultant.nursing.2017@gmail.com")
     address_line_1 = models.CharField(max_length=200, default="Address Line 1")
@@ -58,6 +57,8 @@ class Candidate(models.Model):
     passport_valid_from = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, default=timezone.datetime.now().year, blank=True)
     passport_valid_to = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, default=timezone.datetime.now().year, blank=True)
     passport_place_of_issue = models.CharField(max_length=200, blank=True)
+#   Tab 6: Miscellaneous details
+    tnai_number = models.CharField(max_length=200, default="TNAI number")
     preference_of_work = models.CharField(max_length=10, choices=PREFERENCE_OF_WORK_CHOICES, default="Both", blank=True)
 
     def __str__(self):

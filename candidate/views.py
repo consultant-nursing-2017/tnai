@@ -138,6 +138,66 @@ def submit_candidate(request):
 
     return render(request, 'candidate/submit_candidate.html', {'new_profile': new_profile, 'submit_form': submit_form, 'eligibility_tests_formset': eligibility_tests_formset, 'eligibility_tests_form_instance': eligibility_tests_form_instance, })#educational_qualifications_formset': educational_qualifications_formset, 'educational_qualifications_form_instance': educational_qualifications_form_instance,})# 'experience_formset': experience_formset, 'experience_form_instance': experience_form_instance})
 
+def submit_candidate_personal(request):
+    username=auth.get_user(request)
+    new_profile = True
+    if request.method == 'POST':
+        # check whether it's valid:
+        # TODO
+
+        try:
+            candidate = Candidate.objects.get(candidate_username=username)
+            submit_form = SubmitForm(request.POST, request.FILES, instance=candidate)
+            if submit_form.is_valid():
+                submit_form.save()
+#            candidate = Candidate.objects.get(candidate_username=username)
+            new_profile = False
+        except ObjectDoesNotExist:
+            submit_form = SubmitForm(request.POST, request.FILES)
+            if submit_form.is_valid():
+                submit_form.save()
+            candidate = Candidate.objects.get(candidate_username=username)
+            new_profile = True
+        if 'eligibility' in request.POST:
+            return HttpResponseRedirect('/candidate/submit_candidate_eligibility_tests/')
+        else:
+            return HttpResponseRedirect('/candidate/candidate_list/')
+
+            # if a GET (or any other method) we'll create a blank form
+    else:
+        try:
+            candidate = Candidate.objects.get(candidate_username=username)
+            submit_form = SubmitForm(instance=candidate)
+            new_profile = False
+        except ObjectDoesNotExist:
+            submit_form = SubmitForm(initial={'candidate_username': username,})
+            new_profile = True
+
+    return render(request, 'candidate/submit_candidate_personal.html', {'new_profile': new_profile, 'submit_form': submit_form,}) 
+
+def submit_candidate_eligibility_tests(request):
+    username=auth.get_user(request)
+    EligibilityTestsFormSet = inlineformset_factory(Candidate, EligibilityTests, form=EligibilityTestsForm, extra = 8)
+    new_profile = False
+    if request.method == 'POST':
+        # check whether it's valid:
+        # TODO
+
+        candidate = Candidate.objects.get(candidate_username=username)
+
+        eligibility_tests_formset = EligibilityTestsFormSet(request.POST, request.FILES, instance=candidate)#, initial={'user': username,})
+        eligibility_tests_form_instance = EligibilityTestsForm()
+        if eligibility_tests_formset.is_valid():
+            eligibility_tests_formset.save()
+            return HttpResponseRedirect('/candidate/candidate_list/')
+    else:
+        candidate = Candidate.objects.get(candidate_username=username)
+        eligibility_tests_formset = EligibilityTestsFormSet(instance=candidate)#, initial={'user': username,})
+        eligibility_tests_form_instance = EligibilityTestsForm()
+
+    return render(request, 'candidate/submit_candidate_eligibility_tests.html', {'eligibility_tests_formset': eligibility_tests_formset, 'eligibility_tests_form_instance': eligibility_tests_form_instance, })
+
+ 
 class DetailView(generic.DetailView):
     model = Candidate
     template_name = 'candidate/detail.html'

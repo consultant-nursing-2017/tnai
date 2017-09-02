@@ -56,7 +56,7 @@ class StateNursingCouncilForm(ModelForm):
 class EducationalQualificationsForm(ModelForm):
     class Meta:
         model = EducationalQualifications
-        fields = '__all__'
+        exclude = ['candidate']
 #    def __init__(self, *args, **kwargs):
 #        super(EducationalQualificationsForm, self).__init__(*args, **kwargs) # populates the post
 #        try:
@@ -69,7 +69,7 @@ class EducationalQualificationsForm(ModelForm):
 class EligibilityTestsForm(ModelForm):
     class Meta:
         model = EligibilityTests
-        fields = '__all__'
+        exclude = ['candidate']
 #    def __init__(self, *args, **kwargs):
 #        super (EligibilityTestsForm,self ).__init__(*args, **kwargs) # populates the post
 #        self.fields['user'] = self.instance.candidate_username
@@ -77,7 +77,7 @@ class EligibilityTestsForm(ModelForm):
 class ExperienceForm(ModelForm):
     class Meta:
         model = Experience
-        fields = '__all__'
+        exclude = ['candidate']
         labels = {'starting_from': 'From', 'upto': 'To'}
 
 class PassportAndMiscForm(ModelForm):
