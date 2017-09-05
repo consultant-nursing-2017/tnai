@@ -2,6 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django import forms
+from django.contrib.postgres.fields import ArrayField
+
+class FormYearField(models.PositiveSmallIntegerField):
+    def __init__(self, *args, **kwargs):
+        super (models.PositiveSmallIntegerField,self).__init__(*args, **kwargs) # populates the post
+        YEAR_CHOICES = []
+        for r in range(1970, (timezone.datetime.now().year+20)):
+            YEAR_CHOICES.append((r,r))
+        self.choices=YEAR_CHOICES
 
 class Candidate(models.Model):
     GENDER_CHOICES = (
@@ -81,7 +90,7 @@ class EducationalQualifications(models.Model):
     institute_name = models.CharField(max_length=200, blank=True)
     university_board_council = models.CharField(max_length=200, blank=True)
     year_from = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
-    year_to = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
+    year_to = FormYearField(choices=YEAR_CHOICES, blank=True, null=True)
     marks_obtained = models.PositiveSmallIntegerField(default=0, blank=True)
     total_marks = models.PositiveSmallIntegerField(default=100, blank=True)
     percentage = models.PositiveSmallIntegerField(default=0, blank=True)
@@ -137,6 +146,17 @@ class Experience(models.Model):
     date_to = models.DateField(blank=True, null=True)
 #    total_years = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True)
     proof = models.FileField(default=None, blank=True, null=True)
+
+class StateNursingCouncil(models.Model):
+    COURSE_CHOICES = ['ANM', 'GNM', 'BSc.(N)']
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
+    course = models.CharField(max_length=10, blank=True)
+    state = models.CharField(max_length=200, blank=True)
+    registration_number = models.CharField(max_length=200, blank=True)
+    year = FormYearField(blank=True, null=True)
+    @classmethod
+    def course_choices(self):
+        return self.COURSE_CHOICES
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='candidate_profile') #1 to 1 link with Django User

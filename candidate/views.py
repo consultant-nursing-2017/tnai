@@ -8,8 +8,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
-from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience
-from .forms import SubmitForm, PersonalForm, StateNursingCouncilForm, EducationalQualificationsForm, ProfessionalQualificationsForm, AdditionalQualificationsForm, EligibilityTestsForm, ExperienceForm, PassportAndMiscForm
+from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience, StateNursingCouncil
+from .forms import SubmitForm, PersonalForm, StateNursingCouncilForm, EducationalQualificationsForm, ProfessionalQualificationsForm, AdditionalQualificationsForm, EligibilityTestsForm, ExperienceForm, PassportAndMiscForm, StateNursingCouncilForm
 from django.core.mail import send_mail
 import hashlib
 import random
@@ -29,6 +29,8 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.models import Group
 from django.forms import inlineformset_factory
 from django.core.exceptions import ObjectDoesNotExist
+
+import pdb
 
 ##from django.contrib.auth.decorators import permission_required
 
@@ -69,95 +71,95 @@ def redirect_to_tab(request):
             return HttpResponseRedirect('/candidate/candidate_list/')
  
 
-def submit_candidate(request):
-    # if this is a POST request we need to process the form data
-    username=auth.get_user(request)
-#    EducationalQualificationsFormSet = inlineformset_factory(Candidate, EducationalQualifications, form=EducationalQualificationsForm, extra = 7)
-    EligibilityTestsFormSet = inlineformset_factory(Candidate, EligibilityTests, form=EligibilityTestsForm, extra = 8)
-#    ExperienceFormSet = inlineformset_factory(Candidate, Experience, form=ExperienceForm, extra = 5)
-    new_profile = True
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-#        form = SubmitForm(request.POST, request.FILES)
-        # check whether it's valid:
-        # TODO
-
-        try:
-            candidate = Candidate.objects.get(candidate_username=username)
-            submit_form = SubmitForm(request.POST, request.FILES, instance=candidate)
-            if submit_form.is_valid():
-                submit_form.save()
-#            candidate = Candidate.objects.get(candidate_username=username)
-            new_profile = False
-        except ObjectDoesNotExist:
-            submit_form = SubmitForm(request.POST, request.FILES)
-            if submit_form.is_valid():
-                submit_form.save()
-            candidate = Candidate.objects.get(candidate_username=username)
-            new_profile = True
-
-#        state_nursing_council_form = StateNursingCouncilForm(request.POST, request.FILES, instance=candidate)
+#def submit_candidate(request):
+#    # if this is a POST request we need to process the form data
+#    username=auth.get_user(request)
+##    EducationalQualificationsFormSet = inlineformset_factory(Candidate, EducationalQualifications, form=EducationalQualificationsForm, extra = 7)
+#    EligibilityTestsFormSet = inlineformset_factory(Candidate, EligibilityTests, form=EligibilityTestsForm, extra = 8)
+##    ExperienceFormSet = inlineformset_factory(Candidate, Experience, form=ExperienceForm, extra = 5)
+#    new_profile = True
+#    if request.method == 'POST':
+#        # create a form instance and populate it with data from the request:
+##        form = SubmitForm(request.POST, request.FILES)
+#        # check whether it's valid:
+#        # TODO
 #
-#        if state_nursing_council_form.is_valid():
-##            degree_recognized_by_INC = state_nursing_council_form.cleaned_data['degree_recognized_by_INC']
-##            state_nursing_council_name = state_nursing_council_form.cleaned_data['state_nursing_council_name']
-##            state_nursing_council_registration_number = state_nursing_council_form.cleaned_data['state_nursing_council_registration_number']
-##            state_nursing_council_registration_date = state_nursing_council_form.cleaned_data['state_nursing_council_registration_date']
-##            state_nursing_council_proof = state_nursing_council_form.cleaned_data['state_nursing_council_proof']
-#            state_nursing_council_form.save()
+#        try:
 #            candidate = Candidate.objects.get(candidate_username=username)
-
-#        educational_qualifications_formset = EducationalQualificationsFormSet(request.POST, request.FILES, instance=candidate)
-#        educational_qualifications_form_instance = EducationalQualificationsForm()
-#        if educational_qualifications_formset.is_valid():
-#            educational_qualifications_formset.save()
+#            submit_form = SubmitForm(request.POST, request.FILES, instance=candidate)
+#            if submit_form.is_valid():
+#                submit_form.save()
+##            candidate = Candidate.objects.get(candidate_username=username)
+#            new_profile = False
+#        except ObjectDoesNotExist:
+#            submit_form = SubmitForm(request.POST, request.FILES)
+#            if submit_form.is_valid():
+#                submit_form.save()
 #            candidate = Candidate.objects.get(candidate_username=username)
-        eligibility_tests_formset = EligibilityTestsFormSet(request.POST, request.FILES, instance=candidate)#, initial={'user': username,})
-        eligibility_tests_form_instance = EligibilityTestsForm()
-        if eligibility_tests_formset.is_valid():
-            eligibility_tests_formset.save()
+#            new_profile = True
+#
+##        state_nursing_council_form = StateNursingCouncilForm(request.POST, request.FILES, instance=candidate)
+##
+##        if state_nursing_council_form.is_valid():
+###            degree_recognized_by_INC = state_nursing_council_form.cleaned_data['degree_recognized_by_INC']
+###            state_nursing_council_name = state_nursing_council_form.cleaned_data['state_nursing_council_name']
+###            state_nursing_council_registration_number = state_nursing_council_form.cleaned_data['state_nursing_council_registration_number']
+###            state_nursing_council_registration_date = state_nursing_council_form.cleaned_data['state_nursing_council_registration_date']
+###            state_nursing_council_proof = state_nursing_council_form.cleaned_data['state_nursing_council_proof']
+##            state_nursing_council_form.save()
+##            candidate = Candidate.objects.get(candidate_username=username)
+#
+##        educational_qualifications_formset = EducationalQualificationsFormSet(request.POST, request.FILES, instance=candidate)
+##        educational_qualifications_form_instance = EducationalQualificationsForm()
+##        if educational_qualifications_formset.is_valid():
+##            educational_qualifications_formset.save()
+##            candidate = Candidate.objects.get(candidate_username=username)
+#        eligibility_tests_formset = EligibilityTestsFormSet(request.POST, request.FILES, instance=candidate)#, initial={'user': username,})
+#        eligibility_tests_form_instance = EligibilityTestsForm()
+#        if eligibility_tests_formset.is_valid():
+#            eligibility_tests_formset.save()
+##            candidate = Candidate.objects.get(candidate_username=username)
+##        experience_formset = ExperienceFormSet(request.POST, request.FILES, instance=candidate)
+##        experience_form_instance = ExperienceForm()
+##        if experience_formset.is_valid():
+##            experience_formset.save()
+##            candidate = Candidate.objects.get(candidate_username=username)
+#
+##            passport_number = passport_and_misc_form.cleaned_data['passport_number']
+##            passport_valid_from = passport_and_misc_form.cleaned_data['passport_valid_from']
+##            passport_valid_to = passport_and_misc_form.cleaned_data['passport_valid_to']
+##            passport_place_of_issue = passport_and_misc_form.cleaned_data['passport_place_of_issue']
+##            preference_of_work = passport_and_misc_form.cleaned_data['preference_of_work']
+##        passport_and_misc_form = PassportAndMiscForm(request.POST, request.FILES, instance=candidate)
+##            if passport_and_misc_form.is_valid():
+##                passport_and_misc_form.save()
+#  
+## TODO            photograph
+#            return HttpResponseRedirect('/candidate/candidate_list/')
+#
+#            # if a GET (or any other method) we'll create a blank form
+#    else:
+#        try:
 #            candidate = Candidate.objects.get(candidate_username=username)
-#        experience_formset = ExperienceFormSet(request.POST, request.FILES, instance=candidate)
-#        experience_form_instance = ExperienceForm()
-#        if experience_formset.is_valid():
-#            experience_formset.save()
-#            candidate = Candidate.objects.get(candidate_username=username)
-
-#            passport_number = passport_and_misc_form.cleaned_data['passport_number']
-#            passport_valid_from = passport_and_misc_form.cleaned_data['passport_valid_from']
-#            passport_valid_to = passport_and_misc_form.cleaned_data['passport_valid_to']
-#            passport_place_of_issue = passport_and_misc_form.cleaned_data['passport_place_of_issue']
-#            preference_of_work = passport_and_misc_form.cleaned_data['preference_of_work']
-#        passport_and_misc_form = PassportAndMiscForm(request.POST, request.FILES, instance=candidate)
-#            if passport_and_misc_form.is_valid():
-#                passport_and_misc_form.save()
-  
-# TODO            photograph
-            return HttpResponseRedirect('/candidate/candidate_list/')
-
-            # if a GET (or any other method) we'll create a blank form
-    else:
-        try:
-            candidate = Candidate.objects.get(candidate_username=username)
-            submit_form = SubmitForm(instance=candidate)
-#            educational_qualifications_formset = EducationalQualificationsFormSet(instance=candidate)
-#            educational_qualifications_form_instance = EducationalQualificationsForm()
-            eligibility_tests_formset = EligibilityTestsFormSet(instance=candidate)#, initial={'user': username,})
-            eligibility_tests_form_instance = EligibilityTestsForm()
-#            experience_formset = ExperienceFormSet(request.POST, request.FILES, instance=candidate)
-#            experience_form_instance = ExperienceForm()
-            new_profile = False
-        except ObjectDoesNotExist:
-            submit_form = SubmitForm(initial={'candidate_username': username,})
-#            educational_qualifications_formset = EducationalQualificationsFormSet()
-#            educational_qualifications_form_instance = EducationalQualificationsForm()
-            eligibility_tests_formset = EligibilityTestsFormSet()#initial={'user': username,})
-            eligibility_tests_form_instance = EligibilityTestsForm()
-#            experience_formset = ExperienceFormSet()
-#            experience_form_instance = ExperienceForm()
-            new_profile = True
-
-    return render(request, 'candidate/submit_candidate.html', {'new_profile': new_profile, 'submit_form': submit_form, 'eligibility_tests_formset': eligibility_tests_formset, 'eligibility_tests_form_instance': eligibility_tests_form_instance, })#educational_qualifications_formset': educational_qualifications_formset, 'educational_qualifications_form_instance': educational_qualifications_form_instance,})# 'experience_formset': experience_formset, 'experience_form_instance': experience_form_instance})
+#            submit_form = SubmitForm(instance=candidate)
+##            educational_qualifications_formset = EducationalQualificationsFormSet(instance=candidate)
+##            educational_qualifications_form_instance = EducationalQualificationsForm()
+#            eligibility_tests_formset = EligibilityTestsFormSet(instance=candidate)#, initial={'user': username,})
+#            eligibility_tests_form_instance = EligibilityTestsForm()
+##            experience_formset = ExperienceFormSet(request.POST, request.FILES, instance=candidate)
+##            experience_form_instance = ExperienceForm()
+#            new_profile = False
+#        except ObjectDoesNotExist:
+#            submit_form = SubmitForm(initial={'candidate_username': username,})
+##            educational_qualifications_formset = EducationalQualificationsFormSet()
+##            educational_qualifications_form_instance = EducationalQualificationsForm()
+#            eligibility_tests_formset = EligibilityTestsFormSet()#initial={'user': username,})
+#            eligibility_tests_form_instance = EligibilityTestsForm()
+##            experience_formset = ExperienceFormSet()
+##            experience_form_instance = ExperienceForm()
+#            new_profile = True
+#
+#    return render(request, 'candidate/submit_candidate.html', {'new_profile': new_profile, 'submit_form': submit_form, 'eligibility_tests_formset': eligibility_tests_formset, 'eligibility_tests_form_instance': eligibility_tests_form_instance, })#educational_qualifications_formset': educational_qualifications_formset, 'educational_qualifications_form_instance': educational_qualifications_form_instance,})# 'experience_formset': experience_formset, 'experience_form_instance': experience_form_instance})
 
 def submit_candidate_personal(request):
     username=auth.get_user(request)
@@ -212,7 +214,7 @@ def submit_candidate_educational_qualifications(request):
         # check whether it's valid:
         # TODO
         educational_qualifications_formset = EducationalQualificationsFormSet(request.POST, request.FILES, instance=candidate, queryset=not_professional_qualifications_queryset)#, initial={'user': username,})
-        educational_qualifications_form_instance = EducationalQualificationsForm()
+#        educational_qualifications_form_instance = EducationalQualificationsForm()
         if educational_qualifications_formset.is_valid():
             educational_qualifications_formset.save()
 
@@ -224,8 +226,8 @@ def submit_candidate_educational_qualifications(request):
         else:
             educational_qualifications_formset = EducationalQualificationsFormSet(instance=candidate,
                 initial=[{'class_degree': '10th'}, {'class_degree': '12th/Equivalent'}], queryset=not_professional_qualifications_queryset) #, initial={'user': username,})
-        educational_qualifications_form_instance = EducationalQualificationsForm()
 
+    educational_qualifications_form_instance = educational_qualifications_formset[0]
     return render(request, 'candidate/submit_candidate_educational_qualifications.html', {'educational_qualifications_formset': educational_qualifications_formset, 'educational_qualifications_form_instance': educational_qualifications_form_instance, })
 
 def submit_candidate_professional_qualifications(request):
@@ -245,7 +247,7 @@ def submit_candidate_professional_qualifications(request):
         # check whether it's valid:
         # TODO
         professional_qualifications_formset = ProfessionalQualificationsFormSet(request.POST, request.FILES, instance=candidate)#, initial={'user': username,})
-        professional_qualifications_form_instance = ProfessionalQualificationsForm()
+#        professional_qualifications_form_instance = ProfessionalQualificationsForm()
         if professional_qualifications_formset.is_valid():
             professional_qualifications_formset.save()
 
@@ -256,8 +258,8 @@ def submit_candidate_professional_qualifications(request):
         else:
             professional_qualifications_formset = ProfessionalQualificationsFormSet(instance=candidate,
                 initial=[{'class_degree': 'ANM'}, {'class_degree': 'GNM'}, {'class_degree': 'B. Sc.(N)'}, {'class_degree': 'P. B. B. Sc.(N)'}, {'class_degree': 'M. Sc.(N)'},]) #, initial={'user': username,})
-        professional_qualifications_form_instance = ProfessionalQualificationsForm()
 
+    professional_qualifications_form_instance = professional_qualifications_formset[0]
     return render(request, 'candidate/submit_candidate_professional_qualifications.html', {'professional_qualifications_formset': professional_qualifications_formset, 'professional_qualifications_form_instance': professional_qualifications_form_instance, })
 
 def submit_candidate_additional_qualifications(request):
@@ -276,7 +278,7 @@ def submit_candidate_additional_qualifications(request):
         # check whether it's valid:
         # TODO
         additional_qualifications_formset = AdditionalQualificationsFormSet(request.POST, request.FILES, instance=candidate)#, initial={'user': username,})
-        additional_qualifications_form_instance = AdditionalQualificationsForm()
+#        additional_qualifications_form_instance = AdditionalQualificationsForm()
         if additional_qualifications_formset.is_valid():
             additional_qualifications_formset.save()
 
@@ -287,8 +289,8 @@ def submit_candidate_additional_qualifications(request):
         else:
             additional_qualifications_formset = AdditionalQualificationsFormSet(instance=candidate,
                 initial=[{'course_name': 'M. Phil'}, {'course_name': 'PhD'}, {'course_name': 'MBA'}, {'course_name': 'Post Certificate'}, {'course_name': 'Post Degree'},]) #, initial={'user': username,})
-        additional_qualifications_form_instance = AdditionalQualificationsForm()
 
+    additional_qualifications_form_instance = additional_qualifications_formset[0]
     return render(request, 'candidate/submit_candidate_additional_qualifications.html', {'additional_qualifications_formset': additional_qualifications_formset, 'additional_qualifications_form_instance': additional_qualifications_form_instance, })
 
 def submit_candidate_experience(request):
@@ -308,15 +310,15 @@ def submit_candidate_experience(request):
         # check whether it's valid:
         # TODO
         experience_formset = ExperienceFormSet(request.POST, request.FILES, instance=candidate)#, initial={'user': username,})
-        experience_form_instance = ExperienceForm()
+#        experience_form_instance = ExperienceForm()
         if experience_formset.is_valid():
             experience_formset.save()
 
         return redirect_to_tab(request)
     else:
         experience_formset = ExperienceFormSet(instance=candidate,) #, initial={'user': username,})
-        experience_form_instance = ExperienceForm()
 
+    experience_form_instance = experience_formset[0]
     return render(request, 'candidate/submit_candidate_experience.html', {'experience_formset': experience_formset, 'experience_form_instance': experience_form_instance, })
 
 def submit_candidate_eligibility_tests(request):
@@ -336,7 +338,7 @@ def submit_candidate_eligibility_tests(request):
         # TODO
 
         eligibility_tests_formset = EligibilityTestsFormSet(request.POST, request.FILES, instance=candidate)#, initial={'user': username,})
-        eligibility_tests_form_instance = EligibilityTestsForm()
+#        eligibility_tests_form_instance = EligibilityTestsForm()
         if eligibility_tests_formset.is_valid():
             eligibility_tests_formset.save()
 
@@ -348,8 +350,9 @@ def submit_candidate_eligibility_tests(request):
             eligibility_tests_formset = EligibilityTestsFormSet(instance=candidate,
                 initial=[{'eligibility_tests': 'Prometric (Specify country)'}, {'eligibility_tests': 'HAAD'}, {'eligibility_tests': 'GHA'}, {'eligibility_tests': 'IELTS'}, {'eligibility_tests': 'CGFNS'}, {'eligibility_tests': 'TOEFL'}, {'eligibility_tests': 'OET'},]) #, initial={'user': username,})
 
-        eligibility_tests_form_instance = EligibilityTestsForm()
+#        eligibility_tests_form_instance = EligibilityTestsForm()
 
+    eligibility_tests_form_instance = eligibility_tests_formset[0]
     return render(request, 'candidate/submit_candidate_eligibility_tests.html', {'eligibility_tests_formset': eligibility_tests_formset, 'eligibility_tests_form_instance': eligibility_tests_form_instance, })
 
 def submit_candidate_passport(request):
@@ -374,7 +377,33 @@ def submit_candidate_passport(request):
     return render(request, 'candidate/submit_candidate_passport.html', {'passport_form': passport_form,}) 
 
 def submit_candidate_snc(request):
-    pass
+    username=auth.get_user(request)
+    try:
+        candidate = Candidate.objects.get(candidate_username=username)
+        num_snc = StateNursingCouncil.objects.filter(candidate=candidate).count()
+        if num_snc > 15:
+            raise ValidationError(_('num_snc is greater than 15, value: %(value)s'), params={'value': 'num_snc'},)
+        extra_forms = 15 - num_snc
+        StateNursingCouncilFormSet = inlineformset_factory(Candidate, StateNursingCouncil, form=StateNursingCouncilForm, extra=extra_forms, can_delete=False)
+
+    except ObjectDoesNotExist:
+        return HttpResponseRedirect('/candidate/submit_candidate_personal/')
+    if request.method == 'POST':
+        # check whether it's valid:
+        # TODO
+        snc_formset = StateNursingCouncilFormSet(request.POST, request.FILES, instance=candidate)#, initial={'user': username,})
+#        snc_form_instance = StateNursingCouncilForm()
+        if snc_formset.is_valid():
+            snc_formset.save()
+
+        return redirect_to_tab(request)
+    else:
+        snc_formset = StateNursingCouncilFormSet(instance=candidate, initial=[{'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, ] )
+
+    snc_form_instance = snc_formset[0]
+    snc_course_choices = StateNursingCouncil.course_choices()
+#    pdb.set_trace()
+    return render(request, 'candidate/submit_candidate_snc.html', {'snc_formset': snc_formset, 'snc_form_instance': snc_form_instance, 'snc_course_choices': snc_course_choices, })
 
 class DetailView(generic.DetailView):
     model = Candidate

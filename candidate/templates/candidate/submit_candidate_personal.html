@@ -1,6 +1,9 @@
 {% extends "base_generic.html" %}
 
+{% load static %}
+
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
 <h1>Candidate form</h1>
 <form enctype="multipart/form-data" action="/candidate/submit_candidate_personal/" method="post">
     {% csrf_token %}

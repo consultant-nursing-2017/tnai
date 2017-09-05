@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience
+from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience, StateNursingCouncil
 #from django.contrib.auth.models import User, Group
 #from django.contrib.admin import widgets 
 
@@ -112,6 +112,13 @@ class ExperienceForm(ModelForm):
         model = Experience
         exclude = ['candidate']
         labels = {'year_from': 'From (DD/MM/YY)', 'year_to': 'To (DD/MM/YY)'}
+
+class StateNursingCouncilForm(ModelForm):
+#    s_no = forms.CharField(max_length=5, disabled=True)
+#    courses = forms.CharField(max_length=10, disabled=True)
+    class Meta:
+        model = StateNursingCouncil
+        fields = ['course', 'state', 'registration_number', 'year', ]
 
 class PassportAndMiscForm(ModelForm):
     class Meta:
