@@ -61,7 +61,7 @@ class EducationalQualificationsForm(ModelForm):
         labels = {'university_board_council': 'University/Board', 'class_degree': 'Class/Degree', 'percentage': 'Percent'}
         widgets = {
                 'class_degree': forms.TextInput(attrs={'size':'25', 'placeholder':'Degree (specify)'}),
-                'institute_name': forms.Textarea(attrs={'rows':3, 'cols':25, 'placeholder': 'Institute Name'},),
+#                'institute_name': forms.Textarea(attrs={'rows':3, 'cols':25, 'placeholder': 'Institute Name'},),
                 'marks_obtained': forms.TextInput(attrs={'size':'5'}),
                 'total_marks': forms.TextInput(attrs={'size':'5'}),
                 'percentage': forms.TextInput(attrs={'size':'5'}),
@@ -75,7 +75,7 @@ class ProfessionalQualificationsForm(ModelForm):
         labels = {'class_degree': 'Course', 'university_board_council': 'University/Council', 'percentage': 'Percent', 'grade': 'Grade/Division', 'date_from': 'From (MM/YY)', 'date_to': 'To (MM/YY)', }
         widgets = {
                 'class_degree': forms.TextInput(attrs={'size':'10', 'placeholder':'Degree (specify)'}),
-                'institute_name': forms.Textarea(attrs={'rows':3, 'cols':25, 'placeholder': 'Institute Name'},),
+#                'institute_name': forms.Textarea(attrs={'rows':3, 'cols':25, 'placeholder': 'Institute Name'},),
                 'marks_obtained': forms.TextInput(attrs={'size':'5'}),
                 'total_marks': forms.TextInput(attrs={'size':'5'}),
                 'percentage': forms.TextInput(attrs={'size':'5'}),

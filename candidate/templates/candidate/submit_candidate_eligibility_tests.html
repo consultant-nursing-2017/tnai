@@ -8,17 +8,25 @@
 <form enctype="multipart/form-data" action="/candidate/submit_candidate_eligibility_tests/" method="post">
     {% csrf_token %}
         {{ eligibility_tests_formset.management_form }}
-       <h2>Eligibility Tests Data</h2>
+       <h2>Eligibility Tests Details</h2>
         <table>
             <tr>
                 {% for field in eligibility_tests_form_instance %}
-                    <th>{{field.errors}} {{ field.label }}</th>
+                {% if field.is_hidden %}
+                    <th style="display:none">{{field.errors}} {{ field.label }}</th>
+                {% else %}
+                    <th>{{field.hidden}} {{ field.label }}</th>
+                {% endif %}
                 {% endfor %}
             </tr>
             {% for form in eligibility_tests_formset %}
             <tr>
                 {% for field in form %}
+                {% if field.is_hidden %}
+                    <td style="display:none"> {{field.errors}} {{field}} </td>
+                {% else %}
                     <td> {{field.errors}} {{field}} </td>
+                {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}

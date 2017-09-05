@@ -12,13 +12,21 @@
         <table>
             <tr>
                 {% for field in additional_qualifications_form_instance %}
-                    <th>{{field.errors}} {{ field.label }}</th>
+                    {% if field.is_hidden %}
+                        <th style="display:none">{{field.errors}} {{ field.label }}</th>
+                    {% else %}
+                        <th>{{field.errors}} {{ field.label }}</th>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% for form in additional_qualifications_formset %}
             <tr>
                 {% for field in form %}
-                    <td> {{field.errors}} {{field}} </td>
+                    {% if field.is_hidden %}
+                        <td style="display:none"> {{field.errors}} {{field}} </td>
+                    {% else %}
+                        <td> {{field.errors}} {{field}} </td>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}
