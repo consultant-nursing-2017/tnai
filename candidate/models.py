@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django import forms
 
 class Candidate(models.Model):
     GENDER_CHOICES = (
@@ -36,10 +37,16 @@ class Candidate(models.Model):
     date_of_birth = models.DateField(default=timezone.now)
     gender = models.CharField(max_length=200, choices=GENDER_CHOICES, default="Male")
     marital_status = models.CharField(max_length=200, choices=MARITAL_STATUS_CHOICES, default="Single")
-    email = models.CharField(max_length=200, default="consultant.nursing.2017@gmail.com")
-    address_line_1 = models.CharField(max_length=200, default="Address Line 1")
-    address_line_2 = models.CharField(max_length=200, default="Address Line 2")
-    district = models.CharField(max_length=200, choices=DISTRICT_CHOICES, default="District1")
+#    email = models.CharField(max_length=200, default="consultant.nursing.2017@gmail.com")
+    phone_number = models.CharField(max_length=200, default="9810117638")
+    house_number = models.CharField(max_length=200, default="Address Line 1")
+    area_locality = models.CharField(max_length=200, default="Locality")
+    street_name = models.CharField(max_length=200, default="Street Nae")
+    village_PS_PO = models.CharField(max_length=200, default="PS/PO/Village")
+    country = models.CharField(max_length=200, default="India")
+    state = models.CharField(max_length=200, default="Delhi")
+    district = models.CharField(max_length=200, default="Delhi")
+    pin_code = models.CharField(max_length=200, default="110078")
 
 #   Tab 2: SNC details
     degree_recognized_by_INC = models.BooleanField(default=False)
@@ -54,38 +61,47 @@ class Candidate(models.Model):
     # See model below
 #   Tab 5: Passport details and misc.
     passport_number = models.CharField(max_length=50, blank=True)
-    passport_valid_from = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, default=timezone.datetime.now().year, blank=True)
-    passport_valid_to = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, default=timezone.datetime.now().year, blank=True)
+    passport_valid_from = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
+    passport_valid_to = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
     passport_place_of_issue = models.CharField(max_length=200, blank=True)
 #   Tab 6: Miscellaneous details
-    tnai_number = models.CharField(max_length=200, default="TNAI number")
-    preference_of_work = models.CharField(max_length=10, choices=PREFERENCE_OF_WORK_CHOICES, default="Both", blank=True)
+    tnai_number = models.CharField(max_length=200, default="", blank=True)
+    preference_of_work = models.CharField(max_length=10, choices=PREFERENCE_OF_WORK_CHOICES, blank=True)
 
     def __str__(self):
         return self.candidate_username.username
 
 class EducationalQualifications(models.Model):
-    QUALIFICATIONS_CHOICES = (
-            ('10th', '10th'),
-            ('12th', '12th'),
-            ('Diploma', 'Diploma'),
-            ('Degree', 'Degree'),
-            ('Postgraduate', 'Postgraduate'),
-            ('M. Phil', 'M. Phil'),
-            ('PhD', 'PhD'),
-    )
     YEAR_CHOICES = []
     for r in range(1970, (timezone.datetime.now().year+5)):
         YEAR_CHOICES.append((r,r))
 
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
-    qualification = models.CharField(max_length=200, choices=QUALIFICATIONS_CHOICES, blank=True)
-    professional_qualification_name = models.CharField(max_length=200, default="", blank=True)
-    year_from = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, default=timezone.datetime.now().year, blank=True)
-    year_to = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, default=timezone.datetime.now().year, blank=True)
+    class_degree = models.CharField(max_length=200, blank=True)
+    institute_name = models.CharField(max_length=200, blank=True)
+    university_board_council = models.CharField(max_length=200, blank=True)
+    year_from = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
+    year_to = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
+    marks_obtained = models.PositiveSmallIntegerField(default=0, blank=True)
+    total_marks = models.PositiveSmallIntegerField(default=100, blank=True)
     percentage = models.PositiveSmallIntegerField(default=0, blank=True)
-    institute_name = models.CharField(max_length=200, default="", blank=True)
-    educational_proof = models.FileField(default=None, blank=True, null=True)
+    grade = models.CharField(max_length=20, default="", blank=True)
+    proof = models.FileField(default=None, blank=True, null=True)
+
+    def __str__(self):
+        return self.class_degree
+
+class ProfessionalQualifications(EducationalQualifications):
+    date_from = models.DateField(blank=True, null=True)
+    date_to = models.DateField(blank=True, null=True)
+    professional_qualification = models.BooleanField(default=True, editable=False)
+
+class AdditionalQualifications(models.Model):
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
+    course_name = models.CharField(max_length=200, blank=True)
+    score_marks_grade = models.CharField(max_length=20, default="", blank=True)
+    completed_on = models.DateField(blank=True, null=True)
+    proof = models.FileField(default=None, blank=True, null=True)
 
 class EligibilityTests(models.Model):
     ELIGIBILITY_TESTS_CHOICES = (
@@ -99,30 +115,28 @@ class EligibilityTests(models.Model):
             ('Other', 'Other'),
     )
 
-    YEAR_CHOICES = []
-    for r in range(1970, (timezone.datetime.now().year+20)):
-        YEAR_CHOICES.append((r,r))
-
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
     eligibility_tests = models.CharField(max_length=20, choices=ELIGIBILITY_TESTS_CHOICES, blank=True)
     country = models.CharField(max_length=100, blank=True)
     score_grade_marks = models.CharField(max_length=20, blank=True)
-    completed_on = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True)
-    valid_up_to = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True)
+    completed_on = models.DateField(blank=True, null=True)
+    valid_up_to = models.DateField(blank=True, null=True)
     eligibility_proof = models.FileField(default=None, blank=True, null=True)
 
 class Experience(models.Model):
-    YEAR_CHOICES = []
-    for r in range(1970, (timezone.datetime.now().year+20)):
-        YEAR_CHOICES.append((r,r))
+    COUNTRY_CHOICES = (
+            ('India', 'India'),
+            ('Foreign', 'Foreign'),
+    )
 
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
     institution = models.CharField(max_length=200, blank=True)
+    country = models.CharField(max_length=200, choices=COUNTRY_CHOICES, blank=True)
     specialty = models.CharField(max_length=200, blank=True)
-    starting_from = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True)
-    upto = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True)
+    date_from = models.DateField(blank=True, null=True)
+    date_to = models.DateField(blank=True, null=True)
 #    total_years = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True)
-    experience_proof = models.FileField(default=None, blank=True, null=True)
+    proof = models.FileField(default=None, blank=True, null=True)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='candidate_profile') #1 to 1 link with Django User

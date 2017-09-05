@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Candidate, EducationalQualifications, EligibilityTests, Experience
+from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience
 #from django.contrib.auth.models import User, Group
 #from django.contrib.admin import widgets 
 
@@ -46,7 +46,8 @@ class PersonalForm(ModelForm):
 
     class Meta:
         model = Candidate
-        fields = ['candidate_username', 'name', 'fathers_name', 'date_of_birth', 'gender', 'tnai_number', 'marital_status', 'email', 'address_line_1', 'address_line_2', 'district']
+        fields = ['candidate_username', 'name', 'fathers_name', 'date_of_birth', 'gender', 'marital_status', 'phone_number', 
+            'house_number', 'area_locality', 'street_name', 'village_PS_PO', 'country', 'state', 'district', 'pin_code']
 
 class StateNursingCouncilForm(ModelForm):
     class Meta:
@@ -57,19 +58,51 @@ class EducationalQualificationsForm(ModelForm):
     class Meta:
         model = EducationalQualifications
         exclude = ['candidate']
-#    def __init__(self, *args, **kwargs):
-#        super(EducationalQualificationsForm, self).__init__(*args, **kwargs) # populates the post
-#        try:
-#            instance = kwargs.pop('instance')
-#            self.fields['candidate'] = instance
-#        except:
-#            self.fields['user'] = self.fields['user']
-#            #do nothing
+        labels = {'university_board_council': 'University/Board', 'class_degree': 'Class/Degree', 'percentage': 'Percent'}
+        widgets = {
+                'class_degree': forms.TextInput(attrs={'size':'25', 'placeholder':'Degree (specify)'}),
+                'institute_name': forms.Textarea(attrs={'rows':3, 'cols':25, 'placeholder': 'Institute Name'},),
+                'marks_obtained': forms.TextInput(attrs={'size':'5'}),
+                'total_marks': forms.TextInput(attrs={'size':'5'}),
+                'percentage': forms.TextInput(attrs={'size':'5'}),
+                'grade': forms.TextInput(attrs={'size':'5'}),
+                }
+
+class ProfessionalQualificationsForm(ModelForm):
+    class Meta:
+        model = ProfessionalQualifications
+        fields = ['class_degree', 'institute_name', 'university_board_council', 'date_from', 'date_to', 'marks_obtained', 'total_marks', 'percentage', 'grade', 'proof']
+        labels = {'class_degree': 'Course', 'university_board_council': 'University/Council', 'percentage': 'Percent', 'grade': 'Grade/Division', 'date_from': 'From (MM/YY)', 'date_to': 'To (MM/YY)', }
+        widgets = {
+                'class_degree': forms.TextInput(attrs={'size':'10', 'placeholder':'Degree (specify)'}),
+                'institute_name': forms.Textarea(attrs={'rows':3, 'cols':25, 'placeholder': 'Institute Name'},),
+                'marks_obtained': forms.TextInput(attrs={'size':'5'}),
+                'total_marks': forms.TextInput(attrs={'size':'5'}),
+                'percentage': forms.TextInput(attrs={'size':'5'}),
+                'date_from': forms.TextInput(attrs={'size':'15', 'input_formats': '[\'%m/%Y\']', }),
+                'date_to': forms.TextInput(attrs={'size':'15', 'input_formats' :'[\'%m/%Y\']', }),
+                'grade': forms.TextInput(attrs={'size':'5'}),
+                }
+
+class AdditionalQualificationsForm(ModelForm):
+    class Meta:
+        model = AdditionalQualifications
+        exclude = ['candidate']
+        labels = {'completed_on': 'Completed On (MM/YY)'}
+        widgets = {
+                'course_name': forms.TextInput(attrs={'size':'25', 'placeholder':'Course (specify)'}),
+                'completed_onn': forms.TextInput(attrs={'size':'15', 'input_formats': '[\'%m/%Y\']', }),
+                }
 
 class EligibilityTestsForm(ModelForm):
     class Meta:
         model = EligibilityTests
         exclude = ['candidate']
+        labels = {'eligibility_tests': 'Test/Exam', 'score_grade_marks': 'Score/Grade/Marks', 'completed_on': 'Completed on (DD/MM/YY)', 'valid_up_to': 'Valid Up to (DD/MM/YY)',}
+        widgets = {
+                'eligibility_tests': forms.TextInput(attrs={'size':'25', 'placeholder':'Other (specify)'}),
+                }
+
 #    def __init__(self, *args, **kwargs):
 #        super (EligibilityTestsForm,self ).__init__(*args, **kwargs) # populates the post
 #        self.fields['user'] = self.instance.candidate_username
@@ -78,16 +111,17 @@ class ExperienceForm(ModelForm):
     class Meta:
         model = Experience
         exclude = ['candidate']
-        labels = {'starting_from': 'From', 'upto': 'To'}
+        labels = {'year_from': 'From (DD/MM/YY)', 'year_to': 'To (DD/MM/YY)'}
 
 class PassportAndMiscForm(ModelForm):
     class Meta:
         model = Candidate
-        fields = ['passport_number', 'passport_valid_from', 'passport_valid_to', 'passport_place_of_issue', 'preference_of_work']
+        fields = ['passport_number', 'passport_valid_from', 'passport_valid_to', 'passport_place_of_issue', 'tnai_number', 'preference_of_work']
 
 class SignupForm(UserCreationForm):
-    email = forms.EmailField(max_length=200, help_text='Required')
+#    email = forms.EmailField(max_length=200, help_text='Required')
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'password1', 'password2')
+        labels = {'username': 'Email address (will also serve as your username)'}

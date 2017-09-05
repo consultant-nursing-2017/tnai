@@ -1,0 +1,33 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Candidate form</h1>
+<form enctype="multipart/form-data" action="/candidate/submit_candidate_additional_qualifications/" method="post">
+    {% csrf_token %}
+        {{ additional_qualifications_formset.management_form }}
+        <h2>Additional Qualification Details</h2>
+        <table>
+            <tr>
+                {% for field in additional_qualifications_form_instance %}
+                    <th>{{field.errors}} {{ field.label }}</th>
+                {% endfor %}
+            </tr>
+            {% for form in additional_qualifications_formset %}
+            <tr>
+                {% for field in form %}
+                    <td> {{field.errors}} {{field}} </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    <input type="submit" name="personal" value="Save and go to Personal Details" />
+    <input type="submit" name="educational" value="Save and go to Educational Details" />
+    <input type="submit" name="professional" value="Save and go to Professional Details" />
+    <input type="submit" name="additional" value="Save and stay at Additional Details" />
+    <input type="submit" name="experience" value="Save and go to Experience Details" />
+    <input type="submit" name="eligibility" value="Save and go to Eligibility Details" />
+    <input type="submit" name="state_nursing_council" value="Save and go to SNC Details" />
+    <input type="submit" name="passport" value="Save and go to Passport/Misc. Details" />
+    <input type="submit" name="done" value="Done" />
+</form>
+{% endblock %}
