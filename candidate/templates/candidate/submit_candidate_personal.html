@@ -16,7 +16,7 @@
         {% endif %}
         <h2>Personal Data</h2>
         <table>
-        {% for field in personal_form.visible_fields|slice:"7" %}
+        {% for field in personal_form.visible_fields|slice:"9" %}
             <tr> 
                 <td> {{field.label_tag}} </td>
                 <td>{{field.errors}} {{field}} </td>
@@ -25,7 +25,7 @@
         </table>
         <h3>Permanent Address</h3>
         <table>
-        {% for field in personal_form.visible_fields|slice:"7:15" %}
+        {% for field in personal_form.visible_fields|slice:"9:17" %}
             <tr> 
                 <td> {{field.label_tag}} </td>
                 <td>{{field.errors}} {{field}} </td>

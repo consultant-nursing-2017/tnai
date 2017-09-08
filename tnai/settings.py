@@ -124,6 +124,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/candidate/candidate_list'
+MEDIA_ROOT = '/home/anand/alt-wiki-implementation/tnai/media/'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

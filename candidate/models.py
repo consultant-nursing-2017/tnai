@@ -39,8 +39,13 @@ class Candidate(models.Model):
     for r in range(1970, (timezone.datetime.now().year+20)):
         YEAR_CHOICES.append((r,r))
 
+    def media_path(instance, filename):
+        return 'candidate/{0}/personal/{1}'.format(instance.candidate_username.username, filename)
+
 #   Tab 1: Personal details
     candidate_username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='candidate_username', default=None, blank=True, null=True)
+    photograph = models.ImageField(default=None, blank=True, null=True, upload_to=media_path)
+    curriculum_vitae = models.FileField(default=None, blank=True, null=True, upload_to=media_path)
     name = models.CharField(max_length=200, default="Name")
     fathers_name = models.CharField(max_length=200, default="Father's Name")
     date_of_birth = models.DateField(default=timezone.now)
@@ -81,6 +86,9 @@ class Candidate(models.Model):
         return self.candidate_username.username
 
 class Qualifications(models.Model):
+    def media_path(instance, filename):
+        return 'candidate/{0}/qualifications/{1}/{2}'.format(instance.candidate.candidate_username.username, instance.class_degree, filename)
+
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     class_degree = models.CharField(max_length=200, blank=True)
     institute_name = models.CharField(max_length=200, blank=True)
@@ -89,7 +97,7 @@ class Qualifications(models.Model):
     total_marks = models.PositiveSmallIntegerField(default=100, blank=True)
     percentage = models.PositiveSmallIntegerField(default=0, blank=True)
 #    grade = models.CharField(max_length=20, default="", blank=True)
-    proof = models.FileField(default=None, blank=True, null=True)
+    proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path)
 
     def __str__(self):
         return self.class_degree
@@ -127,19 +135,26 @@ class EligibilityTests(models.Model):
             ('Other', 'Other'),
     )
 
+    def media_path(instance, filename):
+        return 'candidate/{0}/eligibility_tests/{1}'.format(instance.candidate.candidate_username.username, filename)
+
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
     eligibility_tests = models.CharField(max_length=20, choices=ELIGIBILITY_TESTS_CHOICES, blank=True)
     country = models.CharField(max_length=100, blank=True)
 #    score_grade_marks = models.CharField(max_length=20, blank=True)
     completed_on = models.DateField(blank=True, null=True)
     valid_up_to = models.DateField(blank=True, null=True)
-    eligibility_proof = models.FileField(default=None, blank=True, null=True)
+    eligibility_proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path)
+
 
 class Experience(models.Model):
     COUNTRY_CHOICES = (
             ('India', 'India'),
             ('Foreign', 'Foreign'),
     )
+
+    def media_path(instance, filename):
+        return 'candidate/{0}/experience/{1}-{2}/{3}'.format(instance.candidate.candidate_username.username, instance.id, instance.institution, filename)
 
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
     institution = models.CharField(max_length=200, blank=True)
@@ -148,7 +163,7 @@ class Experience(models.Model):
     date_from = models.DateField(blank=True, null=True)
     date_to = models.DateField(blank=True, null=True)
 #    total_years = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True)
-    proof = models.FileField(default=None, blank=True, null=True)
+    proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path)
 
 class StateNursingCouncil(models.Model):
     COURSE_CHOICES = ['ANM', 'GNM', 'BSc.(N)']
