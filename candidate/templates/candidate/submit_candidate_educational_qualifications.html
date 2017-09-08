@@ -2,8 +2,12 @@
 
 {% load static %}
 
-{% block content %}
+{% block title %}
+{% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
+{% endblock %}
+
+{% block content %}
 <h1>Candidate form</h1>
 <form enctype="multipart/form-data" action="/candidate/submit_candidate_educational_qualifications/" method="post">
     {% csrf_token %}
@@ -20,15 +24,18 @@
                 {% endfor %}
             </tr>
             {% for form in educational_qualifications_formset %}
-            <tr>
-                {% for field in form %}
-                    {% if field.is_hidden %}
-                        <td style="display:none"> {{field.errors}} {{field}} </td>
-                    {% else %}
-                        <td> {{field.errors}} {{field}} </td>
+                <tr>
+                    {% for field in form %}
+                        {% if field.is_hidden %}
+                            <td style="display:none"> <font color="red">{{field.errors}}</font> {{field}} </td>
+                        {% else %}
+                            <td> <font color="red">{{field.errors}}</font> {{field}} </td>
+                        {% endif %}
+                    {% endfor %}
+                    {% if form.non_field_errors %}
+                        <td><font color="red">{{form.non_field_errors}}</font></td>
                     {% endif %}
-                {% endfor %}
-            </tr>
+                </tr>
             {% endfor %}
         </table>
     <input type="submit" name="personal" value="Save and go to Personal Details" />

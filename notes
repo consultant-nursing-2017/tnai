@@ -1,0 +1,18 @@
+-- TODO --
+- Make username field disabled, but still save it while POSTing form.
+- District names
+- Add photograph to candidate model.
+- JavaScript
+- Validation
+    - Partially done
+- Button size
+- Appearance:
+    - horizonal line <hr> tag 
+- Media root for storing uploaded files
+
+-- Done --
+Appearance
+    - fix css
+    - fix hidden columns
+- Remove grade column
+- SNC names (in flux)

@@ -25,7 +25,7 @@ SECRET_KEY = '=bk9xc69agbipk^%4fe7nbt41@8yg(lanonhch(q!qeaw=*w@s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -123,7 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = '/employer/employer_list'
+LOGIN_REDIRECT_URL = '/candidate/candidate_list'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

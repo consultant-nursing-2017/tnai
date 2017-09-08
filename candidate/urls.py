@@ -4,7 +4,7 @@ from . import views
 
 app_name = 'candidate'
 urlpatterns = [
-    url(r'^candidate_list/', views.IndexView.as_view(), name='index'),
+    url(r'^candidate_list/', views.entire_profile, name='index'),
 #    url(r'^submit_candidate/', views.submit_candidate, name='submit'),
     url(r'^submit_candidate_personal/', views.submit_candidate_personal, name='submit_candidate_personal'),
     url(r'^submit_candidate_educational_qualifications/', views.submit_candidate_educational_qualifications, name='submit_candidate_educational_qualifications'),
@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^submit_candidate_snc/', views.submit_candidate_snc, name='submit_candidate_snc'),
     url(r'^submit_candidate_passport/', views.submit_candidate_passport, name='submit_candidate_passport'),
     url(r'^signup/$', views.signup, name='signup'),
+    url(r'^first_activation/$', views.first_activation, name='first_activation'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate, name='activate'),
 #    url(r'^$', views.IndexView.as_view(), name='index'),

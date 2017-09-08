@@ -58,11 +58,11 @@ class Candidate(models.Model):
     pin_code = models.CharField(max_length=200, default="110078")
 
 #   Tab 2: SNC details
-    degree_recognized_by_INC = models.BooleanField(default=False)
-    state_nursing_council_name = models.CharField(max_length=200, choices=STATE_NURSING_COUNCIL_CHOICES, default="SNC1", blank=True)
-    state_nursing_council_registration_number = models.CharField(max_length=200, default="", blank=True)
-    state_nursing_council_registration_date = models.DateField(default=timezone.now, blank=True)
-    state_nursing_council_proof = models.FileField(default=None, blank=True, null=True)
+#    degree_recognized_by_INC = models.BooleanField(default=False)
+#    state_nursing_council_name = models.CharField(max_length=200, choices=STATE_NURSING_COUNCIL_CHOICES, default="SNC1", blank=True)
+#    state_nursing_council_registration_number = models.CharField(max_length=200, default="", blank=True)
+#    state_nursing_council_registration_date = models.DateField(default=timezone.now, blank=True)
+#    state_nursing_council_proof = models.FileField(default=None, blank=True, null=True)
 
 #   Tab 3: Educational qualifications
     # See model below
@@ -74,43 +74,46 @@ class Candidate(models.Model):
     passport_valid_to = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
     passport_place_of_issue = models.CharField(max_length=200, blank=True)
 #   Tab 6: Miscellaneous details
-    tnai_number = models.CharField(max_length=200, default="", blank=True)
+    TNAI_number = models.CharField(max_length=200, default="", blank=True)
     preference_of_work = models.CharField(max_length=10, choices=PREFERENCE_OF_WORK_CHOICES, blank=True)
 
     def __str__(self):
         return self.candidate_username.username
 
-class EducationalQualifications(models.Model):
-    YEAR_CHOICES = []
-    for r in range(1970, (timezone.datetime.now().year+5)):
-        YEAR_CHOICES.append((r,r))
-
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
+class Qualifications(models.Model):
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     class_degree = models.CharField(max_length=200, blank=True)
     institute_name = models.CharField(max_length=200, blank=True)
     university_board_council = models.CharField(max_length=200, blank=True)
-    year_from = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
-    year_to = FormYearField(choices=YEAR_CHOICES, blank=True, null=True)
     marks_obtained = models.PositiveSmallIntegerField(default=0, blank=True)
     total_marks = models.PositiveSmallIntegerField(default=100, blank=True)
     percentage = models.PositiveSmallIntegerField(default=0, blank=True)
-    grade = models.CharField(max_length=20, default="", blank=True)
+#    grade = models.CharField(max_length=20, default="", blank=True)
     proof = models.FileField(default=None, blank=True, null=True)
 
     def __str__(self):
         return self.class_degree
 
-class ProfessionalQualifications(EducationalQualifications):
+    class Meta:
+        abstract = True
+
+class EducationalQualifications(Qualifications):
+    year_from = FormYearField(blank=True, null=True)
+    year_to = FormYearField(blank=True, null=True)
+
+class ProfessionalQualifications(Qualifications):
     date_from = models.DateField(blank=True, null=True)
     date_to = models.DateField(blank=True, null=True)
-    professional_qualification = models.BooleanField(default=True, editable=False)
 
-class AdditionalQualifications(models.Model):
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
-    course_name = models.CharField(max_length=200, blank=True)
-    score_marks_grade = models.CharField(max_length=20, default="", blank=True)
-    completed_on = models.DateField(blank=True, null=True)
-    proof = models.FileField(default=None, blank=True, null=True)
+class AdditionalQualifications(Qualifications):
+    course_topic = models.CharField(max_length=200, blank=True, null=True)
+    date_from = models.DateField(blank=True, null=True)
+    date_to = models.DateField(blank=True, null=True)
+#    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
+#    course_name = models.CharField(max_length=200, blank=True)
+#    score_marks_grade = models.CharField(max_length=20, default="", blank=True)
+#    completed_on = models.DateField(blank=True, null=True)
+#    proof = models.FileField(default=None, blank=True, null=True)
 
 class EligibilityTests(models.Model):
     ELIGIBILITY_TESTS_CHOICES = (
@@ -127,7 +130,7 @@ class EligibilityTests(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
     eligibility_tests = models.CharField(max_length=20, choices=ELIGIBILITY_TESTS_CHOICES, blank=True)
     country = models.CharField(max_length=100, blank=True)
-    score_grade_marks = models.CharField(max_length=20, blank=True)
+#    score_grade_marks = models.CharField(max_length=20, blank=True)
     completed_on = models.DateField(blank=True, null=True)
     valid_up_to = models.DateField(blank=True, null=True)
     eligibility_proof = models.FileField(default=None, blank=True, null=True)

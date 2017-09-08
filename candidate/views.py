@@ -7,14 +7,11 @@ from django.http import HttpResponse
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-import datetime #for checking renewal date range.
+import datetime
 from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience, StateNursingCouncil
 from .forms import SubmitForm, PersonalForm, StateNursingCouncilForm, EducationalQualificationsForm, ProfessionalQualificationsForm, AdditionalQualificationsForm, EligibilityTestsForm, ExperienceForm, PassportAndMiscForm, StateNursingCouncilForm
 from django.core.mail import send_mail
-import hashlib
-import random
 from django.utils.crypto import get_random_string
-
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth import login, authenticate
@@ -29,8 +26,12 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.models import Group
 from django.forms import inlineformset_factory
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
 
 import pdb
+import os
+import hashlib
+import random
 
 ##from django.contrib.auth.decorators import permission_required
 
@@ -43,7 +44,7 @@ class IndexView(generic.ListView):
     context_object_name = 'candidate_list'
 
     def get_queryset(self):
-        """Return the last five published questions."""
+        """Return the"""
         username=auth.get_user(self.request)
         if username.is_authenticated():
             return Candidate.objects.filter(candidate_username=username)
@@ -170,19 +171,16 @@ def submit_candidate_personal(request):
 
         try:
             candidate = Candidate.objects.get(candidate_username=username)
-            personal_form = PersonalForm(request.POST, request.FILES, instance=candidate)
-            if personal_form.is_valid():
-                personal_form.save()
-#            candidate = Candidate.objects.get(candidate_username=username)
             new_profile = False
+            personal_form = PersonalForm(request.POST, request.FILES, instance=candidate)
+#            candidate = Candidate.objects.get(candidate_username=username)
         except ObjectDoesNotExist:
-            personal_form = PersonalForm(request.POST, request.FILES)
-            if personal_form.is_valid():
-                personal_form.save()
-            candidate = Candidate.objects.get(candidate_username=username)
             new_profile = True
+            personal_form = PersonalForm(request.POST, request.FILES)
 
-        return redirect_to_tab(request)
+        if personal_form.is_valid():
+            personal_form.save()
+            return redirect_to_tab(request)
             # if a GET (or any other method) we'll create a blank form
     else:
         try:
@@ -198,11 +196,12 @@ def submit_candidate_personal(request):
 def submit_candidate_educational_qualifications(request):
     username=auth.get_user(request)
     new_profile = False
+    error_message = ""
     try:
         candidate = Candidate.objects.get(candidate_username=username)
-        not_professional_qualifications_queryset = EducationalQualifications.objects.filter(candidate=candidate, professionalqualifications__isnull=True)
-#        not_professional_qualifictions_queryset = [p for p in educational_queryset if not hasattr(p, 'professionalqualifications')]
-        num_educational_qualifications = not_professional_qualifications_queryset.count()
+        educational_qualifications_queryset = EducationalQualifications.objects.filter(candidate=candidate)
+#        educational_qualifictions_queryset = [p for p in educational_queryset if not hasattr(p, 'professionalqualifications')]
+        num_educational_qualifications = educational_qualifications_queryset.count()
         if num_educational_qualifications > 3:
             raise ValidationError(_('num_educational_qualifications is greater than 3, value: %(value)s'), params={'value': 'num_educational_qualifications'},)
         extra_forms = 3 - num_educational_qualifications
@@ -213,22 +212,22 @@ def submit_candidate_educational_qualifications(request):
     if request.method == 'POST':
         # check whether it's valid:
         # TODO
-        educational_qualifications_formset = EducationalQualificationsFormSet(request.POST, request.FILES, instance=candidate, queryset=not_professional_qualifications_queryset)#, initial={'user': username,})
+        educational_qualifications_formset = EducationalQualificationsFormSet(request.POST, request.FILES, instance=candidate, queryset=educational_qualifications_queryset)#, initial={'user': username,})
 #        educational_qualifications_form_instance = EducationalQualificationsForm()
+#        pdb.set_trace()
         if educational_qualifications_formset.is_valid():
             educational_qualifications_formset.save()
-
-        return redirect_to_tab(request)
+            return redirect_to_tab(request)
 
     else:
         if num_educational_qualifications > 0:
-            educational_qualifications_formset = EducationalQualificationsFormSet(instance=candidate, queryset=not_professional_qualifications_queryset)#, initial={'user': username,})
+            educational_qualifications_formset = EducationalQualificationsFormSet(instance=candidate, queryset=educational_qualifications_queryset)
         else:
             educational_qualifications_formset = EducationalQualificationsFormSet(instance=candidate,
-                initial=[{'class_degree': '10th'}, {'class_degree': '12th/Equivalent'}], queryset=not_professional_qualifications_queryset) #, initial={'user': username,})
+                initial=[{'class_degree': '10th'}, {'class_degree': '12th/Equivalent'}], queryset=educational_qualifications_queryset)
 
     educational_qualifications_form_instance = educational_qualifications_formset[0]
-    return render(request, 'candidate/submit_candidate_educational_qualifications.html', {'educational_qualifications_formset': educational_qualifications_formset, 'educational_qualifications_form_instance': educational_qualifications_form_instance, })
+    return render(request, 'candidate/submit_candidate_educational_qualifications.html', {'educational_qualifications_formset': educational_qualifications_formset, 'educational_qualifications_form_instance': educational_qualifications_form_instance, 'error_message': error_message})
 
 def submit_candidate_professional_qualifications(request):
     username=auth.get_user(request)
@@ -250,8 +249,7 @@ def submit_candidate_professional_qualifications(request):
 #        professional_qualifications_form_instance = ProfessionalQualificationsForm()
         if professional_qualifications_formset.is_valid():
             professional_qualifications_formset.save()
-
-        return redirect_to_tab(request)
+            return redirect_to_tab(request)
     else:
         if num_professional_qualifications > 0:
             professional_qualifications_formset = ProfessionalQualificationsFormSet(instance=candidate)#, initial={'user': username,})
@@ -272,6 +270,7 @@ def submit_candidate_additional_qualifications(request):
             raise ValidationError(_('num_additional_qualifications is greater than 5, value: %(value)s'), params={'value': 'num_additional_qualifications'},)
         extra_forms = 5 - num_additional_qualifications
         AdditionalQualificationsFormSet = inlineformset_factory(Candidate, AdditionalQualifications, form=AdditionalQualificationsForm, extra=extra_forms, can_delete=False)
+
     except ObjectDoesNotExist:
         return HttpResponseRedirect('/candidate/submit_candidate_personal/')
     if request.method == 'POST':
@@ -281,14 +280,13 @@ def submit_candidate_additional_qualifications(request):
 #        additional_qualifications_form_instance = AdditionalQualificationsForm()
         if additional_qualifications_formset.is_valid():
             additional_qualifications_formset.save()
-
-        return redirect_to_tab(request)
+            return redirect_to_tab(request)
     else:
-        if num_additional_qualifications > 0:
-            additional_qualifications_formset = AdditionalQualificationsFormSet(instance=candidate)#, initial={'user': username,})
-        else:
-            additional_qualifications_formset = AdditionalQualificationsFormSet(instance=candidate,
-                initial=[{'course_name': 'M. Phil'}, {'course_name': 'PhD'}, {'course_name': 'MBA'}, {'course_name': 'Post Certificate'}, {'course_name': 'Post Degree'},]) #, initial={'user': username,})
+#        if num_additional_qualifications > 0:
+        additional_qualifications_formset = AdditionalQualificationsFormSet(instance=candidate)#, initial={'user': username,})
+#        else:
+#            additional_qualifications_formset = AdditionalQualificationsFormSet(instance=candidate,
+#                initial=[{'class_degree': 'ANM'}, {'class_degree': 'GNM'}, {'class_degree': 'B. Sc.(N)'}, {'class_degree': 'P. B. B. Sc.(N)'}, {'class_degree': 'M. Sc.(N)'},]) #, initial={'user': username,})
 
     additional_qualifications_form_instance = additional_qualifications_formset[0]
     return render(request, 'candidate/submit_candidate_additional_qualifications.html', {'additional_qualifications_formset': additional_qualifications_formset, 'additional_qualifications_form_instance': additional_qualifications_form_instance, })
@@ -313,8 +311,7 @@ def submit_candidate_experience(request):
 #        experience_form_instance = ExperienceForm()
         if experience_formset.is_valid():
             experience_formset.save()
-
-        return redirect_to_tab(request)
+            return redirect_to_tab(request)
     else:
         experience_formset = ExperienceFormSet(instance=candidate,) #, initial={'user': username,})
 
@@ -341,8 +338,7 @@ def submit_candidate_eligibility_tests(request):
 #        eligibility_tests_form_instance = EligibilityTestsForm()
         if eligibility_tests_formset.is_valid():
             eligibility_tests_formset.save()
-
-        return redirect_to_tab(request)
+            return redirect_to_tab(request)
     else:
         if num_eligibility_tests > 0:
             eligibility_tests_formset = EligibilityTestsFormSet(instance=candidate)#, initial={'user': username,})
@@ -368,8 +364,7 @@ def submit_candidate_passport(request):
         passport_form = PassportAndMiscForm(request.POST, request.FILES, instance=candidate)
         if passport_form.is_valid():
             passport_form.save()
-
-        return redirect_to_tab(request)
+            return redirect_to_tab(request)
             # if a GET (or any other method) we'll create a blank form
     else:
         passport_form = PassportAndMiscForm(instance=candidate)
@@ -395,8 +390,7 @@ def submit_candidate_snc(request):
 #        snc_form_instance = StateNursingCouncilForm()
         if snc_formset.is_valid():
             snc_formset.save()
-
-        return redirect_to_tab(request)
+            return redirect_to_tab(request)
     else:
         snc_formset = StateNursingCouncilFormSet(instance=candidate, initial=[{'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, ] )
 
@@ -405,6 +399,36 @@ def submit_candidate_snc(request):
 #    pdb.set_trace()
     return render(request, 'candidate/submit_candidate_snc.html', {'snc_formset': snc_formset, 'snc_form_instance': snc_form_instance, 'snc_course_choices': snc_course_choices, })
 
+def entire_profile(request):
+    username=auth.get_user(request)
+    try:
+        candidate = Candidate.objects.get(candidate_username=username)
+        personal_data = [['Name', 'name'], ['Father\'s Name', 'fathers_name'], ['Date of Birth', 'date_of_birth'], ['Gender', 'gender'], ['Marital Status', 'marital_status'], ['Phone Number', 'phone_number'], ]
+        for i, field in enumerate(personal_data):
+            personal_data[i].append(getattr(candidate, field[1]))
+
+        address_data = [['House Number', 'house_number'], ['Area', 'area_locality'], ['Street', 'street_name'], ['Village', 'village_PS_PO'], ['Country', 'country'], ['State', 'state'], ['District', 'district'], ['Pin Code', 'pin_code']]
+        for i, field in enumerate(address_data):
+            address_data[i].append(getattr(candidate, field[1]))
+
+        passport_misc_data = [['Passport number', 'passport_number'], ['Passport valid from', 'passport_valid_from'], ['Passport valid to', 'passport_valid_to'], ['Passport place of issue', 'passport_place_of_issue'], ['TNAI number', 'TNAI_number'], ['Preference_of_work', 'preference_of_work']]
+        for i, field in enumerate(passport_misc_data):
+            passport_misc_data[i].append(getattr(candidate, field[1]))
+        if len(passport_misc_data[0][2]) == 0:
+            passport_misc_data = None
+
+        educational_qualifications_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Grade', 'grade'], ['Proof', 'proof']]
+        educational_qualifications_list = EducationalQualifications.objects.filter(candidate=candidate).values()
+        educational_qualifications_collection = []
+#        for index, educational_qualifications in enumerate(educational_qualifications_queryset):
+#            educational_qualifications_collection.append([educational_qualifications_collection_fields[0], educational_qualifications_collection_fields[1], getattr(educational_qualifications_queryset[index], educational_qualifications_collection_fields[1])])
+        num_educational_qualifications = educational_qualifications_list.count()
+
+    except ObjectDoesNotExist:
+        fields = None
+
+    return render(request, 'candidate/index.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_list': educational_qualifications_list, 'num_educational_qualifications': 0, })
+
 class DetailView(generic.DetailView):
     model = Candidate
     template_name = 'candidate/detail.html'
@@ -412,7 +436,8 @@ class DetailView(generic.DetailView):
         """
         Excludes any questions that aren't published yet.
         """
-        return Candidate.objects.all()
+        username=auth.get_user(self.request)
+        return Candidate.objects.filter(candidate_username=username)
 
 def signup(request):
     if request.method == 'POST':
@@ -432,12 +457,15 @@ def signup(request):
             to_email = form.cleaned_data.get('username')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            return HttpResponseRedirect('/candidate/first_activation/')
     
     else:
         form = SignupForm()
     
     return render(request, 'candidate_signup.html', {'form': form})
+
+def first_activation(request):
+    return render(request, 'candidate/first_activation.html', )
 
 def activate(request, uidb64, token):
     try:
@@ -448,7 +476,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+#        login(request, user)
         # return redirect('home')
 
         g = Group.objects.get(name='Candidate') 

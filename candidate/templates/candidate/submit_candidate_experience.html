@@ -1,9 +1,11 @@
 {% extends "base_generic.html" %}
 
+{% block title %}
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
+{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
 <form enctype="multipart/form-data" action="/candidate/submit_candidate_experience/" method="post">
     {% csrf_token %}
         {{ experience_formset.management_form }}

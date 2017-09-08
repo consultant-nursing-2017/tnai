@@ -1,24 +1,66 @@
 {% extends "base_generic.html" %}
+{% block title %}
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
+{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
-
-{% if candidate_list %}
+<h2> Candidate Profile (Incomplete display) </h2>
+{% if personal_data %}
+    <h2> Candidate username: {{ candidate.candidate_username }} </h2> 
+    <h3> Personal details </h3>
     <table>
-        <tr>
-            <th>Name</th>
-        </tr>
-        {% for candidate in candidate_list %}
-        <tr>
-            <td>{{ candidate.name }}</td>
-            <td>{{ candidate.degree_recognized_by_INC }}</td>
-            <td>{{ candidate.passport_number }}</td>
-        </tr>
+        {% for data in personal_data %}
+            <tr>
+                <th>{{ data.0 }}</th>
+                <td>{{ data.2 }}</td>
+            </tr>
         {% endfor %}
     </table>
+
+    <h4> Address for communication </h4>
+    <table>
+        {% for data in address_data %}
+            <tr>
+                <th>{{ data.0 }}</th>
+                <td>{{ data.2 }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if num_educational_qualifications > 0 %}
+        <h4> Educational Qualifications </h4>
+        <table>
+            <tr>
+                {% with ctr=forloop.counter %}
+                    <th>{{ educational_qualifications_collection_fields.ctr.0 }}</th>
+                {% endwith %}
+            </tr>
+            {% for educational_qualifications_dict in educational_qualifications_list%}
+                <tr>
+                    {% for key, value in educational_qualifications_dict %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    {% if passport_misc_data %}
+        <h4> Passport and miscellaneous details </h4>
+        <table>
+            {% for data in passport_misc_data %}
+                <tr>
+                    <th>{{ data.0 }}</th>
+                    <td>{{ data.2 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 {% else %}
     <p>No candidates are available.</p>
 {% endif %}
+<br>
+<a href="../submit_candidate_personal">Go to candidate form.</a>
 {% endblock %}
 
