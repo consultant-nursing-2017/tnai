@@ -68,6 +68,9 @@ def candidate_index(request):
     username=auth.get_user(request)
     object_does_not_exist = False
     photograph_exists = False
+    if username.groups.filter(name="Employer").count() > 0:
+        return HttpResponseRedirect('/employer/')
+
     try:
         if username.is_authenticated():
             candidate = Candidate.objects.get(candidate_username=username)
@@ -76,12 +79,8 @@ def candidate_index(request):
         else:
             candidate = None
     except ObjectDoesNotExist:
-        try:
-            employer = Employer.objects.get(company_username=username)
-            return HttpResponseRedirect('/employer/employer_list/')
-        except ObjectDoesNotExist:
-            candidate = None
-            object_does_not_exist = True
+        candidate = None
+        object_does_not_exist = True
 
     return render(request, 'candidate/index.html', {'candidate': candidate, 'object_does_not_exist': object_does_not_exist, 'photograph_exists': photograph_exists, }) 
 
@@ -443,7 +442,7 @@ def signup(request):
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
-            message = render_to_string('candidate_acc_active_email.html', {
+            message = render_to_string('candidate/acc_active_email.html', {
                 'user':user, 
                 'domain':current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -458,7 +457,7 @@ def signup(request):
     else:
         form = SignupForm()
     
-    return render(request, 'candidate_signup.html', {'form': form})
+    return render(request, 'candidate/signup.html', {'form': form})
 
 def first_activation(request):
     return render(request, 'candidate/first_activation.html', )

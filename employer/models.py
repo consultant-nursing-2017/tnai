@@ -17,12 +17,13 @@ class Employer(models.Model):
             ('IT', 'IT'),
             ('Shipping', 'Shipping'),
     )
+    employer_username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='employer_username', default=None, blank=True, null=True)
     country = models.CharField(max_length=200, choices = COUNTRY_CHOICES, default="Indian")
-    company_username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='company_username', default=None)
-    company_registration = models.CharField(max_length=200, default="ABC-1234")
-    company_type = models.CharField(max_length=200, choices=COMPANY_CHOICES, default="Private")
+    employer_name = models.CharField(max_length=200, choices = COUNTRY_CHOICES, default="Employer Name")
+    employer_registration = models.CharField(max_length=200, default="ABC-1234")
+    employer_type = models.CharField(max_length=200, choices=COMPANY_CHOICES, default="Private")
+    authorized_signatory = models.CharField(max_length=200, default="Auth 123")
     sector = models.CharField(max_length=200, choices=SECTOR_CHOICES, default="Health")
-    email = models.CharField(max_length=200, default="nursing.consultant.2017@gmail.com")
     address = models.CharField(max_length=500, default="abcdef")
     website = models.URLField(max_length=200, default="http://example.com")
     phone = models.CharField(max_length=200, default="9810117638")

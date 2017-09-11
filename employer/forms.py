@@ -31,13 +31,13 @@ class SubmitForm(ModelForm):
 #        widgets={'date_submitted': forms.DateTimeInput(format='%Y-%m-%d %H:%M')}
  
 
-
 class SignupForm(UserCreationForm):
-    email = forms.EmailField(max_length=200, help_text='Required')
+#    email = forms.EmailField(max_length=200, help_text='Required')
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'password1', 'password2')
+        labels = {'username': 'Email address (will also serve as your username)'}
 
 #class RegistrationForm(forms.Form):
 #    username = forms.CharField(label="",widget=forms.TextInput(attrs={'placeholder': 'Username','class':'form-control input-perso'}),max_length=30,min_length=3)#,validators=[isValidUsername, validators.validate_slug])
