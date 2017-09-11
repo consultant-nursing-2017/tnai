@@ -139,7 +139,7 @@ class EligibilityTests(models.Model):
         return 'candidate/{0}/eligibility_tests/{1}'.format(instance.candidate.candidate_username.username, filename)
 
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
-    eligibility_tests = models.CharField(max_length=20, choices=ELIGIBILITY_TESTS_CHOICES, blank=True)
+    eligibility_tests = models.CharField(max_length=50, choices=ELIGIBILITY_TESTS_CHOICES, blank=True)
     country = models.CharField(max_length=100, blank=True)
 #    score_grade_marks = models.CharField(max_length=20, blank=True)
     completed_on = models.DateField(blank=True, null=True)

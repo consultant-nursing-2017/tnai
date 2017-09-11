@@ -39,38 +39,46 @@ import random
 #def index(request):
 #    return HttpResponse("You're at the submit_contributions index.")
 
-class IndexView(generic.ListView):
-    template_name = 'candidate/index.html'
-    context_object_name = 'candidate_list'
-
-    def get_queryset(self):
-        """Return the"""
-        username=auth.get_user(self.request)
-        if username.is_authenticated():
-            return Candidate.objects.filter(candidate_username=username)
-        else:
-            return HttpResponse("No profile available.")
+#class IndexView(generic.ListView):
+#    template_name = 'candidate/index.html'
+#    context_object_name = 'candidate_list'
 
 def redirect_to_tab(request):
-        if 'personal' in request.POST:
+        if 'save_personal' in request.POST:
             return HttpResponseRedirect('/candidate/submit_candidate_personal/')
-        elif 'educational' in request.POST:
+        elif 'save_educational' in request.POST:
             return HttpResponseRedirect('/candidate/submit_candidate_educational_qualifications/')
-        elif 'professional' in request.POST:
+        elif 'save_professional' in request.POST:
             return HttpResponseRedirect('/candidate/submit_candidate_professional_qualifications/')
-        elif 'additional' in request.POST:
+        elif 'save_additional' in request.POST:
             return HttpResponseRedirect('/candidate/submit_candidate_additional_qualifications/')
-        elif 'experience' in request.POST:
+        elif 'save_experience' in request.POST:
             return HttpResponseRedirect('/candidate/submit_candidate_experience/')
-        elif 'eligibility' in request.POST:
+        elif 'save_eligibility' in request.POST:
             return HttpResponseRedirect('/candidate/submit_candidate_eligibility_tests/')
-        elif 'state_nursing_council' in request.POST:
+        elif 'save_state_nursing_council' in request.POST:
             return HttpResponseRedirect('/candidate/submit_candidate_snc/')
-        elif 'passport' in request.POST:
+        elif 'save_passport' in request.POST:
             return HttpResponseRedirect('/candidate/submit_candidate_passport/')
         else:
-            return HttpResponseRedirect('/candidate/candidate_list/')
- 
+            return HttpResponseRedirect('/candidate/candidate_profile/')
+
+def candidate_index(request):
+    username=auth.get_user(request)
+    object_does_not_exist = False
+    photograph_exists = False
+    try:
+        if username.is_authenticated():
+            candidate = Candidate.objects.get(candidate_username=username)
+            if candidate.photograph:
+                photograph_exists = False # TODO: fix serving photos
+        else:
+            candidate = None
+    except ObjectDoesNotExist:
+        candidate = None
+        object_does_not_exist = True
+
+    return render(request, 'candidate/index.html', {'candidate': candidate, 'object_does_not_exist': object_does_not_exist, 'photograph_exists': photograph_exists, }) 
 
 def submit_candidate_personal(request):
     username=auth.get_user(request)
@@ -254,7 +262,7 @@ def submit_candidate_eligibility_tests(request):
             eligibility_tests_formset = EligibilityTestsFormSet(instance=candidate)#, initial={'user': username,})
         else:
             eligibility_tests_formset = EligibilityTestsFormSet(instance=candidate,
-                initial=[{'eligibility_tests': 'Prometric (Specify country)'}, {'eligibility_tests': 'HAAD'}, {'eligibility_tests': 'GHA'}, {'eligibility_tests': 'IELTS'}, {'eligibility_tests': 'CGFNS'}, {'eligibility_tests': 'TOEFL'}, {'eligibility_tests': 'OET'},]) #, initial={'user': username,})
+                initial=[{'eligibility_tests': 'Prometric (Specify country)'}, {'eligibility_tests': 'HAAD'}, {'eligibility_tests': 'DHA'}, {'eligibility_tests': 'IELTS'}, {'eligibility_tests': 'CGFNS'}, {'eligibility_tests': 'TOEFL'}, {'eligibility_tests': 'OET'},]) #, initial={'user': username,})
 
 #        eligibility_tests_form_instance = EligibilityTestsForm()
 
@@ -327,17 +335,90 @@ def entire_profile(request):
         if len(passport_misc_data[0][2]) == 0:
             passport_misc_data = None
 
-        educational_qualifications_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Grade', 'grade'], ['Proof', 'proof']]
-        educational_qualifications_list = EducationalQualifications.objects.filter(candidate=candidate).values()
+        form = EducationalQualificationsForm()
+        educational_qualifications_collection_fieldnames = form.fields
+        educational_qualifications_collection_fields = []
+        for index, field in enumerate(educational_qualifications_collection_fieldnames):
+            educational_qualifications_collection_fields.append([form.fields[field].label, field])
+        #[['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
+        educational_qualifications_list = EducationalQualifications.objects.filter(candidate=candidate).values().order_by('id')
         educational_qualifications_collection = []
-#        for index, educational_qualifications in enumerate(educational_qualifications_queryset):
-#            educational_qualifications_collection.append([educational_qualifications_collection_fields[0], educational_qualifications_collection_fields[1], getattr(educational_qualifications_queryset[index], educational_qualifications_collection_fields[1])])
-        num_educational_qualifications = educational_qualifications_list.count()
+        for index, educational_qualifications in enumerate(educational_qualifications_list):
+            educational_qualifications_collection.append([])
+            for field in educational_qualifications_collection_fields:
+                educational_qualifications_collection[index].append(educational_qualifications_list[index].get(field[1]))
+
+        form = ProfessionalQualificationsForm()
+        professional_qualifications_collection_fieldnames = form.fields
+        professional_qualifications_collection_fields = []
+        for index, field in enumerate(professional_qualifications_collection_fieldnames):
+            professional_qualifications_collection_fields.append([form.fields[field].label, field])
+#        professional_qualifications_collection_fields = [['Course', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Council', 'university_board_council'], ['From', 'date_from'], ['To', 'date_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
+        professional_qualifications_list = ProfessionalQualifications.objects.filter(candidate=candidate).values().order_by('id')
+        professional_qualifications_collection = []
+        for index, professional_qualifications in enumerate(professional_qualifications_list):
+            professional_qualifications_collection.append([])
+            for field in professional_qualifications_collection_fields:
+                professional_qualifications_collection[index].append(professional_qualifications_list[index].get(field[1]))
+
+        form = AdditionalQualificationsForm()
+        additional_qualifications_collection_fieldnames = form.fields
+        additional_qualifications_collection_fields = []
+        for index, field in enumerate(additional_qualifications_collection_fieldnames):
+            additional_qualifications_collection_fields.append([form.fields[field].label, field])
+#        additional_qualifications_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
+        additional_qualifications_list = AdditionalQualifications.objects.filter(candidate=candidate).values().order_by('id')
+        additional_qualifications_collection = []
+        for index, additional_qualifications in enumerate(additional_qualifications_list):
+            additional_qualifications_collection.append([])
+            for field in additional_qualifications_collection_fields:
+                additional_qualifications_collection[index].append(additional_qualifications_list[index].get(field[1]))
+
+        form = StateNursingCouncilForm()
+        state_nursing_council_collection_fieldnames = form.fields
+        state_nursing_council_collection_fields = []
+        for index, field in enumerate(state_nursing_council_collection_fieldnames):
+            state_nursing_council_collection_fields.append([form.fields[field].label, field])
+#        state_nursing_council_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
+        state_nursing_council_list = StateNursingCouncil.objects.filter(candidate=candidate).values().order_by('id')
+        state_nursing_council_collection = []
+        for index, state_nursing_council in enumerate(state_nursing_council_list):
+            state_nursing_council_collection.append([])
+            for field in state_nursing_council_collection_fields:
+                state_nursing_council_collection[index].append(state_nursing_council_list[index].get(field[1]))
+
+        form = EligibilityTestsForm()
+        eligibility_tests_collection_fieldnames = form.fields
+        eligibility_tests_collection_fields = []
+        for index, field in enumerate(eligibility_tests_collection_fieldnames):
+            eligibility_tests_collection_fields.append([form.fields[field].label, field])
+#        eligibility_tests_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
+        eligibility_tests_list = EligibilityTests.objects.filter(candidate=candidate).values().order_by('id')
+        eligibility_tests_collection = []
+        for index, eligibility_tests in enumerate(eligibility_tests_list):
+            eligibility_tests_collection.append([])
+            for field in eligibility_tests_collection_fields:
+                eligibility_tests_collection[index].append(eligibility_tests_list[index].get(field[1]))
+
+        form = ExperienceForm()
+        experience_collection_fieldnames = form.fields
+        experience_collection_fields = []
+        for index, field in enumerate(experience_collection_fieldnames):
+            experience_collection_fields.append([form.fields[field].label, field])
+#        experience_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
+        experience_list = Experience.objects.filter(candidate=candidate).values().order_by('id')
+        experience_collection = []
+        for index, experience in enumerate(experience_list):
+            experience_collection.append([])
+            for field in experience_collection_fields:
+                experience_collection[index].append(experience_list[index].get(field[1]))
+
+#        pdb.set_trace()
+        return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, })
 
     except ObjectDoesNotExist:
         fields = None
-
-    return render(request, 'candidate/index.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_list': educational_qualifications_list, 'num_educational_qualifications': 0, })
+        return render(request, 'candidate/index.html', {'candidate': None})
 
 class DetailView(generic.DetailView):
     model = Candidate

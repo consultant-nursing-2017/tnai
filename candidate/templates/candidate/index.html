@@ -1,66 +1,21 @@
 {% extends "base_generic.html" %}
+{% load static %}
+
 {% block title %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
 {% endblock %}
 
 {% block content %}
-<h2> Candidate Profile (Incomplete display) </h2>
-{% if personal_data %}
-    <h2> Candidate username: {{ candidate.candidate_username }} </h2> 
-    <h3> Personal details </h3>
-    <table>
-        {% for data in personal_data %}
-            <tr>
-                <th>{{ data.0 }}</th>
-                <td>{{ data.2 }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    <h4> Address for communication </h4>
-    <table>
-        {% for data in address_data %}
-            <tr>
-                <th>{{ data.0 }}</th>
-                <td>{{ data.2 }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    {% if num_educational_qualifications > 0 %}
-        <h4> Educational Qualifications </h4>
-        <table>
-            <tr>
-                {% with ctr=forloop.counter %}
-                    <th>{{ educational_qualifications_collection_fields.ctr.0 }}</th>
-                {% endwith %}
-            </tr>
-            {% for educational_qualifications_dict in educational_qualifications_list%}
-                <tr>
-                    {% for key, value in educational_qualifications_dict %}
-                        <td>{{ value }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-        </table>
+    {% if not object_does_not_exist %}
+        <h2>Candidate: {{ candidate.candidate_username }}</h2>
+        {% if photograph_exists %}
+        <img src="{{ MEDIA_ROOT}}{{ candidate.photograph.url }}"></img>
+        {% else %}
+            No photo uploaded.
+        {% endif %}
+    {% else %}
+        Candidate not found!
     {% endif %}
-
-    {% if passport_misc_data %}
-        <h4> Passport and miscellaneous details </h4>
-        <table>
-            {% for data in passport_misc_data %}
-                <tr>
-                    <th>{{ data.0 }}</th>
-                    <td>{{ data.2 }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-    {% endif %}
-{% else %}
-    <p>No candidates are available.</p>
-{% endif %}
-<br>
-<a href="../submit_candidate_personal">Go to candidate form.</a>
 {% endblock %}
 

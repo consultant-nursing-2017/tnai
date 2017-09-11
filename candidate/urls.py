@@ -4,7 +4,8 @@ from . import views
 
 app_name = 'candidate'
 urlpatterns = [
-    url(r'^candidate_list/', views.entire_profile, name='index'),
+    url(r'^$', views.candidate_index, name='index'),
+    url(r'^candidate_profile/', views.entire_profile, name='candidate_profile'),
 #    url(r'^submit_candidate/', views.submit_candidate, name='submit'),
     url(r'^submit_candidate_personal/', views.submit_candidate_personal, name='submit_candidate_personal'),
     url(r'^submit_candidate_educational_qualifications/', views.submit_candidate_educational_qualifications, name='submit_candidate_educational_qualifications'),
