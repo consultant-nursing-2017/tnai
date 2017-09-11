@@ -59,6 +59,7 @@ class Candidate(models.Model):
     village_PS_PO = models.CharField(max_length=200, default="PS/PO/Village")
     country = models.CharField(max_length=200, default="India")
     state = models.CharField(max_length=200, default="Delhi")
+    city = models.CharField(max_length=200, default="Delhi")
     district = models.CharField(max_length=200, default="Delhi")
     pin_code = models.CharField(max_length=200, default="110078")
 

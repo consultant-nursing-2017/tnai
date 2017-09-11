@@ -49,7 +49,7 @@ class PersonalForm(ModelForm):
     class Meta:
         model = Candidate
         fields = ['candidate_username', 'photograph', 'curriculum_vitae', 'name', 'fathers_name', 'date_of_birth', 'gender', 'marital_status', 'phone_number', 
-            'house_number', 'area_locality', 'street_name', 'village_PS_PO', 'country', 'state', 'district', 'pin_code', ]
+            'house_number', 'area_locality', 'street_name', 'village_PS_PO', 'country', 'state', 'city', 'district', 'pin_code', ]
 
 #    def save(self, *args, **kwargs):
 #        self.fields['

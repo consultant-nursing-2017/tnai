@@ -325,7 +325,7 @@ def entire_profile(request):
         for i, field in enumerate(personal_data):
             personal_data[i].append(getattr(candidate, field[1]))
 
-        address_data = [['House Number', 'house_number'], ['Area', 'area_locality'], ['Street', 'street_name'], ['Village', 'village_PS_PO'], ['Country', 'country'], ['State', 'state'], ['District', 'district'], ['Pin Code', 'pin_code']]
+        address_data = [['House Number', 'house_number'], ['Area', 'area_locality'], ['Street', 'street_name'], ['Village', 'village_PS_PO'], ['Country', 'country'], ['State', 'state'], ['City', 'city'], ['District', 'district'], ['Pin Code', 'pin_code']]
         for i, field in enumerate(address_data):
             address_data[i].append(getattr(candidate, field[1]))
 
