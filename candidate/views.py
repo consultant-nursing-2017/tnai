@@ -8,6 +8,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime
+from employer.models import Employer
 from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience, StateNursingCouncil
 from .forms import SubmitForm, PersonalForm, StateNursingCouncilForm, EducationalQualificationsForm, ProfessionalQualificationsForm, AdditionalQualificationsForm, EligibilityTestsForm, ExperienceForm, PassportAndMiscForm, StateNursingCouncilForm
 from django.core.mail import send_mail
@@ -75,8 +76,12 @@ def candidate_index(request):
         else:
             candidate = None
     except ObjectDoesNotExist:
-        candidate = None
-        object_does_not_exist = True
+        try:
+            employer = Employer.objects.get(company_username=username)
+            return HttpResponseRedirect('/employer/employer_list/')
+        except ObjectDoesNotExist:
+            candidate = None
+            object_does_not_exist = True
 
     return render(request, 'candidate/index.html', {'candidate': candidate, 'object_does_not_exist': object_does_not_exist, 'photograph_exists': photograph_exists, }) 
 

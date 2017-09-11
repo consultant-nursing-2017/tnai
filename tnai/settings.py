@@ -123,7 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = '/candidate/candidate_list'
+LOGIN_REDIRECT_URL = '/candidate/'
 MEDIA_ROOT = '/home/anand/alt-wiki-implementation/tnai/media/'
 
 EMAIL_USE_TLS = True
