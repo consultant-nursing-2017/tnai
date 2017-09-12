@@ -10,7 +10,7 @@
     {% if not object_does_not_exist %}
         <h2> Welcome {{candidate.name}}! </h2>
         {% if photograph_exists %}
-        <img src="{{ MEDIA_ROOT}}{{ candidate.photograph.url }}"></img>
+        <img src="{{ photograph_url }}"></img>
         {% else %}
             No photo uploaded.
         {% endif %}
@@ -32,8 +32,8 @@
         No candidate details found!
     {% endif %}
     <ul>
-        <li><a href="../candidate_profile">View full profile</a></li>
-        <li><a href="../submit_candidate_personal">Update profile</a></li>
+        <li><a href="candidate_profile">View full profile</a></li>
+        <li><a href="submit_candidate_personal">Update profile</a></li>
         <li>Search for employees</li>
         <li>Search for jobs</li>
         <li>Useful links</li>
