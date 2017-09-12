@@ -167,12 +167,16 @@ class Experience(models.Model):
     proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path)
 
 class StateNursingCouncil(models.Model):
-    COURSE_CHOICES = ['ANM', 'GNM', 'BSc.(N)']
+    def media_path(instance, filename):
+        return 'candidate/{0}/SNC/{1}/{2}'.format(instance.candidate.candidate_username.username, instance.registration_number, filename)
+
+    COURSE_CHOICES = ['ANM', 'GNM', 'BSc.(N)', 'MSc.(N)']
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
     course = models.CharField(max_length=10, blank=True)
     state = models.CharField(max_length=200, blank=True)
     registration_number = models.CharField(max_length=200, blank=True)
     year = FormYearField(blank=True, null=True)
+    proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path)
     @classmethod
     def course_choices(self):
         return self.COURSE_CHOICES

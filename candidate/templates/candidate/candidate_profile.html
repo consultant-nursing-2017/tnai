@@ -154,9 +154,10 @@
     {% endif %}
 
     <h3> Passport and miscellaneous details <a href="../submit_candidate_passport">[Update]</a> </h3>
-    {% if passport_data %}
+    <h4> Passport details </h4>
+    {% if passport_misc_data %}
         <table>
-            {% for data in passport_misc_data %}
+            {% for data in passport_misc_data|slice:"-2" %}
                 <tr>
                     <th>{{ data.0 }}</th>
                     <td>{{ data.2 }}</td>
@@ -166,6 +167,15 @@
     {% else %}
         No passport details.
     {% endif %}
+    <h4>Miscellaneous details</h4>
+    <table>
+        {% for data in passport_misc_data|slice:"-2:" %}
+            <tr>
+                <th>{{ data.0 }}</th>
+                <td>{{ data.2 }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% else %}
     <p>No candidates are available.</p>
 {% endif %}

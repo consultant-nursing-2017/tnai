@@ -296,13 +296,14 @@ def submit_candidate_passport(request):
     return render(request, 'candidate/submit_candidate_passport.html', {'passport_form': passport_form,}) 
 
 def submit_candidate_snc(request):
+    snc_course_choices = StateNursingCouncil.course_choices()
     username=auth.get_user(request)
     try:
         candidate = Candidate.objects.get(candidate_username=username)
         num_snc = StateNursingCouncil.objects.filter(candidate=candidate).count()
-        if num_snc > 15:
-            raise ValidationError(_('num_snc is greater than 15, value: %(value)s'), params={'value': 'num_snc'},)
-        extra_forms = 15 - num_snc
+        if num_snc > 20:
+            raise ValidationError(_('num_snc is greater than 20, value: %(value)s'), params={'value': 'num_snc'},)
+        extra_forms = 20 - num_snc
         StateNursingCouncilFormSet = inlineformset_factory(Candidate, StateNursingCouncil, form=StateNursingCouncilForm, extra=extra_forms, can_delete=False)
 
     except ObjectDoesNotExist:
@@ -316,10 +317,13 @@ def submit_candidate_snc(request):
             snc_formset.save()
             return redirect_to_tab(request)
     else:
-        snc_formset = StateNursingCouncilFormSet(instance=candidate, initial=[{'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, {'course': 'ANM'}, {'course': 'GNM'}, {'course': 'BSc.(N)'}, ] )
+        initial_data = []
+        for i in range(0,5):
+            for course in snc_course_choices:
+                initial_data.append({'course': course})
+        snc_formset = StateNursingCouncilFormSet(instance=candidate, initial=initial_data)
 
     snc_form_instance = snc_formset[0]
-    snc_course_choices = StateNursingCouncil.course_choices()
 #    pdb.set_trace()
     return render(request, 'candidate/submit_candidate_snc.html', {'snc_formset': snc_formset, 'snc_form_instance': snc_form_instance, 'snc_course_choices': snc_course_choices, })
 
@@ -337,7 +341,7 @@ def entire_profile(request):
         for i, field in enumerate(address_data):
             address_data[i].append(getattr(candidate, field[1]))
 
-        passport_misc_data = [['Passport number', 'passport_number'], ['Passport valid from', 'passport_valid_from'], ['Passport valid to', 'passport_valid_to'], ['Passport place of issue', 'passport_place_of_issue'], ['TNAI number', 'TNAI_number'], ['Preference_of_work', 'preference_of_work']]
+        passport_misc_data = [['Passport number', 'passport_number'], ['Passport valid from', 'passport_valid_from'], ['Passport valid to', 'passport_valid_to'], ['Passport place of issue', 'passport_place_of_issue'], ['TNAI number', 'TNAI_number'], ['Preference of work', 'preference_of_work']]
         for i, field in enumerate(passport_misc_data):
             passport_misc_data[i].append(getattr(candidate, field[1]))
         if len(passport_misc_data[0][2]) == 0:

@@ -153,7 +153,8 @@ class StateNursingCouncilForm(ModelForm):
 #    courses = forms.CharField(max_length=10, disabled=True)
     class Meta:
         model = StateNursingCouncil
-        fields = ['course', 'state', 'registration_number', 'year', ]
+        exclude = ['candidate']
+#        fields = ['course', 'state', 'registration_number', 'year', 'proof', ]
 
 class PassportAndMiscForm(ModelForm):
     class Meta:
