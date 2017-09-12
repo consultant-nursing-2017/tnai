@@ -10,8 +10,23 @@
 <form enctype="multipart/form-data" action="/candidate/submit_candidate_passport/" method="post">
     {% csrf_token %}
     <h2> Passport and Miscellaneous Details </h2>
+    <h3> Passport Details </h3>
         <table>
-            {{passport_form.as_table}}
+            {% for field in passport_form.visible_fields|slice:":-2" %}
+                <tr> 
+                    <td> {{field.label_tag}} </td>
+                    <td><font color="red">{{field.errors}}</font> {{field}} </td>
+                </tr>
+            {% endfor %}
+        </table>
+    <h3> Miscellaneous Details </h3>
+        <table>
+            {% for field in passport_form.visible_fields|slice:"-2:" %}
+                <tr> 
+                    <td> {{field.label_tag}} </td>
+                    <td><font color="red">{{field.errors}}</font> {{field}} </td>
+                </tr>
+            {% endfor %}
         </table>
     <input type="submit" name="save_personal" value="Save and go to Personal Details" />
     <input type="submit" name="save_educational" value="Save and go to Educational Details" />
