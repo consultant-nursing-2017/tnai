@@ -8,8 +8,8 @@
 <h2> Candidate Profile</h2>
 {% if candidate %}
     <h2> Candidate username: {{ candidate.candidate_username }} </h2> 
-    {% if photograph_url %}
-        <img src="{{ photograph_url }}"></img>
+    {% if candidate.photograph %}
+        <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}"></img>
     {% else %}
         No photograph uploaded.
     {% endif %}

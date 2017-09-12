@@ -67,24 +67,19 @@ def redirect_to_tab(request):
 def candidate_index(request):
     username=auth.get_user(request)
     object_does_not_exist = False
-    photograph_exists = False
-    photograph_url = ""
     if username.groups.filter(name="Employer").count() > 0:
         return HttpResponseRedirect('/employer/')
 
     try:
         if username.is_authenticated():
             candidate = Candidate.objects.get(candidate_username=username)
-            if candidate.photograph:
-                photograph_exists = True # TODO: fix serving photos
-                photograph_url = '../media/' + candidate.photograph.url
         else:
             candidate = None
     except ObjectDoesNotExist:
         candidate = None
         object_does_not_exist = True
 
-    return render(request, 'candidate/index.html', {'candidate': candidate, 'object_does_not_exist': object_does_not_exist, 'photograph_exists': photograph_exists, 'photograph_url': photograph_url }) 
+    return render(request, 'candidate/index.html', {'candidate': candidate, 'object_does_not_exist': object_does_not_exist, }) 
 
 def submit_candidate_personal(request):
     username=auth.get_user(request)
@@ -329,13 +324,11 @@ def submit_candidate_snc(request):
 
 def entire_profile(request):
     username = auth.get_user(request)
-    photograph_url = ""
     try:
         candidate = Candidate.objects.get(candidate_username=username)
         personal_data = [['Name', 'name'], ['Father\'s Name', 'fathers_name'], ['Date of Birth', 'date_of_birth'], ['Gender', 'gender'], ['Marital Status', 'marital_status'], ['Phone Number', 'phone_number'], ]
         for i, field in enumerate(personal_data):
             personal_data[i].append(getattr(candidate, field[1]))
-        photograph_url = '../../media/' + candidate.photograph.url
 
         address_data = [['House Number', 'house_number'], ['Area', 'area_locality'], ['Street', 'street_name'], ['Village', 'village_PS_PO'], ['Country', 'country'], ['State', 'state'], ['City', 'city'], ['District', 'district'], ['Pin Code', 'pin_code']]
         for i, field in enumerate(address_data):
@@ -426,7 +419,7 @@ def entire_profile(request):
                 experience_collection[index].append(experience_list[index].get(field[1]))
 
 #        pdb.set_trace()
-        return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'photograph_url': photograph_url, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, })
+        return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, })
 
     except ObjectDoesNotExist:
         fields = None
