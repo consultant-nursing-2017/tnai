@@ -32,7 +32,9 @@
         No candidate details found!
     {% endif %}
     <ul>
-        <li><a href="candidate_profile">View full profile</a></li>
+        {% if not object_does_not_exist %}
+            <li><a href="candidate_profile">View full profile</a></li>
+        {% endif %}
         <li><a href="submit_candidate_personal">Update profile</a></li>
         <li>Search for employees</li>
         <li>Search for jobs</li>
