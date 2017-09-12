@@ -18,8 +18,8 @@
         <table>
         {% for field in personal_form.visible_fields|slice:"9" %}
             <tr> 
-                <td> {{field.label_tag}} </td>
-                <td>{{field.errors}} {{field}} </td>
+                <th> {{field.label_tag}} </th>
+                <td><font color="red">{{field.errors}}</font> {{field}} </td>
             </tr>
         {% endfor %}
         </table>
@@ -27,8 +27,8 @@
         <table>
         {% for field in personal_form.visible_fields|slice:"9:18" %}
             <tr> 
-                <td> {{field.label_tag}} </td>
-                <td>{{field.errors}} {{field}} </td>
+                <th> {{field.label_tag}} </th>
+                <td><font color="red">{{field.errors}}</font> {{field}} </td>
             </tr>
         {% endfor %}
         </table>

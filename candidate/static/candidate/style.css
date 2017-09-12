@@ -2,8 +2,17 @@ li a {
     color: green;
 }
 
-table, th, td {
+table {
     border: thin solid;
+}
+
+th {
+    background-color: #33FFB2;
+    color: black;
+} 
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
 }
 
 .sidebar-nav {

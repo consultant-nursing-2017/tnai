@@ -14,7 +14,7 @@
         <table>
             {% for field in passport_form.visible_fields|slice:":-2" %}
                 <tr> 
-                    <td> {{field.label_tag}} </td>
+                    <th> {{field.label_tag}} </th>
                     <td><font color="red">{{field.errors}}</font> {{field}} </td>
                 </tr>
             {% endfor %}
@@ -23,7 +23,7 @@
         <table>
             {% for field in passport_form.visible_fields|slice:"-2:" %}
                 <tr> 
-                    <td> {{field.label_tag}} </td>
+                    <th> {{field.label_tag}} </th>
                     <td><font color="red">{{field.errors}}</font> {{field}} </td>
                 </tr>
             {% endfor %}
