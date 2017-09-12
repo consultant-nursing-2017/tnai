@@ -63,7 +63,8 @@ class PersonalForm(ModelForm):
 class EducationalQualificationsForm(ModelForm):
     class Meta:
         model = EducationalQualifications
-        exclude = ['candidate']
+        fields = ['class_degree', 'institute_name', 'university_board_council', 'year_from', 'year_to', 'marks_obtained', 'total_marks', 'percentage', 'proof']
+#        exclude = ['candidate']
         labels = {'university_board_council': 'University/Board', 'class_degree': 'Class/Degree', 'percentage': 'Percent'}
         widgets = {
                 'class_degree': forms.TextInput(attrs={'size':'25', 'placeholder':'Degree (specify)'}),
@@ -91,7 +92,7 @@ class EducationalQualificationsForm(ModelForm):
 
 class ProfessionalQualificationsForm(ModelForm):
     date_from = forms.DateField(input_formats=['%m/%y', '%m-%y', '%m/%Y', '%m-%Y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
-    date_to = forms.DateField(input_formats=['%m/%y', '%m-%y', '%m/%Y', '%m-%Y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
+    date_to = forms.DateField(input_formats=['%m/%y', '%m-%y', '%m/%Y', '%m-%Y'], required=False, label='To (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
     class Meta:
         model = ProfessionalQualifications
         fields = ['class_degree', 'institute_name', 'university_board_council', 'date_from', 'date_to', 'marks_obtained', 'total_marks', 'percentage', 'proof']
@@ -109,7 +110,7 @@ class ProfessionalQualificationsForm(ModelForm):
 
 class AdditionalQualificationsForm(ModelForm):
     date_from = forms.DateField(input_formats=['%m/%y', '%m-%y', '%m/%Y', '%m-%Y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
-    date_to = forms.DateField(input_formats=['%m/%y', '%m-%y', '%m/%Y', '%m-%Y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
+    date_to = forms.DateField(input_formats=['%m/%y', '%m-%y', '%m/%Y', '%m-%Y'], required=False, label='To (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
     class Meta:
         model = AdditionalQualifications
         fields = ['class_degree', 'course_topic', 'institute_name', 'university_board_council', 'date_from', 'date_to', 'marks_obtained', 'total_marks', 'percentage', 'proof']
@@ -142,7 +143,7 @@ class EligibilityTestsForm(ModelForm):
 
 class ExperienceForm(ModelForm):
     date_from = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y'], required=False, label='From (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
-    date_to = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y'], required=False, label='From (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
+    date_to = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y'], required=False, label='To (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
     class Meta:
         model = Experience
         exclude = ['candidate']

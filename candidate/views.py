@@ -337,8 +337,8 @@ def entire_profile(request):
         passport_misc_data = [['Passport number', 'passport_number'], ['Passport valid from', 'passport_valid_from'], ['Passport valid to', 'passport_valid_to'], ['Passport place of issue', 'passport_place_of_issue'], ['TNAI number', 'TNAI_number'], ['Preference of work', 'preference_of_work']]
         for i, field in enumerate(passport_misc_data):
             passport_misc_data[i].append(getattr(candidate, field[1]))
-        if len(passport_misc_data[0][2]) == 0:
-            passport_misc_data = None
+#        if len(passport_misc_data[0][2]) == 0:
+#            passport_misc_data = None
 
         form = EducationalQualificationsForm()
         educational_qualifications_collection_fieldnames = form.fields
