@@ -11,6 +11,7 @@ from django.template import Context
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.validators import validate_image_file_extension
 
 import pdb
     
@@ -51,9 +52,13 @@ class PersonalForm(ModelForm):
         fields = ['candidate_username', 'photograph', 'curriculum_vitae', 'name', 'fathers_name', 'date_of_birth', 'gender', 'marital_status', 'phone_number', 
             'house_number', 'area_locality', 'street_name', 'village_PS_PO', 'country', 'state', 'city', 'district', 'pin_code', ]
 
-#    def save(self, *args, **kwargs):
-#        self.fields['
-#        super(PersonalForm, self).save(*args, **kwargs)
+#    def validate_photograph_size(value):
+#        errors = []
+#        if not validate_image_file_extension(value):
+#            errors.append(ValidationError())
+#        (width, height) = get_image_dimensions(photograph)
+#        if width > 200 or height > 200:
+#            raise ValidationError()
 
 class EducationalQualificationsForm(ModelForm):
     class Meta:
@@ -85,8 +90,8 @@ class EducationalQualificationsForm(ModelForm):
             raise ValidationError(errors)
 
 class ProfessionalQualificationsForm(ModelForm):
-    date_from = forms.DateField(input_formats=['%m/%y', '%m-%y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
-    date_to = forms.DateField(input_formats=['%m/%y', '%m-%y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
+    date_from = forms.DateField(input_formats=['%m/%y', '%m-%y', '%m/%Y', '%m-%Y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
+    date_to = forms.DateField(input_formats=['%m/%y', '%m-%y', '%m/%Y', '%m-%Y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
     class Meta:
         model = ProfessionalQualifications
         fields = ['class_degree', 'institute_name', 'university_board_council', 'date_from', 'date_to', 'marks_obtained', 'total_marks', 'percentage', 'proof']
@@ -103,8 +108,8 @@ class ProfessionalQualificationsForm(ModelForm):
                 }
 
 class AdditionalQualificationsForm(ModelForm):
-    date_from = forms.DateField(input_formats=['%m/%y', '%m-%y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
-    date_to = forms.DateField(input_formats=['%m/%y', '%m-%y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
+    date_from = forms.DateField(input_formats=['%m/%y', '%m-%y', '%m/%Y', '%m-%Y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
+    date_to = forms.DateField(input_formats=['%m/%y', '%m-%y', '%m/%Y', '%m-%Y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
     class Meta:
         model = AdditionalQualifications
         fields = ['class_degree', 'course_topic', 'institute_name', 'university_board_council', 'date_from', 'date_to', 'marks_obtained', 'total_marks', 'percentage', 'proof']
@@ -121,8 +126,8 @@ class AdditionalQualificationsForm(ModelForm):
                 }
 
 class EligibilityTestsForm(ModelForm):
-    completed_on = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y'], required=False, label='Completed on (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
-    valid_up_to = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y'], required=False, label='Valid up to (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
+    completed_on = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y'], required=False, label='Completed on (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
+    valid_up_to = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y'], required=False, label='Valid up to (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
     class Meta:
         model = EligibilityTests
         exclude = ['candidate']
@@ -136,8 +141,8 @@ class EligibilityTestsForm(ModelForm):
 #        self.fields['user'] = self.instance.candidate_username
 
 class ExperienceForm(ModelForm):
-    date_from = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y'], required=False, label='From (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
-    date_to = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y'], required=False, label='From (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
+    date_from = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y'], required=False, label='From (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
+    date_to = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y'], required=False, label='From (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
     class Meta:
         model = Experience
         exclude = ['candidate']
