@@ -1,0 +1,56 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
+{% endblock %}
+
+{% block content %}
+<h1>Candidate form</h1>
+<form enctype="multipart/form-data" action="/candidate/submit_candidate_snc/" method="post">
+    {% csrf_token %}
+        {{ snc_formset.management_form }}
+       <h2>SNC Details</h2>
+        <table>
+            <tr>
+                <th>S. No.</th>
+                {% for field in snc_form_instance %}
+                {% if field.is_hidden %}
+                    <th style="display:none">{{field.errors}} {{ field.label }}</th>
+                {% else %}
+                    <th>{{field.errors}} {{ field.label }}</th>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            {% with len=snc_course_choices|length %}
+            {% for form in snc_formset %}
+                {% if forloop.counter|add:"-1"|divisibleby:len %}
+                    <tr>
+                    <th rowspan="{{len|add:"1"}}"> {% widthratio forloop.counter|add:len len 1 %} </th>
+                {% endif %}
+                <tr>
+                    {% for field in form %}
+                        {% if field.is_hidden %}
+                            <td style="display:none"> {{field.errors}} {{field}} </td>
+                        {% else %}
+                            <td> {{field.errors}} {{field}} </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                {% if forloop.counter|add:"-1"|divisibleby:len %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            {% endwith %}
+        </table>
+    <input type="submit" name="save_personal" value="Save and go to Personal Details" />
+    <input type="submit" name="save_educational" value="Save and go to Educational Details" />
+    <input type="submit" name="save_professional" value="Save and go to Professional Details" />
+    <input type="submit" name="save_additional" value="Save and go to Additional Details" />
+    <input type="submit" name="save_experience" value="Save and go to Experience Details" />
+    <input type="submit" name="save_eligibility" value="Save and go to Eligibility Details" />
+    <input type="submit" name="save_state_nursing_council" value="Save and stay at SNC Details" />
+    <input type="submit" name="save_passport" value="Save and go to Passport/Misc. Details" />
+    <input type="submit" name="save_done" value="Done" />
+</form>
+{% endblock %}

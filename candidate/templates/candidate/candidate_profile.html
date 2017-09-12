@@ -1,0 +1,174 @@
+{% extends "base_generic.html" %}
+{% block title %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
+{% endblock %}
+
+{% block content %}
+<h2> Candidate Profile</h2>
+{% if candidate %}
+    <h2> Candidate username: {{ candidate.candidate_username }} </h2> 
+    {% if photograph_url %}
+        <img src="{{ photograph_url }}"></img>
+    {% else %}
+        No photograph uploaded.
+    {% endif %}
+    <h3> Personal details <a href="../submit_candidate_personal">[Update]</a></h3> 
+    <table>
+        {% for data in personal_data %}
+            <tr>
+                <th>{{ data.0 }}</th>
+                <td>{{ data.2 }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h4> Address for communication </h4>
+    <table>
+        {% for data in address_data %}
+            <tr>
+                <th>{{ data.0 }}</th>
+                <td>{{ data.2 }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h3> Educational Qualifications <a href="../submit_candidate_educational_qualifications">[Update]</a></h3>
+    {% if educational_qualifications_collection %}
+        <table>
+            <tr>
+                {% for field in educational_qualifications_collection_fields %}
+                    <th>{{ field.0 }}</th>
+                {% endfor %}
+            </tr>
+            {% for educational_qualifications in educational_qualifications_collection %}
+                <tr>
+                    {% for value in educational_qualifications %}
+                        <td>{{ value }} </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        No qualifications.
+    {% endif %}
+
+    <h3> Professional Qualifications <a href="../submit_candidate_professional_qualifications">[Update]</a> </h3>
+    {% if professional_qualifications_collection %}
+        <table>
+            <tr>
+                {% for field in professional_qualifications_collection_fields %}
+                    <th>{{ field.0 }}</th>
+                {% endfor %}
+            </tr>
+            {% for professional_qualifications in professional_qualifications_collection %}
+                <tr>
+                    {% for value in professional_qualifications %}
+                        <td>{{ value }} </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        No qualifications.
+    {% endif %}
+
+    <h3> Additional Qualifications <a href="../submit_candidate_additional_qualifications">[Update]</a> </h3>
+    {% if additional_qualifications_collection %}
+        <table>
+            <tr>
+                {% for field in additional_qualifications_collection_fields %}
+                    <th>{{ field.0 }}</th>
+                {% endfor %}
+            </tr>
+            {% for additional_qualifications in additional_qualifications_collection %}
+                <tr>
+                    {% for value in additional_qualifications %}
+                        <td>{{ value }} </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        No qualifications.
+    {% endif %}
+
+    <h3> Eligibility Tests <a href="../submit_candidate_eligibility_tests">[Update]</a> </h3>
+    {% if eligibility_tests_collection %}
+        <table>
+            <tr>
+                {% for field in eligibility_tests_collection_fields %}
+                    <th>{{ field.0 }}</th>
+                {% endfor %}
+            </tr>
+            {% for eligibility_tests in eligibility_tests_collection %}
+                <tr>
+                    {% for value in eligibility_tests %}
+                        <td>{{ value }} </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        No qualifications.
+    {% endif %}
+
+    <h3> Experience <a href="../submit_candidate_experience">[Update]</a> </h3>
+    {% if experience_collection %}
+        <table>
+            <tr>
+                {% for field in experience_collection_fields %}
+                    <th>{{ field.0 }}</th>
+                {% endfor %}
+            </tr>
+            {% for experience in experience_collection %}
+                <tr>
+                    {% for value in experience %}
+                        <td>{{ value }} </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        No qualifications.
+    {% endif %}
+
+    <h3> SNC Qualifications <a href="../submit_candidate_snc">[Update]</a> </h3>
+    {% if state_nursing_council_collection %}
+        <table>
+            <tr>
+                {% for field in state_nursing_council_collection_fields %}
+                    <th>{{ field.0 }}</th>
+                {% endfor %}
+            </tr>
+            {% for state_nursing_council in state_nursing_council_collection %}
+                <tr>
+                    {% for value in state_nursing_council %}
+                        <td>{{ value }} </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        No qualifications.
+    {% endif %}
+
+    <h3> Passport and miscellaneous details <a href="../submit_candidate_passport">[Update]</a> </h3>
+    {% if passport_data %}
+        <table>
+            {% for data in passport_misc_data %}
+                <tr>
+                    <th>{{ data.0 }}</th>
+                    <td>{{ data.2 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        No passport details.
+    {% endif %}
+{% else %}
+    <p>No candidates are available.</p>
+{% endif %}
+<br>
+{% endblock %}
+
