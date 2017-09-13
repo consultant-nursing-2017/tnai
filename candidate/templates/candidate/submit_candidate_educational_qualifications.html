@@ -15,6 +15,9 @@
         <h2>General Educational Details</h2>
         <table>
             <tr>
+                {% if educational_qualifications_formset.errors %}
+                    <th>Errors</th>
+                {% endif %}
                 {% for field in educational_qualifications_form_instance %}
                     {% if field.is_hidden %}
                         <th style="display:none">{{ field.label }}</th>
@@ -25,6 +28,18 @@
             </tr>
             {% for form in educational_qualifications_formset %}
                 <tr>
+                    {% if form.errors %}
+                        <td> 
+                            <div class="error_msg">
+                                &#x2718
+                                {% if form.non_field_errors %}
+                                    {{form.non_field_errors}}
+                                {% endif %}
+                            </div> 
+                        </td>
+                    {% elif educational_qualifications_formset.errors %}
+                        <td> </td>
+                    {% endif %}
                     {% for field in form %}
                         {% if field.is_hidden %}
                             <td style="display:none"> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
@@ -32,9 +47,6 @@
                             <td> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
                         {% endif %}
                     {% endfor %}
-                    {% if form.non_field_errors %}
-                        <td><div class="error_msg">{{form.non_field_errors}}</div></td>
-                    {% endif %}
                 </tr>
             {% endfor %}
         </table>

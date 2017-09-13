@@ -13,6 +13,10 @@
        <h2>SNC Details</h2>
         <table>
             <tr>
+                {% if snc_formset.errors %}
+                    <th>Errors</th>
+                {% endif %}
+
                 <th>S. No.</th>
                 {% for field in snc_form_instance %}
                 {% if field.is_hidden %}
@@ -29,6 +33,19 @@
                     <th rowspan="{{len|add:"1"}}"> {% widthratio forloop.counter|add:len len 1 %} </th>
                 {% endif %}
                 <tr>
+                    {% if form.errors %}
+                        <td> 
+                            <div class="error_msg">
+                                &#x2718
+                                {% if form.non_field_errors %}
+                                    {{form.non_field_errors}}
+                                {% endif %}
+                            </div> 
+                        </td>
+                    {% elif snc_formset.errors %}
+                        <td> </td>
+                    {% endif %}
+
                     {% for field in form %}
                         {% if field.is_hidden %}
                             <td style="display:none"> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
@@ -36,9 +53,6 @@
                             <td> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
                         {% endif %}
                     {% endfor %}
-                    {% if form.non_field_errors %}
-                        <td><div class="error_msg">{{form.non_field_errors}}</div></td>
-                    {% endif %}
                 </tr>
                 {% if forloop.counter|add:"-1"|divisibleby:len %}
                     </tr>

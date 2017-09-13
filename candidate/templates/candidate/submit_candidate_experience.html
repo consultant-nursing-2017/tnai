@@ -12,6 +12,9 @@
         <h2>Experience Details</h2>
         <table>
             <tr>
+                {% if experience_formset.errors %}
+                    <th>Errors</th>
+                {% endif %}
                 {% for field in experience_form_instance %}
                     {% if field.is_hidden %}
                     <th style="display:none"> {{ field.label }}</th>
@@ -22,6 +25,18 @@
             </tr>
             {% for form in experience_formset %}
             <tr>
+                {% if form.errors %}
+                    <td> 
+                        <div class="error_msg">
+                            &#x2718
+                            {% if form.non_field_errors %}
+                                {{form.non_field_errors}}
+                            {% endif %}
+                        </div> 
+                    </td>
+                {% elif experience_formset.errors %}
+                    <td> </td>
+                {% endif %}
                 {% for field in form %}
                     {% if field.is_hidden %}
                         <td style="display:none"> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
@@ -29,9 +44,6 @@
                         <td> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
                     {% endif %}
                 {% endfor %}
-                {% if form.non_field_errors %}
-                    <td><div class="error_msg">{{form.non_field_errors}}</div></td>
-                {% endif %}
             </tr>
             {% endfor %}
         </table>
