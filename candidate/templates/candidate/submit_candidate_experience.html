@@ -14,9 +14,9 @@
             <tr>
                 {% for field in experience_form_instance %}
                     {% if field.is_hidden %}
-                        <th style="display:none">{{field.errors}} {{ field.label }}</th>
+                    <th style="display:none"> {{ field.label }}</th>
                     {% else %}
-                        <th>{{field.errors}} {{ field.label }}</th>
+                        <th> {{ field.label }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -24,11 +24,14 @@
             <tr>
                 {% for field in form %}
                     {% if field.is_hidden %}
-                        <td style="display:none"> {{field.errors}} {{field}} </td>
+                        <td style="display:none"> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
                     {% else %}
-                        <td> {{field.errors}} {{field}} </td>
+                        <td> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
                     {% endif %}
                 {% endfor %}
+                {% if form.non_field_errors %}
+                    <td><div class="error_msg">{{form.non_field_errors}}</div></td>
+                {% endif %}
             </tr>
             {% endfor %}
         </table>

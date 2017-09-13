@@ -12,13 +12,13 @@
         <table>
             <tr>
                 {% for field in educational_qualifications_form_instance %}
-                    <th>{{field.errors}} {{ field.label }}</th>
+                    <th>{{ field.label }}</th>
                 {% endfor %}
             </tr>
             {% for form in educational_qualifications_formset %}
             <tr>
                 {% for field in form %}
-                    <td> {{field.errors}} {{field}} </td>
+                    <td> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
                 {% endfor %}
             </tr>
             {% endfor %}
@@ -28,13 +28,13 @@
         <table>
             <tr>
                 {% for field in professional_qualifications_form_instance %}
-                    <th>{{field.errors}} {{ field.label }}</th>
+                    <th>{{ field.label }}</th>
                 {% endfor %}
             </tr>
             {% for form in professional_qualifications_formset %}
             <tr>
                 {% for field in form %}
-                    <td> {{field.errors}} {{field}} </td>
+                    <td> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
                 {% endfor %}
             </tr>
             {% endfor %}

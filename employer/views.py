@@ -15,6 +15,7 @@ from django.core.mail import send_mail
 import hashlib
 import random
 from django.utils.crypto import get_random_string
+from django.contrib import auth
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
@@ -27,6 +28,8 @@ from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import Group
+from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
 
 ##from django.contrib.auth.decorators import permission_required
 
@@ -42,7 +45,25 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Employer.objects.all()
 
+def employer_index(request):
+    username=auth.get_user(request)
+    object_does_not_exist = False
+    if username.groups.filter(name="Candidate").count() > 0:
+        return HttpResponseRedirect('/candidate/')
+
+    try:
+        if username.is_authenticated():
+            employer = Employer.objects.get(employer_username=username)
+        else:
+            employer = None
+    except ObjectDoesNotExist:
+        employer = None
+        object_does_not_exist = True
+
+    return render(request, 'employer/index.html', {'employer': employer, 'object_does_not_exist': object_does_not_exist, }) 
+
 def submit_employer(request):
+    username=auth.get_user(request)
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -50,30 +71,30 @@ def submit_employer(request):
         # check whether it's valid:
 
         if form.is_valid():
-            country = form.cleaned_data['country']
-            company_username = form.cleaned_data['company_username']
-            company_registration = form.cleaned_data['company_registration']
-            company_type = form.cleaned_data['company_type']
-            sector = form.cleaned_data['sector']
-            email = form.cleaned_data['email']
-            address = form.cleaned_data['address']
-            website = form.cleaned_data['website']
-            phone = form.cleaned_data['phone']
-            registration_certification = form.cleaned_data['registration_certification']
-            authorized_signatory_id_proof = form.cleaned_data['authorized_signatory_id_proof']
-            total_employees = form.cleaned_data['total_employees']
-            annual_recruitment_of_indians = form.cleaned_data['annual_recruitment_of_indians']
-            nurses_degree = form.cleaned_data['nurses_degree']
-            nurses_diploma = form.cleaned_data['nurses_diploma']
-            doctors = form.cleaned_data['doctors']
-            lab_technicians = form.cleaned_data['lab_technicians']
-            pathologists = form.cleaned_data['pathologists']
+#            country = form.cleaned_data['country']
+#            company_username = form.cleaned_data['company_username']
+#            company_registration = form.cleaned_data['company_registration']
+#            company_type = form.cleaned_data['company_type']
+#            sector = form.cleaned_data['sector']
+#            email = form.cleaned_data['email']
+#            address = form.cleaned_data['address']
+#            website = form.cleaned_data['website']
+#            phone = form.cleaned_data['phone']
+#            registration_certification = form.cleaned_data['registration_certification']
+#            authorized_signatory_id_proof = form.cleaned_data['authorized_signatory_id_proof']
+#            total_employees = form.cleaned_data['total_employees']
+#            annual_recruitment_of_indians = form.cleaned_data['annual_recruitment_of_indians']
+#            nurses_degree = form.cleaned_data['nurses_degree']
+#            nurses_diploma = form.cleaned_data['nurses_diploma']
+#            doctors = form.cleaned_data['doctors']
+#            lab_technicians = form.cleaned_data['lab_technicians']
+#            pathologists = form.cleaned_data['pathologists']
 
             form.save()
-            return HttpResponseRedirect('/employer/employer_list/')
+            return HttpResponseRedirect('/employer/')
             # if a GET (or any other method) we'll create a blank form
     else:
-        form = SubmitForm()
+        form = SubmitForm(initial={'employer_username': username,})
 
     return render(request, 'employer/submit_employer.html', {'form': form})
 

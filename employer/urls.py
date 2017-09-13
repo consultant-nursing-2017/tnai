@@ -4,7 +4,8 @@ from . import views
 
 app_name = 'employer'
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', views.employer_index, name='index'),
+#    url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^submit_employer/', views.submit_employer, name='submit'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^first_activation/$', views.first_activation, name='first_activation'),

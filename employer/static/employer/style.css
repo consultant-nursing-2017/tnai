@@ -1,6 +1,22 @@
 li a {
     color: green;
 }
-table, th, td {
-    border: 1px solid black;
+
+table {
+    border: thin solid;
+}
+
+th {
+    background-color: #33FFB2;
+    color: black;
+} 
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
 }

@@ -15,6 +15,10 @@ tr:nth-child(even) {
     background-color: #f2f2f2
 }
 
+div.error_msg {
+    color: red;
+}
+
 .sidebar-nav {
     margin-top: 20px;
     padding: 0;

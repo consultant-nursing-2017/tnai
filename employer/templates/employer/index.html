@@ -1,36 +1,38 @@
 {% extends "base_generic.html" %}
 {% load static %}
 
-{% block content %}
+{% block title %}
+{% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" />
-
-{% if employer_list %}
-    <table>
-        <tr>
-            <th>Country</th>
-            <th>Company Username</th>
-            <th>Company Registration</th>
-            <th>Company Type</th>
-            <th>Sector</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Website</th>
-        </tr>
-        {% for employer in employer_list %}
-        <tr>
-            <td>{{ employer.country }}</td>
-            <td>{{ employer.company_username }}</td>
-            <td>{{ employer.company_registration }}</td>
-            <td>{{ employer.company_type }}</td>
-            <td>{{ employer.sector }}</td>
-            <td>{{ employer.email }}</td>
-            <td>{{ employer.address }}</td>
-            <td><a href="{{ employer.website }}">Website</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-{% else %}
-    <p>No contributions are available.</p>
-{% endif %}
 {% endblock %}
 
+{% block content %}
+    {% if not object_does_not_exist %}
+        <h2> Welcome {{employer.name}}! </h2>
+        <table>
+            <tr>
+                <th>Email:</th>
+                <td>{{employer.employer_username}}</td>
+            </tr>
+            <tr>
+                <th>Location:</th>
+                <td>{{employer.country}}</td>
+            </tr>
+            <tr>
+                <th>Authorized signatory:</th>
+                <td>{{employer.authorized_signatory}}</td>
+            </tr>
+        </table>
+    {% else %}
+        No employer details found!
+    {% endif %}
+    <ul>
+        {% if not object_does_not_exist %}
+            <li><a href="employer_profile">View full profile</a></li>
+        {% endif %}
+        <li><a href="submit_employer">Update profile</a></li>
+        <li>Search for employees</li>
+        <li>Search for jobs</li>
+        <li>Useful links</li>
+    </ul>
+{% endblock %}
