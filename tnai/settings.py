@@ -132,3 +132,10 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'consultant.nursing.2017@gmail.com'
 EMAIL_HOST_PASSWORD = 'anand vinay'
 EMAIL_PORT = 587
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
+
+print ("base dir path", BASE_DIR)

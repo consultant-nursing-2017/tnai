@@ -4,18 +4,17 @@
 - JavaScript
 - Validation
     - Partially done
-    - Make error column the first instead of the last
 - Button size
 - Appearance:
     - alternate color for rows
     - headers should be blue
     - background image
     - serve photograph in profile
-- Media root for storing uploaded files
 - SNC details requires proof?
 - Instruction
     -- File upload explanation
     -- Fields on forms should grow in height not width
+- Hostname should not be hardcoded in MEDIA_URL
 
 -- Done --
 Appearance
@@ -24,3 +23,6 @@ Appearance
 - Remove grade column
 - SNC names (in flux)
 - Add photograph to candidate model.
+- Media root for storing uploaded files
+- Validation
+    - Make error column the first instead of the last

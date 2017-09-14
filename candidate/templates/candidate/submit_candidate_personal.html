@@ -9,37 +9,79 @@
 <h1>Candidate form</h1>
 <form enctype="multipart/form-data" action="/candidate/submit_candidate_personal/" method="post">
     {% csrf_token %}
+
+<!--    <div class="row">
+    </div>
+    <div class="row">
+        <div class="3u">
+            <input type="submit" name="save_personal" value="Save and stay at Personal Details" />
+        </div>
+        <div class="3u">
+            <input type="submit" name="save_educational" value="Save and go to Educational Details" />
+        </div>
+        <div class="3u">
+            <input type="submit" name="save_professional" value="Save and go to Professional Details" />
+        </div>
+        <div class="3u">
+            <input type="submit" name="save_additional" value="Save and go to Additional Details" />
+        </div>
+    <div class="row">
+        <div class="3u">
+            <input type="submit" name="save_experience" value="Save and go to Experience Details" />
+        </div>
+        <div class="3u">
+            <input type="submit" name="save_eligibility" value="Save and go to Eligibility Details" />
+        </div>
+        <div class="3u">
+            <input type="submit" name="save_state_nursing_council" value="Save and go to SNC Details" />
+        </div>
+        <div class="3u">
+            <input type="submit" name="save_passport" value="Save and go to Passport/Misc. Details" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="3u -6u">
+        <input type="submit" name="save_done" value="Done" />
+        </div>
+    </div>
+-->
         {% if new_profile %}
         <h2>New profile</h2>
         {% else %}
         <h2>Update profile</h2>
         {% endif %}
-        <h2>Personal Data</h2>
-        <table>
-        {% for field in personal_form.visible_fields|slice:"9" %}
-            <tr> 
-                <th> {{field.label_tag}} </th>
-                <td><div class="error_msg">{{field.errors}}</div> {{field}} </td>
-            </tr>
-        {% endfor %}
-        </table>
-        <h3>Permanent Address</h3>
-        <table>
-        {% for field in personal_form.visible_fields|slice:"9:18" %}
-            <tr> 
-                <th> {{field.label_tag}} </th>
-                <td><div class="error_msg">{{field.errors}}</div> {{field}} </td>
-            </tr>
-        {% endfor %}
-        </table>
-    <input type="submit" name="save_personal" value="Save and stay at Personal Details" />
-    <input type="submit" name="save_educational" value="Save and go to Educational Details" />
-    <input type="submit" name="save_professional" value="Save and go to Professional Details" />
-    <input type="submit" name="save_additional" value="Save and go to Additional Details" />
-    <input type="submit" name="save_experience" value="Save and go to Experience Details" />
-    <input type="submit" name="save_eligibility" value="Save and go to Eligibility Details" />
-    <input type="submit" name="save_state_nursing_council" value="Save and go to SNC Details" />
-    <input type="submit" name="save_passport" value="Save and go to Passport/Misc. Details" />
-    <input type="submit" name="save_done" value="Done" />
+        <div class="row">
+            <div class="6u">
+            <h3>Personal Details</h3>
+                <table>
+                {% for field in personal_form.visible_fields|slice:"9" %}
+                    <tr> 
+                        <th> {{field.label_tag}} </th>
+                        <td><div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+            <div class="6u">
+            <h3>Permanent Address</h3>
+                <table>
+                {% for field in personal_form.visible_fields|slice:"9:18" %}
+                    <tr> 
+                        <th> {{field.label_tag}} </th>
+                        <td><div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+        <input type="submit" name="save_personal" value="Save and stay at Personal Details" />
+        <input type="submit" name="save_educational" value="Save and go to Educational Details" />
+        <input type="submit" name="save_professional" value="Save and go to Professional Details" />
+        <input type="submit" name="save_additional" value="Save and go to Additional Details" />
+        <input type="submit" name="save_experience" value="Save and go to Experience Details" />
+        <input type="submit" name="save_eligibility" value="Save and go to Eligibility Details" />
+        <input type="submit" name="save_state_nursing_council" value="Save and go to SNC Details" />
+        <input type="submit" name="save_passport" value="Save and go to Passport/Misc. Details" />
+        <input type="submit" name="save_done" value="Done" />
 </form>
 {% endblock %}

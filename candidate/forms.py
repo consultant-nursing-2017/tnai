@@ -46,11 +46,12 @@ class PersonalForm(ModelForm):
 #        self.fields['sponsor'].queryset = User.objects.filter(groups__in=sponsorsQS)
 #        contributorsQS = Group.objects.filter(name='Contributors')
 #        self.fields['contributor'].queryset = User.objects.filter(groups__in=contributorsQS)
-
+    date_of_birth = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y'], required=False, label='Completed on (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
     class Meta:
         model = Candidate
         fields = ['candidate_username', 'photograph', 'curriculum_vitae', 'name', 'fathers_name', 'date_of_birth', 'gender', 'marital_status', 'phone_number', 
             'house_number', 'area_locality', 'street_name', 'village_PS_PO', 'country', 'state', 'city', 'district', 'pin_code', ]
+        labels = {'date_of_birth': 'Date of birth (DD/MM/YY)'}
 
 #    def validate_photograph_size(value):
 #        errors = []
