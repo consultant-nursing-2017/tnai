@@ -108,6 +108,20 @@ class ProfessionalQualificationsForm(ModelForm):
 #                'date_to': forms.DateInput(format=('%m/%y'), attrs={'size':'15'}),
 #                'grade': forms.TextInput(attrs={'size':'5'}),
                 }
+    def clean(self):
+        cleaned_data = super (ModelForm, self).clean()
+        date_from = cleaned_data.get("date_from")
+        date_to = cleaned_data.get("date_to")
+        marks_obtained = cleaned_data.get("marks_obtained")
+        total_marks = cleaned_data.get("total_marks")
+#        pdb.set_trace()
+        errors = []
+        if date_from is not None and (date_to is None or date_from > date_to):
+            errors.append(forms.ValidationError(_("'Date from' must be at most 'Date to'"), code='invalid_year'))
+        if marks_obtained is not None and (total_marks is None or marks_obtained > total_marks):
+            errors.append(forms.ValidationError(_("'Marks obtained' must be at most 'Total marks'"), code='invalid_marks'))
+        if errors:
+            raise ValidationError(errors)
 
 class AdditionalQualificationsForm(ModelForm):
     date_from = forms.DateField(input_formats=['%m/%y', '%m-%y', '%m/%Y', '%m-%Y'], required=False, label='From (MM/YY)', widget=forms.DateInput(format=('%m/%y'), attrs={'size':'15'}))
@@ -126,6 +140,20 @@ class AdditionalQualificationsForm(ModelForm):
 #                'date_to': forms.DateInput(attrs={'size':'15'}),
 #                'grade': forms.TextInput(attrs={'size':'5'}),
                 }
+    def clean(self):
+        cleaned_data = super (ModelForm, self).clean()
+        date_from = cleaned_data.get("date_from")
+        date_to = cleaned_data.get("date_to")
+        marks_obtained = cleaned_data.get("marks_obtained")
+        total_marks = cleaned_data.get("total_marks")
+#        pdb.set_trace()
+        errors = []
+        if date_from is not None and (date_to is None or date_from > date_to):
+            errors.append(forms.ValidationError(_("'Date from' must be at most 'Date to'"), code='invalid_year'))
+        if marks_obtained is not None and (total_marks is None or marks_obtained > total_marks):
+            errors.append(forms.ValidationError(_("'Marks obtained' must be at most 'Total marks'"), code='invalid_marks'))
+        if errors:
+            raise ValidationError(errors)
 
 class EligibilityTestsForm(ModelForm):
     completed_on = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y'], required=False, label='Completed on (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}))
@@ -138,6 +166,17 @@ class EligibilityTestsForm(ModelForm):
                 'eligibility_tests': forms.TextInput(attrs={'size':'25', 'placeholder':'Other (specify)'}),
                 }
 
+    def clean(self):
+        cleaned_data = super (ModelForm, self).clean()
+        completed_on = cleaned_data.get("completed_on")
+        valid_up_to = cleaned_data.get("valid_up_to")
+#        pdb.set_trace()
+        errors = []
+        if completed_on is not None and (valid_up_to is None or completed_on > valid_up_to):
+            errors.append(forms.ValidationError(_("'Completed on' must be at most 'Valid up to'"), code='invalid_year'))
+        if errors:
+            raise ValidationError(errors)
+
 #    def __init__(self, *args, **kwargs):
 #        super (EligibilityTestsForm,self ).__init__(*args, **kwargs) # populates the post
 #        self.fields['user'] = self.instance.candidate_username
@@ -149,6 +188,16 @@ class ExperienceForm(ModelForm):
         model = Experience
         exclude = ['candidate']
         labels = {'date_from': 'From (DD/MM/YY)', 'date_to': 'To (DD/MM/YY)'}
+    def clean(self):
+        cleaned_data = super (ModelForm, self).clean()
+        date_from = cleaned_data.get("date_from")
+        date_to = cleaned_data.get("date_to")
+#        pdb.set_trace()
+        errors = []
+        if date_from is not None and (date_to is None or date_from > date_to):
+            errors.append(forms.ValidationError(_("'Date from' must be at most 'Date to'"), code='invalid_year'))
+        if errors:
+            raise ValidationError(errors)
 
 class StateNursingCouncilForm(ModelForm):
 #    s_no = forms.CharField(max_length=5, disabled=True)
@@ -162,6 +211,23 @@ class PassportAndMiscForm(ModelForm):
     class Meta:
         model = Candidate
         fields = ['passport_number', 'passport_valid_from', 'passport_valid_to', 'passport_place_of_issue', 'TNAI_number', 'preference_of_work']
+
+    def check_passport_data(self, cleaned_data):
+        passport_number = cleaned_data.get("passport_number")
+        passport_valid_from = cleaned_data.get("passport_valid_from")
+        passport_valid_to = cleaned_data.get("passport_valid_to")
+        passport_place_of_issue = cleaned_data.get("passport_valid_to")
+
+        return (passport_number is not None) and (passport_number != "")
+
+    def clean(self):
+        cleaned_data = super (ModelForm, self).clean()
+        preference_of_work = cleaned_data.get("preference_of_work")
+        errors = []
+        if preference_of_work is not None and preference_of_work != 'India' and not self.check_passport_data(cleaned_data):
+            errors.append(forms.ValidationError(_("If preference of work is not in India, then passport data must be valid."), code='invalid_year'))
+        if errors:
+            raise ValidationError(errors)
 
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')

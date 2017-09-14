@@ -49,6 +49,10 @@
 		-webkit-text-size-adjust: none;
 	}
 
+    div.error_msg {
+        color: red;
+    }
+
 /* Box Model */
 
 	*, *:before, *:after {

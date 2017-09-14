@@ -6,20 +6,23 @@
     - Partially done
 - Button size
 - Appearance:
-    - alternate color for rows
-    - headers should be blue
     - background image
-    - serve photograph in profile
+    - fix large length of uploaded field
 - SNC details requires proof?
 - Instruction
     -- File upload explanation
     -- Fields on forms should grow in height not width
 - Hostname should not be hardcoded in MEDIA_URL
+- Testing database
+- Capitalize for all fields -- override model's save method
+- Eligibility (Grade/Marks/%)
 
 -- Done --
 Appearance
+    - serve photograph in profile
     - fix css
     - fix hidden columns
+    - alternate color for rows
 - Remove grade column
 - SNC names (in flux)
 - Add photograph to candidate model.

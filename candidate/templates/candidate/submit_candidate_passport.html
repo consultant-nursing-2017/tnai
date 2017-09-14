@@ -1,8 +1,8 @@
 {% extends "base_generic.html" %}
 
 {% block title %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
+{# {% load static %} #}
+{# <link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" /> #}
 {% endblock %}
 
 {% block content %}
@@ -10,24 +10,32 @@
 <form enctype="multipart/form-data" action="/candidate/submit_candidate_passport/" method="post">
     {% csrf_token %}
     <h2> Passport and Miscellaneous Details </h2>
-    <h3> Passport Details </h3>
-        <table>
-            {% for field in passport_form.visible_fields|slice:":-2" %}
-                <tr> 
-                    <th> {{field.label_tag}} </th>
-                    <td><div class="error_msg">{{field.errors}}</div> {{field}} </td>
-                </tr>
-            {% endfor %}
-        </table>
-    <h3> Miscellaneous Details </h3>
-        <table>
-            {% for field in passport_form.visible_fields|slice:"-2:" %}
-                <tr> 
-                    <th> {{field.label_tag}} </th>
-                    <td><div class="error_msg">{{field.errors}}</div> {{field}} </td>
-                </tr>
-            {% endfor %}
-        </table>
+    <div class="row">
+        <div class="6u">
+            <h3> Passport Details </h3>
+            <div class="error_msg">{{passport_form.non_field_errors}}</div>
+            <table>
+                {% for field in passport_form.visible_fields|slice:":-2" %}
+                    <tr> 
+                        <th> {{field.label_tag}} </th>
+                        <td><div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="6u">
+            <h3> Miscellaneous Details </h3>
+            <table>
+                {% for field in passport_form.visible_fields|slice:"-2:" %}
+                    <tr> 
+                        <th> {{field.label_tag}} </th>
+                        <td><div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
     <input type="submit" name="save_personal" value="Save and go to Personal Details" />
     <input type="submit" name="save_educational" value="Save and go to Educational Details" />
     <input type="submit" name="save_professional" value="Save and go to Professional Details" />

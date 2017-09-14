@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.static import serve
 from django.conf import settings
+from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^employer/', include('employer.urls')),
@@ -25,7 +26,8 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^accounts/', include('django.contrib.auth.urls'), name="accounts"),
+    url(r'^$', RedirectView.as_view(url="/accounts/login")),
 ]
 
 if settings.DEBUG:

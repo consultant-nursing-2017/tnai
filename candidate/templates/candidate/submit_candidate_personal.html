@@ -50,6 +50,7 @@
         {% else %}
         <h2>Update profile</h2>
         {% endif %}
+        <div class="error_msg">{{passport_form.non_field_errors}}</div>
         <div class="row">
             <div class="6u">
             <h3>Personal Details</h3>
@@ -62,6 +63,8 @@
                 {% endfor %}
                 </table>
             </div>
+        </div>
+        <div class="row">
             <div class="6u">
             <h3>Permanent Address</h3>
                 <table>
