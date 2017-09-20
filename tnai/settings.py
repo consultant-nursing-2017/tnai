@@ -138,4 +138,4 @@ STATICFILES_DIRS = [
     '/var/www/static/',
 ]
 
-print ("base dir path", BASE_DIR)
+#print ("base dir path", BASE_DIR)

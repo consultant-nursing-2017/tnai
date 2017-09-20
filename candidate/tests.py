@@ -29,16 +29,30 @@ from django.contrib.auth.models import Group
 from django.forms import inlineformset_factory
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
+from django.core.management import call_command
 
 import pdb
 import os
 import hashlib
 import random
+import datetime
 
 # Create your tests here.
 
 class PersonalFormTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        call_command('loaddata', 'prod_data', verbosity=0)
+
     def test_date_of_birth_must_be_in_the_past(self):
-        time = timezone.now() + datetime.delta(days=30)
-#        form = PersonalForm(initial=[{'date_of_birth': time}])
-#        self.assertTrue(form.is_valid())
+        user=User.objects.get(username='anand.42@gmail.com')
+        candidate=Candidate.objects.get(candidate_username=user)
+        tim = timezone.now() + datetime.timedelta(days=30)
+        form = PersonalForm(instance=candidate, initial={'date_of_birth': tim},)
+        pdb.set_trace()
+        self.assertFalse(form.is_valid())
+
+        tim = timezone.now() + datetime.timedelta(days=-30)
+        form = PersonalForm(initial={'date_of_birth': tim},)
+#        pdb.set_trace()
+        self.assertTrue(form.is_valid())

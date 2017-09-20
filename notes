@@ -29,3 +29,45 @@ Appearance
 - Media root for storing uploaded files
 - Validation
     - Make error column the first instead of the last
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------
+Website
+Database backend - important - PostgresSQL
+Front end created in Python using Django web framework.
+Membership fees
+
+1 GB 2399
+2 GB 2999
+4 GB 4999
+8 GB 7999
+
+2 GB 1 year 1399 month, reset after 2 year (discounts expected)
+2 GB 2 year 1299 month, reset after 2 year (discounts expected)
+
+2 years - .com 959 + 99
+1 year - 400
+1 year - 449
+
+prajitha@godaddy.com
