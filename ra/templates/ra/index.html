@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+    <h2> RA module </h2>
+    {% if {{allowed}} %}
+    <h3>Welcome {{ username.username }}! </h3>
+    <ul>
+        <li><a href="candidate_list">List all candidates</a></li>
+        <li><a href="employer_list">List all employers</a></li>
+    </ul>
+    {% else %}
+        <h2> You are not allowed to access this page. Please login with an RA account </h2>
+        <a href="/accounts/login/">Login page</a>
+    {% endif %}
+{% endblock %}
