@@ -199,7 +199,7 @@ class ExperienceForm(ModelForm):
         date_to = cleaned_data.get("date_to")
 #        pdb.set_trace()
         errors = []
-        if date_from is not None and (date_to is None or date_from > date_to):
+        if date_from is not None and date_to is not None and date_from > date_to:
             errors.append(forms.ValidationError(_("'Date from' must be at most 'Date to'"), code='invalid_year'))
         if errors:
             raise ValidationError(errors)
