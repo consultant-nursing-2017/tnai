@@ -142,7 +142,7 @@ class EligibilityTests(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
     eligibility_tests = models.CharField(max_length=50, choices=ELIGIBILITY_TESTS_CHOICES, blank=True)
     country = models.CharField(max_length=100, blank=True)
-#    score_grade_marks = models.CharField(max_length=20, blank=True)
+    score_grade_marks = models.CharField(max_length=20, blank=True, null=True)
     completed_on = models.DateField(blank=True, null=True)
     valid_up_to = models.DateField(blank=True, null=True)
     eligibility_proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path)

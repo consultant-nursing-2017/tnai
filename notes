@@ -1,6 +1,7 @@
 -- TODO --
 - Make username field disabled, but still save it while POSTing form.
-- District names
+- District names dropdown
+- SNC names dropdown
 - JavaScript
 - Validation
     - Partially done
@@ -8,14 +9,10 @@
 - Appearance:
     - background image
     - fix large length of uploaded field
-- SNC details requires proof?
 - Instruction
     -- File upload explanation
     -- Fields on forms should grow in height not width
-- Hostname should not be hardcoded in MEDIA_URL
-- Testing database
-- Capitalize for all fields -- override model's save method
-- Eligibility (Grade/Marks/%)
+- Error messages should be below field in template
 
 -- Done --
 Appearance
@@ -29,6 +26,11 @@ Appearance
 - Media root for storing uploaded files
 - Validation
     - Make error column the first instead of the last
+- SNC details requires proof?
+- Testing database
+- Uppercase all fields (only in full profile)
+- Hostname should not be hardcoded in MEDIA_URL
+- Eligibility (Grade/Marks/%)
 
 
 

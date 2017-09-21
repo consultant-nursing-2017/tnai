@@ -166,7 +166,7 @@ class EligibilityTestsForm(ModelForm):
     class Meta:
         model = EligibilityTests
         exclude = ['candidate']
-        labels = {'eligibility_tests': 'Test/Exam', 'completed_on': 'Completed on (DD/MM/YY)', 'valid_up_to': 'Valid up to (DD/MM/YY)',}
+        labels = {'eligibility_tests': 'Test/Exam', 'completed_on': 'Completed on (DD/MM/YY)', 'valid_up_to': 'Valid up to (DD/MM/YY)', 'score_grade_marks': 'Score/Grade/Marks', }
         widgets = {
                 'eligibility_tests': forms.TextInput(attrs={'size':'25', 'placeholder':'Other (specify)'}),
                 }
