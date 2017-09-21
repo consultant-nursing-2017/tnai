@@ -352,7 +352,7 @@ def entire_profile(request):
         for index, field in enumerate(educational_qualifications_collection_fieldnames):
             educational_qualifications_collection_fields.append([form.fields[field].label, field])
         #[['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
-        educational_qualifications_list = EducationalQualifications.objects.filter(candidate=candidate).values().order_by('id')
+        educational_qualifications_list = EducationalQualifications.objects.filter(candidate=candidate).values().order_by('id').exclude(class_degree__isnull=True).exclude(class_degree__exact="")
         educational_qualifications_collection = []
         for index, educational_qualifications in enumerate(educational_qualifications_list):
             educational_qualifications_collection.append([])
@@ -365,7 +365,7 @@ def entire_profile(request):
         for index, field in enumerate(professional_qualifications_collection_fieldnames):
             professional_qualifications_collection_fields.append([form.fields[field].label, field])
 #        professional_qualifications_collection_fields = [['Course', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Council', 'university_board_council'], ['From', 'date_from'], ['To', 'date_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
-        professional_qualifications_list = ProfessionalQualifications.objects.filter(candidate=candidate).values().order_by('id')
+        professional_qualifications_list = ProfessionalQualifications.objects.filter(candidate=candidate).values().order_by('id').exclude(institute_name__isnull=True).exclude(institute_name__exact="")
         professional_qualifications_collection = []
         for index, professional_qualifications in enumerate(professional_qualifications_list):
             professional_qualifications_collection.append([])
@@ -378,7 +378,7 @@ def entire_profile(request):
         for index, field in enumerate(additional_qualifications_collection_fieldnames):
             additional_qualifications_collection_fields.append([form.fields[field].label, field])
 #        additional_qualifications_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
-        additional_qualifications_list = AdditionalQualifications.objects.filter(candidate=candidate).values().order_by('id')
+        additional_qualifications_list = AdditionalQualifications.objects.filter(candidate=candidate).values().order_by('id').exclude(class_degree__isnull=True).exclude(class_degree__exact="")
         additional_qualifications_collection = []
         for index, additional_qualifications in enumerate(additional_qualifications_list):
             additional_qualifications_collection.append([])
@@ -391,7 +391,7 @@ def entire_profile(request):
         for index, field in enumerate(state_nursing_council_collection_fieldnames):
             state_nursing_council_collection_fields.append([form.fields[field].label, field])
 #        state_nursing_council_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
-        state_nursing_council_list = StateNursingCouncil.objects.filter(candidate=candidate).values().order_by('id')
+        state_nursing_council_list = StateNursingCouncil.objects.filter(candidate=candidate).values().order_by('course', 'id').exclude(state__isnull=True).exclude(state__exact="")
         state_nursing_council_collection = []
         for index, state_nursing_council in enumerate(state_nursing_council_list):
             state_nursing_council_collection.append([])
@@ -404,7 +404,7 @@ def entire_profile(request):
         for index, field in enumerate(eligibility_tests_collection_fieldnames):
             eligibility_tests_collection_fields.append([form.fields[field].label, field])
 #        eligibility_tests_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
-        eligibility_tests_list = EligibilityTests.objects.filter(candidate=candidate).values().order_by('id')
+        eligibility_tests_list = EligibilityTests.objects.filter(candidate=candidate).values().order_by('id').exclude(score_grade_marks__isnull=True).exclude(score_grade_marks__exact="")
         eligibility_tests_collection = []
         for index, eligibility_tests in enumerate(eligibility_tests_list):
             eligibility_tests_collection.append([])
@@ -417,7 +417,7 @@ def entire_profile(request):
         for index, field in enumerate(experience_collection_fieldnames):
             experience_collection_fields.append([form.fields[field].label, field])
 #        experience_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
-        experience_list = Experience.objects.filter(candidate=candidate).values().order_by('id')
+        experience_list = Experience.objects.filter(candidate=candidate).values().order_by('id').exclude(institution__isnull=True).exclude(institution__exact="")
         experience_collection = []
         for index, experience in enumerate(experience_list):
             experience_collection.append([])

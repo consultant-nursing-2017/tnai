@@ -12,11 +12,9 @@
 - Instruction
     -- File upload explanation
     -- Fields on forms should grow in height not width
-- Error messages should be below field in template
 - Password reset not working
 - More attractive index page
 - Remove non-working links
-- General education - make 10th/12th required (starred)
 - Final profile - show only non-blank entries
 - University/Council dropdown
 - Reduce padding for text input field in CSS
@@ -46,6 +44,9 @@ Appearance
 - Passport proof (not required)
 - TNAI number (not required)
 - Experience - "To" field not mandatory
+- Add instructions to each tab
+- Error messages should be below field in template
+- General education - make 10th/12th required (starred)
 
 
 
