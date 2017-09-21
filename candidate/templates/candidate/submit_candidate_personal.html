@@ -58,7 +58,7 @@
                 {% for field in personal_form.visible_fields|slice:"9" %}
                     <tr> 
                         <th> {{field.label_tag}} </th>
-                        <td><div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                        <td> <div class="error_msg">{{field.errors}}</div> {{field}}</td>
                     </tr>
                 {% endfor %}
                 </table>

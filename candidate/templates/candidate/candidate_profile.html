@@ -18,7 +18,7 @@
         {% for data in personal_data %}
             <tr>
                 <th>{{ data.0 }}</th>
-                <td>{{ data.2 }}</td>
+                <td>{{ data.2|upper }}</td>
             </tr>
         {% endfor %}
     </table>
@@ -28,7 +28,7 @@
         {% for data in address_data %}
             <tr>
                 <th>{{ data.0 }}</th>
-                <td>{{ data.2 }}</td>
+                <td>{{ data.2|upper }}</td>
             </tr>
         {% endfor %}
     </table>
@@ -44,7 +44,7 @@
             {% for educational_qualifications in educational_qualifications_collection %}
                 <tr>
                     {% for value in educational_qualifications %}
-                        <td>{{ value }} </td>
+                        <td>{{ value|upper }} </td>
                     {% endfor %}
                 </tr>
             {% endfor %}
@@ -64,7 +64,7 @@
             {% for professional_qualifications in professional_qualifications_collection %}
                 <tr>
                     {% for value in professional_qualifications %}
-                        <td>{{ value }} </td>
+                        <td>{{ value|upper }} </td>
                     {% endfor %}
                 </tr>
             {% endfor %}
@@ -84,7 +84,7 @@
             {% for additional_qualifications in additional_qualifications_collection %}
                 <tr>
                     {% for value in additional_qualifications %}
-                        <td>{{ value }} </td>
+                        <td>{{ value|upper }} </td>
                     {% endfor %}
                 </tr>
             {% endfor %}
@@ -104,7 +104,7 @@
             {% for eligibility_tests in eligibility_tests_collection %}
                 <tr>
                     {% for value in eligibility_tests %}
-                        <td>{{ value }} </td>
+                        <td>{{ value|upper }} </td>
                     {% endfor %}
                 </tr>
             {% endfor %}
@@ -124,7 +124,7 @@
             {% for experience in experience_collection %}
                 <tr>
                     {% for value in experience %}
-                        <td>{{ value }} </td>
+                        <td>{{ value|upper }} </td>
                     {% endfor %}
                 </tr>
             {% endfor %}
@@ -144,7 +144,7 @@
             {% for state_nursing_council in state_nursing_council_collection %}
                 <tr>
                     {% for value in state_nursing_council %}
-                        <td>{{ value }} </td>
+                        <td>{{ value|upper }} </td>
                     {% endfor %}
                 </tr>
             {% endfor %}
@@ -159,7 +159,7 @@
         {% for data in passport_misc_data|slice:"-2" %}
             <tr>
                 <th>{{ data.0 }}</th>
-                <td>{{ data.2 }}</td>
+                <td>{{ data.2|upper }}</td>
             </tr>
         {% endfor %}
     </table>
@@ -168,7 +168,7 @@
         {% for data in passport_misc_data|slice:"-2:" %}
             <tr>
                 <th>{{ data.0 }}</th>
-                <td>{{ data.2 }}</td>
+                <td>{{ data.2|upper }}</td>
             </tr>
         {% endfor %}
     </table>
