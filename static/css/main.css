@@ -49,7 +49,20 @@
 		-webkit-text-size-adjust: none;
 	}
 
+    /* TNAI mod */
+    div.ok_msg {
+        color: green;
+    }
+
+    span.ok_msg {
+        color: green;
+    }
+
     div.error_msg {
+        color: red;
+    }
+
+    span.error_msg {
         color: red;
     }
 

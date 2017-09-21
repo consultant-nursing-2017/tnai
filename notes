@@ -19,9 +19,14 @@
 - General education - make 10th/12th required (starred)
 - Final profile - show only non-blank entries
 - University/Council dropdown
-- Experience - "To" field not mandatory
+- Reduce padding for text input field in CSS
+- Photograph size
 
--- Done --
+RA module
+- Candidate list, employer list
+- Form for filtering records
+
+------- Done --------
 Appearance
     - serve photograph in profile
     - fix css
@@ -40,6 +45,7 @@ Appearance
 - Eligibility (Grade/Marks/%)
 - Passport proof (not required)
 - TNAI number (not required)
+- Experience - "To" field not mandatory
 
 
 

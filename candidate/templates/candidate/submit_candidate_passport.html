@@ -10,6 +10,12 @@
 <form enctype="multipart/form-data" action="/candidate/submit_candidate_passport/" method="post">
     {% csrf_token %}
     <h2> Passport and Miscellaneous Details </h2>
+    <h3>Instructions</h3>
+    <ul>
+        <li> "Valid From" should be at most "Valid To".</li>
+        <li> If preference of work is "Foreign" or "Both", passport details are mandatory. </li>
+        <li> If not a member of TNAI, leave the "TNAI number" field blank.
+    </ul>
     <div class="row">
         <div class="6u">
             <h3> Passport Details </h3>
@@ -18,7 +24,7 @@
                 {% for field in passport_form.visible_fields|slice:":-2" %}
                     <tr> 
                         <th> {{field.label_tag}} </th>
-                        <td><div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                        <td>{{field}} <div class="error_msg">{{field.errors}}</div> </td>
                     </tr>
                 {% endfor %}
             </table>
@@ -30,7 +36,7 @@
                 {% for field in passport_form.visible_fields|slice:"-2:" %}
                     <tr> 
                         <th> {{field.label_tag}} </th>
-                        <td><div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                        <td>{{field}} <div class="error_msg">{{field.errors}}</div> </td>
                     </tr>
                 {% endfor %}
             </table>

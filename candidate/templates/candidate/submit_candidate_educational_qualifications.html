@@ -13,6 +13,13 @@
     {% csrf_token %}
         {{ educational_qualifications_formset.management_form }}
         <h2>General Educational Details</h2>
+        <h3>Instructions</h3>
+        <ul>
+            <li> Year "From" should be at most Year "To".</li>
+            <li> Marks Obtained should be at most Total Marks.</li>
+            <li> Information for 10th and 12th/Equivalent is mandatory.</li>
+            <li> If not applicable, leave the "degree" row blank. </li>
+        </ul>
         <table>
             <tr>
                 {% if educational_qualifications_formset.errors %}
@@ -44,7 +51,7 @@
                         {% if field.is_hidden %}
                             <td style="display:none"> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
                         {% else %}
-                            <td> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                            <td> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
                         {% endif %}
                     {% endfor %}
                 </tr>

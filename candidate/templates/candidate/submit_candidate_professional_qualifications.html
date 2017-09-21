@@ -11,6 +11,12 @@
     {% csrf_token %}
         {{ professional_qualifications_formset.management_form }}
         <h2>Professional Qualification Details</h2>
+        <h3>Instructions</h3>
+        <ul>
+            <li> Date should be in MM/YY or MM/YYYY format. <span class="ok_msg">Valid: 06/15 OR 06/2015</span> <span class="error_msg">Invalid: 01/06/17</span></li>
+            <li> For dates, use "/" (slash), "-" (dash) or "." (period) as separator. <span class="ok_msg">Valid: 09/16 OR 01-17 OR 02.15</span> <span class="error_msg">Invalid: 06\17</span></li>
+            <li> Enter details for each qualification on a separate row. For qualifications which don't apply, leave the row blank. </li>
+        </ul>
         <table>
             <tr>
                 {% if professional_qualifications_formset.errors %}
@@ -41,9 +47,9 @@
 
                 {% for field in form %}
                     {% if field.is_hidden %}
-                        <td style="display:none"> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                        <td style="display:none"> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
                     {% else %}
-                        <td> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                        <td> {{field}}<div class="error_msg">{{field.errors}}</div> </td>
                     {% endif %}
                 {% endfor %}
             </tr>

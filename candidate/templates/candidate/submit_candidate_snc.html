@@ -10,7 +10,11 @@
 <form enctype="multipart/form-data" action="/candidate/submit_candidate_snc/" method="post">
     {% csrf_token %}
         {{ snc_formset.management_form }}
-       <h2>SNC Details</h2>
+       <h2>State Nursing Council Details</h2>
+        <h3>Instructions</h3>
+        <ul>
+            <li> Enter details for each course and for each state on a separate row. Leave extra rows blank. </li>
+        </ul>
         <table>
             <tr>
                 {% if snc_formset.errors %}
@@ -48,9 +52,9 @@
 
                     {% for field in form %}
                         {% if field.is_hidden %}
-                            <td style="display:none"> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                            <td style="display:none"> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
                         {% else %}
-                            <td> <div class="error_msg">{{field.errors}}</div> {{field}} </td>
+                            <td> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
                         {% endif %}
                     {% endfor %}
                 </tr>

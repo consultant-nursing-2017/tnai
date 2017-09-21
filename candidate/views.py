@@ -69,6 +69,8 @@ def candidate_index(request):
     object_does_not_exist = False
     if username.groups.filter(name="Employer").count() > 0:
         return HttpResponseRedirect('/employer/')
+    elif username.groups.filter(name="TNAI").count() > 0:
+        return HttpResponseRedirect('/ra/')
 
     try:
         if username.is_authenticated():
