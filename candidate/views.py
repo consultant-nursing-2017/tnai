@@ -293,34 +293,38 @@ def submit_candidate_passport(request):
 def submit_candidate_snc(request):
     snc_course_choices = StateNursingCouncil.course_choices()
     username=auth.get_user(request)
+    max_snc_per_course = 5
+    total_forms = max_snc_per_course * len(snc_course_choices)
     try:
         candidate = Candidate.objects.get(candidate_username=username)
         num_snc = StateNursingCouncil.objects.filter(candidate=candidate).count()
-        if num_snc > 20:
-            raise ValidationError(_('num_snc is greater than 20, value: %(value)s'), params={'value': 'num_snc'},)
-        extra_forms = 20 - num_snc
+        if num_snc > total_forms:
+            raise ValidationError(_('num_snc is greater than %(total_forms), value: %(value)s'), params={'value': 'num_snc', 'total_forms': 'total_forms', },)
+        extra_forms = total_forms - num_snc
         StateNursingCouncilFormSet = inlineformset_factory(Candidate, StateNursingCouncil, form=StateNursingCouncilForm, extra=extra_forms, can_delete=False)
+        qs=StateNursingCouncil.objects.filter(candidate=candidate).order_by('course')
 
     except ObjectDoesNotExist:
         return HttpResponseRedirect('/candidate/submit_candidate_personal/')
+
     if request.method == 'POST':
         # check whether it's valid:
         # TODO
-        snc_formset = StateNursingCouncilFormSet(request.POST, request.FILES, instance=candidate)#, initial={'user': username,})
+        snc_formset = StateNursingCouncilFormSet(request.POST, request.FILES, instance=candidate, queryset=qs)#, initial={'user': username,})
 #        snc_form_instance = StateNursingCouncilForm()
         if snc_formset.is_valid():
             snc_formset.save()
             return redirect_to_tab(request)
     else:
         initial_data = []
-        for i in range(0,5):
-            for course in snc_course_choices:
+        for course in snc_course_choices:
+            for i in range(0,max_snc_per_course):
                 initial_data.append({'course': course})
-        snc_formset = StateNursingCouncilFormSet(instance=candidate, initial=initial_data)
+        snc_formset = StateNursingCouncilFormSet(instance=candidate, initial=initial_data, queryset=qs)
 
     snc_form_instance = snc_formset[0]
 #    pdb.set_trace()
-    return render(request, 'candidate/submit_candidate_snc.html', {'snc_formset': snc_formset, 'snc_form_instance': snc_form_instance, 'snc_course_choices': snc_course_choices, })
+    return render(request, 'candidate/submit_candidate_snc.html', {'snc_formset': snc_formset, 'snc_form_instance': snc_form_instance, 'snc_course_choices': snc_course_choices, 'total_forms': total_forms, 'max_snc_per_course': max_snc_per_course, })
 
 def entire_profile(request):
     username = auth.get_user(request)

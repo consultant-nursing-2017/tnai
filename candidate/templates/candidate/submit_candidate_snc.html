@@ -26,11 +26,11 @@
                 {% endif %}
                 {% endfor %}
             </tr>
-            {% with len=snc_course_choices|length %}
+            {% with len=max_snc_per_course %}
             {% for form in snc_formset %}
                 {% if forloop.counter|add:"-1"|divisibleby:len %}
                     <tr>
-                    <th rowspan="{{len|add:"1"}}"> {% widthratio forloop.counter|add:len len 1 %} </th>
+                        <th rowspan="{{len|add:"1"}}"> {% widthratio forloop.counter|add:len len 1 %} </th>
                 {% endif %}
                 <tr>
                     {% if form.errors %}

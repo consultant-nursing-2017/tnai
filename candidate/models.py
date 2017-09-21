@@ -177,6 +177,10 @@ class StateNursingCouncil(models.Model):
     registration_number = models.CharField(max_length=200, blank=True)
     year = FormYearField(blank=True, null=True)
     proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path)
+
+    def __str__(self):
+        return self.candidate.candidate_username.username + self.course + self.state + self.registration_number
+
     @classmethod
     def course_choices(self):
         return self.COURSE_CHOICES
