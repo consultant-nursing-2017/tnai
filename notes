@@ -15,10 +15,10 @@
 - Password reset not working
 - More attractive index page
 - Remove non-working links
-- Final profile - show only non-blank entries
 - University/Council dropdown
 - Reduce padding for text input field in CSS
 - Photograph size
+- SNC form, use Javascript
 
 RA module
 - Candidate list, employer list
@@ -47,6 +47,7 @@ Appearance
 - Add instructions to each tab
 - Error messages should be below field in template
 - General education - make 10th/12th required (starred)
+- Final profile - show only non-blank entries
 
 
 

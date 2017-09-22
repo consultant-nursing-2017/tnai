@@ -304,7 +304,7 @@ def submit_candidate_snc(request):
         num_snc = StateNursingCouncil.objects.filter(candidate=candidate).count()
         if num_snc > total_forms:
             raise ValidationError(_('num_snc is greater than %(total_forms), value: %(value)s'), params={'value': 'num_snc', 'total_forms': 'total_forms', },)
-        extra_forms = total_forms - num_snc
+        extra_forms = 2
         StateNursingCouncilFormSet = inlineformset_factory(Candidate, StateNursingCouncil, form=StateNursingCouncilForm, extra=extra_forms, can_delete=False)
         qs=StateNursingCouncil.objects.filter(candidate=candidate).order_by('course')
 
@@ -320,11 +320,7 @@ def submit_candidate_snc(request):
             snc_formset.save()
             return redirect_to_tab(request)
     else:
-        initial_data = []
-        for course in snc_course_choices:
-            for i in range(0,max_snc_per_course):
-                initial_data.append({'course': course})
-        snc_formset = StateNursingCouncilFormSet(instance=candidate, initial=initial_data, queryset=qs)
+        snc_formset = StateNursingCouncilFormSet(instance=candidate, queryset=qs)
 
     snc_form_instance = snc_formset[0]
 #    pdb.set_trace()

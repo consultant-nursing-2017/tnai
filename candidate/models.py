@@ -175,9 +175,15 @@ class StateNursingCouncil(models.Model):
     def media_path(instance, filename):
         return 'candidate/{0}/SNC/{1}/{2}'.format(instance.candidate.candidate_username.username, instance.registration_number, filename)
 
-    COURSE_CHOICES = ['ANM', 'GNM', 'BSc.(N)', 'MSc.(N)']
+    COURSES = ['ANM', 'GNM', 'BSc.(N)', 'MSc.(N)']
+    COURSE_CHOICES = (
+            ('ANM', 'ANM'),
+            ('GNM', 'GNM'),
+            ('BSc.(N)', 'BSc.(N)'),
+            ('MSc.(N)', 'MSc.(N)'),
+    )
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
-    course = models.CharField(max_length=10, blank=True)
+    course = models.CharField(max_length=10, blank=True, choices=COURSE_CHOICES)
     state = models.CharField(max_length=200, blank=True)
     registration_number = models.CharField(max_length=200, blank=True)
     year = FormYearField(blank=True, null=True)
@@ -186,9 +192,9 @@ class StateNursingCouncil(models.Model):
     def __str__(self):
         return self.candidate.candidate_username.username + self.course + self.state + self.registration_number
 
-    @classmethod
-    def course_choices(self):
-        return self.COURSE_CHOICES
+    @staticmethod
+    def course_choices():
+        return StateNursingCouncil.COURSES
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='candidate_profile') #1 to 1 link with Django User

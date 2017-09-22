@@ -6,22 +6,40 @@
 {% endblock %}
 
 {% block content %}
+<script src="{% static "candidate/js/snc-jquery.js" %}"></script>
+<script type="text/html" id="item-template">
+    <tr>
+        <div id="item-__prefix__">
+            {% with form=snc_formset.empty_form %}
+                {% for field in form %}
+                    {% if field.is_hidden %}
+                        <td style="display:none"> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
+                    {% else %}
+                        <td> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
+                    {% endif %}
+                {% endfor %}
+            {% endwith %}
+        </div>
+        <td>Hi abcd</td>
+    </tr>
+</script>
+
 <h1>Candidate form</h1>
 <form enctype="multipart/form-data" action="/candidate/submit_candidate_snc/" method="post">
     {% csrf_token %}
-        {{ snc_formset.management_form }}
-       <h2>State Nursing Council Details</h2>
-        <h3>Instructions</h3>
-        <ul>
-            <li> Enter details for each course and for each state on a separate row. Leave extra rows blank. </li>
-        </ul>
-        <table>
+    {{ snc_formset.management_form }}
+    <h2>State Nursing Council Details</h2>
+    <h3>Instructions</h3>
+    <ul>
+        <li> Enter details for each course and for each state on a separate row. Leave extra rows blank. </li>
+    </ul>
+    <table>
+        <div id="items-form-container">
             <tr>
                 {% if snc_formset.errors %}
                     <th>Errors</th>
                 {% endif %}
 
-                <th>S. No.</th>
                 {% for field in snc_form_instance %}
                 {% if field.is_hidden %}
                     <th style="display:none">{{ field.label }}</th>
@@ -30,13 +48,9 @@
                 {% endif %}
                 {% endfor %}
             </tr>
-            {% with len=max_snc_per_course %}
             {% for form in snc_formset %}
-                {% if forloop.counter|add:"-1"|divisibleby:len %}
-                    <tr>
-                        <th rowspan="{{len|add:"1"}}"> {% widthratio forloop.counter|add:len len 1 %} </th>
-                {% endif %}
-                <tr>
+            <tr>
+                <div id="item-{{ forloop.counter0 }}">
                     {% if form.errors %}
                         <td> 
                             <div class="error_msg">
@@ -57,13 +71,14 @@
                             <td> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
                         {% endif %}
                     {% endfor %}
-                </tr>
-                {% if forloop.counter|add:"-1"|divisibleby:len %}
-                    </tr>
-                {% endif %}
+
+                </div>
+            </tr>
             {% endfor %}
-            {% endwith %}
-        </table>
+        </div>
+    </table>
+    <a href="#" id="add-item-button" class="btn btn-info add-item">Add another</a>
+
     <input type="submit" name="save_personal" value="Save and go to Personal Details" />
     <input type="submit" name="save_educational" value="Save and go to Educational Details" />
     <input type="submit" name="save_professional" value="Save and go to Professional Details" />
