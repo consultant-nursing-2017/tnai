@@ -304,7 +304,7 @@ def submit_candidate_snc(request):
         num_snc = StateNursingCouncil.objects.filter(candidate=candidate).count()
         if num_snc > total_forms:
             raise ValidationError(_('num_snc is greater than %(total_forms), value: %(value)s'), params={'value': 'num_snc', 'total_forms': 'total_forms', },)
-        extra_forms = 2
+        extra_forms = 1
         StateNursingCouncilFormSet = inlineformset_factory(Candidate, StateNursingCouncil, form=StateNursingCouncilForm, extra=extra_forms, can_delete=False)
         qs=StateNursingCouncil.objects.filter(candidate=candidate).order_by('course')
 

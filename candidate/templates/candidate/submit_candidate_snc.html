@@ -6,26 +6,17 @@
 {% endblock %}
 
 {% block content %}
-<script src="{% static "candidate/js/snc-jquery.js" %}"></script>
-<script type="text/html" id="item-template">
-    <tr>
-        <div id="item-__prefix__">
-            {% with form=snc_formset.empty_form %}
-                {% for field in form %}
-                    {% if field.is_hidden %}
-                        <td style="display:none"> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
-                    {% else %}
-                        <td> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
-                    {% endif %}
-                {% endfor %}
-            {% endwith %}
-        </div>
-        <td>Hi abcd</td>
-    </tr>
+{# <script src="{% static "candidate/js/snc-jquery.js" %}"></script> #}
+<script type="text/javascript">
+   $(function() {
+       $('#myForm tbody tr').formset({
+           prefix: '{{snc_formset.prefix}}'
+       });
+   })
 </script>
 
 <h1>Candidate form</h1>
-<form enctype="multipart/form-data" action="/candidate/submit_candidate_snc/" method="post">
+<form id="myForm" enctype="multipart/form-data" action="/candidate/submit_candidate_snc/" method="post">
     {% csrf_token %}
     {{ snc_formset.management_form }}
     <h2>State Nursing Council Details</h2>
@@ -35,6 +26,7 @@
     </ul>
     <table>
         <div id="items-form-container">
+            <thead>
             <tr>
                 {% if snc_formset.errors %}
                     <th>Errors</th>
@@ -48,36 +40,36 @@
                 {% endif %}
                 {% endfor %}
             </tr>
+            </thead>
+            <tbody>
             {% for form in snc_formset %}
             <tr>
-                <div id="item-{{ forloop.counter0 }}">
-                    {% if form.errors %}
-                        <td> 
-                            <div class="error_msg">
-                                &#x2718
-                                {% if form.non_field_errors %}
-                                    {{form.non_field_errors}}
-                                {% endif %}
-                            </div> 
-                        </td>
-                    {% elif snc_formset.errors %}
-                        <td> </td>
+                {% if form.errors %}
+                    <td> 
+                        <div class="error_msg">
+                            &#x2718
+                            {% if form.non_field_errors %}
+                                {{form.non_field_errors}}
+                            {% endif %}
+                        </div> 
+                    </td>
+                {% elif snc_formset.errors %}
+                    <td> </td>
+                {% endif %}
+
+                {% for field in form %}
+                    {% if field.is_hidden %}
+                        <td style="display:none"> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
+                    {% else %}
+                        <td> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
                     {% endif %}
+                {% endfor %}
 
-                    {% for field in form %}
-                        {% if field.is_hidden %}
-                            <td style="display:none"> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
-                        {% else %}
-                            <td> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
-                        {% endif %}
-                    {% endfor %}
-
-                </div>
             </tr>
             {% endfor %}
+            </tbody>
         </div>
     </table>
-    <a href="#" id="add-item-button" class="btn btn-info add-item">Add another</a>
 
     <input type="submit" name="save_personal" value="Save and go to Personal Details" />
     <input type="submit" name="save_educational" value="Save and go to Educational Details" />
