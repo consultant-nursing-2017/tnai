@@ -244,9 +244,11 @@ def submit_candidate_eligibility_tests(request):
     try:
         candidate = Candidate.objects.get(candidate_username=username)
         num_eligibility_tests = EligibilityTests.objects.filter(candidate=candidate).count()
-        if num_eligibility_tests > 8:
-            raise ValidationError(_('num_eligibility_tests is greater than 8, value: %(value)s'), params={'value': 'num_eligibility_tests'},)
-        extra_forms = 8 - num_eligibility_tests
+        num_total_elibility_tests_choices = EligibilityTests.eligibility_tests_choices()
+        total_choices = len(num_total_elibility_tests_choices)
+        if num_eligibility_tests > total_choices:
+            raise ValidationError(_('num_eligibility_tests is greater than %(total_choices), value: %(value)s'), params={'value': 'num_eligibility_tests', 'total_choices': 'total_choices'},)
+        extra_forms = total_choices - num_eligibility_tests
         EligibilityTestsFormSet = inlineformset_factory(Candidate, EligibilityTests, form=EligibilityTestsForm, extra=extra_forms, can_delete=False)
     except ObjectDoesNotExist:
         return HttpResponseRedirect('/candidate/submit_candidate_personal/')
@@ -265,7 +267,7 @@ def submit_candidate_eligibility_tests(request):
             eligibility_tests_formset = EligibilityTestsFormSet(instance=candidate)#, initial={'user': username,})
         else:
             eligibility_tests_formset = EligibilityTestsFormSet(instance=candidate,
-                initial=[{'eligibility_tests': 'Prometric (Specify country)'}, {'eligibility_tests': 'HAAD'}, {'eligibility_tests': 'DHA'}, {'eligibility_tests': 'IELTS'}, {'eligibility_tests': 'CGFNS'}, {'eligibility_tests': 'TOEFL'}, {'eligibility_tests': 'OET'},]) #, initial={'user': username,})
+                initial=[{'eligibility_tests': 'Prometric (Saudi Arabia)'}, {'eligibility_tests': 'Prometric (UAE)'}, {'eligibility_tests': 'Prometric (Qatar)'}, {'eligibility_tests': 'HAAD'}, {'eligibility_tests': 'DHA'}, {'eligibility_tests': 'IELTS'}, {'eligibility_tests': 'CGFNS'}, {'eligibility_tests': 'TOEFL'}, {'eligibility_tests': 'OET'},]) #, initial={'user': username,})
 
 #        eligibility_tests_form_instance = EligibilityTestsForm()
 

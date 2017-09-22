@@ -126,7 +126,9 @@ class AdditionalQualifications(Qualifications):
 
 class EligibilityTests(models.Model):
     ELIGIBILITY_TESTS_CHOICES = (
-            ('Prometric (Specify country)', 'Prometric (Specify country)'),
+            ('Prometric (Saudi Arabia)', 'Prometric (Saudi Arabia)'),
+            ('Prometric (UAE)', 'Prometric (UAE)'),
+            ('Prometric (Qatar)', 'Prometric (Qatar)'),
             ('HAAD', 'HAAD'),
             ('DHA', 'DHA'),
             ('IELTS', 'IELTS'),
@@ -140,13 +142,16 @@ class EligibilityTests(models.Model):
         return 'candidate/{0}/eligibility_tests/{1}'.format(instance.candidate.candidate_username.username, filename)
 
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
-    eligibility_tests = models.CharField(max_length=50, choices=ELIGIBILITY_TESTS_CHOICES, blank=True)
-    country = models.CharField(max_length=100, blank=True)
+    eligibility_tests = models.CharField(max_length=50, blank=True)
+#    country = models.CharField(max_length=100, blank=True)
     score_grade_marks = models.CharField(max_length=20, blank=True, null=True)
     completed_on = models.DateField(blank=True, null=True)
     valid_up_to = models.DateField(blank=True, null=True)
     eligibility_proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path)
 
+    @staticmethod
+    def eligibility_tests_choices():
+        return EligibilityTests.ELIGIBILITY_TESTS_CHOICES
 
 class Experience(models.Model):
     COUNTRY_CHOICES = (
