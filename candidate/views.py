@@ -110,7 +110,7 @@ def submit_candidate_personal(request):
             new_profile = False
         except ObjectDoesNotExist:
             new_profile = True
-            personal_form = PersonalForm(initial={'candidate_username': username,})
+            personal_form = PersonalForm(initial={'candidate_username': username, 'dummy_candidate_username': username})
 
     return render(request, 'candidate/submit_candidate_personal.html', {'new_profile': new_profile, 'personal_form': personal_form,}) 
 
