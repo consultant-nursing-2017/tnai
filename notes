@@ -1,5 +1,6 @@
 -- TODO --
 - Make username field disabled, but still save it while POSTing form.
+    - Partly done
 - District names dropdown
 - SNC names dropdown
 - JavaScript
@@ -18,7 +19,8 @@
 - University/Council dropdown
 - Reduce padding for text input field in CSS
 - Photograph size
-- SNC form, use Javascript
+- Tests
+- Shorten file upload text
 
 RA module
 - Candidate list, employer list
@@ -48,6 +50,7 @@ Appearance
 - Error messages should be below field in template
 - General education - make 10th/12th required (starred)
 - Final profile - show only non-blank entries
+- SNC form, use Javascript
 
 
 

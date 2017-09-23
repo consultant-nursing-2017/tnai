@@ -45,24 +45,24 @@ import random
 #    context_object_name = 'candidate_list'
 
 def redirect_to_tab(request):
-        if 'save_personal' in request.POST:
-            return HttpResponseRedirect('/candidate/submit_candidate_personal/')
-        elif 'save_educational' in request.POST:
-            return HttpResponseRedirect('/candidate/submit_candidate_educational_qualifications/')
-        elif 'save_professional' in request.POST:
-            return HttpResponseRedirect('/candidate/submit_candidate_professional_qualifications/')
-        elif 'save_additional' in request.POST:
-            return HttpResponseRedirect('/candidate/submit_candidate_additional_qualifications/')
-        elif 'save_experience' in request.POST:
-            return HttpResponseRedirect('/candidate/submit_candidate_experience/')
-        elif 'save_eligibility' in request.POST:
-            return HttpResponseRedirect('/candidate/submit_candidate_eligibility_tests/')
-        elif 'save_state_nursing_council' in request.POST:
-            return HttpResponseRedirect('/candidate/submit_candidate_snc/')
-        elif 'save_passport' in request.POST:
-            return HttpResponseRedirect('/candidate/submit_candidate_passport/')
-        else:
-            return HttpResponseRedirect('/candidate/candidate_profile/')
+    if 'save_personal' in request.POST:
+        return HttpResponseRedirect('/candidate/submit_candidate_personal/')
+    elif 'save_educational' in request.POST:
+        return HttpResponseRedirect('/candidate/submit_candidate_educational_qualifications/')
+    elif 'save_professional' in request.POST:
+        return HttpResponseRedirect('/candidate/submit_candidate_professional_qualifications/')
+    elif 'save_additional' in request.POST:
+        return HttpResponseRedirect('/candidate/submit_candidate_additional_qualifications/')
+    elif 'save_experience' in request.POST:
+        return HttpResponseRedirect('/candidate/submit_candidate_experience/')
+    elif 'save_eligibility' in request.POST:
+        return HttpResponseRedirect('/candidate/submit_candidate_eligibility_tests/')
+    elif 'save_state_nursing_council' in request.POST:
+        return HttpResponseRedirect('/candidate/submit_candidate_snc/')
+    elif 'save_passport' in request.POST:
+        return HttpResponseRedirect('/candidate/submit_candidate_passport/')
+    else:
+        return HttpResponseRedirect('/candidate/candidate_profile/')
 
 def candidate_index(request):
     username=auth.get_user(request)
@@ -110,7 +110,7 @@ def submit_candidate_personal(request):
             new_profile = False
         except ObjectDoesNotExist:
             new_profile = True
-            personal_form = PersonalForm(initial={'candidate_username': username, 'dummy_candidate_username': username})
+            personal_form = PersonalForm(initial={'candidate_username': username,})
 
     return render(request, 'candidate/submit_candidate_personal.html', {'new_profile': new_profile, 'personal_form': personal_form,}) 
 

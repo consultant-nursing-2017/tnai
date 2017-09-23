@@ -35,10 +35,11 @@ class SubmitForm(ModelForm):
 
 class PersonalForm(ModelForm):
     def __init__(self, *args, **kwargs):
-        instance = kwargs.get('instance', None)
-        candidate_username = instance.candidate_username.username
-        if candidate_username is not None:
-            kwargs.update(initial={'dummy_candidate_username': candidate_username, })
+#        instance = kwargs.get('instance', None)
+#        if instance is not None:
+#            candidate_username = instance.candidate_username.username
+#            if candidate_username is not None:
+#                kwargs.update(initial={'dummy_candidate_username': candidate_username, 'candidate_username': candidate_username, })
         super (PersonalForm,self ).__init__(*args, **kwargs) # populates the post
 #        candidate_username = kwargs.pop('candidate_username', None)
 #        self.fields['dummy_candidate_username'] = candidate_username
@@ -58,12 +59,12 @@ class PersonalForm(ModelForm):
         if value > datetime.date.today():
             raise ValidationError(_("Date of Birth must be in the past."), code='invalid_year')
 
-    candidate_username=forms.CharField(widget=forms.HiddenInput())
-    dummy_candidate_username=forms.CharField(disabled=True, label='Username')
+#    candidate_username=forms.CharField(widget=forms.HiddenInput())
+#    dummy_candidate_username=forms.CharField(disabled=True, label='Username')
     date_of_birth = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%y', '%d.%m.%Y'], required=False, label='Completed on (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}), validators=[validate_date_of_birth])
     class Meta:
         model = Candidate
-        fields = ['dummy_candidate_username', 'candidate_username', 'photograph', 'curriculum_vitae', 'name', 'fathers_name', 'date_of_birth', 'gender', 'marital_status', 'phone_number', 
+        fields = ['candidate_username', 'photograph', 'curriculum_vitae', 'name', 'fathers_name', 'date_of_birth', 'gender', 'marital_status', 'phone_number', 
             'house_number', 'area_locality', 'street_name', 'village_PS_PO', 'country', 'state', 'city', 'district', 'pin_code', ]
         labels = {'date_of_birth': 'Date of birth (DD/MM/YY)'}
 
