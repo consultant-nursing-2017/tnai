@@ -45,14 +45,15 @@ class PersonalFormTests(TestCase):
         call_command('loaddata', 'prod_data', verbosity=0)
 
     def test_date_of_birth_must_be_in_the_past(self):
-        user=User.objects.get(username='anand.42@gmail.com')
-        candidate=Candidate.objects.get(candidate_username=user)
+        user = User.objects.get(username='anand.42@gmail.com')
+        candidate = Candidate.objects.get(candidate_username=user)
+        data_as_dict = candidate.__dict__
         tim = timezone.now() + datetime.timedelta(days=30)
-        form = PersonalForm(instance=candidate, initial={'date_of_birth': tim},)
-        pdb.set_trace()
+        data_as_dict.update({'date_of_birth': tim})
+        form = PersonalForm(data=data_as_dict)
         self.assertFalse(form.is_valid())
 
         tim = timezone.now() + datetime.timedelta(days=-30)
-        form = PersonalForm(initial={'date_of_birth': tim},)
-#        pdb.set_trace()
+        data_as_dict.update({'date_of_birth': tim})
+        form = PersonalForm(data=data_as_dict)
         self.assertTrue(form.is_valid())
