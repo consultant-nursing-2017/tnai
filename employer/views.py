@@ -8,8 +8,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
-from .models import Employer
-from .forms import SubmitForm
+from .models import Employer, Advertisement
+from .forms import EmployerForm, AdvertisementForm
 #from .forms import RegistrationForm
 from django.core.mail import send_mail
 import hashlib
@@ -64,39 +64,66 @@ def employer_index(request):
 
 def submit_employer(request):
     username=auth.get_user(request)
-    # if this is a POST request we need to process the form data
+    new_profile = True
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = SubmitForm(request.POST, request.FILES)
         # check whether it's valid:
+        # TODO
+
+        try:
+            employer = Employer.objects.get(employer_username=username)
+            new_profile = False
+            form = EmployerForm(request.POST, request.FILES, instance=employer)
+        except ObjectDoesNotExist:
+            new_profile = True
+            form = EmployerForm(request.POST, request.FILES)
 
         if form.is_valid():
-#            country = form.cleaned_data['country']
-#            company_username = form.cleaned_data['company_username']
-#            company_registration = form.cleaned_data['company_registration']
-#            company_type = form.cleaned_data['company_type']
-#            sector = form.cleaned_data['sector']
-#            email = form.cleaned_data['email']
-#            address = form.cleaned_data['address']
-#            website = form.cleaned_data['website']
-#            phone = form.cleaned_data['phone']
-#            registration_certification = form.cleaned_data['registration_certification']
-#            authorized_signatory_id_proof = form.cleaned_data['authorized_signatory_id_proof']
-#            total_employees = form.cleaned_data['total_employees']
-#            annual_recruitment_of_indians = form.cleaned_data['annual_recruitment_of_indians']
-#            nurses_degree = form.cleaned_data['nurses_degree']
-#            nurses_diploma = form.cleaned_data['nurses_diploma']
-#            doctors = form.cleaned_data['doctors']
-#            lab_technicians = form.cleaned_data['lab_technicians']
-#            pathologists = form.cleaned_data['pathologists']
-
             form.save()
             return HttpResponseRedirect('/employer/')
-            # if a GET (or any other method) we'll create a blank form
     else:
-        form = SubmitForm(initial={'employer_username': username,})
+        # if a GET (or any other method) we'll create a blank form
+        try:
+            employer = Employer.objects.get(employer_username=username)
+            form = EmployerForm(instance=employer)
+            new_profile = False
+        except ObjectDoesNotExist:
+            new_profile = True
+            form = EmployerForm(initial={'employer_username': username,})
 
-    return render(request, 'employer/submit_employer.html', {'form': form})
+    return render(request, 'employer/submit_employer.html', {'new_profile': new_profile, 'form': form,}) 
+
+def submit_advertisement(request):
+    username=auth.get_user(request)
+    new_advertisement = True
+    if request.method == 'POST':
+        # check whether it's valid:
+        # TODO
+
+        try:
+            employer = Employer.objects.get(employer_username=username)
+            advertisement = Advertisement.objects.get(employer_advert=employer)
+            new_advertisement = False
+            form = AdvertisementForm(request.POST, request.FILES, instance=advertisement)
+        except ObjectDoesNotExist:
+            # TODO what if employer object doesn't exist
+            new_advertisement = True
+            form = AdvertisementForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/employer/')
+    else:
+        # if a GET (or any other method) we'll create a blank form
+        try:
+            employer = Employer.objects.get(employer_username=username)
+            advertisement = Advertisement.objects.get(employer_advert=employer)
+            form = AdvertisementForm(instance=advertisement)
+            new_advertisement = False
+        except ObjectDoesNotExist:
+            new_advertisement = True
+            form = AdvertisementForm(initial={'employer_advert': employer,})
+
+    return render(request, 'employer/submit_advertisement.html', {'new_advertisement': new_advertisement, 'form': form,}) 
 
 class DetailView(generic.DetailView):
     model = Employer

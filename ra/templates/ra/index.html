@@ -8,14 +8,10 @@
 
 {% block content %}
     <h2> RA module </h2>
-    {% if allowed %}
     <h3>Welcome {{ username.username }}! </h3>
     <ul>
         <li><a href="candidate_list">List all candidates</a></li>
         <li><a href="employer_list">List all employers</a></li>
+        <li><a href="advertisement_list">List all advertisements</a></li>
     </ul>
-    {% else %}
-        <h2> You are not allowed to access this page. Please login with an RA account </h2>
-        <a href="/accounts/login/">Login page</a>
-    {% endif %}
 {% endblock %}

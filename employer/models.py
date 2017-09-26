@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from candidate.models import EligibilityTests
+
+import datetime
+import uuid
 
 class Employer(models.Model):
     COUNTRY_CHOICES = (
@@ -37,8 +41,47 @@ class Employer(models.Model):
     doctors = models.IntegerField(default=0)
     lab_technicians = models.IntegerField(default=0)
     pathologists = models.IntegerField(default=0)
-#    def __str__(self):
-#        return self.contributor + ", " + self.sponsor + ", " + self.url + ", " + self.date_submitted + ", " + self.approved
+
+    def __str__(self):
+        return self.employer_username.username
+
+class Advertisement(models.Model):
+    DURATION_UNITS_CHOICES = (
+            ("Days", "Days"),
+            ("Weeks", "Weeks"),
+            ("Months", "Months"),
+            ("Years", "Years"),
+    )
+    MEDICAL_FACILITIES_CHOICES = (
+            ("Self", "Self"),
+            ("Family", "Family"),
+            ("None", "None"),
+    )
+    employer_advert = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='employer_advert', blank=False, null=True)
+    job_role = models.CharField(max_length=200, blank=False, default="Nurse")
+    closing_date = models.DateField(blank=False, default=timezone.now() + datetime.timedelta(days=30))
+    number_of_vacancies = models.IntegerField(blank=False, default=5)
+    educational_qualifications = models.CharField(max_length=500, blank=False, default="ANM required")
+    eligibility_tests = models.CharField(max_length=500, blank=False, choices=EligibilityTests.eligibility_tests_choices(), default="HAAD")
+    experience = models.CharField(max_length=500, blank=False, default="2 years")
+    name_of_hospital = models.CharField(max_length=200, blank=False, default="Hospital1")
+    city = models.CharField(max_length=200, blank=False, default="Delhi")
+    country = models.CharField(max_length=200, blank=False, default="India")
+    start_date = models.DateField(blank=False, default=timezone.now)
+    duration_of_assignment_number = models.IntegerField(blank=False, default=5)
+    duration_of_assignment_units = models.CharField(max_length=15, blank=False, choices=DURATION_UNITS_CHOICES, default="Months")
+    salary_number = models.IntegerField(blank=False, default=1200)
+    salary_units = models.CharField(max_length=20, blank=False, default="AED")
+    allowances = models.CharField(max_length=500, blank=True, default="Travel")
+    personal_accomodation = models.BooleanField(blank=True, default=False)
+    family_accomodation = models.BooleanField(blank=True, default=False)
+    medical_facilities = models.CharField(max_length=15, blank=True, choices=MEDICAL_FACILITIES_CHOICES, default="Self")
+    visa_cost = models.BooleanField(blank=True, default=False)
+    air_ticket_for_joining = models.BooleanField(blank=True, default=False)
+    air_ticket_for_vacation = models.BooleanField(blank=True, default=False)
+    annual_leave_days = models.IntegerField(blank=True, default=14)
+    other_notes = models.CharField(max_length=500, blank=True, )
+    ad_uuid = models.CharField(max_length=12, unique=True, editable=False)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='employer_profile') #1 to 1 link with Django User

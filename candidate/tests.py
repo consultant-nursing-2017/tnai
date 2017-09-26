@@ -45,6 +45,9 @@ class PersonalFormTests(TestCase):
         call_command('loaddata', 'prod_data', verbosity=0)
 
     def test_date_of_birth_must_be_in_the_past(self):
+        """ 
+        date_of_birth cannot be in the past. If it is, PersonalForm must fail validation.
+        """
         user = User.objects.get(username='anand.42@gmail.com')
         candidate = Candidate.objects.get(candidate_username=user)
         data_as_dict = candidate.__dict__

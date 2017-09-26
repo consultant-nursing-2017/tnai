@@ -27,18 +27,52 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
+from candidate.models import Candidate
+from employer.models import Employer
+from employer.models import Advertisement
 
-def ra_index(request):
-    username = auth.get_user(request)
+def is_allowed(username, request):
     allowed = True
     if username.groups.filter(name="TNAI").count() <= 0:
         allowed = False
-#        return HttpResponseRedirect('/accounts/logout/')
+    
+    return allowed
 
-    return render(request, 'ra/index.html', {'username': username, 'allowed': allowed, }) 
+def ra_index(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+    else:
+        return render(request, 'ra/index.html', {'username': username,}) 
 
 def candidate_list(request):
-    pass
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+
+    # User is allowed to access page
+    queryset = Candidate.objects.all()
+    return render(request, 'ra/candidate_list.html', {'queryset': queryset}, )
 
 def employer_list(request):
-    pass
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+
+    # User is allowed to access page
+    queryset = Employer.objects.all()
+    return render(request, 'ra/employer_list.html', {'queryset': queryset}, )
+
+def advertisement_list(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+
+    # User is allowed to access page
+    queryset = Advertisement.objects.all()
+    return render(request, 'ra/advertisement_list.html', {'queryset': queryset}, )
+

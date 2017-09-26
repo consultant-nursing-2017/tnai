@@ -6,7 +6,8 @@ app_name = 'employer'
 urlpatterns = [
     url(r'^$', views.employer_index, name='index'),
 #    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^submit_employer/', views.submit_employer, name='submit'),
+    url(r'^submit_employer/', views.submit_employer, name='submit_employer'),
+    url(r'^submit_advertisement/', views.submit_advertisement, name='submit_advertisement'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^first_activation/$', views.first_activation, name='first_activation'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',

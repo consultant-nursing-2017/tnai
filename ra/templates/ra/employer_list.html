@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+    <h2> RA module </h2>
+    <h3>Welcome {{ username.username }}! </h3>
+    <h3>List of employers</h3>
+    <table>
+        <tr>
+            <th> Employer username </th>
+            <th> Name </th>
+            <th> Full profile </th>
+        </tr>
+        {% for record in queryset %}
+        <tr>
+            <td> {{ record.employer_username }} </td>
+            <td> {{ record.employer_name }} </td>
+            <td> Not implemented yet </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="../">Back to RA index page</a>
+{% endblock %}
