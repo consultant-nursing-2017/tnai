@@ -30,6 +30,7 @@ from django.conf import settings
 from candidate.models import Candidate
 from employer.models import Employer
 from employer.models import Advertisement
+from .forms import FilterForm
 
 def is_allowed(username, request):
     allowed = True
@@ -54,7 +55,8 @@ def candidate_list(request):
 
     # User is allowed to access page
     queryset = Candidate.objects.all()
-    return render(request, 'ra/candidate_list.html', {'queryset': queryset}, )
+    filter_form = FilterForm()
+    return render(request, 'ra/candidate_list.html', {'queryset': queryset, 'filter_form': filter_form, }, )
 
 def employer_list(request):
     username = auth.get_user(request)

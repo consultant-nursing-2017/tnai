@@ -175,8 +175,12 @@ def submit_candidate_professional_qualifications(request):
         if num_professional_qualifications > 0:
             professional_qualifications_formset = ProfessionalQualificationsFormSet(instance=candidate)#, initial={'user': username,})
         else:
+            courses = ProfessionalQualifications.course_choices()
+            initial_courses = []
+            for course in courses:
+                initial_courses.append({'class_degree': course})
             professional_qualifications_formset = ProfessionalQualificationsFormSet(instance=candidate,
-                initial=[{'class_degree': 'ANM'}, {'class_degree': 'GNM'}, {'class_degree': 'B. Sc.(N)'}, {'class_degree': 'P. B. B. Sc.(N)'}, {'class_degree': 'M. Sc.(N)'},]) #, initial={'user': username,})
+                initial=initial_courses) #, initial={'user': username,})
 
     professional_qualifications_form_instance = professional_qualifications_formset[0]
     return render(request, 'candidate/submit_candidate_professional_qualifications.html', {'professional_qualifications_formset': professional_qualifications_formset, 'professional_qualifications_form_instance': professional_qualifications_form_instance, })
