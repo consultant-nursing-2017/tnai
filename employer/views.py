@@ -48,7 +48,7 @@ class IndexView(generic.ListView):
 
 def is_allowed(username, request):
     allowed = True
-    if username.groups.filter(name="TNAI").count() <= 0:
+    if username.groups.filter(name="Employer").count() <= 0:
         allowed = False
     
     return allowed

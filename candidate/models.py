@@ -113,6 +113,10 @@ class EducationalQualifications(Qualifications):
 class ProfessionalQualifications(Qualifications):
     date_from = models.DateField(blank=True, null=True)
     date_to = models.DateField(blank=True, null=True)
+    COURSES = ['ANM', 'GNM', 'BSc.(N)', 'PBBSc.(N)', 'MSc.(N)']
+    @staticmethod
+    def course_choices():
+        return ProfessionalQualifications.COURSES
 
 class AdditionalQualifications(Qualifications):
     course_topic = models.CharField(max_length=200, blank=True, null=True)
@@ -175,13 +179,10 @@ class StateNursingCouncil(models.Model):
     def media_path(instance, filename):
         return 'candidate/{0}/SNC/{1}/{2}'.format(instance.candidate.candidate_username.username, instance.registration_number, filename)
 
-    COURSES = ['ANM', 'GNM', 'BSc.(N)', 'MSc.(N)']
-    COURSE_CHOICES = (
-            ('ANM', 'ANM'),
-            ('GNM', 'GNM'),
-            ('BSc.(N)', 'BSc.(N)'),
-            ('MSc.(N)', 'MSc.(N)'),
-    )
+    COURSES = ProfessionalQualifications.course_choices() #['ANM', 'GNM', 'BSc.(N)', 'MSc.(N)']
+    COURSE_CHOICES = []
+    for course in COURSES:
+        COURSE_CHOICES.append((course, course))
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
     course = models.CharField(max_length=10, blank=True, choices=COURSE_CHOICES)
     state = models.CharField(max_length=200, blank=True)

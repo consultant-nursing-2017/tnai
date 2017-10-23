@@ -24,11 +24,13 @@
 
 - Candidate module
     - Check authorization
-
+- Employer module
+    - Display full employer profile.
 
 RA module
 - Candidate list, employer list
 - Form for filtering records
+- How to calculate experience?
 
 Exam module
 - How are slots determined? Clarify.
