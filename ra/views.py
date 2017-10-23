@@ -75,4 +75,3 @@ def advertisement_list(request):
     # User is allowed to access page
     queryset = Advertisement.objects.all()
     return render(request, 'ra/advertisement_list.html', {'queryset': queryset}, )
-

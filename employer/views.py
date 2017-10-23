@@ -45,6 +45,13 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Employer.objects.all()
 
+def is_allowed(username, request):
+    allowed = True
+    if username.groups.filter(name="TNAI").count() <= 0:
+        allowed = False
+    
+    return allowed
+
 def employer_index(request):
     username=auth.get_user(request)
     object_does_not_exist = False
