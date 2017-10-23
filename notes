@@ -28,8 +28,7 @@
     - Display full employer profile.
 
 RA module
-- Candidate list, employer list
-- Form for filtering records
+- Filter data using filter form
 - How to calculate experience?
 - Eligibility: can there be multiple choices?
 - Professional qualifications: can there be multiple choices?
@@ -65,6 +64,9 @@ Appearance
 - Changes to advertisement form.
 - Employer
     - Check authorization
+RA module
+    - Candidate list, employer list
+    - Form for filtering records
 
 
 

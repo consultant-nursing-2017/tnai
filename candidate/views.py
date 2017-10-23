@@ -44,6 +44,13 @@ import random
 #    template_name = 'candidate/index.html'
 #    context_object_name = 'candidate_list'
 
+def is_allowed(username, request):
+    allowed = True
+    if username.groups.filter(name="Candidate").count() <= 0:
+        allowed = False
+    
+    return allowed
+
 def redirect_to_tab(request):
     if 'save_personal' in request.POST:
         return HttpResponseRedirect('/candidate/submit_candidate_personal/')
@@ -72,6 +79,10 @@ def candidate_index(request):
     elif username.groups.filter(name="TNAI").count() > 0:
         return HttpResponseRedirect('/ra/')
 
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html',)
+
     try:
         if username.is_authenticated():
             candidate = Candidate.objects.get(candidate_username=username)
@@ -85,6 +96,10 @@ def candidate_index(request):
 
 def submit_candidate_personal(request):
     username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html',)
+
     new_profile = True
     if request.method == 'POST':
         # check whether it's valid:
@@ -116,6 +131,10 @@ def submit_candidate_personal(request):
 
 def submit_candidate_educational_qualifications(request):
     username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html',)
+
     new_profile = False
     error_message = ""
     try:
@@ -152,6 +171,10 @@ def submit_candidate_educational_qualifications(request):
 
 def submit_candidate_professional_qualifications(request):
     username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html',)
+
     new_profile = False
     try:
         candidate = Candidate.objects.get(candidate_username=username)
@@ -187,6 +210,10 @@ def submit_candidate_professional_qualifications(request):
 
 def submit_candidate_additional_qualifications(request):
     username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html',)
+
     new_profile = False
     try:
         candidate = Candidate.objects.get(candidate_username=username)
@@ -218,6 +245,10 @@ def submit_candidate_additional_qualifications(request):
 
 def submit_candidate_experience(request):
     username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html',)
+
     new_profile = False
     try:
         candidate = Candidate.objects.get(candidate_username=username)
@@ -245,6 +276,10 @@ def submit_candidate_experience(request):
 
 def submit_candidate_eligibility_tests(request):
     username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html',)
+
     try:
         candidate = Candidate.objects.get(candidate_username=username)
         num_eligibility_tests = EligibilityTests.objects.filter(candidate=candidate).count()
@@ -280,6 +315,10 @@ def submit_candidate_eligibility_tests(request):
 
 def submit_candidate_passport(request):
     username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html',)
+
     try:
         candidate = Candidate.objects.get(candidate_username=username)
     except ObjectDoesNotExist:
@@ -301,6 +340,10 @@ def submit_candidate_passport(request):
 def submit_candidate_snc(request):
     snc_course_choices = StateNursingCouncil.course_choices()
     username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html',)
+
     max_snc_per_course = 5
     total_forms = max_snc_per_course * len(snc_course_choices)
     try:
@@ -332,6 +375,10 @@ def submit_candidate_snc(request):
 
 def entire_profile(request):
     username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html',)
+
     try:
         candidate = Candidate.objects.get(candidate_username=username)
         personal_data = [['Name', 'name'], ['Father\'s Name', 'fathers_name'], ['Date of Birth', 'date_of_birth'], ['Gender', 'gender'], ['Marital Status', 'marital_status'], ['Phone Number', 'phone_number'], ]
