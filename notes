@@ -22,6 +22,10 @@
 - Tests
 - Shorten file upload text
 
+- Candidate module
+    - Check authorization
+
+
 RA module
 - Candidate list, employer list
 - Form for filtering records
@@ -54,6 +58,9 @@ Appearance
 - General education - make 10th/12th required (starred)
 - Final profile - show only non-blank entries
 - SNC form, use Javascript
+- Changes to advertisement form.
+- Employer
+    - Check authorization
 
 
 

@@ -14,6 +14,7 @@ from .forms import EmployerForm, AdvertisementForm
 from django.core.mail import send_mail
 import hashlib
 import random
+import pdb
 from django.utils.crypto import get_random_string
 from django.contrib import auth
 
@@ -54,6 +55,10 @@ def is_allowed(username, request):
 
 def employer_index(request):
     username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'employer/not_allowed.html',)
+
     object_does_not_exist = False
     if username.groups.filter(name="Candidate").count() > 0:
         return HttpResponseRedirect('/candidate/')
@@ -71,6 +76,10 @@ def employer_index(request):
 
 def submit_employer(request):
     username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'employer/not_allowed.html',)
+
     new_profile = True
     if request.method == 'POST':
         # check whether it's valid:
@@ -101,6 +110,10 @@ def submit_employer(request):
 
 def submit_advertisement(request):
     username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'employer/not_allowed.html',)
+
     new_advertisement = True
     if request.method == 'POST':
         # check whether it's valid:
