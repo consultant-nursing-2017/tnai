@@ -473,8 +473,14 @@ def entire_profile(request):
             for field in experience_collection_fields:
                 experience_collection[index].append(experience_list[index].get(field[1]))
 
+        registration_number = getattr(candidate, 'registration_number').hashid
+        is_provisional_registration_number = getattr(candidate, 'is_provisional_registration_number')
+        if is_provisional_registration_number:
+            registration_number = "TNAI/REC/PROV/" + registration_number
+        else:
+            registration_number = "TNAI/REC/PERM/" + registration_number
 #        pdb.set_trace()
-        return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, })
+        return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, 'registration_number': registration_number, })
 
     except ObjectDoesNotExist:
         fields = None

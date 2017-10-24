@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django import forms
 from django.contrib.postgres.fields import ArrayField
+from hashid_field import HashidField
+
+import pdb
 
 class FormYearField(models.PositiveSmallIntegerField):
     def __init__(self, *args, **kwargs):
@@ -83,8 +86,17 @@ class Candidate(models.Model):
     TNAI_number = models.CharField(max_length=200, default="", blank=True)
     preference_of_work = models.CharField(max_length=10, choices=PREFERENCE_OF_WORK_CHOICES, blank=True)
 
+    registration_number = HashidField(allow_int_lookup=True, null=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    is_provisional_registration_number = models.BooleanField(default=True, editable=False)
+
     def __str__(self):
         return self.candidate_username.username
+
+    def save(self, *args, **kwargs):
+#        pdb.set_trace()
+        if not self.registration_number:
+            self.registration_number = self.pk
+        super(Candidate, self).save(*args, **kwargs)
 
 class Qualifications(models.Model):
     def media_path(instance, filename):

@@ -140,4 +140,6 @@ STATICFILES_DIRS = [
     '/var/www/static/',
 ]
 
+HASHID_FIELD_SALT = "When I use a word, it means just what I choose it to mean—neither more nor less."
+
 #print ("base dir path", BASE_DIR)

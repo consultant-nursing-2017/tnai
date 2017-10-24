@@ -8,6 +8,7 @@
 <h2> Candidate Profile</h2>
 {% if candidate %}
     <h2> Candidate username: {{ candidate.candidate_username }} </h2> 
+    <h2> Registration number: {{ registration_number }} </h2> 
     {% if candidate.photograph %}
         <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}"></img>
     {% else %}
