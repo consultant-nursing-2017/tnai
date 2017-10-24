@@ -14,6 +14,8 @@
     -- File upload explanation
     -- Fields on forms should grow in height not width
 - Password reset not working
+    - Partially done
+- Use login_required() for various views
 - More attractive index page
 - Remove non-working links
 - University/Council dropdown
@@ -23,7 +25,7 @@
 - Shorten file upload text
 
 - Candidate module
-    - Provisional ID
+    - AHA courses American Heart Association. Additional Qualification.
 - Employer module
     - Display full employer profile.
 - Write email to Shailendra
@@ -66,6 +68,7 @@ Appearance
 - Changes to advertisement form.
 - Candidate module
     - Check authorization
+    - Provisional ID
 - Employer
     - Check authorization
 RA module

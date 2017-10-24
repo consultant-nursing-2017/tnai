@@ -502,6 +502,7 @@ def signup(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
+            user.email = user.username
             user.save()
             current_site = get_current_site(request)
             message = render_to_string('candidate/acc_active_email.html', {
