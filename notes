@@ -23,7 +23,7 @@
 - Shorten file upload text
 
 - Candidate module
-    - Check authorization
+    - Provisional ID
 - Employer module
     - Display full employer profile.
 
@@ -62,6 +62,8 @@ Appearance
 - Final profile - show only non-blank entries
 - SNC form, use Javascript
 - Changes to advertisement form.
+- Candidate module
+    - Check authorization
 - Employer
     - Check authorization
 RA module
