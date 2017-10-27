@@ -44,9 +44,16 @@ import random
 #    template_name = 'candidate/index.html'
 #    context_object_name = 'candidate_list'
 
+def is_ra_user(username, request):
+    ra_user = True
+    if username.groups.filter(name="TNAI").count() <= 0:
+        ra_user = False
+    
+    return ra_user
+
 def is_allowed(username, request):
     allowed = True
-    if username.groups.filter(name="Candidate").count() <= 0 and username.groups.filter(name="TNAI").count() <= 0:
+    if username.groups.filter(name="Candidate").count() <= 0 and not is_ra_user(username, request):
         allowed = False
     
     return allowed
@@ -381,8 +388,11 @@ def entire_profile(request):
         return render(request, 'candidate/not_allowed.html',)
 
     try:
-        if 'submit_candidate_id' in request.POST:
-            candidate = Candidate.objects.get(pk=candidate_id)
+        if 'registration_number' in request.GET:
+            registration_number = request.GET.__getitem__('registration_number')
+            candidate = Candidate.objects.get(registration_number=registration_number)
+            if not is_ra_user(username, request) and candidate.candidate_username != username:
+                return render(request, 'candidate/not_allowed.html',)
             updation_allowed = False
         else:
             candidate = Candidate.objects.get(candidate_username=username)
