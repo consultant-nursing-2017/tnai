@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from candidate.models import ProfessionalQualifications, EligibilityTests
     
 class FilterForm(forms.Form):
+    name = forms.CharField()
+    date_of_birth = forms.DateField()
     gender = forms.ChoiceField([(None, '--- Either ---'), ('Male', 'Male'), ('Female', 'Female'), ])
     COURSE_CHOICES = [(None, '--- Any ---')]
     COURSES = ProfessionalQualifications.course_choices()
