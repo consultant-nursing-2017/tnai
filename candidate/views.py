@@ -46,7 +46,7 @@ import random
 
 def is_allowed(username, request):
     allowed = True
-    if username.groups.filter(name="Candidate").count() <= 0:
+    if username.groups.filter(name="Candidate").count() <= 0 and username.groups.filter(name="TNAI").count() <= 0:
         allowed = False
     
     return allowed
@@ -376,11 +376,16 @@ def submit_candidate_snc(request):
 def entire_profile(request):
     username = auth.get_user(request)
     allowed = is_allowed(username, request)
+    updation_allowed = False
     if not allowed:
         return render(request, 'candidate/not_allowed.html',)
 
     try:
-        candidate = Candidate.objects.get(candidate_username=username)
+        if 'submit_candidate_id' in request.POST:
+            candidate = Candidate.objects.get(pk=candidate_id)
+            updation_allowed = False
+        else:
+            candidate = Candidate.objects.get(candidate_username=username)
         personal_data = [['Name', 'name'], ['Father\'s Name', 'fathers_name'], ['Date of Birth', 'date_of_birth'], ['Gender', 'gender'], ['Marital Status', 'marital_status'], ['Phone Number', 'phone_number'], ]
         for i, field in enumerate(personal_data):
             personal_data[i].append(getattr(candidate, field[1]))
@@ -480,7 +485,7 @@ def entire_profile(request):
         else:
             registration_number = "TNAI/REC/PERM/" + registration_number
 #        pdb.set_trace()
-        return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, 'registration_number': registration_number, })
+        return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, 'registration_number': registration_number, 'updation_allowed': updation_allowed, })
 
     except ObjectDoesNotExist:
         fields = None
