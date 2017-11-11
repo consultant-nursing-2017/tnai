@@ -94,6 +94,7 @@ class Candidate(models.Model):
 
     def save(self, *args, **kwargs):
 #        pdb.set_trace()
+        super(Candidate, self).save(*args, **kwargs)
         if not self.registration_number:
             self.registration_number = self.pk
         super(Candidate, self).save(*args, **kwargs)
