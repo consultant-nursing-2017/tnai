@@ -1,0 +1,78 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'exam/style.css' %}" />
+{% endblock %}
+
+{% block content %}
+{# <script src="{% static "candidate/js/exam_time_slot-jquery.js" %}"></script> #}
+<script type="text/javascript">
+   $(function() {
+       $('#myForm tbody tr').formset({
+           prefix: '{{exam_time_slot_formset.prefix}}'
+       });
+   })
+</script>
+
+<h1>Exam Time Slots</h1>
+<form id="myForm" enctype="multipart/form-data" action="/exam/submit_exam_time_slot/" method="post">
+    {% csrf_token %}
+    {{ exam_time_slot_formset.management_form }}
+    <h2>Exam Time Slots</h2>
+    <h3>Instructions</h3>
+    <ul>
+        <li> Enter each time slot in a separate row. </li>
+        <li> Time should be in 24-hour format HH:MM. For example: 13:00 </li>
+    </ul>
+    <table>
+        <div id="items-form-container">
+            <thead>
+            <tr>
+                {% if exam_time_slot_formset.errors %}
+                    <th>Errors</th>
+                {% endif %}
+
+                {% for field in exam_time_slot_form_instance %}
+                {% if field.is_hidden %}
+                    <th style="display:none">{{ field.label }}</th>
+                {% else %}
+                    <th>{{ field.label }}</th>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for form in exam_time_slot_formset %}
+            <tr>
+                {% if form.errors %}
+                    <td> 
+                        <div class="error_msg">
+                            &#x2718
+                            {% if form.non_field_errors %}
+                                {{form.non_field_errors}}
+                            {% endif %}
+                        </div> 
+                    </td>
+                {% elif exam_time_slot_formset.errors %}
+                    <td> </td>
+                {% endif %}
+
+                {% for field in form %}
+                    {% if field.is_hidden %}
+                        <td style="display:none"> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
+                    {% else %}
+                        <td> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
+                    {% endif %}
+                {% endfor %}
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </div>
+    </table>
+
+    <input type="hidden" name="exam_id" value="{{ exam_id }}" />
+    <input type="submit" name="done" value="Done" />
+</form>
+{% endblock %}

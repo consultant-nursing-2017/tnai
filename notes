@@ -28,8 +28,8 @@
     - AHA courses American Heart Association. Additional Qualification.
 - Employer module
     - Display full employer profile.
-- Write email to Shailendra
-- Print out forms for TNAI
+- Booking time slots for candidates
+    - check race condition: see F() in django (https://docs.djangoproject.com/en/1.8/ref/models/instances/#updating-attributes-based-on-existing-fields).
 
 RA module
 - Filter data using filter form
@@ -74,7 +74,8 @@ Appearance
 RA module
     - Candidate list, employer list
     - Form for filtering records
-
+- Write email to Shailendra
+- Print out forms for TNAI
 
 
 

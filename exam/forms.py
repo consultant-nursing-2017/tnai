@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Exam, ExamTimeSlots, CandidateBookTimeSlot
+from .models import Exam, ExamTimeSlot, CandidateBookTimeSlot
 #from django.contrib.auth.models import User, Group
 #from django.contrib.admin import widgets 
 
@@ -15,12 +15,14 @@ class ExamForm(ModelForm):
         model = Exam
         fields = '__all__'
 
-class ExamTimeSlotsForm(ModelForm)
+class ExamTimeSlotForm(ModelForm):
+    begin_time = forms.TimeField(input_formats=['%H:%M'], required=False, label='Begin', widget=forms.TimeInput(format=('%H:%M'), attrs={'size':'15'}))
+    end_time = forms.TimeField(input_formats=['%H:%M'], required=False, label='End', widget=forms.TimeInput(format=('%H:%M'), attrs={'size':'15'}))
     class Meta:
-        model = ExamTimeSlots
+        model = ExamTimeSlot
         fields = '__all__'
 
-class CandidateBookTimeSlotForm(ModelForm)
+class CandidateBookTimeSlotForm(ModelForm):
     class Meta:
         model = CandidateBookTimeSlot
         fields = '__all__' 

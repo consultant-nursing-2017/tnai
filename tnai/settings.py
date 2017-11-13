@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'employer',
     'candidate',
     'ra',
+    'exam',
 ]
 
 MIDDLEWARE = [
