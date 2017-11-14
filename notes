@@ -28,8 +28,10 @@
     - AHA courses American Heart Association. Additional Qualification.
 - Employer module
     - Display full employer profile.
-- Booking time slots for candidates
-    - check race condition: see F() in django (https://docs.djangoproject.com/en/1.8/ref/models/instances/#updating-attributes-based-on-existing-fields).
+- Exam module
+    - Validation for time slots (should be non-overlapping).
+    - Booking time slots for candidates
+        - check race condition: see F() in django (https://docs.djangoproject.com/en/1.8/ref/models/instances/#updating-attributes-based-on-existing-fields).
 
 RA module
 - Filter data using filter form

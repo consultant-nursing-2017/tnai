@@ -17,6 +17,10 @@ class Exam(models.Model):
     exam_type = models.CharField(max_length=100, choices=EXAM_TYPE_CHOICES, blank=False, default="MOH")
     name = models.CharField(max_length=500, blank=False, default="Exam1")
     date = models.DateField(blank=False, default=timezone.now)
+
+    @staticmethod
+    def exam_type_choices():
+        return Exam.EXAM_TYPE_CHOICES
 #    notes = models.CharField(max_length=500, blank=True)
 
 class ExamTimeSlot(models.Model):

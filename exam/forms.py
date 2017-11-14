@@ -9,6 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
 from django.template import Context
 from django.conf import settings
+
+import pdb
     
 class ExamForm(ModelForm):
     class Meta:
@@ -22,7 +24,23 @@ class ExamTimeSlotForm(ModelForm):
         model = ExamTimeSlot
         fields = '__all__'
 
-class CandidateBookTimeSlotForm(ModelForm):
-    class Meta:
-        model = CandidateBookTimeSlot
-        fields = '__all__' 
+class FilterExamListForm(forms.Form):
+    EXAM_TYPE_CHOICES = Exam.exam_type_choices()
+    exam_date = forms.DateField()
+    exam_type = forms.ChoiceField(choices=EXAM_TYPE_CHOICES)
+
+class CandidateBookTimeSlotForm(forms.Form):
+    TIME_SLOT_CHOICES = []
+    time_slot = forms.ChoiceField(choices=TIME_SLOT_CHOICES, widget=forms.RadioSelect())
+    def __init__(self, *args, **kwargs):
+        try:
+            queryset = kwargs.pop('queryset')
+        except KeyError:
+            queryset = []
+        super(CandidateBookTimeSlotForm, self).__init__(*args, **kwargs)
+        choices = []
+        for record in queryset:
+            time_slot_string = str(record.begin_time) + ' to ' + str(record.end_time)
+            choices.append((record.pk, time_slot_string))
+
+        self.fields['time_slot'].choices = choices
