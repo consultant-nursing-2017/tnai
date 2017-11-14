@@ -1,0 +1,35 @@
+{% extends "base_generic.html" %}
+{% block title %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" />
+{% endblock %}
+
+{% block content %}
+<h2> Booked Exam Time Slots</h2>
+    <h2> Candidate username: {{ candidate.candidate_username }} </h2> 
+    <h2> Registration number: {{ candidate.registration_number }} </h2> 
+    {% if candidate.photograph %}
+        <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}"></img>
+    {% else %}
+        No photograph uploaded.
+    {% endif %}
+    <table>
+        <tr>
+            <th>Exam name</th>
+            <th>Date</th>
+            <th>Booked time slot</th>
+            <th>Hall ticket</th>
+            <th>Room number</th>
+        </tr>
+        <tr>
+            {% for record in queryset %}
+            <td>{{record.time_slot.exam.name}}</td>
+            <td>{{record.time_slot.exam.date}}</td>
+            <td>{{record.time_slot.begin_time}} to {{record.time_slot.end_time}}</td>
+            <td> Not implemented yet </td>
+            <td> Not implemented yet </td>
+            {% endfor %}
+        </tr>
+    </table>
+{% endblock %}
+

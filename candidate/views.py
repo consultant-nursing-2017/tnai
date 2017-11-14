@@ -8,9 +8,10 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime
-from employer.models import Employer
 from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience, StateNursingCouncil
 from .forms import SubmitForm, PersonalForm, StateNursingCouncilForm, EducationalQualificationsForm, ProfessionalQualificationsForm, AdditionalQualificationsForm, EligibilityTestsForm, ExperienceForm, PassportAndMiscForm, StateNursingCouncilForm
+from employer.models import Employer
+from exam.models import ExamTimeSlot, CandidateBookTimeSlot
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 from django.shortcuts import render, redirect
@@ -500,6 +501,20 @@ def entire_profile(request):
     except ObjectDoesNotExist:
         fields = None
         return render(request, 'candidate/index.html', {'candidate': None})
+
+def find_exam(request):
+    pass
+
+def booked_exam_time_slots(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    updation_allowed = False
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html',)
+    candidate = Candidate.objects.get(candidate_username=username)
+
+    queryset = CandidateBookTimeSlot.objects.filter(candidate=candidate)
+    return render(request, 'candidate/booked_exam_time_slots.html', {'candidate': candidate, 'queryset': queryset})
 
 class DetailView(generic.DetailView):
     model = Candidate

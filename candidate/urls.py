@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^submit_candidate_eligibility_tests/', views.submit_candidate_eligibility_tests, name='submit_candidate_eligibility_tests'),
     url(r'^submit_candidate_snc/', views.submit_candidate_snc, name='submit_candidate_snc'),
     url(r'^submit_candidate_passport/', views.submit_candidate_passport, name='submit_candidate_passport'),
+    url(r'^find_exam/', views.find_exam, name='find_exam'),
+    url(r'^booked_exam_time_slots/', views.booked_exam_time_slots, name='booked_exam_time_slots'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^first_activation/$', views.first_activation, name='first_activation'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',

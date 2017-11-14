@@ -1,4 +1,5 @@
 -- TODO --
+- Files should be all be in pdf. Photo can be in jpg or pdf.
 - Make username field disabled, but still save it while POSTing form.
     - Partly done
 - District names dropdown
@@ -32,6 +33,7 @@
     - Validation for time slots (should be non-overlapping).
     - Booking time slots for candidates
         - check race condition: see F() in django (https://docs.djangoproject.com/en/1.8/ref/models/instances/#updating-attributes-based-on-existing-fields).
+    - Display time slots in 24-hour format
 
 RA module
 - Filter data using filter form
