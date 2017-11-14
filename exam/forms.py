@@ -26,7 +26,8 @@ class ExamTimeSlotForm(ModelForm):
 
 class FilterExamListForm(forms.Form):
     EXAM_TYPE_CHOICES = Exam.exam_type_choices()
-    exam_date = forms.DateField()
+    exam_name = forms.CharField(max_length=500)
+    exam_date = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%y', '%d.%m.%Y'], required=False, label='Exam date (DD-MM-YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}), )
     exam_type = forms.ChoiceField(choices=EXAM_TYPE_CHOICES)
 
 class CandidateBookTimeSlotForm(forms.Form):

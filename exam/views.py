@@ -60,15 +60,17 @@ def is_ra_user(username, request):
 
 def exam_list(request):
     username = auth.get_user(request)
-    allowed = is_ra_user(username, request)
+    candidate_user_type = is_candidate_user(username, request)
+    ra_user_type = is_ra_user(username, request)
+    allowed = candidate_user_type or ra_user_type
     if not allowed:
         return render(request, 'exam/not_allowed.html',)
 
     # User is allowed to access page
     queryset = Exam.objects.all()
     # Filter: TODO
-#    filter_form = FilterForm()
-    return render(request, 'exam/exam_list.html', {'username': username, 'queryset': queryset,}, )
+    filter_form = FilterExamListForm()
+    return render(request, 'exam/exam_list.html', {'username': username, 'queryset': queryset, 'filter_form': filter_form, 'candidate_user_type': candidate_user_type, 'ra_user_type': ra_user_type, })
 
 def submit_exam(request):
     username=auth.get_user(request)

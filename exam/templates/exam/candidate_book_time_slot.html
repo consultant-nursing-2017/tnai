@@ -1,0 +1,71 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+    <h2> Exam module </h2>
+    <h3>Candidate: {{ candidate.name }} </h3>
+    <h3>Book time slot for exam: {{ exam.name }} on {{exam.date}} </h3>
+
+
+<form action="/exam/candidate_book_time_slot/" method="post">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <th> Time slot</th>
+            <th> Book </th>
+        </tr>
+        {% for radio in form.time_slot %}
+            <tr>
+                <td>
+                <label for="{{ radio.id_for_label }}">
+                    {{ radio.choice_label }}
+                </label>
+                </td>
+                <td>
+                    <span class="radio">{{ radio.tag }}</span>
+                </td>
+            </tr>
+        {% endfor %}
+        <div class="error_msg">{{form.errors}}</div>
+    </table>
+    <input type="hidden" name="exam_id" value="{{exam_id}}"/>
+    <input type="submit" name="book" value="Book time slot" /> 
+    <input type="submit" name="cancel" value="Cancel" /> 
+</form>
+<!--
+    <table>
+        <tr>
+            <th> Time slot</th>
+            <th> Book </th>
+        </tr>
+        {% for record in queryset %}
+        <tr>
+            <td> {{record.begin_time}} to {{record.end_time}} </td>
+            <td> <input type="submit" name="book-{{record.pk}}" value="Book time slot" /> </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Filter candidates</h3>
+
+<form action="/ra/candidate_list/" method="post">
+    {% csrf_token %}
+        <table>
+        {% for field in filter_form %}
+            <tr> 
+                <td> {{field.label_tag}} </td>
+                <td><span class="error_msg">{{field.errors}}</span> {{field}} </td>
+            </tr>
+        {% endfor %}
+        </table>
+    <input type="submit" name="filter" value="Filter" />
+</form>
+
+    <a href="../">Back to RA index page</a>
+-->
+{% endblock %}

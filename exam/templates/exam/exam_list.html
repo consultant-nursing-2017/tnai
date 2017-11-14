@@ -20,18 +20,26 @@
         </tr>
         {% for record in queryset %}
         <tr>
+            {% if candidate_user_type %}
+            <td> {{ record.exam_id }} </td>
+            {% else %}
             <td> <a href="/exam/submit_exam?exam_id={{record.exam_id}}">{{ record.exam_id }} [Click to update exam details]</a> </td>
+            {% endif %}
             <td> {{ record.name }} </td>
             <td> {{ record.exam_type }} </td>
             <td> {{ record.date }} </td>
-            <td> <a href="/exam/submit_exam_time_slot?exam_id={{record.exam_id}}">Click here</a> </td>
+            {% if candidate_user_type %}
+            <td> <a href="/exam/candidate_book_time_slot?exam_id={{record.exam_id}}">Click here to book</a> </td>
+            {% else %}
+            <td> <a href="/exam/submit_exam_time_slot?exam_id={{record.exam_id}}">Click here to edit</a> </td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>
 
-<!--    <h3>Filter candidates</h3>
+<h3>Filter exams</h3>
 
-<form action="/ra/candidate_list/" method="post">
+<form action="/exam/exam_list/" method="post">
     {% csrf_token %}
         <table>
         {% for field in filter_form %}
@@ -44,6 +52,5 @@
     <input type="submit" name="filter" value="Filter" />
 </form>
 
-    <a href="../">Back to RA index page</a>
--->
+<a href="../">Back to exam index page</a>
 {% endblock %}
