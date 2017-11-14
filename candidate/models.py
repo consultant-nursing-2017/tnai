@@ -47,7 +47,7 @@ class Candidate(models.Model):
 
 #   Tab 1: Personal details
     candidate_username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='candidate_username', default=None, blank=True, null=True)
-    photograph = models.ImageField(default=None, blank=True, null=True, upload_to=media_path)
+    photograph = models.FileField(default=None, blank=True, null=True, upload_to=media_path)
     curriculum_vitae = models.FileField(default=None, blank=True, null=True, upload_to=media_path)
     name = models.CharField(max_length=200, default="Name")
     fathers_name = models.CharField(max_length=200, default="Father's Name")

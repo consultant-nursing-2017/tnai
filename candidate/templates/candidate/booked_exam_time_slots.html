@@ -14,22 +14,27 @@
         No photograph uploaded.
     {% endif %}
     <table>
-        <tr>
-            <th>Exam name</th>
-            <th>Date</th>
-            <th>Booked time slot</th>
-            <th>Hall ticket</th>
-            <th>Room number</th>
-        </tr>
-        <tr>
+        {% if queryset %}
+            <tr>
+                <th>Exam name</th>
+                <th>Date</th>
+                <th>Booked time slot</th>
+                <th>Hall ticket</th>
+                <th>Room number</th>
+            </tr>
             {% for record in queryset %}
-            <td>{{record.time_slot.exam.name}}</td>
-            <td>{{record.time_slot.exam.date}}</td>
-            <td>{{record.time_slot.begin_time}} to {{record.time_slot.end_time}}</td>
-            <td> Not implemented yet </td>
-            <td> Not implemented yet </td>
+                <tr>
+                    <td>{{record.time_slot.exam.name}}</td>
+                    <td>{{record.time_slot.exam.date}}</td>
+                    <td>{{record.time_slot.begin_time}} to {{record.time_slot.end_time}} <a href="/exam/candidate_book_time_slot?exam_id={{record.time_slot.exam.exam_id}}">[Change]</a></td>
+                    <td> Not implemented yet </td>
+                    <td> Not implemented yet </td>
+                </tr>
             {% endfor %}
-        </tr>
+        {% else %}
+            <h3>No booked exams found</h3>
+        {% endif %}
     </table>
+    <a href="../">Back to Candidate index page</a>
 {% endblock %}
 

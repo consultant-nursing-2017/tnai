@@ -25,10 +25,11 @@ class ExamTimeSlotForm(ModelForm):
         fields = '__all__'
 
 class FilterExamListForm(forms.Form):
-    EXAM_TYPE_CHOICES = Exam.exam_type_choices()
-    exam_name = forms.CharField(max_length=500)
+    EXAM_TYPE_CHOICES = [(None, '--- Any ---')]
+    EXAM_TYPE_CHOICES.extend(Exam.exam_type_choices())
+    exam_name = forms.CharField(max_length=500, required=False)
     exam_date = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%y', '%d.%m.%Y'], required=False, label='Exam date (DD-MM-YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}), )
-    exam_type = forms.ChoiceField(choices=EXAM_TYPE_CHOICES)
+    exam_type = forms.ChoiceField(choices=EXAM_TYPE_CHOICES, required=False)
 
 class CandidateBookTimeSlotForm(forms.Form):
     TIME_SLOT_CHOICES = []
@@ -38,6 +39,11 @@ class CandidateBookTimeSlotForm(forms.Form):
             queryset = kwargs.pop('queryset')
         except KeyError:
             queryset = []
+        try:
+            booked_time_slot = kwargs.pop('booked_time_slot')
+        except KeyError:
+            booked_time_slot = None
+
         super(CandidateBookTimeSlotForm, self).__init__(*args, **kwargs)
         choices = []
         for record in queryset:
@@ -45,3 +51,5 @@ class CandidateBookTimeSlotForm(forms.Form):
             choices.append((record.pk, time_slot_string))
 
         self.fields['time_slot'].choices = choices
+        if booked_time_slot is not None:
+            self.fields['time_slot'].initial = booked_time_slot.pk

@@ -34,6 +34,10 @@
     - Booking time slots for candidates
         - check race condition: see F() in django (https://docs.djangoproject.com/en/1.8/ref/models/instances/#updating-attributes-based-on-existing-fields).
     - Display time slots in 24-hour format
+- RA is also allowed to book slots
+Exam type
+    - Written + interview
+    - Only interview
 
 RA module
 - Filter data using filter form

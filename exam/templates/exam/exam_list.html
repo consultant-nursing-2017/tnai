@@ -29,7 +29,7 @@
             <td> {{ record.exam_type }} </td>
             <td> {{ record.date }} </td>
             {% if candidate_user_type %}
-            <td> <a href="/exam/candidate_book_time_slot?exam_id={{record.exam_id}}">Click here to book</a> </td>
+            <td> <a href="/exam/candidate_book_time_slot?exam_id={{record.exam_id}}">Click here to book slot or change existing booking</a> </td>
             {% else %}
             <td> <a href="/exam/submit_exam_time_slot?exam_id={{record.exam_id}}">Click here to edit</a> </td>
             {% endif %}
@@ -50,6 +50,7 @@
         {% endfor %}
         </table>
     <input type="submit" name="filter" value="Filter" />
+    <input type="submit" name="clear_all_filters" value="Clear all filters" />
 </form>
 
 <a href="../">Back to exam index page</a>

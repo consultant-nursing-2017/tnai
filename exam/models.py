@@ -9,14 +9,15 @@ import uuid
 
 
 class Exam(models.Model):
-    EXAM_TYPE_CHOICES = (
+    EXAM_TYPE_CHOICES = [
             ("MOH", "MOH"),
             ("Prometric/HAAD", "Prometric/HAAD"),
-    )
+    ]
     exam_id = HashidAutoField(primary_key=True)
     exam_type = models.CharField(max_length=100, choices=EXAM_TYPE_CHOICES, blank=False, default="MOH")
     name = models.CharField(max_length=500, blank=False, default="Exam1")
     date = models.DateField(blank=False, default=timezone.now)
+    hall_ticket_download_minimum_number_of_days = models.PositiveSmallIntegerField(blank=False, default=10)
 
     @staticmethod
     def exam_type_choices():
@@ -36,8 +37,10 @@ class ExamRoom(models.Model):
 
 class CandidateBookTimeSlot(models.Model):
     candidate = models.ForeignKey(Candidate, related_name='candidate', on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='exam_book_slot', default=None, blank=True, null=True)
     time_slot = models.ForeignKey(ExamTimeSlot, on_delete=models.CASCADE, related_name='time_slot', default=None, blank=True, null=True)
     exam_room = models.ForeignKey(ExamRoom, on_delete=models.CASCADE, related_name='exam_room', default=None, blank=True, null=True)
+    hall_ticket_downloaded = models.BooleanField(default=False)
 
 #class Profile(models.Model):
 #    user = models.OneToOneField(User, related_name='employer_profile') #1 to 1 link with Django User

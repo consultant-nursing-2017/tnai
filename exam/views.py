@@ -69,7 +69,24 @@ def exam_list(request):
     # User is allowed to access page
     queryset = Exam.objects.all()
     # Filter: TODO
-    filter_form = FilterExamListForm()
+    if request.method == 'POST':
+        if 'clear_all_filters' in request.POST:
+            filter_form = FilterExamListForm()
+        else:
+            filter_form = FilterExamListForm(request.POST)
+            if filter_form.is_valid():
+                exam_name = filter_form.cleaned_data['exam_name']
+                if exam_name is not None and len(exam_name) > 0:
+                    queryset = queryset.filter(name__icontains=exam_name)
+                exam_date = filter_form.cleaned_data['exam_date']
+                if exam_date is not None:
+                    queryset = queryset.filter(date=exam_date)
+                exam_type = filter_form.cleaned_data['exam_type']
+                if exam_type is not None:
+                    queryset = queryset.filter(exam_type=exam_type)
+    else:
+        filter_form = FilterExamListForm()
+
     return render(request, 'exam/exam_list.html', {'username': username, 'queryset': queryset, 'filter_form': filter_form, 'candidate_user_type': candidate_user_type, 'ra_user_type': ra_user_type, })
 
 def submit_exam(request):
@@ -147,6 +164,7 @@ def candidate_book_time_slot(request):
     candidate = Candidate.objects.get(candidate_username=username)
 
     exam_id = None
+    booking = None
     if request.method == 'GET':
         if 'exam_id' in request.GET:
             exam_id = request.GET.__getitem__('exam_id')
@@ -166,21 +184,30 @@ def candidate_book_time_slot(request):
     except ObjectDoesNotExist:
         return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id})
 
+    try:
+        booking = CandidateBookTimeSlot.objects.filter(candidate=candidate).get(exam=exam)
+        if booking.hall_ticket_downloaded:
+            return render(request, 'exam/hall_ticket_already_downloaded.html')
+    except ObjectDoesNotExist:
+        pass
+
     if request.method == 'POST':
-        if 'cancel' in request.POST:
-            return HttpResponseRedirect('/candidate/')
+        if booking is not None:
+            booking.delete() # cancel old booking
+        if 'cancel_booking' in request.POST:
+            return HttpResponseRedirect('/candidate/booked_exam_time_slots/')
         else: # must be "book"
             queryset = ExamTimeSlot.objects.filter(exam_id = exam_id).order_by('begin_time')
             form = CandidateBookTimeSlotForm(request.POST, queryset=queryset)
-            pdb.set_trace()
             if form.is_valid():
                 time_slot_id = form.cleaned_data['time_slot']
                 exam_time_slot = ExamTimeSlot.objects.get(pk=time_slot_id)
                 candidate_book_time_slot = CandidateBookTimeSlot()
                 candidate_book_time_slot.candidate = candidate
+                candidate_book_time_slot.exam = exam
                 candidate_book_time_slot.time_slot = exam_time_slot
                 candidate_book_time_slot.save()
-                return HttpResponseRedirect('/candidate/')
+                return HttpResponseRedirect('/candidate/booked_exam_time_slots/')
         # check whether it's valid:
         # TODO
 #        exam_time_slot_formset = ExamTimeSlotFormSet(request.POST, request.FILES, instance=exam, queryset=qs)#, initial={'user': username,})
@@ -191,7 +218,12 @@ def candidate_book_time_slot(request):
 #            return HttpResponseRedirect('/exam/exam_list/')
     else:
         queryset = ExamTimeSlot.objects.filter(exam_id = exam_id).order_by('begin_time')
-        form = CandidateBookTimeSlotForm(queryset=queryset)
+        try:
+            booking = CandidateBookTimeSlot.objects.filter(candidate=candidate).get(exam=exam)
+            form = CandidateBookTimeSlotForm(queryset = queryset, booked_time_slot = booking.time_slot)
+        except ObjectDoesNotExist:
+            booked_time_slot = None
+            form = CandidateBookTimeSlotForm(queryset = queryset)
 
     return render(request, 'exam/candidate_book_time_slot.html', {'candidate': candidate, 'exam_id': exam_id, 'exam': exam, 'form': form, })
 
