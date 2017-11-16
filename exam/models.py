@@ -10,11 +10,11 @@ import uuid
 
 class Exam(models.Model):
     EXAM_TYPE_CHOICES = [
-            ("MOH", "MOH"),
-            ("Prometric/HAAD", "Prometric/HAAD"),
+            ("Written + Interview", "Written + Interview"),
+            ("Only Interview", "Only Interview"),
     ]
     exam_id = HashidAutoField(primary_key=True)
-    exam_type = models.CharField(max_length=100, choices=EXAM_TYPE_CHOICES, blank=False, default="MOH")
+    exam_type = models.CharField(max_length=100, choices=EXAM_TYPE_CHOICES, blank=False, default="Only Interview")
     name = models.CharField(max_length=500, blank=False, default="Exam1")
     date = models.DateField(blank=False, default=timezone.now)
     hall_ticket_download_minimum_number_of_days = models.PositiveSmallIntegerField(blank=False, default=10)

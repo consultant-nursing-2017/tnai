@@ -35,9 +35,6 @@
         - check race condition: see F() in django (https://docs.djangoproject.com/en/1.8/ref/models/instances/#updating-attributes-based-on-existing-fields).
     - Display time slots in 24-hour format
 - RA is also allowed to book slots
-Exam type
-    - Written + interview
-    - Only interview
 
 RA module
 - Filter data using filter form
@@ -47,6 +44,11 @@ RA module
 
 Exam module
 - How are slots determined? Clarify.
+
+- GoDaddy server
+    - SSL certificate.
+    - email
+    - domain name
 
 ------- Done --------
 Appearance
@@ -84,7 +86,13 @@ RA module
     - Form for filtering records
 - Write email to Shailendra
 - Print out forms for TNAI
-
+Exam type
+    - Written + interview
+    - Only interview
+- GoDaddy server
+    - All software
+    - Settings for website
+    - Groups (Employer, Candidate, TNAI)
 
 
 
