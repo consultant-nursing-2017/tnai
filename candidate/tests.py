@@ -24,6 +24,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import Group
 from django.forms import inlineformset_factory
@@ -60,3 +61,26 @@ class PersonalFormTests(TestCase):
         data_as_dict.update({'date_of_birth': tim})
         form = PersonalForm(data=data_as_dict)
         self.assertTrue(form.is_valid())
+
+class CandidateSignupViewTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        call_command('loaddata', 'prod_data', verbosity=0)
+
+
+    def test_signup_form_should_have_both_passwords_match(self):
+        """ 
+        Signup form should have both passwords match
+        """
+        form = SignupForm({'username': 'Anand.84@gmail.com', 'password1': 'abc xyz1', 'password2': 'abc xyz2'})
+        self.assertFalse(form.is_valid())
+
+        form = SignupForm({'username': 'abc1234567', 'password1': 'abcd xyz1', 'password2': 'abcd xyz1'})
+        self.assertTrue(form.is_valid())
+
+    def test_login_username_should_be_case_insensitive(self):
+        """ 
+        Candidate login username should be case insensitive
+        """
+        form = SignupForm({'username': 'Consultant.nursing.2017@gmail.com', 'password1': 'candidate1', 'password2': 'candidate1'})
+        self.assertFalse(form.is_valid())

@@ -43,3 +43,7 @@ class SignupForm(UserCreationForm):
         model = User
         fields = ('username', 'password1', 'password2')
         labels = {'username': 'Email address (will also serve as your username)'}
+
+    def clean_username(self):
+        data = self.cleaned_data['username']
+        return data.lower()
