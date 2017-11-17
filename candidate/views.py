@@ -396,6 +396,7 @@ def entire_profile(request):
                 return render(request, 'candidate/not_allowed.html',)
             updation_allowed = False
         else:
+            updation_allowed = True
             candidate = Candidate.objects.get(candidate_username=username)
         personal_data = [['Name', 'name'], ['Father\'s Name', 'fathers_name'], ['Date of Birth', 'date_of_birth'], ['Gender', 'gender'], ['Marital Status', 'marital_status'], ['Phone Number', 'phone_number'], ]
         for i, field in enumerate(personal_data):

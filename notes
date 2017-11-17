@@ -45,10 +45,11 @@ RA module
 Exam module
 - How are slots determined? Clarify.
 
-- GoDaddy server
-    - SSL certificate.
-    - email
-    - domain name
+------ GoDaddy server -----
+- SSL certificate.
+- email
+- Sessions for logging out users after a certain time.
+- Fix default values
 
 ------- Done --------
 Appearance
@@ -89,10 +90,12 @@ RA module
 Exam type
     - Written + interview
     - Only interview
-- GoDaddy server
+----- GoDaddy server ----
     - All software
     - Settings for website
     - Groups (Employer, Candidate, TNAI)
+    - domain name
+    - CSS
 
 
 
@@ -113,22 +116,3 @@ Exam type
 
 
 
----------------------------
-Website
-Database backend - important - PostgresSQL
-Front end created in Python using Django web framework.
-Membership fees
-
-1 GB 2399
-2 GB 2999
-4 GB 4999
-8 GB 7999
-
-2 GB 1 year 1399 month, reset after 2 year (discounts expected)
-2 GB 2 year 1299 month, reset after 2 year (discounts expected)
-
-2 years - .com 959 + 99
-1 year - 400
-1 year - 449
-
-prajitha@godaddy.com
