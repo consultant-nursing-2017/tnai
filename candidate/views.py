@@ -45,6 +45,13 @@ import random
 #    template_name = 'candidate/index.html'
 #    context_object_name = 'candidate_list'
 
+def is_candidate_user(username, request):
+    candidate_user = True
+    if username.groups.filter(name="Candidate").count() <= 0:
+        candidate_user = False
+    
+    return candidate_user
+
 def is_ra_user(username, request):
     ra_user = True
     if username.groups.filter(name="TNAI").count() <= 0:
@@ -54,7 +61,7 @@ def is_ra_user(username, request):
 
 def is_allowed(username, request):
     allowed = True
-    if username.groups.filter(name="Candidate").count() <= 0 and not is_ra_user(username, request):
+    if not is_candidate_user(username, request) and not is_ra_user(username, request):
         allowed = False
     
     return allowed
@@ -384,7 +391,7 @@ def submit_candidate_snc(request):
 def entire_profile(request):
     username = auth.get_user(request)
     allowed = is_allowed(username, request)
-    updation_allowed = False
+    updation_allowed = is_candidate_user(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html',)
 
@@ -394,9 +401,7 @@ def entire_profile(request):
             candidate = Candidate.objects.get(registration_number=registration_number)
             if not is_ra_user(username, request) and candidate.candidate_username != username:
                 return render(request, 'candidate/not_allowed.html',)
-            updation_allowed = False
         else:
-            updation_allowed = True
             candidate = Candidate.objects.get(candidate_username=username)
         personal_data = [['Name', 'name'], ['Father\'s Name', 'fathers_name'], ['Date of Birth', 'date_of_birth'], ['Gender', 'gender'], ['Marital Status', 'marital_status'], ['Phone Number', 'phone_number'], ]
         for i, field in enumerate(personal_data):
