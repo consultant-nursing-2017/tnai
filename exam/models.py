@@ -13,7 +13,8 @@ class Exam(models.Model):
             ("Written + Interview", "Written + Interview"),
             ("Only Interview", "Only Interview"),
     ]
-    exam_id = HashidAutoField(primary_key=True)
+
+    exam_id = HashidAutoField(primary_key=True, allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     exam_type = models.CharField(max_length=100, choices=EXAM_TYPE_CHOICES, blank=False, default="Only Interview")
     name = models.CharField(max_length=500, blank=False, default="Exam1")
     date = models.DateField(blank=False, default=timezone.now)

@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^submit_exam/', views.submit_exam, name='submit_exam'),
     url(r'^submit_exam_time_slot/', views.submit_exam_time_slot, name='submit_exam_time_slot'),
     url(r'^candidate_book_time_slot/', views.candidate_book_time_slot, name='candidate_book_time_slot'),
+    url(r'^candidate_show_hall_ticket/', views.candidate_show_hall_ticket, name='candidate_show_hall_ticket'),
 ]

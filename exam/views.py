@@ -156,6 +156,41 @@ def submit_exam_time_slot(request):
 #    pdb.set_trace()
     return render(request, 'exam/submit_exam_time_slot.html', {'exam_time_slot_formset': exam_time_slot_formset, 'exam_time_slot_form_instance': exam_time_slot_form_instance, 'exam_id': exam_id, })
 
+def candidate_show_hall_ticket(request):
+    username=auth.get_user(request)
+    allowed = is_candidate_user(username, request)
+    if not allowed:
+        return render(request, 'exam/not_allowed.html', {'not_member_of_group': 'Candidate'})
+    candidate = Candidate.objects.get(candidate_username=username)
+
+    exam_id = None
+    if request.method == 'GET':
+        if 'exam_id' in request.GET:
+            exam_id = request.GET.__getitem__('exam_id')
+        else:
+            return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id})
+    else:
+        if 'exam_id' in request.POST:
+            exam_id = request.POST.get('exam_id', "")
+        else:
+            return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id})
+    try:
+        exam = Exam.objects.get(exam_id=exam_id)
+
+    except ObjectDoesNotExist:
+        return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id})
+
+    try:
+        booking = CandidateBookTimeSlot.objects.filter(candidate=candidate).get(exam=exam)
+    except ObjectDoesNotExist:
+        return render(request, 'exam/booking_does_not_exist.html', {'exam_id': exam_id})
+
+    if request.method == 'POST':
+        pass
+    else:
+        pass
+    return render(request, 'exam/candidate_show_hall_ticket.html', {'candidate': candidate, 'exam_id': exam_id, 'exam': exam, 'booking': booking, })
+
 def candidate_book_time_slot(request):
     username=auth.get_user(request)
     allowed = is_candidate_user(username, request)
