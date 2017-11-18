@@ -55,7 +55,24 @@ def candidate_list(request):
 
     # User is allowed to access page
     queryset = Candidate.objects.all()
-    filter_form = FilterForm()
+    if request.method == 'POST':
+        if 'clear_all_filters' in request.POST:
+            filter_form = FilterForm()
+        else:
+            filter_form = FilterForm(request.POST)
+            if filter_form.is_valid():
+                name = filter_form.cleaned_data['name']
+                if name is not None and len(name) > 0:
+                    queryset = queryset.filter(name__icontains=name)
+                date_of_birth = filter_form.cleaned_data['date_of_birth']
+                if date_of_birth is not None:
+                    queryset = queryset.filter(date_of_birth=date_of_birth)
+                gender = filter_form.cleaned_data['gender']
+                if gender is not None:
+                    queryset = queryset.filter(gender=gender)
+    else:
+        filter_form = FilterForm()
+
     return render(request, 'ra/candidate_list.html', {'queryset': queryset, 'filter_form': filter_form, }, )
 
 def employer_list(request):

@@ -11,17 +11,17 @@ from django.contrib.auth.models import User
 from candidate.models import ProfessionalQualifications, EligibilityTests
     
 class FilterForm(forms.Form):
-    name = forms.CharField()
-    date_of_birth = forms.DateField()
-    gender = forms.ChoiceField([(None, '--- Either ---'), ('Male', 'Male'), ('Female', 'Female'), ])
+    name = forms.CharField(required=False, )
+    date_of_birth = forms.DateField(required=False, )
+    gender = forms.ChoiceField([(None, '--- Either ---'), ('Male', 'Male'), ('Female', 'Female'), ], required=False, )
     COURSE_CHOICES = [(None, '--- Any ---')]
     COURSES = ProfessionalQualifications.course_choices()
     for course in COURSES:
         COURSE_CHOICES.append((course, course))
-    professional_qualifications = forms.ChoiceField(COURSE_CHOICES)
-    experience = forms.CharField()
+    professional_qualifications = forms.ChoiceField(COURSE_CHOICES, required=False, )
+    experience = forms.CharField(required=False, )
     ELIGIBILITY_TESTS_CHOICES = [(None, '--- Any ---')] + list(EligibilityTests.eligibility_tests_choices())
-    eligibility_tests = forms.ChoiceField(ELIGIBILITY_TESTS_CHOICES)
+    eligibility_tests = forms.ChoiceField(ELIGIBILITY_TESTS_CHOICES, required=False,)
 
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')
