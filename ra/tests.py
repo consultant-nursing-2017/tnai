@@ -36,26 +36,32 @@ import datetime
 # Create your tests here.
 
 class RALoginFormTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        call_command('loaddata', 'prod_data', verbosity=0)
+
     def test_login_username_should_be_case_insensitive(self):
         """ 
         RA login username should be case insensitive
         """
-        response = self.client.post('/accounts/login/', {'username': 'Ra-user1', 'password': 'tnai ra user1'})
-        self.assertEqual(response.status_code, 200)
+        self.client.post('/accounts/login/', {'username': 'Ra-user1', 'password': 'tnai ra user1'})
+        response = self.client.get('/ra/')
+        self.assertContains(response, "List all")
 
     def test_login_username_should_be_an_RA(self):
         """ 
-        RA login username should be case insensitive
+        RA login username should be an RA
         """
-        pass
-#TODO
-#        response = self.client.post('/accounts/login/', {'username': 'Ra-user2', 'password': 'tnai ra user1'})
-#        self.assertEqual(response.status_code, 200)
+        candidate_user = User.objects.get(username='consultant.nursing.2017@gmail.com')
+        self.client.force_login(user=candidate_user)
+        response = self.client.get('/ra/')
+        self.assertContains(response, "not allowed")
 
-#    @classmethod
-#    def setUpTestData(cls):
-#        call_command('loaddata', 'prod_data', verbosity=0)
-#
+        ra_user = User.objects.get(username='ra-user1')
+        self.client.force_login(user=ra_user)
+        response = self.client.get('/ra/')
+        self.assertContains(response, "List all")
+
 #    def test_signup_form_should_have_both_passwords_match(self):
 #        """ 
 #        Signup form should have both passwords match
