@@ -63,10 +63,10 @@ class PersonalFormTests(TestCase):
         self.assertTrue(form.is_valid())
 
 class CandidateSignupFormTests(TestCase):
-#    @classmethod
-#    def setUpTestData(cls):
-#        call_command('loaddata', 'prod_data', verbosity=0)
-#
+    @classmethod
+    def setUpTestData(cls):
+        call_command('loaddata', 'prod_data', verbosity=0)
+
     def test_signup_form_should_have_both_passwords_match(self):
         """ 
         Signup form should have both passwords match
@@ -86,9 +86,29 @@ class CandidateSignupFormTests(TestCase):
 #       self.assertFalse(form.is_valid())
 
 class CandidateLoginViewTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        call_command('loaddata', 'prod_data', verbosity=0)
+
     def test_candidate_login_username_should_be_case_insensitive(self):
         """ 
         Candidate login username should be case insensitive
         """
-        response = self.client.post('/accounts/login/', {'username': 'Consultant.nursing.2017@gmail.com', 'password': 'candidate1'})
+        response = self.client.post('/accounts/login/', {'username': 'Consultant.nursing.2017@gmail.com', 'password': 'candidate1'}, follow=True)
         self.assertEqual(response.status_code, 200)
+
+class CandidateViewTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        call_command('loaddata', 'prod_data', verbosity=0)
+
+    def test_candidate_cannot_view_another_candidate_profile(self):
+        user1 = User.objects.get(username='consultant.nursing.2017@gmail.com')
+        self.client.force_login(user=user1)
+        user2 = User.objects.get(username='vprashantsharma@gmail.com')
+        candidate2 = Candidate.objects.get(candidate_username=user2)
+        candidate2.save()
+        registration_number = str(candidate2.registration_number)
+        response = self.client.get('/candidate/candidate_profile/?registration_number=' + str(registration_number), follow=True)
+#        pdb.set_trace()
+        self.assertContains(response, "not allowed")

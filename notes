@@ -44,7 +44,7 @@
 - Style/Theme
 - RA
     - add/update/delete candidate/employer
-    - verification of candidate/employer
+    - verification for employer?
     - email notification
 
 - Candidate
@@ -121,6 +121,7 @@ RA module
     - Form for filtering records
     - RA filters
         Name, date of birth, gender
+    - Verification for candidate.
 
 - Write email to Shailendra
 - Print out forms for TNAI
