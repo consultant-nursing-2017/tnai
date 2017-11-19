@@ -40,6 +40,36 @@
 - RA filters
     ProfessionalQualifications, Experience, Eligibility
 
+************
+- Style/Theme
+- RA
+    - add/update/delete candidate/employer
+    - verification of candidate/employer
+    - email notification
+
+- Candidate
+    - filter advertisement
+        - Criteria: country (for now)
+    - email verification
+        - when "done" and assigned a registration number
+    - tweak personal form display: use two-column format
+    - prettify link for uploaded files
+
+- Exam module
+    - Hall ticket number
+    - Print button
+
+- Employer
+    - Search (only show summary)
+    - email notification
+        - registration
+        - advertisement creation
+
+- Website
+    - Updates (in pdf format)
+        - title, document
+**********
+
 RA module
 - Filter data using filter form
 - How to calculate experience?
