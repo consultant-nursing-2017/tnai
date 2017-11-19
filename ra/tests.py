@@ -26,6 +26,7 @@ from django.forms import inlineformset_factory
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.core.management import call_command
+from candidate.models import Candidate
 
 import pdb
 import os
@@ -78,3 +79,73 @@ class RALoginFormTest(TestCase):
 #        """
 #        form = SignupForm({'username': 'Consultant.nursing.2017@gmail.com', 'password1': 'candidate1', 'password2': 'candidate1'})
 #        self.assertFalse(form.is_valid())
+
+class RAVerifyCandidateViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        call_command('loaddata', 'prod_data', verbosity=0)
+
+    def test_candidate_with_provisional_registration_number_should_have_verify_link(self):
+        ra_user = User.objects.get(username='ra-user1')
+        self.client.force_login(user=ra_user)
+
+        user=User.objects.get(username='consultant.nursing.2017@gmail.com')
+        candidate = Candidate.objects.get(candidate_username=user)
+        candidate.save()
+        registration_number = candidate.registration_number
+        response = self.client.get('/ra/verify_candidate/?registration_number=' + str(registration_number))
+        self.assertContains(response, "Verify")
+
+    def test_candidate_with_permanent_registration_number_should_not_be_allowed_to_re_verify(self):
+        ra_user = User.objects.get(username='ra-user1')
+        self.client.force_login(user=ra_user)
+
+        user=User.objects.get(username='vprashantsharma@gmail.com')
+        candidate = Candidate.objects.get(candidate_username=user)
+        candidate.is_provisional_registration_number = False
+        candidate.save()
+        registration_number = candidate.registration_number
+        response = self.client.get('/ra/verify_candidate/?registration_number=' + str(registration_number))
+#        pdb.set_trace()
+        self.assertContains(response, "verified")
+
+    def test_candidate_with_permanent_registration_number_should_not_have_verify_link(self):
+        ra_user = User.objects.get(username='ra-user1')
+        self.client.force_login(user=ra_user)
+
+        user=User.objects.get(username='vprashantsharma@gmail.com')
+        candidate = Candidate.objects.get(candidate_username=user)
+        candidate.is_provisional_registration_number = False
+        candidate.save()
+        registration_number = candidate.registration_number
+        response = self.client.get('/candidate/candidate_profile/?registration_number=' + str(registration_number))
+#        pdb.set_trace()
+        self.assertContains(response, "PERM")
+
+    def test_candidate_profile_with_candidate_login_does_not_see_verify_link(self):
+        ra_user = User.objects.get(username='vprashantsharma@gmail.com')
+        self.client.force_login(user=ra_user)
+
+        user=User.objects.get(username='vprashantsharma@gmail.com')
+        candidate = Candidate.objects.get(candidate_username=user)
+        candidate.is_provisional_registration_number = False
+        candidate.save()
+        registration_number = str(candidate.registration_number) + '5@'
+        response = self.client.get('/ra/verify_candidate/?registration_number=' + str(registration_number))
+        self.assertContains(response, 'not allowed')
+
+        response = self.client.get('/candidate/candidate_profile', follow=True)
+        self.assertTrue("Verify" not in str(response.content))
+
+    def test_candidate_with_invalid_registration_number(self):
+        ra_user = User.objects.get(username='ra-user1')
+        self.client.force_login(user=ra_user)
+
+        user=User.objects.get(username='vprashantsharma@gmail.com')
+        candidate = Candidate.objects.get(candidate_username=user)
+        candidate.is_provisional_registration_number = False
+        candidate.save()
+        registration_number = str(candidate.registration_number) + '5@'
+        response = self.client.get('/ra/verify_candidate/?registration_number=' + str(registration_number))
+#        pdb.set_trace()
+        self.assertContains(response, "invalid")

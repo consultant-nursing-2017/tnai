@@ -32,6 +32,8 @@ from employer.models import Employer
 from employer.models import Advertisement
 from .forms import FilterForm
 
+import pdb
+
 def is_allowed(username, request):
     allowed = True
     if username.groups.filter(name="TNAI").count() <= 0:
@@ -94,3 +96,27 @@ def advertisement_list(request):
     # User is allowed to access page
     queryset = Advertisement.objects.all()
     return render(request, 'ra/advertisement_list.html', {'queryset': queryset}, )
+
+def verify_candidate(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+
+    if request.method == 'GET':
+        registration_number = request.GET.__getitem__('registration_number')
+        try:
+            candidate = Candidate.objects.get(registration_number=registration_number)
+        except ObjectDoesNotExist:
+            return render(request, 'ra/invalid_registration_number.html', {'registration_number': registration_number}, )
+
+        return render(request, 'ra/verify_candidate.html', {'candidate': candidate}, )
+    else:
+        if 'verify_yes' in request.POST:
+            registration_number = request.POST.get('registration_number')
+            candidate = Candidate.objects.get(registration_number=registration_number)
+            candidate.is_provisional_registration_number = False
+            candidate.save()
+            return HttpResponseRedirect('/candidate/candidate_profile?registration_number='+str(registration_number))
+        else:
+            return HttpResponseRedirect('/ra/')

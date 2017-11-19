@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+    <h2> RA module </h2>
+
+{% if candidate.is_provisional_registration_number %}
+    <h3> Verify candidate? </h3>
+    <form action="/ra/verify_candidate/" method="post">
+        {% csrf_token %}
+        {% if candidate.photograph %}
+            <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}"></img>
+        {% else %}
+            No photograph uploaded.
+        {% endif %}
+        <table>
+            <tr>
+                <th>Userame</th>
+                <td>{{candidate.candidate_username}}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{candidate.name}}</td>
+            </tr>
+        </table>
+
+        <input type="hidden" name="registration_number" value="{{candidate.registration_number}}" />
+        <input type="submit" name="verify_yes" value="Yes" />
+        <input type="submit" name="verify_no" value="No" />
+    </form>
+{% else %}
+    <h3> The candidate is already verified. </h3>
+{% endif %}
+
+    <a href="../">Back to RA index page</a>
+{% endblock %}

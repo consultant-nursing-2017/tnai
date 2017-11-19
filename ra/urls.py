@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^candidate_list/', views.candidate_list, name='candidate_list'),
     url(r'^employer_list/', views.employer_list, name='employer_list'),
     url(r'^advertisement_list/', views.advertisement_list, name='advertisement_list'),
+    url(r'^verify_candidate/', views.verify_candidate, name='verify_candidate'),
 #    url(r'^$', views.IndexView.as_view(), name='index'),
 ]
 #    url(r'^$', views.IndexView.as_view(), name='index'),

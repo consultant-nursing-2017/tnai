@@ -162,6 +162,7 @@ def candidate_show_hall_ticket(request):
     if not allowed:
         return render(request, 'exam/not_allowed.html', {'not_member_of_group': 'Candidate'})
     candidate = Candidate.objects.get(candidate_username=username)
+    displayed_registration_number = candidate.registration_number_display()
 
     exam_id = None
     if request.method == 'GET':
@@ -189,7 +190,7 @@ def candidate_show_hall_ticket(request):
         pass
     else:
         pass
-    return render(request, 'exam/candidate_show_hall_ticket.html', {'candidate': candidate, 'exam_id': exam_id, 'exam': exam, 'booking': booking, })
+    return render(request, 'exam/candidate_show_hall_ticket.html', {'candidate': candidate, 'displayed_registration_number': displayed_registration_number, 'exam_id': exam_id, 'exam': exam, 'booking': booking, })
 
 def candidate_book_time_slot(request):
     username=auth.get_user(request)

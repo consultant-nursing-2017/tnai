@@ -392,6 +392,7 @@ def entire_profile(request):
     username = auth.get_user(request)
     allowed = is_allowed(username, request)
     updation_allowed = is_candidate_user(username, request)
+    ra_user = is_ra_user(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html',)
 
@@ -497,12 +498,9 @@ def entire_profile(request):
 
         registration_number = getattr(candidate, 'registration_number').hashid
         is_provisional_registration_number = getattr(candidate, 'is_provisional_registration_number')
-        if is_provisional_registration_number:
-            registration_number = "TNAI/REC/PROV/" + registration_number
-        else:
-            registration_number = "TNAI/REC/PERM/" + registration_number
+        displayed_registration_number = candidate.registration_number_display()
 #        pdb.set_trace()
-        return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, 'registration_number': registration_number, 'updation_allowed': updation_allowed, })
+        return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, 'registration_number': registration_number, 'displayed_registration_number': displayed_registration_number, 'updation_allowed': updation_allowed, 'ra_user': ra_user, })
 
     except ObjectDoesNotExist:
         fields = None

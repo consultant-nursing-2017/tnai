@@ -92,6 +92,14 @@ class Candidate(models.Model):
     def __str__(self):
         return self.candidate_username.username
 
+    def registration_number_display(self):
+        if self.is_provisional_registration_number:
+            displayed_registration_number = "TNAI/REC/PROV/" + str(self.registration_number)
+        else:
+            displayed_registration_number = "TNAI/REC/PERM/" + str(self.registration_number)
+
+        return displayed_registration_number
+
     def save(self, *args, **kwargs):
 #        pdb.set_trace()
         super(Candidate, self).save(*args, **kwargs)
