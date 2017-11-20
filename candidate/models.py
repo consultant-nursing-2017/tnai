@@ -79,8 +79,10 @@ class Candidate(models.Model):
     # See model below
 #   Tab 5: Passport details and misc.
     passport_number = models.CharField(max_length=50, blank=True)
-    passport_valid_from = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
-    passport_valid_to = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
+    passport_valid_from = models.DateField(blank=True, null=True, default=None)
+    passport_valid_to = models.DateField(blank=True, null=True, default=None)
+#    passport_valid_from = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
+#    passport_valid_to = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True, null=True)
     passport_place_of_issue = models.CharField(max_length=200, blank=True)
 #   Tab 6: Miscellaneous details
     TNAI_number = models.CharField(max_length=200, default="", blank=True)
