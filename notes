@@ -49,8 +49,6 @@
 - Candidate
     - filter advertisement
         - Criteria: country (for now)
-    - email verification
-        - when "done" and assigned a registration number
     - tweak personal form display: use two-column format
     - prettify link for uploaded files
 
@@ -114,6 +112,8 @@ Appearance
 - Candidate module
     - Check authorization
     - Provisional ID
+    - email verification
+        - when "done" and assigned a registration number
 - Employer
     - Check authorization
 RA module

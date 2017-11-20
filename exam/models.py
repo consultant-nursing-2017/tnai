@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from candidate.models import Candidate
-from hashid_field import HashidAutoField
+from hashid_field import HashidAutoField, HashidField
+from django.conf import settings
 
 import datetime
 import uuid
@@ -14,7 +15,7 @@ class Exam(models.Model):
             ("Only Interview", "Only Interview"),
     ]
 
-    exam_id = HashidAutoField(primary_key=True, allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    exam_id = HashidAutoField(salt=settings.HASHID_FIELD_SALT+"Exam", primary_key=True, allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     exam_type = models.CharField(max_length=100, choices=EXAM_TYPE_CHOICES, blank=False, default="Only Interview")
     name = models.CharField(max_length=500, blank=False, default="Exam1")
     date = models.DateField(blank=False, default=timezone.now)
@@ -41,7 +42,14 @@ class CandidateBookTimeSlot(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='exam_book_slot', default=None, blank=True, null=True)
     time_slot = models.ForeignKey(ExamTimeSlot, on_delete=models.CASCADE, related_name='time_slot', default=None, blank=True, null=True)
     exam_room = models.ForeignKey(ExamRoom, on_delete=models.CASCADE, related_name='exam_room', default=None, blank=True, null=True)
+    hall_ticket_number = HashidField(salt=settings.HASHID_FIELD_SALT+"Hall ticket", allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEF", null=True)
     hall_ticket_downloaded = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        super(CandidateBookTimeSlot, self).save(*args, **kwargs)
+        if not self.hall_ticket_number:
+            self.hall_ticket_number = self.pk
+        super(CandidateBookTimeSlot, self).save(*args, **kwargs)
 
 #class Profile(models.Model):
 #    user = models.OneToOneField(User, related_name='employer_profile') #1 to 1 link with Django User

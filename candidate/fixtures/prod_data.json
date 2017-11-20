@@ -96,7 +96,7 @@
     "pk": 26,
     "fields": {
         "password": "pbkdf2_sha256$36000$UWiUT7mOaPzQ$GHnjtH3WbDzhMGgn4sZKKggrvyJPyIPqPVf2mQiaj1M=",
-        "last_login": "2017-09-23T10:42:48.226Z",
+        "last_login": "2017-11-20T09:45:59.092Z",
         "is_superuser": false,
         "username": "anand.42@gmail.com",
         "first_name": "",
@@ -281,6 +281,14 @@
 },
 {
     "model": "sessions.session",
+    "pk": "h5uze0rig58mjy5mj7lamr1vfbtahhpa",
+    "fields": {
+        "session_data": "NjBhZjBjMDZmYjlhYWNkNzkzOGNlMzhiNDc4OWNmNzAyOGUzMmFiODp7Il9hdXRoX3VzZXJfaGFzaCI6ImMyNzM3NTQ0YjFmNjVhMWUzMWRhNTQ4YWIxMTVkMzk1ZjNkZjM4YzgiLCJfYXV0aF91c2VyX2lkIjoiMjYiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJ0bmFpLmJhY2tlbmRzLkNhc2VJbnNlbnNpdGl2ZU1vZGVsQmFja2VuZCJ9",
+        "expire_date": "2017-12-04T09:45:59.147Z"
+    }
+},
+{
+    "model": "sessions.session",
     "pk": "j7j7ok9b8hcg0p6gf47egcgy8htajpl7",
     "fields": {
         "session_data": "MDA3ZjMxMmFiMmQ0MWQyZGMxMmVhNjI4OTkzN2ZjNDNhYWRlZjEzYTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjMyIiwiX2F1dGhfdXNlcl9oYXNoIjoiNzNjNTAyMDZiNmM5NzQ0YzdjNzQxYTAxOWJjNjRmNjlhOTRiZjQ4YyJ9",
@@ -301,14 +309,6 @@
     "fields": {
         "session_data": "ZjY0YzVhOTkzZGQxNmQ4M2E5NjZjZWVhNDM4MTAyNWQ3YzU3NGQ3Nzp7Il9hdXRoX3VzZXJfaWQiOiIzMyIsIl9hdXRoX3VzZXJfaGFzaCI6IjM3ZDE1MzQ5YWVlNjFjZDY0MGEyZDU2MTYzNmM2N2Q5ZDVlNWJiNzQiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCJ9",
         "expire_date": "2017-10-09T17:51:46.380Z"
-    }
-},
-{
-    "model": "sessions.session",
-    "pk": "nwg0gc9923r89vfzx1l17kx4lbgb4yxl",
-    "fields": {
-        "session_data": "YWFjYTBiNTIxMjFjYmFkMzI3ODY3ZTEwOTY3ZmVmZDVmZDc2ZWZhMTp7Il9hdXRoX3VzZXJfaGFzaCI6ImEyZDdlZDJkYjkyNjI1NzgyMGQ4ODVjNTI2YWQ5NmZmYThkOTkzNWUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJ0bmFpLmJhY2tlbmRzLkNhc2VJbnNlbnNpdGl2ZU1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxOSJ9",
-        "expire_date": "2017-12-04T05:55:37.865Z"
     }
 },
 {
@@ -427,13 +427,14 @@
         "district": "Delhi",
         "pin_code": "110078",
         "passport_number": "",
-        "passport_valid_from": "2017-05-11",
+        "passport_valid_from": null,
         "passport_valid_to": null,
         "passport_place_of_issue": "",
         "TNAI_number": "",
         "preference_of_work": "",
         "registration_number": "R6Y8MYW",
-        "is_provisional_registration_number": true
+        "is_provisional_registration_number": true,
+        "sent_email_notification_provisional_registration_number": false
     }
 },
 {
@@ -465,39 +466,8 @@
         "TNAI_number": "",
         "preference_of_work": "Foreign",
         "registration_number": "ZV76K7J",
-        "is_provisional_registration_number": true
-    }
-},
-{
-    "model": "candidate.candidate",
-    "pk": 5,
-    "fields": {
-        "candidate_username": 26,
-        "photograph": "candidate/anand.42@gmail.com/personal/spongebob_1_150x150_png_by_somemilk_Z9ikaCD.png",
-        "curriculum_vitae": "",
-        "name": "Name",
-        "fathers_name": "Father's Name",
-        "date_of_birth": "2016-09-12",
-        "gender": "Male",
-        "marital_status": "Single",
-        "phone_number": "9810117638",
-        "house_number": "Address Line 1",
-        "area_locality": "Locality",
-        "street_name": "Street Nae",
-        "village_PS_PO": "PS/PO/Village",
-        "country": "India",
-        "state": "Delhi",
-        "city": "Delhi",
-        "district": "Delhi",
-        "pin_code": "110078",
-        "passport_number": "",
-        "passport_valid_from": null,
-        "passport_valid_to": null,
-        "passport_place_of_issue": "",
-        "TNAI_number": "",
-        "preference_of_work": "India",
-        "registration_number": "9AYXZ24",
-        "is_provisional_registration_number": true
+        "is_provisional_registration_number": true,
+        "sent_email_notification_provisional_registration_number": false
     }
 },
 {
@@ -529,7 +499,8 @@
         "TNAI_number": "210432",
         "preference_of_work": "Both",
         "registration_number": "EPY9V2X",
-        "is_provisional_registration_number": true
+        "is_provisional_registration_number": true,
+        "sent_email_notification_provisional_registration_number": false
     }
 },
 {
@@ -561,7 +532,8 @@
         "TNAI_number": "123456",
         "preference_of_work": "India",
         "registration_number": "W6Y542D",
-        "is_provisional_registration_number": false
+        "is_provisional_registration_number": false,
+        "sent_email_notification_provisional_registration_number": false
     }
 },
 {
@@ -593,7 +565,41 @@
         "TNAI_number": "261197",
         "preference_of_work": "Both",
         "registration_number": "ZE2VR7J",
-        "is_provisional_registration_number": true
+        "is_provisional_registration_number": true,
+        "sent_email_notification_provisional_registration_number": false
+    }
+},
+{
+    "model": "candidate.candidate",
+    "pk": 10,
+    "fields": {
+        "candidate_username": 26,
+        "photograph": "",
+        "curriculum_vitae": "",
+        "name": "Name",
+        "fathers_name": "Father's Name",
+        "date_of_birth": "1980-11-11",
+        "gender": "Male",
+        "marital_status": "Single",
+        "phone_number": "9810117638",
+        "house_number": "Address Line 1",
+        "area_locality": "Locality",
+        "street_name": "Street Nae",
+        "village_PS_PO": "PS/PO/Village",
+        "country": "India",
+        "state": "Delhi",
+        "city": "Delhi",
+        "district": "Delhi",
+        "pin_code": "110078",
+        "passport_number": "",
+        "passport_valid_from": null,
+        "passport_valid_to": null,
+        "passport_place_of_issue": "",
+        "TNAI_number": "",
+        "preference_of_work": "",
+        "registration_number": "3AYD37Z",
+        "is_provisional_registration_number": true,
+        "sent_email_notification_provisional_registration_number": true
     }
 },
 {
@@ -654,36 +660,6 @@
         "percentage": 75,
         "proof": "",
         "year_completed": 2001
-    }
-},
-{
-    "model": "candidate.educationalqualifications",
-    "pk": 9,
-    "fields": {
-        "candidate": 5,
-        "class_degree": "10th",
-        "institute_name": "",
-        "university_board_council": "",
-        "marks_obtained": 0,
-        "total_marks": 100,
-        "percentage": 0,
-        "proof": "candidate/anand.42@gmail.com/qualifications/10th/login.jpg",
-        "year_completed": 1974
-    }
-},
-{
-    "model": "candidate.educationalqualifications",
-    "pk": 10,
-    "fields": {
-        "candidate": 5,
-        "class_degree": "12th/Equivalent",
-        "institute_name": "",
-        "university_board_council": "",
-        "marks_obtained": 0,
-        "total_marks": 100,
-        "percentage": 0,
-        "proof": "",
-        "year_completed": null
     }
 },
 {
@@ -949,86 +925,6 @@
         "proof": "",
         "date_from": "2011-10-01",
         "date_to": "2013-10-01"
-    }
-},
-{
-    "model": "candidate.professionalqualifications",
-    "pk": 21,
-    "fields": {
-        "candidate": 5,
-        "class_degree": "ANM",
-        "institute_name": "",
-        "university_board_council": "",
-        "marks_obtained": 0,
-        "total_marks": 100,
-        "percentage": 0,
-        "proof": "",
-        "date_from": "2015-10-01",
-        "date_to": "2015-12-01"
-    }
-},
-{
-    "model": "candidate.professionalqualifications",
-    "pk": 22,
-    "fields": {
-        "candidate": 5,
-        "class_degree": "GNM",
-        "institute_name": "",
-        "university_board_council": "",
-        "marks_obtained": 0,
-        "total_marks": 100,
-        "percentage": 0,
-        "proof": "",
-        "date_from": null,
-        "date_to": null
-    }
-},
-{
-    "model": "candidate.professionalqualifications",
-    "pk": 23,
-    "fields": {
-        "candidate": 5,
-        "class_degree": "B. Sc.(N)",
-        "institute_name": "",
-        "university_board_council": "",
-        "marks_obtained": 0,
-        "total_marks": 100,
-        "percentage": 0,
-        "proof": "",
-        "date_from": null,
-        "date_to": null
-    }
-},
-{
-    "model": "candidate.professionalqualifications",
-    "pk": 24,
-    "fields": {
-        "candidate": 5,
-        "class_degree": "P. B. B. Sc.(N)",
-        "institute_name": "",
-        "university_board_council": "",
-        "marks_obtained": 0,
-        "total_marks": 100,
-        "percentage": 0,
-        "proof": "",
-        "date_from": null,
-        "date_to": null
-    }
-},
-{
-    "model": "candidate.professionalqualifications",
-    "pk": 25,
-    "fields": {
-        "candidate": 5,
-        "class_degree": "M. Sc.(N)",
-        "institute_name": "",
-        "university_board_council": "",
-        "marks_obtained": 0,
-        "total_marks": 100,
-        "percentage": 0,
-        "proof": "",
-        "date_from": null,
-        "date_to": null
     }
 },
 {
@@ -1358,23 +1254,6 @@
 },
 {
     "model": "candidate.additionalqualifications",
-    "pk": 12,
-    "fields": {
-        "candidate": 5,
-        "class_degree": "",
-        "institute_name": "",
-        "university_board_council": "",
-        "marks_obtained": 0,
-        "total_marks": 100,
-        "percentage": 0,
-        "proof": "",
-        "course_topic": null,
-        "date_from": null,
-        "date_to": null
-    }
-},
-{
-    "model": "candidate.additionalqualifications",
     "pk": 13,
     "fields": {
         "candidate": 6,
@@ -1405,114 +1284,6 @@
         "course_topic": "Nursing",
         "date_from": "2020-12-01",
         "date_to": "2025-12-01"
-    }
-},
-{
-    "model": "candidate.eligibilitytests",
-    "pk": 50,
-    "fields": {
-        "candidate": 5,
-        "eligibility_tests": "Prometric (Saudi Arabia)",
-        "score_grade_marks": null,
-        "completed_on": null,
-        "valid_up_to": null,
-        "eligibility_proof": ""
-    }
-},
-{
-    "model": "candidate.eligibilitytests",
-    "pk": 51,
-    "fields": {
-        "candidate": 5,
-        "eligibility_tests": "Prometric (UAE)",
-        "score_grade_marks": null,
-        "completed_on": null,
-        "valid_up_to": null,
-        "eligibility_proof": ""
-    }
-},
-{
-    "model": "candidate.eligibilitytests",
-    "pk": 52,
-    "fields": {
-        "candidate": 5,
-        "eligibility_tests": "Prometric (Qatar)",
-        "score_grade_marks": null,
-        "completed_on": null,
-        "valid_up_to": null,
-        "eligibility_proof": ""
-    }
-},
-{
-    "model": "candidate.eligibilitytests",
-    "pk": 53,
-    "fields": {
-        "candidate": 5,
-        "eligibility_tests": "HAAD",
-        "score_grade_marks": null,
-        "completed_on": null,
-        "valid_up_to": null,
-        "eligibility_proof": ""
-    }
-},
-{
-    "model": "candidate.eligibilitytests",
-    "pk": 54,
-    "fields": {
-        "candidate": 5,
-        "eligibility_tests": "DHA",
-        "score_grade_marks": null,
-        "completed_on": null,
-        "valid_up_to": null,
-        "eligibility_proof": ""
-    }
-},
-{
-    "model": "candidate.eligibilitytests",
-    "pk": 55,
-    "fields": {
-        "candidate": 5,
-        "eligibility_tests": "IELTS",
-        "score_grade_marks": null,
-        "completed_on": null,
-        "valid_up_to": null,
-        "eligibility_proof": ""
-    }
-},
-{
-    "model": "candidate.eligibilitytests",
-    "pk": 56,
-    "fields": {
-        "candidate": 5,
-        "eligibility_tests": "CGFNS",
-        "score_grade_marks": null,
-        "completed_on": null,
-        "valid_up_to": null,
-        "eligibility_proof": ""
-    }
-},
-{
-    "model": "candidate.eligibilitytests",
-    "pk": 57,
-    "fields": {
-        "candidate": 5,
-        "eligibility_tests": "TOEFL",
-        "score_grade_marks": null,
-        "completed_on": null,
-        "valid_up_to": null,
-        "eligibility_proof": ""
-    }
-},
-{
-    "model": "candidate.eligibilitytests",
-    "pk": 58,
-    "fields": {
-        "candidate": 5,
-        "eligibility_tests": "OET",
-        "score_grade_marks": null,
-        "completed_on": null,
-        "valid_up_to": null,
-        "eligibility_proof": ""
     }
 },
 {
@@ -1642,19 +1413,6 @@
         "specialty": "LECTURER",
         "date_from": "2015-08-17",
         "date_to": "2016-08-17",
-        "proof": ""
-    }
-},
-{
-    "model": "candidate.experience",
-    "pk": 13,
-    "fields": {
-        "candidate": 5,
-        "institution": "",
-        "country": "",
-        "specialty": "",
-        "date_from": "2015-01-01",
-        "date_to": "2017-01-01",
         "proof": ""
     }
 },
@@ -2859,18 +2617,6 @@
     }
 },
 {
-    "model": "candidate.statenursingcouncil",
-    "pk": 216,
-    "fields": {
-        "candidate": 5,
-        "course": "ANM",
-        "state": "",
-        "registration_number": "",
-        "year": null,
-        "proof": ""
-    }
-},
-{
     "model": "exam.exam",
     "pk": "R6Y8MYW",
     "fields": {
@@ -2996,6 +2742,7 @@
         "exam": "R6Y8MYW",
         "time_slot": 3,
         "exam_room": null,
+        "hall_ticket_number": "4D94A89",
         "hall_ticket_downloaded": false
     }
 },
@@ -3007,6 +2754,7 @@
         "exam": "NW2W57E",
         "time_slot": 6,
         "exam_room": null,
+        "hall_ticket_number": "3E9E479",
         "hall_ticket_downloaded": false
     }
 },
