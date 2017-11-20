@@ -79,7 +79,7 @@ class PersonalForm(ModelForm):
 class EducationalQualificationsForm(ModelForm):
     class Meta:
         model = EducationalQualifications
-        fields = ['class_degree', 'institute_name', 'university_board_council', 'year_from', 'year_to', 'marks_obtained', 'total_marks', 'percentage', 'proof']
+        fields = ['class_degree', 'institute_name', 'university_board_council', 'year_completed', 'marks_obtained', 'total_marks', 'percentage', 'proof']
 #        exclude = ['candidate']
         labels = {'university_board_council': 'University/Board', 'class_degree': 'Class/Degree', 'percentage': 'Percent'}
         widgets = {

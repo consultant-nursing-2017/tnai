@@ -128,8 +128,9 @@ class Qualifications(models.Model):
         abstract = True
 
 class EducationalQualifications(Qualifications):
-    year_from = FormYearField(blank=True, null=True)
-    year_to = FormYearField(blank=True, null=True)
+    year_completed = FormYearField(blank=True, null=True)
+#    year_from = FormYearField(blank=True, null=True)
+#    year_to = FormYearField(blank=True, null=True)
 
 class ProfessionalQualifications(Qualifications):
     date_from = models.DateField(blank=True, null=True)
