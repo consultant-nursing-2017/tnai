@@ -90,6 +90,7 @@ class Candidate(models.Model):
 
     registration_number = HashidField(allow_int_lookup=True, null=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", default=None)
     is_provisional_registration_number = models.BooleanField(default=True, editable=False)
+    sent_email_notification_provisional_registration_number = models.BooleanField(default=False, editable=False)
 
     def __str__(self):
         return self.candidate_username.username

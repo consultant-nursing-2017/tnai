@@ -497,13 +497,25 @@ def entire_profile(request):
                 experience_collection[index].append(experience_list[index].get(field[1]))
 
         registration_number_raw = candidate.registration_number
-        if registration_number_raw is None:
-            candidate.registration_number = candidate.pk
-            candidate.save()
-            registration_number_raw = candidate.registration_number
         registration_number = registration_number_raw.hashid
         is_provisional_registration_number = getattr(candidate, 'is_provisional_registration_number')
         displayed_registration_number = candidate.registration_number_display()
+
+        if candidate.sent_email_notification_provisional_registration_number is False:
+            current_site = get_current_site(request)
+            user = candidate.candidate_username
+            message = render_to_string('candidate/provisional_registration_number_email.html', {
+                'user':user, 
+                'domain':current_site.domain,
+                'registration_number_display': candidate.registration_number_display()
+            })
+            mail_subject = 'Your provisional TNAI recruitment registration number'
+            to_email = candidate.candidate_username.username
+            email = EmailMessage(mail_subject, message, to=[to_email])
+            result = email.send()
+            if result:
+                candidate.sent_email_notification_provisional_registration_number = True
+                candidate.save()
 
 #        pdb.set_trace()
         return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, 'registration_number': registration_number, 'displayed_registration_number': displayed_registration_number, 'updation_allowed': updation_allowed, 'ra_user': ra_user, })
