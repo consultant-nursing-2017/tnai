@@ -223,6 +223,12 @@ class StateNursingCouncilForm(ModelForm):
 #        fields = ['course', 'state', 'registration_number', 'year', 'proof', ]
 
 class PassportAndMiscForm(ModelForm):
+    def validate_passport_date_from_past(value):
+        if value > datetime.date.today():
+            raise ValidationError(_("Date must be in the past."), code='invalid_year')
+
+    passport_valid_from = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%y', '%d.%m.%Y'], required=False, label='Passport valid from', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}), validators=[validate_passport_date_from_past])
+    passport_valid_to = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%y', '%d.%m.%Y'], required=False, label='Passport valid to', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}), )
     class Meta:
         model = Candidate
         fields = ['passport_number', 'passport_valid_from', 'passport_valid_to', 'passport_place_of_issue', 'TNAI_number', 'preference_of_work']
@@ -239,8 +245,8 @@ class PassportAndMiscForm(ModelForm):
         cleaned_data = super (ModelForm, self).clean()
         preference_of_work = cleaned_data.get("preference_of_work")
         errors = []
-        if preference_of_work is not None and preference_of_work != 'India' and not self.check_passport_data(cleaned_data):
-            errors.append(forms.ValidationError(_("If preference of work is not in India, then passport data must be valid."), code='invalid_year'))
+        if preference_of_work is not None and len(preference_of_work) > 0 and preference_of_work != 'India' and not self.check_passport_data(cleaned_data):
+            errors.append(forms.ValidationError(_("If preference of work is 'Foreign' or 'Both', passport details are mandatory."), code='invalid_year'))
         if errors:
             raise ValidationError(errors)
 
