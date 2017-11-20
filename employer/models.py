@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from candidate.models import EligibilityTests
+from tnai.validators import ValidateFileExtension
 
 import datetime
 import uuid
@@ -32,8 +33,8 @@ class Employer(models.Model):
     website = models.URLField(max_length=200, default="http://example.com")
     phone = models.CharField(max_length=200, default="9810117638")
 #    registration_certification = models.CharField(max_length=200, default="")
-    registration_certification = models.FileField(default="")
-    authorized_signatory_id_proof = models.FileField(default=None)
+    registration_certification = models.FileField(default="", validators=[ValidateFileExtension.validate_file])
+    authorized_signatory_id_proof = models.FileField(default=None, validators=[ValidateFileExtension.validate_file])
     total_employees = models.IntegerField(default=0)
     annual_recruitment_of_indians = models.IntegerField(default=0)
     nurses_degree = models.IntegerField(default=0)

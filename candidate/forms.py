@@ -12,6 +12,7 @@ from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.validators import validate_image_file_extension
+from tnai.validators import ValidateFileExtension
 
 import pdb
     
