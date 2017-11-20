@@ -1,0 +1,3520 @@
+[
+{
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "Employer",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+        "name": "Candidate",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 3,
+    "fields": {
+        "name": "TNAI",
+        "permissions": [
+            10,
+            11,
+            12,
+            22,
+            23,
+            24,
+            19,
+            20,
+            21
+        ]
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$JFWPLcFEdudN$pWPWfEwHYPPKcF7sUBtM0hhoJ5i4BGvdhjoRgRnVU0k=",
+        "last_login": "2017-09-21T08:27:13.801Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "consultant.nursing.2017@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2017-08-01T06:19:32Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 19,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$zE0rHMA89Ewj$n81oiDJ+Iihxhzzk28gCgVISNZqLWvHOuyC/BmyWSnM=",
+        "last_login": "2017-11-20T05:55:37.708Z",
+        "is_superuser": false,
+        "username": "consultant.nursing.2017@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-09-02T16:56:51.809Z",
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 25,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$R5EfCz7XhVJl$ESEIFAZxuVTq/pCBB5yTenujGISx8Jq+kk4lQeF7yeM=",
+        "last_login": "2017-09-13T08:53:30.018Z",
+        "is_superuser": false,
+        "username": "munna.ajinas09@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-09-12T08:42:20.689Z",
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 26,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$UWiUT7mOaPzQ$GHnjtH3WbDzhMGgn4sZKKggrvyJPyIPqPVf2mQiaj1M=",
+        "last_login": "2017-09-23T10:42:48.226Z",
+        "is_superuser": false,
+        "username": "anand.42@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-09-12T12:21:23.986Z",
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 27,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$90nevBg8NPbP$rNPT4JoMyAKnycWxb/4bKtcwVgyc9O12npMsNzaGXFA=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "evelynpkannan@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": false,
+        "date_joined": "2017-09-12T13:20:42.123Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 28,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$lxHDV3qWTjOW$SeJW5unUOepdUDdVauuYiUwRFQrAFXGfI1x8Y+DVbLM=",
+        "last_login": "2017-09-12T14:22:01.571Z",
+        "is_superuser": false,
+        "username": "raznamakkar009@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-09-12T13:22:06.435Z",
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 29,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$0LDh1hCdBD4J$QeIN27n8uDsVZ8yUJUy06MdCXB7UpPAvoZ6RbAi6B1I=",
+        "last_login": "2017-09-12T14:10:07.866Z",
+        "is_superuser": false,
+        "username": "vprashantsharma@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-09-12T13:26:21.095Z",
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 30,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$2HHec0voGNJd$9T3vxjkvnk56VDNmUWNfVjlktaWjaV+vYpDtCi0IFWE=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "prashantsharma@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": false,
+        "date_joined": "2017-09-12T13:28:36.287Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 31,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$nAnO4WQrmEKy$bt51cGJbtSMM8iPF/LqFcDo2tJrIx8Q+fw8fpVLerSU=",
+        "last_login": "2017-09-21T11:56:12.873Z",
+        "is_superuser": false,
+        "username": "tnaitesting@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-09-14T09:14:12.280Z",
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 32,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$gurOSAMlR8fH$4/syKBvt5YpShIQx25YXeZbG1u4ugy+yHZxu8GlCVxY=",
+        "last_login": "2017-11-19T16:00:16.406Z",
+        "is_superuser": false,
+        "username": "ra-user1",
+        "first_name": "RA User1",
+        "last_name": "",
+        "email": "consultant.nursing.2017@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-09-21T08:27:56Z",
+        "groups": [
+            3
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 33,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$2ZrWwc1LSWUR$84brGz7V1Wlc9lpMMksUK8v9iFEGTv+yaXpJszF6gOc=",
+        "last_login": "2017-11-14T14:14:29.399Z",
+        "is_superuser": false,
+        "username": "belrogue4@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-09-25T17:47:55.725Z",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "0crdfk7a05t5xiujns1pursra2kwoq4t",
+    "fields": {
+        "session_data": "Yjc3Y2Q5ZjhmOTMyNmUyNDNkYjNkMjQ4MGI3YjkyOGVmY2I3ODc3NDp7Il9hdXRoX3VzZXJfaWQiOiIyNiIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiYzI3Mzc1NDRiMWY2NWExZTMxZGE1NDhhYjExNWQzOTVmM2RmMzhjOCJ9",
+        "expire_date": "2017-10-11T14:09:13.112Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "4hwretcyzplxcbx1kjcr6rr35k86d0ou",
+    "fields": {
+        "session_data": "NmFmN2FiMzg0NzkzMDkzMGRjZGI4YTJkMWEzMmZiOGIyYjc1OGUwMjp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiNzNjNTAyMDZiNmM5NzQ0YzdjNzQxYTAxOWJjNjRmNjlhOTRiZjQ4YyIsIl9hdXRoX3VzZXJfaWQiOiIzMiJ9",
+        "expire_date": "2017-10-07T10:57:46.872Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "56qohxaat7rvxghfu2kv7y0gbk0kctrz",
+    "fields": {
+        "session_data": "MmY5ODMyYThhMzcxZTc3NmE4NzU5ZGIyOTYzOGY5YTY4MzA5YTY3ZTp7Il9hdXRoX3VzZXJfaGFzaCI6ImMyNzM3NTQ0YjFmNjVhMWUzMWRhNTQ4YWIxMTVkMzk1ZjNkZjM4YzgiLCJfYXV0aF91c2VyX2lkIjoiMjYiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCJ9",
+        "expire_date": "2017-10-11T12:47:50.894Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "g3vobuhuc4mo0144483pzb5t65jjkv2a",
+    "fields": {
+        "session_data": "OTMyZTMyZTcwOTI4YzBiYTNmM2QxNDk1OGRkMWQ4ODIwYmJhZjIwYzp7Il9hdXRoX3VzZXJfaGFzaCI6IjRjZDhhMjc0NTFmMjhiMjhiNjkxNWFhMDZhODE3NjU2YjJiZGZkMDAiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIyMiJ9",
+        "expire_date": "2017-09-24T10:24:38.295Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "j7j7ok9b8hcg0p6gf47egcgy8htajpl7",
+    "fields": {
+        "session_data": "MDA3ZjMxMmFiMmQ0MWQyZGMxMmVhNjI4OTkzN2ZjNDNhYWRlZjEzYTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjMyIiwiX2F1dGhfdXNlcl9oYXNoIjoiNzNjNTAyMDZiNmM5NzQ0YzdjNzQxYTAxOWJjNjRmNjlhOTRiZjQ4YyJ9",
+        "expire_date": "2017-10-11T10:55:34.145Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "k734srsduwadbj8o278rn6afnvb4l5hd",
+    "fields": {
+        "session_data": "MDM2ZDI4YTI3N2UxOWM1ZDI4YTczMmE2YzhkYmI0MWYyNzY1M2NkOTp7Il9hdXRoX3VzZXJfaWQiOiIyNiIsIl9hdXRoX3VzZXJfaGFzaCI6ImMyNzM3NTQ0YjFmNjVhMWUzMWRhNTQ4YWIxMTVkMzk1ZjNkZjM4YzgiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCJ9",
+        "expire_date": "2017-09-28T09:11:29.360Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "lmpp80x9poyv4lnhjzhglgzf2dkcwzue",
+    "fields": {
+        "session_data": "ZjY0YzVhOTkzZGQxNmQ4M2E5NjZjZWVhNDM4MTAyNWQ3YzU3NGQ3Nzp7Il9hdXRoX3VzZXJfaWQiOiIzMyIsIl9hdXRoX3VzZXJfaGFzaCI6IjM3ZDE1MzQ5YWVlNjFjZDY0MGEyZDU2MTYzNmM2N2Q5ZDVlNWJiNzQiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCJ9",
+        "expire_date": "2017-10-09T17:51:46.380Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "nwg0gc9923r89vfzx1l17kx4lbgb4yxl",
+    "fields": {
+        "session_data": "YWFjYTBiNTIxMjFjYmFkMzI3ODY3ZTEwOTY3ZmVmZDVmZDc2ZWZhMTp7Il9hdXRoX3VzZXJfaGFzaCI6ImEyZDdlZDJkYjkyNjI1NzgyMGQ4ODVjNTI2YWQ5NmZmYThkOTkzNWUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJ0bmFpLmJhY2tlbmRzLkNhc2VJbnNlbnNpdGl2ZU1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxOSJ9",
+        "expire_date": "2017-12-04T05:55:37.865Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "qc0xgdloq0j8nlvn0u4g407fomp2si67",
+    "fields": {
+        "session_data": "YzkxNzllMDkwYzYzMjM2NzUwMjQ4YWEzOGJlMzk2ZWZlNzRjYzUzYjp7Il9hdXRoX3VzZXJfaWQiOiI2IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI3MDE2MGExMjMyMWNjMTExNDM5MTY2MjUwMWE2YWExYmZmOGUyNmJiIn0=",
+        "expire_date": "2017-08-26T13:28:55.266Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "w4hrkg7yidwpw4kijmn0twak3fx8dl2v",
+    "fields": {
+        "session_data": "ZjQ0MjhiMTUxZDU3YjI3NjI3YjNmNzM0YTBjNmVjZTk2MmMxYmFkNDp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiNmE4YjY0ZWVlZmU1MTY5OGVmNzg5OTRkOThiMjdmNDRmMzBmNDViNSIsIl9hdXRoX3VzZXJfaWQiOiIyMCJ9",
+        "expire_date": "2017-09-20T10:58:43.020Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "wpu53i8g8zz0xuvms8buhnzawtqtxcks",
+    "fields": {
+        "session_data": "ODk1OTgwZWRkYjRjYzhlYmMzOTU3OTZjZTNiMjY1ZDc4ZjE3YTJlMjp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9oYXNoIjoiOGUyYTVkZjI0MjI3YTIwZWJjZTdmMTZhMGU1ZDFkOTMwMGUyNmMxMyIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=",
+        "expire_date": "2017-08-15T10:23:08.977Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "ywkvtqsrsfuyvytf4bnz6gj47kyh4457",
+    "fields": {
+        "session_data": "MmY5ODMyYThhMzcxZTc3NmE4NzU5ZGIyOTYzOGY5YTY4MzA5YTY3ZTp7Il9hdXRoX3VzZXJfaGFzaCI6ImMyNzM3NTQ0YjFmNjVhMWUzMWRhNTQ4YWIxMTVkMzk1ZjNkZjM4YzgiLCJfYXV0aF91c2VyX2lkIjoiMjYiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCJ9",
+        "expire_date": "2017-10-07T10:42:48.278Z"
+    }
+},
+{
+    "model": "employer.employer",
+    "pk": 10,
+    "fields": {
+        "employer_username": 33,
+        "country": "Foreign",
+        "employer_name": "Foreign",
+        "employer_registration": "ABC-1234",
+        "employer_type": "Private",
+        "authorized_signatory": "Auth 123",
+        "sector": "Health",
+        "address": "abcdef",
+        "website": "http://example.com",
+        "phone": "9810117638",
+        "registration_certification": "",
+        "authorized_signatory_id_proof": "",
+        "total_employees": 0,
+        "annual_recruitment_of_indians": 0,
+        "nurses_degree": 0,
+        "nurses_diploma": 0,
+        "doctors": 0,
+        "lab_technicians": 0,
+        "pathologists": 0
+    }
+},
+{
+    "model": "employer.advertisement",
+    "pk": 1,
+    "fields": {
+        "employer_advert": 10,
+        "job_role": "Nurse",
+        "closing_date": "2017-10-26",
+        "number_of_vacancies": 20,
+        "educational_qualifications": "ANM required",
+        "eligibility_tests": "HAAD",
+        "experience": "2 years",
+        "name_of_hospital": "Hospital1",
+        "city": "Delhi",
+        "country": "India",
+        "start_date": "2017-09-26",
+        "duration_of_assignment": 5,
+        "duration_of_assignment_units": "Months",
+        "salary_number": 1200,
+        "salary_currency": "AED",
+        "allowances": "Travel",
+        "personal_accomodation": false,
+        "family_accomodation": false,
+        "accomodation_allowance": 0,
+        "accomodation_allowance_currency": "AED",
+        "maternity_leave": false,
+        "medical_facilities": "Self",
+        "visa_cost": false,
+        "air_ticket_for_joining": false,
+        "air_ticket_for_vacation": false,
+        "annual_leave_days": 14,
+        "other_notes": "",
+        "life_insurance": 0,
+        "life_insurance_currency": "AED",
+        "ad_uuid": ""
+    }
+},
+{
+    "model": "candidate.candidate",
+    "pk": 1,
+    "fields": {
+        "candidate_username": 19,
+        "photograph": "",
+        "curriculum_vitae": "",
+        "name": "Name1",
+        "fathers_name": "Father's Name",
+        "date_of_birth": "2017-09-01",
+        "gender": "Male",
+        "marital_status": "Single",
+        "phone_number": "9810117638",
+        "house_number": "Address Line 1",
+        "area_locality": "Locality",
+        "street_name": "Street Nae",
+        "village_PS_PO": "PS/PO/Village",
+        "country": "India",
+        "state": "Delhi",
+        "city": "Delhi",
+        "district": "Delhi",
+        "pin_code": "110078",
+        "passport_number": "",
+        "passport_valid_from": "2017-05-11",
+        "passport_valid_to": null,
+        "passport_place_of_issue": "",
+        "TNAI_number": "",
+        "preference_of_work": "",
+        "registration_number": "R6Y8MYW",
+        "is_provisional_registration_number": true
+    }
+},
+{
+    "model": "candidate.candidate",
+    "pk": 4,
+    "fields": {
+        "candidate_username": 25,
+        "photograph": "candidate/munna.ajinas09@gmail.com/personal/spongebob_1_150x150_png_by_somemilk_crgtncf.png",
+        "curriculum_vitae": "",
+        "name": "Ajinas",
+        "fathers_name": "Father's Name",
+        "date_of_birth": "2017-09-12",
+        "gender": "Male",
+        "marital_status": "Married",
+        "phone_number": "9810117638",
+        "house_number": "Address Line 1",
+        "area_locality": "Locality",
+        "street_name": "Street Nae",
+        "village_PS_PO": "PS/PO/Village",
+        "country": "India",
+        "state": "Delhi",
+        "city": "Delhi",
+        "district": "Delhi",
+        "pin_code": "110078",
+        "passport_number": "KJMNC",
+        "passport_valid_from": null,
+        "passport_valid_to": null,
+        "passport_place_of_issue": "ERNAKULAM",
+        "TNAI_number": "",
+        "preference_of_work": "Foreign",
+        "registration_number": "ZV76K7J",
+        "is_provisional_registration_number": true
+    }
+},
+{
+    "model": "candidate.candidate",
+    "pk": 5,
+    "fields": {
+        "candidate_username": 26,
+        "photograph": "candidate/anand.42@gmail.com/personal/spongebob_1_150x150_png_by_somemilk_Z9ikaCD.png",
+        "curriculum_vitae": "",
+        "name": "Name",
+        "fathers_name": "Father's Name",
+        "date_of_birth": "2016-09-12",
+        "gender": "Male",
+        "marital_status": "Single",
+        "phone_number": "9810117638",
+        "house_number": "Address Line 1",
+        "area_locality": "Locality",
+        "street_name": "Street Nae",
+        "village_PS_PO": "PS/PO/Village",
+        "country": "India",
+        "state": "Delhi",
+        "city": "Delhi",
+        "district": "Delhi",
+        "pin_code": "110078",
+        "passport_number": "",
+        "passport_valid_from": null,
+        "passport_valid_to": null,
+        "passport_place_of_issue": "",
+        "TNAI_number": "",
+        "preference_of_work": "India",
+        "registration_number": "9AYXZ24",
+        "is_provisional_registration_number": true
+    }
+},
+{
+    "model": "candidate.candidate",
+    "pk": 6,
+    "fields": {
+        "candidate_username": 28,
+        "photograph": "candidate/raznamakkar009@gmail.com/personal/14302.jpg",
+        "curriculum_vitae": "candidate/raznamakkar009@gmail.com/personal/2.jpg",
+        "name": "ajinas",
+        "fathers_name": "maitheen",
+        "date_of_birth": "1984-05-30",
+        "gender": "Male",
+        "marital_status": "Married",
+        "phone_number": "9810117638",
+        "house_number": "L-17",
+        "area_locality": "FLORENCE NIGHTINGALE LANE",
+        "street_name": "GREEN PARK MAIN",
+        "village_PS_PO": "GREEN PARK",
+        "country": "India",
+        "state": "Delhi",
+        "city": "Delhi",
+        "district": "Delhi",
+        "pin_code": "110078",
+        "passport_number": "KWEA2135J",
+        "passport_valid_from": null,
+        "passport_valid_to": null,
+        "passport_place_of_issue": "KOCHI",
+        "TNAI_number": "210432",
+        "preference_of_work": "Both",
+        "registration_number": "EPY9V2X",
+        "is_provisional_registration_number": true
+    }
+},
+{
+    "model": "candidate.candidate",
+    "pk": 7,
+    "fields": {
+        "candidate_username": 29,
+        "photograph": "candidate/vprashantsharma@gmail.com/personal/1.jpg",
+        "curriculum_vitae": "candidate/vprashantsharma@gmail.com/personal/9.jpg",
+        "name": "Prashant Sharma",
+        "fathers_name": "Lt .Suresh Sharma",
+        "date_of_birth": "2017-03-06",
+        "gender": "Male",
+        "marital_status": "Single",
+        "phone_number": "9999420669",
+        "house_number": "62 B Street No.3",
+        "area_locality": "East Laxmi Market",
+        "street_name": "3",
+        "village_PS_PO": "Laxxmi Nagar",
+        "country": "India",
+        "state": "Delhi",
+        "city": "Delhi",
+        "district": "Delhi",
+        "pin_code": "110092",
+        "passport_number": "123456",
+        "passport_valid_from": null,
+        "passport_valid_to": null,
+        "passport_place_of_issue": "Delhi",
+        "TNAI_number": "123456",
+        "preference_of_work": "India",
+        "registration_number": "W6Y542D",
+        "is_provisional_registration_number": false
+    }
+},
+{
+    "model": "candidate.candidate",
+    "pk": 9,
+    "fields": {
+        "candidate_username": 31,
+        "photograph": "candidate/tnaitesting@gmail.com/personal/SWATI_PIC.jpg",
+        "curriculum_vitae": "candidate/tnaitesting@gmail.com/personal/Bank_information.doc",
+        "name": "THOTA MALATHI",
+        "fathers_name": "T GOVINDA RAO",
+        "date_of_birth": "1989-09-01",
+        "gender": "Female",
+        "marital_status": "Single",
+        "phone_number": "9948702845",
+        "house_number": "D NO-57-24-124/1",
+        "area_locality": "THUMMADAPALEM",
+        "street_name": "KANCHARAPAEM",
+        "village_PS_PO": "PS/PO/Village",
+        "country": "VISAKHAPATANAM",
+        "state": "ANDHRAPRADESH",
+        "city": "ANDHRAPRADESH",
+        "district": "VISAKHAPATANAM",
+        "pin_code": "530008",
+        "passport_number": "K9443745",
+        "passport_valid_from": null,
+        "passport_valid_to": null,
+        "passport_place_of_issue": "VISAKHAPATANAM",
+        "TNAI_number": "261197",
+        "preference_of_work": "Both",
+        "registration_number": "ZE2VR7J",
+        "is_provisional_registration_number": true
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 1,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "10th",
+        "institute_name": "a",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "year_completed": null
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 2,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "12th/Equivalent",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "year_completed": null
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 7,
+    "fields": {
+        "candidate": 4,
+        "class_degree": "10th",
+        "institute_name": "govt school ayyankavu",
+        "university_board_council": "seconry school leaving certificate",
+        "marks_obtained": 600,
+        "total_marks": 1000,
+        "percentage": 60,
+        "proof": "candidate/munna.ajinas09@gmail.com/qualifications/10th/candidate_form_part_2_kBfivp1.jpg",
+        "year_completed": 1997
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 8,
+    "fields": {
+        "candidate": 4,
+        "class_degree": "12th/Equivalent",
+        "institute_name": "st thomas college",
+        "university_board_council": "calicut university",
+        "marks_obtained": 500,
+        "total_marks": 700,
+        "percentage": 75,
+        "proof": "",
+        "year_completed": 2001
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 9,
+    "fields": {
+        "candidate": 5,
+        "class_degree": "10th",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "candidate/anand.42@gmail.com/qualifications/10th/login.jpg",
+        "year_completed": 1974
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 10,
+    "fields": {
+        "candidate": 5,
+        "class_degree": "12th/Equivalent",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "year_completed": null
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 11,
+    "fields": {
+        "candidate": 6,
+        "class_degree": "10th",
+        "institute_name": "GOVT HS AYYANKAVU",
+        "university_board_council": "SSC BOARD",
+        "marks_obtained": 600,
+        "total_marks": 900,
+        "percentage": 60,
+        "proof": "",
+        "year_completed": 1999
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 12,
+    "fields": {
+        "candidate": 6,
+        "class_degree": "12th/Equivalent",
+        "institute_name": "ST THOMAS COLLEGE",
+        "university_board_council": "CALICUT UNIVERSITY",
+        "marks_obtained": 500,
+        "total_marks": 800,
+        "percentage": 60,
+        "proof": "",
+        "year_completed": 2001
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 13,
+    "fields": {
+        "candidate": 7,
+        "class_degree": "10th",
+        "institute_name": "CBSE",
+        "university_board_council": "",
+        "marks_obtained": 75,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "year_completed": 2000
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 14,
+    "fields": {
+        "candidate": 7,
+        "class_degree": "12th/Equivalent",
+        "institute_name": "NIOS",
+        "university_board_council": "",
+        "marks_obtained": 42,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "year_completed": 2004
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 15,
+    "fields": {
+        "candidate": 7,
+        "class_degree": "BA",
+        "institute_name": "IGNOU",
+        "university_board_council": "",
+        "marks_obtained": 51,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "year_completed": 2009
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 16,
+    "fields": {
+        "candidate": 9,
+        "class_degree": "10th",
+        "institute_name": "NAVJEEVAN PUBLIC SCHOOL, BHIMILI, VISAKHAPATANAM",
+        "university_board_council": "INDIAN CERTIFICATE OF SECONDARY EDUCATION EXAMINATION",
+        "marks_obtained": 334,
+        "total_marks": 600,
+        "percentage": 56,
+        "proof": "candidate/tnaitesting@gmail.com/qualifications/10th/IMG_20170909_212146.jpg",
+        "year_completed": 2005
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 17,
+    "fields": {
+        "candidate": 9,
+        "class_degree": "12th/Equivalent",
+        "institute_name": "SADHANA JUNIOR COLLEGE",
+        "university_board_council": "BOARD OF INTERMEDIATE EDUCATION",
+        "marks_obtained": 814,
+        "total_marks": 1000,
+        "percentage": 81,
+        "proof": "candidate/tnaitesting@gmail.com/qualifications/12th/Equivalent/12.pdf",
+        "year_completed": 2005
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 1,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "ANM",
+        "institute_name": "a",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 2,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "GNM",
+        "institute_name": "b",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 3,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "B. Sc.(N)",
+        "institute_name": "c",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 4,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "P. B. B. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 5,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "M. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 16,
+    "fields": {
+        "candidate": 4,
+        "class_degree": "ANM",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 17,
+    "fields": {
+        "candidate": 4,
+        "class_degree": "GNM",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 18,
+    "fields": {
+        "candidate": 4,
+        "class_degree": "B. Sc.(N)",
+        "institute_name": "laxmi memorial college of nursing",
+        "university_board_council": "rajiv gandhi university of health sciences",
+        "marks_obtained": 600,
+        "total_marks": 900,
+        "percentage": 75,
+        "proof": "",
+        "date_from": "2002-09-01",
+        "date_to": "2006-09-01"
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 19,
+    "fields": {
+        "candidate": 4,
+        "class_degree": "P. B. B. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 20,
+    "fields": {
+        "candidate": 4,
+        "class_degree": "M. Sc.(N)",
+        "institute_name": "indi nursing college",
+        "university_board_council": "rjiv gandhi university of helth sciences",
+        "marks_obtained": 500,
+        "total_marks": 1000,
+        "percentage": 50,
+        "proof": "",
+        "date_from": "2011-10-01",
+        "date_to": "2013-10-01"
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 21,
+    "fields": {
+        "candidate": 5,
+        "class_degree": "ANM",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": "2015-10-01",
+        "date_to": "2015-12-01"
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 22,
+    "fields": {
+        "candidate": 5,
+        "class_degree": "GNM",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 23,
+    "fields": {
+        "candidate": 5,
+        "class_degree": "B. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 24,
+    "fields": {
+        "candidate": 5,
+        "class_degree": "P. B. B. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 25,
+    "fields": {
+        "candidate": 5,
+        "class_degree": "M. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 26,
+    "fields": {
+        "candidate": 6,
+        "class_degree": "ANM",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 27,
+    "fields": {
+        "candidate": 6,
+        "class_degree": "GNM",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 28,
+    "fields": {
+        "candidate": 6,
+        "class_degree": "B. Sc.(N)",
+        "institute_name": "LAXMI MEMORIAL  CON",
+        "university_board_council": "RGUHS BANGALORE",
+        "marks_obtained": 600,
+        "total_marks": 1200,
+        "percentage": 50,
+        "proof": "",
+        "date_from": "2002-10-01",
+        "date_to": "2006-10-01"
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 29,
+    "fields": {
+        "candidate": 6,
+        "class_degree": "P. B. B. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 30,
+    "fields": {
+        "candidate": 6,
+        "class_degree": "M. Sc.(N)",
+        "institute_name": "INDIRA CON",
+        "university_board_council": "RGUHS BANGALORE",
+        "marks_obtained": 600,
+        "total_marks": 1200,
+        "percentage": 50,
+        "proof": "",
+        "date_from": "2011-10-01",
+        "date_to": "2013-10-01"
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 31,
+    "fields": {
+        "candidate": 7,
+        "class_degree": "ANM",
+        "institute_name": "St. Stephens",
+        "university_board_council": "Delhi University",
+        "marks_obtained": 95,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "candidate/vprashantsharma@gmail.com/qualifications/ANM/11.jpg",
+        "date_from": "2015-01-01",
+        "date_to": "2018-12-01"
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 32,
+    "fields": {
+        "candidate": 7,
+        "class_degree": "GNM",
+        "institute_name": "Holy Cross",
+        "university_board_council": "Kerala University",
+        "marks_obtained": 93,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "candidate/vprashantsharma@gmail.com/qualifications/GNM/10.jpg",
+        "date_from": "2019-01-01",
+        "date_to": "2021-12-01"
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 33,
+    "fields": {
+        "candidate": 7,
+        "class_degree": "B. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 34,
+    "fields": {
+        "candidate": 7,
+        "class_degree": "P. B. B. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 35,
+    "fields": {
+        "candidate": 7,
+        "class_degree": "M. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 36,
+    "fields": {
+        "candidate": 9,
+        "class_degree": "ANM",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 37,
+    "fields": {
+        "candidate": 9,
+        "class_degree": "GNM",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 38,
+    "fields": {
+        "candidate": 9,
+        "class_degree": "B. Sc.(N)",
+        "institute_name": "SMT VIJAYA LUKE COLLEGE OF NURSING, VISAKHAPATANAM",
+        "university_board_council": "DR N T R UNIVERSITY OF HEALTH SCIENCES, ANDHRAPRADESH",
+        "marks_obtained": 600,
+        "total_marks": 1200,
+        "percentage": 50,
+        "proof": "candidate/tnaitesting@gmail.com/qualifications/B. Sc.(N)/DEGREE.pdf",
+        "date_from": "2007-12-01",
+        "date_to": "2011-11-01"
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 39,
+    "fields": {
+        "candidate": 9,
+        "class_degree": "P. B. B. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.professionalqualifications",
+    "pk": 40,
+    "fields": {
+        "candidate": 9,
+        "class_degree": "M. Sc.(N)",
+        "institute_name": "SRI RAMACHANDRA COLLEGE OF NURSING",
+        "university_board_council": "SRI RAMACHANDRA UNIVERSITY",
+        "marks_obtained": 985,
+        "total_marks": 1400,
+        "percentage": 65,
+        "proof": "candidate/tnaitesting@gmail.com/qualifications/M. Sc.(N)/PG_2.pdf",
+        "date_from": "2013-07-01",
+        "date_to": "2015-07-01"
+    }
+},
+{
+    "model": "candidate.additionalqualifications",
+    "pk": 1,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "ANM",
+        "institute_name": "d",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "course_topic": null,
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.additionalqualifications",
+    "pk": 2,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "GNM",
+        "institute_name": "e",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "course_topic": null,
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.additionalqualifications",
+    "pk": 3,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "B. Sc.(N)",
+        "institute_name": "g",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "course_topic": null,
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.additionalqualifications",
+    "pk": 4,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "P. B. B. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "course_topic": null,
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.additionalqualifications",
+    "pk": 5,
+    "fields": {
+        "candidate": 1,
+        "class_degree": "M. Sc.(N)",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "course_topic": null,
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.additionalqualifications",
+    "pk": 12,
+    "fields": {
+        "candidate": 5,
+        "class_degree": "",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "course_topic": null,
+        "date_from": null,
+        "date_to": null
+    }
+},
+{
+    "model": "candidate.additionalqualifications",
+    "pk": 13,
+    "fields": {
+        "candidate": 6,
+        "class_degree": "DIPLOMA",
+        "institute_name": "FR MULLER NURSING",
+        "university_board_council": "NA",
+        "marks_obtained": 200,
+        "total_marks": 400,
+        "percentage": 50,
+        "proof": "",
+        "course_topic": "DIALYSIS NURSING",
+        "date_from": "2011-10-01",
+        "date_to": "2011-10-01"
+    }
+},
+{
+    "model": "candidate.additionalqualifications",
+    "pk": 14,
+    "fields": {
+        "candidate": 7,
+        "class_degree": "PG Diploma",
+        "institute_name": "IGNOU",
+        "university_board_council": "IGNOU",
+        "marks_obtained": 95,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "candidate/vprashantsharma@gmail.com/qualifications/PG Diploma/5.jpg",
+        "course_topic": "Nursing",
+        "date_from": "2020-12-01",
+        "date_to": "2025-12-01"
+    }
+},
+{
+    "model": "candidate.eligibilitytests",
+    "pk": 50,
+    "fields": {
+        "candidate": 5,
+        "eligibility_tests": "Prometric (Saudi Arabia)",
+        "score_grade_marks": null,
+        "completed_on": null,
+        "valid_up_to": null,
+        "eligibility_proof": ""
+    }
+},
+{
+    "model": "candidate.eligibilitytests",
+    "pk": 51,
+    "fields": {
+        "candidate": 5,
+        "eligibility_tests": "Prometric (UAE)",
+        "score_grade_marks": null,
+        "completed_on": null,
+        "valid_up_to": null,
+        "eligibility_proof": ""
+    }
+},
+{
+    "model": "candidate.eligibilitytests",
+    "pk": 52,
+    "fields": {
+        "candidate": 5,
+        "eligibility_tests": "Prometric (Qatar)",
+        "score_grade_marks": null,
+        "completed_on": null,
+        "valid_up_to": null,
+        "eligibility_proof": ""
+    }
+},
+{
+    "model": "candidate.eligibilitytests",
+    "pk": 53,
+    "fields": {
+        "candidate": 5,
+        "eligibility_tests": "HAAD",
+        "score_grade_marks": null,
+        "completed_on": null,
+        "valid_up_to": null,
+        "eligibility_proof": ""
+    }
+},
+{
+    "model": "candidate.eligibilitytests",
+    "pk": 54,
+    "fields": {
+        "candidate": 5,
+        "eligibility_tests": "DHA",
+        "score_grade_marks": null,
+        "completed_on": null,
+        "valid_up_to": null,
+        "eligibility_proof": ""
+    }
+},
+{
+    "model": "candidate.eligibilitytests",
+    "pk": 55,
+    "fields": {
+        "candidate": 5,
+        "eligibility_tests": "IELTS",
+        "score_grade_marks": null,
+        "completed_on": null,
+        "valid_up_to": null,
+        "eligibility_proof": ""
+    }
+},
+{
+    "model": "candidate.eligibilitytests",
+    "pk": 56,
+    "fields": {
+        "candidate": 5,
+        "eligibility_tests": "CGFNS",
+        "score_grade_marks": null,
+        "completed_on": null,
+        "valid_up_to": null,
+        "eligibility_proof": ""
+    }
+},
+{
+    "model": "candidate.eligibilitytests",
+    "pk": 57,
+    "fields": {
+        "candidate": 5,
+        "eligibility_tests": "TOEFL",
+        "score_grade_marks": null,
+        "completed_on": null,
+        "valid_up_to": null,
+        "eligibility_proof": ""
+    }
+},
+{
+    "model": "candidate.eligibilitytests",
+    "pk": 58,
+    "fields": {
+        "candidate": 5,
+        "eligibility_tests": "OET",
+        "score_grade_marks": null,
+        "completed_on": null,
+        "valid_up_to": null,
+        "eligibility_proof": ""
+    }
+},
+{
+    "model": "candidate.experience",
+    "pk": 1,
+    "fields": {
+        "candidate": 1,
+        "institution": "1",
+        "country": "India",
+        "specialty": "",
+        "date_from": null,
+        "date_to": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.experience",
+    "pk": 2,
+    "fields": {
+        "candidate": 1,
+        "institution": "2",
+        "country": "Foreign",
+        "specialty": "",
+        "date_from": null,
+        "date_to": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.experience",
+    "pk": 5,
+    "fields": {
+        "candidate": 4,
+        "institution": "laxmi memorial college of nursing",
+        "country": "India",
+        "specialty": "asst lecturer",
+        "date_from": "2006-01-10",
+        "date_to": "2009-01-10",
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.experience",
+    "pk": 6,
+    "fields": {
+        "candidate": 4,
+        "institution": "indira nursing college",
+        "country": "India",
+        "specialty": "asst lecturer",
+        "date_from": "2011-01-10",
+        "date_to": "2013-01-10",
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.experience",
+    "pk": 7,
+    "fields": {
+        "candidate": 4,
+        "institution": "ine",
+        "country": "India",
+        "specialty": "lecturer",
+        "date_from": "2015-01-10",
+        "date_to": "2017-01-10",
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.experience",
+    "pk": 8,
+    "fields": {
+        "candidate": 6,
+        "institution": "LMCN MANGALORE",
+        "country": "India",
+        "specialty": "ASST LECTURER",
+        "date_from": "2011-01-10",
+        "date_to": "2012-01-10",
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.experience",
+    "pk": 9,
+    "fields": {
+        "candidate": 6,
+        "institution": "INDIRA CON",
+        "country": "India",
+        "specialty": "LECTURER",
+        "date_from": "2013-01-10",
+        "date_to": "2014-01-10",
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.experience",
+    "pk": 10,
+    "fields": {
+        "candidate": 7,
+        "institution": "TNAI",
+        "country": "India",
+        "specialty": "LDC",
+        "date_from": "2007-07-01",
+        "date_to": "2017-12-31",
+        "proof": "candidate/vprashantsharma@gmail.com/experience/None-TNAI/6.jpg"
+    }
+},
+{
+    "model": "candidate.experience",
+    "pk": 11,
+    "fields": {
+        "candidate": 9,
+        "institution": "SMT VIJAYA LUKE COLLEGE OF NURSING",
+        "country": "India",
+        "specialty": "TUTOR/ CLINICAL INSTRUCTOR",
+        "date_from": "2012-04-01",
+        "date_to": "2013-03-31",
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.experience",
+    "pk": 12,
+    "fields": {
+        "candidate": 9,
+        "institution": "SMT VIJAYA LUKE COLLEGE OF NURSING",
+        "country": "India",
+        "specialty": "LECTURER",
+        "date_from": "2015-08-17",
+        "date_to": "2016-08-17",
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.experience",
+    "pk": 13,
+    "fields": {
+        "candidate": 5,
+        "institution": "",
+        "country": "",
+        "specialty": "",
+        "date_from": "2015-01-01",
+        "date_to": "2017-01-01",
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 1,
+    "fields": {
+        "candidate": 1,
+        "course": "ANM",
+        "state": "a",
+        "registration_number": "100",
+        "year": 2002,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 2,
+    "fields": {
+        "candidate": 1,
+        "course": "GNM",
+        "state": "b",
+        "registration_number": "101",
+        "year": 2006,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 3,
+    "fields": {
+        "candidate": 1,
+        "course": "BSc.(N)",
+        "state": "c",
+        "registration_number": "102",
+        "year": 2011,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 4,
+    "fields": {
+        "candidate": 1,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 5,
+    "fields": {
+        "candidate": 1,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 6,
+    "fields": {
+        "candidate": 1,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 7,
+    "fields": {
+        "candidate": 1,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 8,
+    "fields": {
+        "candidate": 1,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 9,
+    "fields": {
+        "candidate": 1,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 10,
+    "fields": {
+        "candidate": 1,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 11,
+    "fields": {
+        "candidate": 1,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 12,
+    "fields": {
+        "candidate": 1,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 13,
+    "fields": {
+        "candidate": 1,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 14,
+    "fields": {
+        "candidate": 1,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 15,
+    "fields": {
+        "candidate": 1,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 61,
+    "fields": {
+        "candidate": 4,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 62,
+    "fields": {
+        "candidate": 4,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 63,
+    "fields": {
+        "candidate": 4,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 64,
+    "fields": {
+        "candidate": 4,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 65,
+    "fields": {
+        "candidate": 4,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 66,
+    "fields": {
+        "candidate": 4,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 67,
+    "fields": {
+        "candidate": 4,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 68,
+    "fields": {
+        "candidate": 4,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 69,
+    "fields": {
+        "candidate": 4,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 70,
+    "fields": {
+        "candidate": 4,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 71,
+    "fields": {
+        "candidate": 4,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 72,
+    "fields": {
+        "candidate": 4,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 73,
+    "fields": {
+        "candidate": 4,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 74,
+    "fields": {
+        "candidate": 4,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 75,
+    "fields": {
+        "candidate": 4,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 76,
+    "fields": {
+        "candidate": 4,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 77,
+    "fields": {
+        "candidate": 4,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 78,
+    "fields": {
+        "candidate": 4,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 79,
+    "fields": {
+        "candidate": 4,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 80,
+    "fields": {
+        "candidate": 4,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 101,
+    "fields": {
+        "candidate": 7,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 102,
+    "fields": {
+        "candidate": 7,
+        "course": "GNM",
+        "state": "Delhi Nursing Council",
+        "registration_number": "123456",
+        "year": null,
+        "proof": "candidate/vprashantsharma@gmail.com/SNC/123456/10.jpg"
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 103,
+    "fields": {
+        "candidate": 7,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 104,
+    "fields": {
+        "candidate": 7,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 105,
+    "fields": {
+        "candidate": 7,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 106,
+    "fields": {
+        "candidate": 7,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 107,
+    "fields": {
+        "candidate": 7,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 108,
+    "fields": {
+        "candidate": 7,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 109,
+    "fields": {
+        "candidate": 7,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 110,
+    "fields": {
+        "candidate": 7,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 111,
+    "fields": {
+        "candidate": 7,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 112,
+    "fields": {
+        "candidate": 7,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 113,
+    "fields": {
+        "candidate": 7,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 114,
+    "fields": {
+        "candidate": 7,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 115,
+    "fields": {
+        "candidate": 7,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 116,
+    "fields": {
+        "candidate": 7,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 117,
+    "fields": {
+        "candidate": 7,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 118,
+    "fields": {
+        "candidate": 7,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 119,
+    "fields": {
+        "candidate": 7,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 120,
+    "fields": {
+        "candidate": 7,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 121,
+    "fields": {
+        "candidate": 6,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 122,
+    "fields": {
+        "candidate": 6,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 123,
+    "fields": {
+        "candidate": 6,
+        "course": "BSc.(N)",
+        "state": "KARNATAKA STATE NURSING COUNCIL",
+        "registration_number": "20807",
+        "year": 2009,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 124,
+    "fields": {
+        "candidate": 6,
+        "course": "MSc.(N)",
+        "state": "KARNATAKA NURSING COUNCIL",
+        "registration_number": "5086",
+        "year": 2013,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 125,
+    "fields": {
+        "candidate": 6,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 126,
+    "fields": {
+        "candidate": 6,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 127,
+    "fields": {
+        "candidate": 6,
+        "course": "BSc.(N)",
+        "state": "RAJASTHAN NURSING COUNCIL",
+        "registration_number": "32846",
+        "year": 2011,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 128,
+    "fields": {
+        "candidate": 6,
+        "course": "MSc.(N)",
+        "state": "MAHARASHTRA NURSING COUNCIL",
+        "registration_number": "XVIII103",
+        "year": 2013,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 129,
+    "fields": {
+        "candidate": 6,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 130,
+    "fields": {
+        "candidate": 6,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 131,
+    "fields": {
+        "candidate": 6,
+        "course": "BSc.(N)",
+        "state": "KERALA NURSING COUNCIL",
+        "registration_number": "10234",
+        "year": 2011,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 132,
+    "fields": {
+        "candidate": 6,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 133,
+    "fields": {
+        "candidate": 6,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 134,
+    "fields": {
+        "candidate": 6,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 135,
+    "fields": {
+        "candidate": 6,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 136,
+    "fields": {
+        "candidate": 6,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 137,
+    "fields": {
+        "candidate": 6,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 138,
+    "fields": {
+        "candidate": 6,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 139,
+    "fields": {
+        "candidate": 6,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 140,
+    "fields": {
+        "candidate": 6,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 141,
+    "fields": {
+        "candidate": 1,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 142,
+    "fields": {
+        "candidate": 1,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 143,
+    "fields": {
+        "candidate": 1,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 144,
+    "fields": {
+        "candidate": 1,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 145,
+    "fields": {
+        "candidate": 1,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 146,
+    "fields": {
+        "candidate": 9,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 147,
+    "fields": {
+        "candidate": 9,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 148,
+    "fields": {
+        "candidate": 9,
+        "course": "BSc.(N)",
+        "state": "THE ANDHRAPRADESH NURSES, MIDWIVES, AUXILIARY NURSE-MIDWIVES AND HEALTH VISITORS COUNCIL",
+        "registration_number": "125400/124961",
+        "year": 2011,
+        "proof": "candidate/tnaitesting@gmail.com/SNC/125400/124961/REG_BSC.pdf"
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 149,
+    "fields": {
+        "candidate": 9,
+        "course": "MSc.(N)",
+        "state": "THE ANDHRAPRADESH NURSES, MIDWIVES, AUXILIARY NURSE-MIDWIVES AND HEALTH VISITORS COUNCIL",
+        "registration_number": "125400",
+        "year": 2015,
+        "proof": "candidate/tnaitesting@gmail.com/SNC/125400/REG_MSC.pdf"
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 150,
+    "fields": {
+        "candidate": 9,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 151,
+    "fields": {
+        "candidate": 9,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 152,
+    "fields": {
+        "candidate": 9,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 153,
+    "fields": {
+        "candidate": 9,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 154,
+    "fields": {
+        "candidate": 9,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 155,
+    "fields": {
+        "candidate": 9,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 156,
+    "fields": {
+        "candidate": 9,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 157,
+    "fields": {
+        "candidate": 9,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 158,
+    "fields": {
+        "candidate": 9,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 159,
+    "fields": {
+        "candidate": 9,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 160,
+    "fields": {
+        "candidate": 9,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 161,
+    "fields": {
+        "candidate": 9,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 162,
+    "fields": {
+        "candidate": 9,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 163,
+    "fields": {
+        "candidate": 9,
+        "course": "GNM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 164,
+    "fields": {
+        "candidate": 9,
+        "course": "BSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 165,
+    "fields": {
+        "candidate": 9,
+        "course": "MSc.(N)",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "candidate.statenursingcouncil",
+    "pk": 216,
+    "fields": {
+        "candidate": 5,
+        "course": "ANM",
+        "state": "",
+        "registration_number": "",
+        "year": null,
+        "proof": ""
+    }
+},
+{
+    "model": "exam.exam",
+    "pk": "R6Y8MYW",
+    "fields": {
+        "exam_type": "MOH",
+        "name": "Exam1",
+        "date": "2017-11-15",
+        "hall_ticket_download_minimum_number_of_days": 10
+    }
+},
+{
+    "model": "exam.exam",
+    "pk": "NW2W57E",
+    "fields": {
+        "exam_type": "MOH",
+        "name": "Exam2",
+        "date": "2017-11-25",
+        "hall_ticket_download_minimum_number_of_days": 10
+    }
+},
+{
+    "model": "exam.exam",
+    "pk": "ZV76K7J",
+    "fields": {
+        "exam_type": "MOH",
+        "name": "Exam1",
+        "date": "2017-11-18",
+        "hall_ticket_download_minimum_number_of_days": 7
+    }
+},
+{
+    "model": "exam.examtimeslot",
+    "pk": 2,
+    "fields": {
+        "exam": "R6Y8MYW",
+        "begin_time": "09:00:00",
+        "end_time": "10:00:00",
+        "maximum_number_of_students": 200,
+        "number_of_students_booked": 0
+    }
+},
+{
+    "model": "exam.examtimeslot",
+    "pk": 3,
+    "fields": {
+        "exam": "R6Y8MYW",
+        "begin_time": "10:00:00",
+        "end_time": "11:00:00",
+        "maximum_number_of_students": 200,
+        "number_of_students_booked": 0
+    }
+},
+{
+    "model": "exam.examtimeslot",
+    "pk": 4,
+    "fields": {
+        "exam": "NW2W57E",
+        "begin_time": "10:00:00",
+        "end_time": "11:00:00",
+        "maximum_number_of_students": 200,
+        "number_of_students_booked": 0
+    }
+},
+{
+    "model": "exam.examtimeslot",
+    "pk": 5,
+    "fields": {
+        "exam": "NW2W57E",
+        "begin_time": "11:15:00",
+        "end_time": "12:15:00",
+        "maximum_number_of_students": 200,
+        "number_of_students_booked": 0
+    }
+},
+{
+    "model": "exam.examtimeslot",
+    "pk": 6,
+    "fields": {
+        "exam": "NW2W57E",
+        "begin_time": "12:30:00",
+        "end_time": "13:30:00",
+        "maximum_number_of_students": 200,
+        "number_of_students_booked": 0
+    }
+},
+{
+    "model": "exam.examtimeslot",
+    "pk": 7,
+    "fields": {
+        "exam": "ZV76K7J",
+        "begin_time": "10:00:00",
+        "end_time": "11:00:00",
+        "maximum_number_of_students": 200,
+        "number_of_students_booked": 0
+    }
+},
+{
+    "model": "exam.examtimeslot",
+    "pk": 8,
+    "fields": {
+        "exam": "ZV76K7J",
+        "begin_time": "11:15:00",
+        "end_time": "12:15:00",
+        "maximum_number_of_students": 200,
+        "number_of_students_booked": 0
+    }
+},
+{
+    "model": "exam.examtimeslot",
+    "pk": 9,
+    "fields": {
+        "exam": "ZV76K7J",
+        "begin_time": "13:00:00",
+        "end_time": "14:00:00",
+        "maximum_number_of_students": 200,
+        "number_of_students_booked": 0
+    }
+},
+{
+    "model": "exam.candidatebooktimeslot",
+    "pk": 15,
+    "fields": {
+        "candidate": 1,
+        "exam": "R6Y8MYW",
+        "time_slot": 3,
+        "exam_room": null,
+        "hall_ticket_downloaded": false
+    }
+},
+{
+    "model": "exam.candidatebooktimeslot",
+    "pk": 16,
+    "fields": {
+        "candidate": 1,
+        "exam": "NW2W57E",
+        "time_slot": 6,
+        "exam_room": null,
+        "hall_ticket_downloaded": false
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2017-08-01T06:20:47.452Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "1",
+        "object_repr": "Employer",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2017-08-01T06:20:56.332Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "2",
+        "object_repr": "Candidate",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2017-08-01T06:21:27.855Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "2",
+        "object_repr": "Employer1",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2017-08-01T06:21:46.529Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "2",
+        "object_repr": "Employer1",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"first_name\", \"last_name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2017-08-06T10:00:57.797Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "3",
+        "object_repr": "Candidate1",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2017-08-06T10:01:18.181Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "3",
+        "object_repr": "Candidate1",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"first_name\", \"last_name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2017-08-06T10:01:25.863Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "3",
+        "object_repr": "Candidate1",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2017-08-06T10:16:22.001Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "4",
+        "object_repr": "Candidate2",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2017-08-06T11:09:37.820Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "5",
+        "object_repr": "Employer2",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2017-08-06T11:13:07.255Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "3",
+        "object_repr": "TNAI",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+        "action_time": "2017-08-06T11:13:49.900Z",
+        "user": 1,
+        "content_type": 3,
+        "object_id": "3",
+        "object_repr": "TNAI",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+        "action_time": "2017-08-12T13:28:29.535Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "6",
+        "object_repr": "Employer3",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+        "action_time": "2017-08-29T12:10:52.930Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "7",
+        "object_repr": "Employer10",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+        "action_time": "2017-08-29T12:10:52.985Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "8",
+        "object_repr": "Employer11",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+        "action_time": "2017-08-29T12:15:38.143Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "9",
+        "object_repr": "Employer10",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 16,
+    "fields": {
+        "action_time": "2017-08-29T12:21:27.505Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "10",
+        "object_repr": "Employer10",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+        "action_time": "2017-08-30T07:23:48.628Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "11",
+        "object_repr": "Employer10",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+        "action_time": "2017-08-30T07:23:48.767Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "12",
+        "object_repr": "Employer11",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+        "action_time": "2017-08-30T07:36:57.792Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "3",
+        "object_repr": "Candidate1",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+        "action_time": "2017-08-30T07:36:57.867Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "4",
+        "object_repr": "Candidate2",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+        "action_time": "2017-08-30T08:42:42.067Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "14",
+        "object_repr": "Candidate1",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 22,
+    "fields": {
+        "action_time": "2017-08-30T08:42:42.223Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "15",
+        "object_repr": "Candidate2",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 23,
+    "fields": {
+        "action_time": "2017-08-30T09:02:03.475Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "16",
+        "object_repr": "Candidate1",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 24,
+    "fields": {
+        "action_time": "2017-08-30T11:42:12.958Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "1",
+        "object_repr": "admin",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"email\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 25,
+    "fields": {
+        "action_time": "2017-09-10T08:47:05.245Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "20",
+        "object_repr": "anand.42@gmail.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 26,
+    "fields": {
+        "action_time": "2017-09-10T09:17:21.310Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "21",
+        "object_repr": "anand.42@gmail.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 27,
+    "fields": {
+        "action_time": "2017-09-11T16:32:57.217Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "17",
+        "object_repr": "Candidate1",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 28,
+    "fields": {
+        "action_time": "2017-09-11T16:32:57.248Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "18",
+        "object_repr": "Candidate2",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 29,
+    "fields": {
+        "action_time": "2017-09-11T16:32:57.260Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "2",
+        "object_repr": "Employer1",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 30,
+    "fields": {
+        "action_time": "2017-09-11T16:32:57.270Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "13",
+        "object_repr": "Employer10",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 31,
+    "fields": {
+        "action_time": "2017-09-11T16:32:57.282Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "5",
+        "object_repr": "Employer2",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 32,
+    "fields": {
+        "action_time": "2017-09-11T16:32:57.293Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "6",
+        "object_repr": "Employer3",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 33,
+    "fields": {
+        "action_time": "2017-09-11T17:26:57.387Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "23",
+        "object_repr": "belrogue4@gmail.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 34,
+    "fields": {
+        "action_time": "2017-09-12T12:20:46.327Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "22",
+        "object_repr": "anand.42@gmail.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 35,
+    "fields": {
+        "action_time": "2017-09-17T14:52:25.636Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "24",
+        "object_repr": "belrogue4@gmail.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 36,
+    "fields": {
+        "action_time": "2017-09-21T08:27:56.867Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "32",
+        "object_repr": "ra-user1",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 37,
+    "fields": {
+        "action_time": "2017-09-21T08:28:42.081Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "32",
+        "object_repr": "ra-user1",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"first_name\", \"email\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 38,
+    "fields": {
+        "action_time": "2017-10-24T12:48:49.152Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "26",
+        "object_repr": "anand.42@gmail.com",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"email\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 39,
+    "fields": {
+        "action_time": "2017-11-17T11:21:56.474Z",
+        "user": 1,
+        "content_type": 4,
+        "object_id": "26",
+        "object_repr": "anand.42@gmail.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+}
+]
