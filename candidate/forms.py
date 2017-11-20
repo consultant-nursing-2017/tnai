@@ -13,6 +13,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.validators import validate_image_file_extension
 from tnai.validators import ValidateFileExtension
+from tnai.widgets import CustomClearableFileInput
 
 import pdb
     
@@ -68,6 +69,7 @@ class PersonalForm(ModelForm):
         fields = ['candidate_username', 'photograph', 'curriculum_vitae', 'name', 'fathers_name', 'date_of_birth', 'gender', 'marital_status', 'phone_number', 
             'house_number', 'area_locality', 'street_name', 'village_PS_PO', 'country', 'state', 'city', 'district', 'pin_code', ]
         labels = {'date_of_birth': 'Date of birth (DD/MM/YY)'}
+        widgets = {'photograph': CustomClearableFileInput, 'curriculum_vitae': CustomClearableFileInput, }
 
 #    def validate_photograph_size(value):
 #        errors = []
