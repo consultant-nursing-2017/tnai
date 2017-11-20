@@ -88,7 +88,7 @@ class Candidate(models.Model):
     TNAI_number = models.CharField(max_length=200, default="", blank=True)
     preference_of_work = models.CharField(max_length=10, choices=PREFERENCE_OF_WORK_CHOICES, blank=True)
 
-    registration_number = HashidField(allow_int_lookup=True, null=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    registration_number = HashidField(allow_int_lookup=True, null=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", default=None)
     is_provisional_registration_number = models.BooleanField(default=True, editable=False)
 
     def __str__(self):

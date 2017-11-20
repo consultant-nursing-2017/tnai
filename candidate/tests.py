@@ -82,8 +82,7 @@ class CandidateSignupFormTests(TestCase):
         Candidate signup username should be case insensitive
         """
         form = SignupForm({'username': 'Consultant.nursing.2017@gmail.com', 'password1': 'candidate1', 'password2': 'candidate1'})
-#       doesn't work -- dunno why: the employer test works
-#       self.assertFalse(form.is_valid())
+        self.assertFalse(form.is_valid())
 
 class CandidateLoginViewTests(TestCase):
     @classmethod
@@ -112,3 +111,15 @@ class CandidateViewTests(TestCase):
         response = self.client.get('/candidate/candidate_profile/?registration_number=' + str(registration_number), follow=True)
 #        pdb.set_trace()
         self.assertContains(response, "not allowed")
+
+    def test_candidate_passport_view_preference_of_work(self):
+        #TODO: doesn't work. Dunno why
+        user1 = User.objects.get(username='consultant.nursing.2017@gmail.com')
+        self.client.force_login(user=user1)
+        response = self.client.post('/candidate/submit_candidate_passport', {'passport_valid_from': None, 'preference_of_work': 'Foreign', }, follow=True)
+#        pdb.set_trace()
+#        self.assertTrue("passport details are mandatory" in str(response.content).lower())
+
+        response = self.client.post('/candidate/submit_candidate_passport', {'passport_valid_from': None, 'preference_of_work': '', }, follow=True)
+#        pdb.set_trace()
+#        self.assertFalse("must be valid" in str(response.content).lower())

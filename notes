@@ -24,7 +24,6 @@
 - Photograph size
 - Tests
 - Shorten file upload text
-- Passport should have full date, not just year?
 
 - Candidate module
     - AHA courses American Heart Association. Additional Qualification.
@@ -111,6 +110,7 @@ Appearance
 - Final profile - show only non-blank entries
 - SNC form, use Javascript
 - Changes to advertisement form.
+- Passport should have full date, not just year?
 - Candidate module
     - Check authorization
     - Provisional ID
