@@ -16,7 +16,8 @@
             {{exam_form.as_table}}
         </table>
 
-        <input type="submit" value="Submit" />
+        <input type="hidden" name="exam_id" value="{{exam_id}}">
+        <input type="submit" name="submit" value="Submit" />
     </form>
 {% endif %}
 {% endblock %}

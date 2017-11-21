@@ -67,7 +67,7 @@ def exam_list(request):
         return render(request, 'exam/not_allowed.html',)
 
     # User is allowed to access page
-    queryset = Exam.objects.all()
+    queryset = Exam.objects.all().order_by('+date')
     exam_or_interview = "Exam"
     # Filter: TODO
     if request.method == 'POST':
@@ -106,12 +106,17 @@ def submit_exam(request):
     new_entry = True
     exam_or_interview = "Exam"
     if request.method == 'POST':
-        exam_form = ExamForm(request.POST, request.FILES)
+        if 'exam_id' in request.POST:
+            exam_id = request.POST.get('exam_id')
+        else:
+            exam_id = ""
+        exam = Exam.objects.get(exam_id = exam_id)
+        exam_form = ExamForm(request.POST, request.FILES, instance = exam)
 
         if exam_form.is_valid():
             exam = exam_form.save()
             exam_or_interview = exam.exam_or_interview
-            return HttpResponseRedirect('/exam/exam_list/?exam_or_interview=exam_or_interview')
+            return HttpResponseRedirect('/exam/exam_list/?exam_or_interview='+exam_or_interview)
             # if a GET (or any other method) we'll create a blank form
     else:
         if 'exam_id' in request.GET:
@@ -127,7 +132,7 @@ def submit_exam(request):
 
             exam_form = ExamForm(initial={'exam_or_interview': exam_or_interview})
 
-    return render(request, 'exam/submit_exam.html', {'new_entry': new_entry, 'exam_form': exam_form, 'missing_exam_or_interview': False, }) 
+    return render(request, 'exam/submit_exam.html', {'new_entry': new_entry, 'exam_form': exam_form, 'missing_exam_or_interview': False, 'exam_id': exam_id, }) 
 
 def submit_exam_time_slot(request):
     username=auth.get_user(request)
