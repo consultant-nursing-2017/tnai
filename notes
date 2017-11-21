@@ -35,9 +35,13 @@
         - check race condition: see F() in django (https://docs.djangoproject.com/en/1.8/ref/models/instances/#updating-attributes-based-on-existing-fields).
     - Display time slots in 24-hour format
     - Template for Exam ID not found, Booking not found
+    - Also add interview page. Use JavaScript to hide irrelevant fields.
 - RA is also allowed to book slots
 - RA filters
     ProfessionalQualifications, Experience, Eligibility
+- RA module
+    - mass notification
+    - add/remove SNC
 
 ************
 - Style/Theme

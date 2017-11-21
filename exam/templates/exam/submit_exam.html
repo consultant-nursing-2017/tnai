@@ -1,18 +1,23 @@
 {% extends "base_generic.html" %}
-
 {% block content %}
-<h1>Employer form</h1>
-<form enctype="multipart/form-data" action="/exam/submit_exam/" method="post">
-    {% csrf_token %}
-    {% if new_entry %}
-        <h2> New exam</h2>
-    {% else %}
-        <h2> Update exam</h2>
-    {% endif %}
-    <table>
-    {{ exam_form.as_table }}
-    </table>
-    <input type="submit" value="Submit" />
-</form>
+
+<h1>Exam/interview form</h1>
+{% if missing_exam_or_interview %}
+    <h2>Missing option: submit exam or interview? </h2>
+{% else %}
+    <form enctype="multipart/form-data" action="/exam/submit_exam/" method="post">
+        {% csrf_token %}
+        {% if new_entry %}
+            <h2> New entry</h2>
+        {% else %}
+            <h2> Update entry</h2>
+        {% endif %}
+        <table>
+            {{exam_form.as_table}}
+        </table>
+
+        <input type="submit" value="Submit" />
+    </form>
+{% endif %}
 {% endblock %}
 

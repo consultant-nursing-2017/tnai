@@ -8,22 +8,32 @@ from django.conf import settings
 import datetime
 import uuid
 
+# Exam should be understood as representing "Exam/Interview"
 
 class Exam(models.Model):
     EXAM_TYPE_CHOICES = [
             ("Written + Interview", "Written + Interview"),
             ("Only Interview", "Only Interview"),
     ]
+    EXAM_OR_INTERVIEW_CHOICES = [
+            ("Exam", "Exam"),
+            ("Interview", "Interview"),
+    ]
 
     exam_id = HashidAutoField(salt=settings.HASHID_FIELD_SALT+"Exam", primary_key=True, allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-    exam_type = models.CharField(max_length=100, choices=EXAM_TYPE_CHOICES, blank=False, default="Only Interview")
+    exam_or_interview = models.CharField(max_length=100, choices=EXAM_OR_INTERVIEW_CHOICES, blank=False, default="Exam")
+    exam_type = models.CharField(max_length=100, choices=EXAM_TYPE_CHOICES, blank=True, default="Only Interview")
     name = models.CharField(max_length=500, blank=False, default="Exam1")
     date = models.DateField(blank=False, default=timezone.now)
-    hall_ticket_download_minimum_number_of_days = models.PositiveSmallIntegerField(blank=False, default=10)
+    hall_ticket_download_minimum_number_of_days = models.PositiveSmallIntegerField(blank=True, default=10, null=True)
 
     @staticmethod
     def exam_type_choices():
         return Exam.EXAM_TYPE_CHOICES
+
+    @staticmethod
+    def exam_or_interview_choices():
+        return Exam.EXAM_OR_INTERVIEW_CHOICES
 #    notes = models.CharField(max_length=500, blank=True)
 
 class ExamTimeSlot(models.Model):

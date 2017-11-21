@@ -68,10 +68,12 @@ def exam_list(request):
 
     # User is allowed to access page
     queryset = Exam.objects.all()
+    exam_or_interview = "Exam"
     # Filter: TODO
     if request.method == 'POST':
+        exam_or_interview = request.POST.get('exam_or_interview')
         if 'clear_all_filters' in request.POST:
-            filter_form = FilterExamListForm()
+            filter_form = FilterExamListForm(initial={'exam_or_interview': exam_or_interview})
         else:
             filter_form = FilterExamListForm(request.POST)
             if filter_form.is_valid():
@@ -82,12 +84,17 @@ def exam_list(request):
                 if exam_date is not None:
                     queryset = queryset.filter(date=exam_date)
                 exam_type = filter_form.cleaned_data['exam_type']
-                if exam_type is not None:
+                if exam_type is not None and len(exam_type) > 0:
                     queryset = queryset.filter(exam_type=exam_type)
     else:
-        filter_form = FilterExamListForm()
+        if 'exam_or_interview' in request.GET:
+            exam_or_interview = request.GET.__getitem__('exam_or_interview')
+        else:
+            exam_or_interview = "Exam"
+        filter_form = FilterExamListForm(initial={'exam_or_interview': exam_or_interview})
 
-    return render(request, 'exam/exam_list.html', {'username': username, 'queryset': queryset, 'filter_form': filter_form, 'candidate_user_type': candidate_user_type, 'ra_user_type': ra_user_type, })
+    queryset = queryset.filter(exam_or_interview=exam_or_interview)
+    return render(request, 'exam/exam_list.html', {'username': username, 'queryset': queryset, 'filter_form': filter_form, 'candidate_user_type': candidate_user_type, 'ra_user_type': ra_user_type, 'exam_or_interview': exam_or_interview, 'missing_exam_or_interview': False, })
 
 def submit_exam(request):
     username=auth.get_user(request)
@@ -95,13 +102,16 @@ def submit_exam(request):
     if not allowed:
         return render(request, 'exam/not_allowed.html', {'not_member_of_group': 'TNAI'})
 
+    missing_exam_or_interview = False
     new_entry = True
+    exam_or_interview = "Exam"
     if request.method == 'POST':
         exam_form = ExamForm(request.POST, request.FILES)
 
         if exam_form.is_valid():
-            exam_form.save()
-            return HttpResponseRedirect('/exam/exam_list/')
+            exam = exam_form.save()
+            exam_or_interview = exam.exam_or_interview
+            return HttpResponseRedirect('/exam/exam_list/?exam_or_interview=exam_or_interview')
             # if a GET (or any other method) we'll create a blank form
     else:
         if 'exam_id' in request.GET:
@@ -110,9 +120,14 @@ def submit_exam(request):
             exam = Exam.objects.get(exam_id=exam_id)
             exam_form = ExamForm(instance=exam)
         else:
-            exam_form = ExamForm()
+            if 'exam_or_interview' in request.GET:
+                exam_or_interview = request.GET.__getitem__('exam_or_interview')
+            else:
+                missing_exam_or_interview = True
 
-    return render(request, 'exam/submit_exam.html', {'new_entry': new_entry, 'exam_form': exam_form,}) 
+            exam_form = ExamForm(initial={'exam_or_interview': exam_or_interview})
+
+    return render(request, 'exam/submit_exam.html', {'new_entry': new_entry, 'exam_form': exam_form, 'missing_exam_or_interview': False, }) 
 
 def submit_exam_time_slot(request):
     username=auth.get_user(request)
@@ -148,7 +163,7 @@ def submit_exam_time_slot(request):
 #        snc_form_instance = StateNursingCouncilForm()
         if exam_time_slot_formset.is_valid():
             exam_time_slot_formset.save()
-            return HttpResponseRedirect('/exam/exam_list/')
+            return HttpResponseRedirect('/exam/exam_list/?exam_or_interview=' + exam.exam_or_interview)
     else:
         exam_time_slot_formset = ExamTimeSlotFormSet(instance=exam, queryset=qs)
 

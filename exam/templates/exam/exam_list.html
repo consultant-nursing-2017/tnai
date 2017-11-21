@@ -7,51 +7,58 @@
 {% endblock %}
 
 {% block content %}
-    <h2> Exam module </h2>
-    <h3>Welcome {{ username.username }}! </h3>
-    <h3>List of exams</h3>
-    <table>
-        <tr>
-            <th> Exam ID </th>
-            <th> Name</th>
-            <th> Type </th>
-            <th> Date </th>
-            <th> Time Slots </th>
-        </tr>
-        {% for record in queryset %}
-        <tr>
-            {% if candidate_user_type %}
-            <td> {{ record.exam_id }} </td>
-            {% else %}
-            <td> <a href="/exam/submit_exam?exam_id={{record.exam_id}}">{{ record.exam_id }} [Click to update exam details]</a> </td>
-            {% endif %}
-            <td> {{ record.name }} </td>
-            <td> {{ record.exam_type }} </td>
-            <td> {{ record.date }} </td>
-            {% if candidate_user_type %}
-            <td> <a href="/exam/candidate_book_time_slot?exam_id={{record.exam_id}}">Click here to book slot or change existing booking</a> </td>
-            {% else %}
-            <td> <a href="/exam/submit_exam_time_slot?exam_id={{record.exam_id}}">Click here to edit</a> </td>
-            {% endif %}
-        </tr>
-        {% endfor %}
-    </table>
-
-<h3>Filter exams</h3>
-
-<form action="/exam/exam_list/" method="post">
-    {% csrf_token %}
+    {% if not missing_exam_or_interview %}
+        <h2> {{exam_or_interview}} module </h2>
+        <h3>Welcome {{ username.username }}! </h3>
+        <h3>List of {{exam_or_interview.lower}}s</h3>
         <table>
-        {% for field in filter_form %}
-            <tr> 
-                <td> {{field.label_tag}} </td>
-                <td><span class="error_msg">{{field.errors}}</span> {{field}} </td>
+            <tr>
+                <th> {{exam_or_interview}} ID </th>
+                <th> Name</th>
+                <th> Type </th>
+                <th> Date </th>
+                <th> Time Slots </th>
             </tr>
-        {% endfor %}
+            {% for record in queryset %}
+            <tr>
+                {% if candidate_user_type %}
+                <td> {{ record.exam_id }} </td>
+                {% else %}
+                <td> <a href="/exam/submit_exam?exam_id={{record.exam_id}}">{{ record.exam_id }} [Click to update {{exam_or_interview.lower}} details]</a> </td>
+                {% endif %}
+                <td> {{ record.name }} </td>
+                <td> {{ record.exam_type }} </td>
+                <td> {{ record.date }} </td>
+                {% if candidate_user_type %}
+                <td> <a href="/exam/candidate_book_time_slot?exam_id={{record.exam_id}}">Click here to book slot or change existing booking</a> </td>
+                {% else %}
+                <td> <a href="/exam/submit_exam_time_slot?exam_id={{record.exam_id}}">Click here to edit</a> </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
         </table>
-    <input type="submit" name="filter" value="Filter" />
-    <input type="submit" name="clear_all_filters" value="Clear all filters" />
-</form>
 
-<a href="../">Back to exam index page</a>
+    <h3>Filter {{exam_or_interview.lower}}s</h3>
+
+    <form action="/exam/exam_list/" method="post">
+        {% csrf_token %}
+            <table>
+            {% for field in filter_form.visible_fields %}
+                <tr> 
+                    <td> {{field.label_tag}} </td>
+                    <td><span class="error_msg">{{field.errors}}</span> {{field}} </td>
+                </tr>
+            {% endfor %}
+            </table>
+        <input type="hidden" name="exam_or_interview" value="{{exam_or_interview}}" />
+        <input type="submit" name="filter" value="Filter" />
+        <input type="submit" name="clear_all_filters" value="Clear all filters" />
+    </form>
+    {% else %}
+        <div class=error_msg">
+            <h2>Missing option: exam or interview?</h2>
+        </div>
+    {% endif %}
+
+    <a href="../">Back to exam index page</a>
 {% endblock %}
