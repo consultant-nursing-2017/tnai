@@ -56,7 +56,7 @@
     "pk": 19,
     "fields": {
         "password": "pbkdf2_sha256$36000$zE0rHMA89Ewj$n81oiDJ+Iihxhzzk28gCgVISNZqLWvHOuyC/BmyWSnM=",
-        "last_login": "2017-11-20T05:55:37.708Z",
+        "last_login": "2017-11-20T12:21:38.973Z",
         "is_superuser": false,
         "username": "consultant.nursing.2017@gmail.com",
         "first_name": "",
@@ -96,7 +96,7 @@
     "pk": 26,
     "fields": {
         "password": "pbkdf2_sha256$36000$UWiUT7mOaPzQ$GHnjtH3WbDzhMGgn4sZKKggrvyJPyIPqPVf2mQiaj1M=",
-        "last_login": "2017-11-20T09:45:59.092Z",
+        "last_login": "2017-11-22T09:34:12.730Z",
         "is_superuser": false,
         "username": "anand.42@gmail.com",
         "first_name": "",
@@ -212,7 +212,7 @@
     "pk": 32,
     "fields": {
         "password": "pbkdf2_sha256$36000$gurOSAMlR8fH$4/syKBvt5YpShIQx25YXeZbG1u4ugy+yHZxu8GlCVxY=",
-        "last_login": "2017-11-19T16:00:16.406Z",
+        "last_login": "2017-11-22T09:24:38.296Z",
         "is_superuser": false,
         "username": "ra-user1",
         "first_name": "RA User1",
@@ -281,14 +281,6 @@
 },
 {
     "model": "sessions.session",
-    "pk": "h5uze0rig58mjy5mj7lamr1vfbtahhpa",
-    "fields": {
-        "session_data": "NjBhZjBjMDZmYjlhYWNkNzkzOGNlMzhiNDc4OWNmNzAyOGUzMmFiODp7Il9hdXRoX3VzZXJfaGFzaCI6ImMyNzM3NTQ0YjFmNjVhMWUzMWRhNTQ4YWIxMTVkMzk1ZjNkZjM4YzgiLCJfYXV0aF91c2VyX2lkIjoiMjYiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJ0bmFpLmJhY2tlbmRzLkNhc2VJbnNlbnNpdGl2ZU1vZGVsQmFja2VuZCJ9",
-        "expire_date": "2017-12-04T09:45:59.147Z"
-    }
-},
-{
-    "model": "sessions.session",
     "pk": "j7j7ok9b8hcg0p6gf47egcgy8htajpl7",
     "fields": {
         "session_data": "MDA3ZjMxMmFiMmQ0MWQyZGMxMmVhNjI4OTkzN2ZjNDNhYWRlZjEzYTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjMyIiwiX2F1dGhfdXNlcl9oYXNoIjoiNzNjNTAyMDZiNmM5NzQ0YzdjNzQxYTAxOWJjNjRmNjlhOTRiZjQ4YyJ9",
@@ -317,6 +309,14 @@
     "fields": {
         "session_data": "YzkxNzllMDkwYzYzMjM2NzUwMjQ4YWEzOGJlMzk2ZWZlNzRjYzUzYjp7Il9hdXRoX3VzZXJfaWQiOiI2IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI3MDE2MGExMjMyMWNjMTExNDM5MTY2MjUwMWE2YWExYmZmOGUyNmJiIn0=",
         "expire_date": "2017-08-26T13:28:55.266Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "vrsl8y9trsgrcwcrhmmu6hsqfyu9cogg",
+    "fields": {
+        "session_data": "NDIyMzY0MjdkZDE2MDM4NDNmNGI0ZjA5ZTliODU3ODc0NDFjOTUxMjp7Il9hdXRoX3VzZXJfYmFja2VuZCI6InRuYWkuYmFja2VuZHMuQ2FzZUluc2Vuc2l0aXZlTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiYzI3Mzc1NDRiMWY2NWExZTMxZGE1NDhhYjExNWQzOTVmM2RmMzhjOCIsIl9hdXRoX3VzZXJfaWQiOiIyNiJ9",
+        "expire_date": "2017-12-06T09:34:12.818Z"
     }
 },
 {
@@ -409,8 +409,8 @@
     "pk": 1,
     "fields": {
         "candidate_username": 19,
-        "photograph": "",
-        "curriculum_vitae": "",
+        "photograph": "candidate/consultant.nursing.2017@gmail.com/personal/candidate_form_part_3_AOzwUZk.jpg",
+        "curriculum_vitae": "candidate/consultant.nursing.2017@gmail.com/personal/employer-profile_RKYzkfS.pdf",
         "name": "Name1",
         "fathers_name": "Father's Name",
         "date_of_birth": "2017-09-01",
@@ -434,7 +434,7 @@
         "preference_of_work": "",
         "registration_number": "R6Y8MYW",
         "is_provisional_registration_number": true,
-        "sent_email_notification_provisional_registration_number": false
+        "sent_email_notification_provisional_registration_number": true
     }
 },
 {
@@ -575,7 +575,7 @@
     "fields": {
         "candidate_username": 26,
         "photograph": "",
-        "curriculum_vitae": "",
+        "curriculum_vitae": "candidate/anand.42@gmail.com/personal/employer-profile.pdf",
         "name": "Name",
         "fathers_name": "Father's Name",
         "date_of_birth": "1980-11-11",
@@ -765,6 +765,36 @@
         "percentage": 81,
         "proof": "candidate/tnaitesting@gmail.com/qualifications/12th/Equivalent/12.pdf",
         "year_completed": 2005
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 18,
+    "fields": {
+        "candidate": 10,
+        "class_degree": "10th",
+        "institute_name": "abc1",
+        "university_board_council": "board1",
+        "marks_obtained": 80,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "candidate/anand.42@gmail.com/qualifications/10th/employer-advertisement.pdf",
+        "year_completed": 2011
+    }
+},
+{
+    "model": "candidate.educationalqualifications",
+    "pk": 19,
+    "fields": {
+        "candidate": 10,
+        "class_degree": "12th/Equivalent",
+        "institute_name": "",
+        "university_board_council": "",
+        "marks_obtained": 0,
+        "total_marks": 100,
+        "percentage": 0,
+        "proof": "",
+        "year_completed": null
     }
 },
 {
@@ -1417,12 +1447,208 @@
     }
 },
 {
+    "model": "candidate.statenursingcouncilname",
+    "pk": 3,
+    "fields": {
+        "name": "Andhra Pradesh Nurses & Midwives Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 4,
+    "fields": {
+        "name": "Arunachal Pradesh Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 5,
+    "fields": {
+        "name": "Assam Nurses Midwives & Health Visitor Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 6,
+    "fields": {
+        "name": "Bihar Nurses Registration Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 7,
+    "fields": {
+        "name": "Chattisgarh Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 8,
+    "fields": {
+        "name": "Delhi Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 9,
+    "fields": {
+        "name": "Goa Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 10,
+    "fields": {
+        "name": "Gujarat Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 11,
+    "fields": {
+        "name": "Haryana Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 12,
+    "fields": {
+        "name": "Himachal Pradesh Nurses Registration Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 13,
+    "fields": {
+        "name": "Jammu and Kashmir Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 14,
+    "fields": {
+        "name": "Jharkhand Nurses Registration Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 15,
+    "fields": {
+        "name": "Karnataka Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 16,
+    "fields": {
+        "name": "Kerala Nurses & Midwives Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 17,
+    "fields": {
+        "name": "Madhya Pradesh Nurses Registration Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 18,
+    "fields": {
+        "name": "Maharashtra Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 19,
+    "fields": {
+        "name": "Manipur Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 20,
+    "fields": {
+        "name": "Meghalaya Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 21,
+    "fields": {
+        "name": "Mizoram Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 22,
+    "fields": {
+        "name": "Orissa Nurses & Midwives Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 23,
+    "fields": {
+        "name": "Punjab Nurses Registration Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 24,
+    "fields": {
+        "name": "Rajasthan Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 25,
+    "fields": {
+        "name": "Tamil Nadu Nurses & Midwives Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 26,
+    "fields": {
+        "name": "Tripura Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 27,
+    "fields": {
+        "name": "Uttar Pradesh Nurses & Midwives Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 28,
+    "fields": {
+        "name": "Uttarakhand Nurses Midwives Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 29,
+    "fields": {
+        "name": "West Bengal Nursing Council"
+    }
+},
+{
+    "model": "candidate.statenursingcouncilname",
+    "pk": 30,
+    "fields": {
+        "name": "Telangana State Nurses Midwives Auxiliary Nurse Midwives & Health Visitors Council"
+    }
+},
+{
     "model": "candidate.statenursingcouncil",
     "pk": 1,
     "fields": {
         "candidate": 1,
         "course": "ANM",
-        "state": "a",
+        "state_nursing_council_name": null,
         "registration_number": "100",
         "year": 2002,
         "proof": ""
@@ -1434,7 +1660,7 @@
     "fields": {
         "candidate": 1,
         "course": "GNM",
-        "state": "b",
+        "state_nursing_council_name": null,
         "registration_number": "101",
         "year": 2006,
         "proof": ""
@@ -1446,7 +1672,7 @@
     "fields": {
         "candidate": 1,
         "course": "BSc.(N)",
-        "state": "c",
+        "state_nursing_council_name": null,
         "registration_number": "102",
         "year": 2011,
         "proof": ""
@@ -1458,7 +1684,7 @@
     "fields": {
         "candidate": 1,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1470,7 +1696,7 @@
     "fields": {
         "candidate": 1,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1482,7 +1708,7 @@
     "fields": {
         "candidate": 1,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1494,7 +1720,7 @@
     "fields": {
         "candidate": 1,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1506,7 +1732,7 @@
     "fields": {
         "candidate": 1,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1518,7 +1744,7 @@
     "fields": {
         "candidate": 1,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1530,7 +1756,7 @@
     "fields": {
         "candidate": 1,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1542,7 +1768,7 @@
     "fields": {
         "candidate": 1,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1554,7 +1780,7 @@
     "fields": {
         "candidate": 1,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1566,7 +1792,7 @@
     "fields": {
         "candidate": 1,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1578,7 +1804,7 @@
     "fields": {
         "candidate": 1,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1590,7 +1816,7 @@
     "fields": {
         "candidate": 1,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1602,7 +1828,7 @@
     "fields": {
         "candidate": 4,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1614,7 +1840,7 @@
     "fields": {
         "candidate": 4,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1626,7 +1852,7 @@
     "fields": {
         "candidate": 4,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1638,7 +1864,7 @@
     "fields": {
         "candidate": 4,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1650,7 +1876,7 @@
     "fields": {
         "candidate": 4,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1662,7 +1888,7 @@
     "fields": {
         "candidate": 4,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1674,7 +1900,7 @@
     "fields": {
         "candidate": 4,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1686,7 +1912,7 @@
     "fields": {
         "candidate": 4,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1698,7 +1924,7 @@
     "fields": {
         "candidate": 4,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1710,7 +1936,7 @@
     "fields": {
         "candidate": 4,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1722,7 +1948,7 @@
     "fields": {
         "candidate": 4,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1734,7 +1960,7 @@
     "fields": {
         "candidate": 4,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1746,7 +1972,7 @@
     "fields": {
         "candidate": 4,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1758,7 +1984,7 @@
     "fields": {
         "candidate": 4,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1770,7 +1996,7 @@
     "fields": {
         "candidate": 4,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1782,7 +2008,7 @@
     "fields": {
         "candidate": 4,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1794,7 +2020,7 @@
     "fields": {
         "candidate": 4,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1806,7 +2032,7 @@
     "fields": {
         "candidate": 4,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1818,7 +2044,7 @@
     "fields": {
         "candidate": 4,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1830,7 +2056,7 @@
     "fields": {
         "candidate": 4,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1842,7 +2068,7 @@
     "fields": {
         "candidate": 7,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1854,7 +2080,7 @@
     "fields": {
         "candidate": 7,
         "course": "GNM",
-        "state": "Delhi Nursing Council",
+        "state_nursing_council_name": null,
         "registration_number": "123456",
         "year": null,
         "proof": "candidate/vprashantsharma@gmail.com/SNC/123456/10.jpg"
@@ -1866,7 +2092,7 @@
     "fields": {
         "candidate": 7,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1878,7 +2104,7 @@
     "fields": {
         "candidate": 7,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1890,7 +2116,7 @@
     "fields": {
         "candidate": 7,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1902,7 +2128,7 @@
     "fields": {
         "candidate": 7,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1914,7 +2140,7 @@
     "fields": {
         "candidate": 7,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1926,7 +2152,7 @@
     "fields": {
         "candidate": 7,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1938,7 +2164,7 @@
     "fields": {
         "candidate": 7,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1950,7 +2176,7 @@
     "fields": {
         "candidate": 7,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1962,7 +2188,7 @@
     "fields": {
         "candidate": 7,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1974,7 +2200,7 @@
     "fields": {
         "candidate": 7,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1986,7 +2212,7 @@
     "fields": {
         "candidate": 7,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -1998,7 +2224,7 @@
     "fields": {
         "candidate": 7,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2010,7 +2236,7 @@
     "fields": {
         "candidate": 7,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2022,7 +2248,7 @@
     "fields": {
         "candidate": 7,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2034,7 +2260,7 @@
     "fields": {
         "candidate": 7,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2046,7 +2272,7 @@
     "fields": {
         "candidate": 7,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2058,7 +2284,7 @@
     "fields": {
         "candidate": 7,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2070,7 +2296,7 @@
     "fields": {
         "candidate": 7,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2082,7 +2308,7 @@
     "fields": {
         "candidate": 6,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2094,7 +2320,7 @@
     "fields": {
         "candidate": 6,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2106,7 +2332,7 @@
     "fields": {
         "candidate": 6,
         "course": "BSc.(N)",
-        "state": "KARNATAKA STATE NURSING COUNCIL",
+        "state_nursing_council_name": null,
         "registration_number": "20807",
         "year": 2009,
         "proof": ""
@@ -2118,7 +2344,7 @@
     "fields": {
         "candidate": 6,
         "course": "MSc.(N)",
-        "state": "KARNATAKA NURSING COUNCIL",
+        "state_nursing_council_name": null,
         "registration_number": "5086",
         "year": 2013,
         "proof": ""
@@ -2130,7 +2356,7 @@
     "fields": {
         "candidate": 6,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2142,7 +2368,7 @@
     "fields": {
         "candidate": 6,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2154,7 +2380,7 @@
     "fields": {
         "candidate": 6,
         "course": "BSc.(N)",
-        "state": "RAJASTHAN NURSING COUNCIL",
+        "state_nursing_council_name": null,
         "registration_number": "32846",
         "year": 2011,
         "proof": ""
@@ -2166,7 +2392,7 @@
     "fields": {
         "candidate": 6,
         "course": "MSc.(N)",
-        "state": "MAHARASHTRA NURSING COUNCIL",
+        "state_nursing_council_name": null,
         "registration_number": "XVIII103",
         "year": 2013,
         "proof": ""
@@ -2178,7 +2404,7 @@
     "fields": {
         "candidate": 6,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2190,7 +2416,7 @@
     "fields": {
         "candidate": 6,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2202,7 +2428,7 @@
     "fields": {
         "candidate": 6,
         "course": "BSc.(N)",
-        "state": "KERALA NURSING COUNCIL",
+        "state_nursing_council_name": null,
         "registration_number": "10234",
         "year": 2011,
         "proof": ""
@@ -2214,7 +2440,7 @@
     "fields": {
         "candidate": 6,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2226,7 +2452,7 @@
     "fields": {
         "candidate": 6,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2238,7 +2464,7 @@
     "fields": {
         "candidate": 6,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2250,7 +2476,7 @@
     "fields": {
         "candidate": 6,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2262,7 +2488,7 @@
     "fields": {
         "candidate": 6,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2274,7 +2500,7 @@
     "fields": {
         "candidate": 6,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2286,7 +2512,7 @@
     "fields": {
         "candidate": 6,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2298,7 +2524,7 @@
     "fields": {
         "candidate": 6,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2310,7 +2536,7 @@
     "fields": {
         "candidate": 6,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2322,7 +2548,7 @@
     "fields": {
         "candidate": 1,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2334,7 +2560,7 @@
     "fields": {
         "candidate": 1,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2346,7 +2572,7 @@
     "fields": {
         "candidate": 1,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2358,7 +2584,7 @@
     "fields": {
         "candidate": 1,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2370,7 +2596,7 @@
     "fields": {
         "candidate": 1,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2382,7 +2608,7 @@
     "fields": {
         "candidate": 9,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2394,7 +2620,7 @@
     "fields": {
         "candidate": 9,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2406,7 +2632,7 @@
     "fields": {
         "candidate": 9,
         "course": "BSc.(N)",
-        "state": "THE ANDHRAPRADESH NURSES, MIDWIVES, AUXILIARY NURSE-MIDWIVES AND HEALTH VISITORS COUNCIL",
+        "state_nursing_council_name": null,
         "registration_number": "125400/124961",
         "year": 2011,
         "proof": "candidate/tnaitesting@gmail.com/SNC/125400/124961/REG_BSC.pdf"
@@ -2418,7 +2644,7 @@
     "fields": {
         "candidate": 9,
         "course": "MSc.(N)",
-        "state": "THE ANDHRAPRADESH NURSES, MIDWIVES, AUXILIARY NURSE-MIDWIVES AND HEALTH VISITORS COUNCIL",
+        "state_nursing_council_name": null,
         "registration_number": "125400",
         "year": 2015,
         "proof": "candidate/tnaitesting@gmail.com/SNC/125400/REG_MSC.pdf"
@@ -2430,7 +2656,7 @@
     "fields": {
         "candidate": 9,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2442,7 +2668,7 @@
     "fields": {
         "candidate": 9,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2454,7 +2680,7 @@
     "fields": {
         "candidate": 9,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2466,7 +2692,7 @@
     "fields": {
         "candidate": 9,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2478,7 +2704,7 @@
     "fields": {
         "candidate": 9,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2490,7 +2716,7 @@
     "fields": {
         "candidate": 9,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2502,7 +2728,7 @@
     "fields": {
         "candidate": 9,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2514,7 +2740,7 @@
     "fields": {
         "candidate": 9,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2526,7 +2752,7 @@
     "fields": {
         "candidate": 9,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2538,7 +2764,7 @@
     "fields": {
         "candidate": 9,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2550,7 +2776,7 @@
     "fields": {
         "candidate": 9,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2562,7 +2788,7 @@
     "fields": {
         "candidate": 9,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2574,7 +2800,7 @@
     "fields": {
         "candidate": 9,
         "course": "ANM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2586,7 +2812,7 @@
     "fields": {
         "candidate": 9,
         "course": "GNM",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2598,7 +2824,7 @@
     "fields": {
         "candidate": 9,
         "course": "BSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2610,7 +2836,7 @@
     "fields": {
         "candidate": 9,
         "course": "MSc.(N)",
-        "state": "",
+        "state_nursing_council_name": null,
         "registration_number": "",
         "year": null,
         "proof": ""
@@ -2620,7 +2846,8 @@
     "model": "exam.exam",
     "pk": "R6Y8MYW",
     "fields": {
-        "exam_type": "MOH",
+        "exam_or_interview": "Exam",
+        "exam_type": "Only Interview",
         "name": "Exam1",
         "date": "2017-11-15",
         "hall_ticket_download_minimum_number_of_days": 10
@@ -2630,7 +2857,8 @@
     "model": "exam.exam",
     "pk": "NW2W57E",
     "fields": {
-        "exam_type": "MOH",
+        "exam_or_interview": "Exam",
+        "exam_type": "Written + Interview",
         "name": "Exam2",
         "date": "2017-11-25",
         "hall_ticket_download_minimum_number_of_days": 10
@@ -2640,10 +2868,33 @@
     "model": "exam.exam",
     "pk": "ZV76K7J",
     "fields": {
-        "exam_type": "MOH",
+        "exam_or_interview": "Exam",
+        "exam_type": "Written + Interview",
         "name": "Exam1",
         "date": "2017-11-18",
         "hall_ticket_download_minimum_number_of_days": 7
+    }
+},
+{
+    "model": "exam.exam",
+    "pk": "9AYXZ24",
+    "fields": {
+        "exam_or_interview": "Exam",
+        "exam_type": "Written + Interview",
+        "name": "Exam1",
+        "date": "2017-11-15",
+        "hall_ticket_download_minimum_number_of_days": 10
+    }
+},
+{
+    "model": "exam.exam",
+    "pk": "EPY9V2X",
+    "fields": {
+        "exam_or_interview": "Interview",
+        "exam_type": "Only Interview",
+        "name": "Interview1",
+        "date": "2017-11-21",
+        "hall_ticket_download_minimum_number_of_days": 10
     }
 },
 {
@@ -2735,6 +2986,39 @@
     }
 },
 {
+    "model": "exam.examtimeslot",
+    "pk": 10,
+    "fields": {
+        "exam": "EPY9V2X",
+        "begin_time": "09:00:00",
+        "end_time": "10:15:00",
+        "maximum_number_of_students": 200,
+        "number_of_students_booked": 0
+    }
+},
+{
+    "model": "exam.examtimeslot",
+    "pk": 11,
+    "fields": {
+        "exam": "EPY9V2X",
+        "begin_time": "10:30:00",
+        "end_time": "11:45:00",
+        "maximum_number_of_students": 100,
+        "number_of_students_booked": 0
+    }
+},
+{
+    "model": "exam.examtimeslot",
+    "pk": 12,
+    "fields": {
+        "exam": "EPY9V2X",
+        "begin_time": "12:00:00",
+        "end_time": "13:15:00",
+        "maximum_number_of_students": 200,
+        "number_of_students_booked": 0
+    }
+},
+{
     "model": "exam.candidatebooktimeslot",
     "pk": 15,
     "fields": {
@@ -2755,6 +3039,30 @@
         "time_slot": 6,
         "exam_room": null,
         "hall_ticket_number": "3E9E479",
+        "hall_ticket_downloaded": false
+    }
+},
+{
+    "model": "exam.candidatebooktimeslot",
+    "pk": 17,
+    "fields": {
+        "candidate": 10,
+        "exam": "NW2W57E",
+        "time_slot": 4,
+        "exam_room": null,
+        "hall_ticket_number": "5A93529",
+        "hall_ticket_downloaded": false
+    }
+},
+{
+    "model": "exam.candidatebooktimeslot",
+    "pk": 18,
+    "fields": {
+        "candidate": 10,
+        "exam": "EPY9V2X",
+        "time_slot": 11,
+        "exam_room": null,
+        "hall_ticket_number": "5A956D9",
         "hall_ticket_downloaded": false
     }
 },

@@ -53,7 +53,6 @@
 - Candidate
     - filter advertisement
         - Criteria: country (for now)
-    - tweak personal form display: use two-column format
 
 - Exam module
     - Print button (won't do)
@@ -116,6 +115,7 @@ Appearance
     - Provisional ID
     - email verification
         - when "done" and assigned a registration number
+    - tweak personal form display: use two-column format
 - Employer
     - Check authorization
 RA module
