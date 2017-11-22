@@ -463,7 +463,7 @@ def entire_profile(request):
         for index, field in enumerate(state_nursing_council_collection_fieldnames):
             state_nursing_council_collection_fields.append([form.fields[field].label, field])
 #        state_nursing_council_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
-        state_nursing_council_list = StateNursingCouncil.objects.filter(candidate=candidate).values().order_by('course', 'id').exclude(state__isnull=True).exclude(state__exact="")
+        state_nursing_council_list = StateNursingCouncil.objects.select_related('state_nursing_council_name').exclude(state_nursing_council_name__name__isnull=True).exclude(state_nursing_council_name__name__exact="").filter(candidate=candidate).order_by('course', 'id').values()
         state_nursing_council_collection = []
         for index, state_nursing_council in enumerate(state_nursing_council_list):
             state_nursing_council_collection.append([])

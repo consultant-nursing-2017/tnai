@@ -41,7 +41,6 @@
     ProfessionalQualifications, Experience, Eligibility
 - RA module
     - mass notification
-    - add SNC (probably no remove)
     - full advertisement
 
 ************
@@ -49,17 +48,15 @@
 - RA
     - add/update/delete candidate/employer
     - verification for employer?
-    - email notification
+    - email notification (for what?)
 
 - Candidate
     - filter advertisement
         - Criteria: country (for now)
     - tweak personal form display: use two-column format
-    - prettify link for uploaded files
 
 - Exam module
-    - Hall ticket number
-    - Print button
+    - Print button (won't do)
 
 - Employer
     - Search (only show summary)
@@ -127,6 +124,9 @@ RA module
     - RA filters
         Name, date of birth, gender
     - Verification for candidate.
+    - add SNC (probably no remove)
+Exam module
+    - Hall ticket number
 
 - Write email to Shailendra
 - Print out forms for TNAI

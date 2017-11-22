@@ -19,29 +19,34 @@
     {% else %}
         No photograph uploaded.
     {% endif %}
-    <h3> Personal Details 
-        {% if updation_allowed %}
-        <a href="../submit_candidate_personal">[Update]</a>
-        {% endif %}
-    </h3> 
-    <table>
-        {% for data in personal_data %}
-            <tr>
-                <th>{{ data.0 }}</th>
-                <td>{{ data.2|upper }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    <h4> Address for communication </h4>
-    <table>
-        {% for data in address_data %}
-            <tr>
-                <th>{{ data.0 }}</th>
-                <td>{{ data.2|upper }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div class="row">
+        <div class="6u">
+            <h3> Personal Details 
+                {% if updation_allowed %}
+                <a href="../submit_candidate_personal">[Update]</a>
+                {% endif %}
+            </h3> 
+            <table>
+                {% for data in personal_data %}
+                    <tr>
+                        <th>{{ data.0 }}</th>
+                        <td>{{ data.2|upper }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="6u">
+            <h4> Address for communication </h4>
+            <table>
+                {% for data in address_data %}
+                    <tr>
+                        <th>{{ data.0 }}</th>
+                        <td>{{ data.2|upper }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 
     <h3> Educational Qualifications 
         {% if updation_allowed %}

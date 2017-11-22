@@ -105,12 +105,12 @@ def edit_list_state_nursing_council(request):
         return render(request, 'ra/not_allowed.html',)
 
     # User is allowed to access page
-    queryset = StateNursingCouncilName.objects.all()
+    queryset = StateNursingCouncilName.objects.all().order_by('name')
     if request.method == 'POST':
         form = StateNursingCouncilNameForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/ra/')
+            return HttpResponseRedirect('/ra/edit_list_state_nursing_council/')
     else:
         form = StateNursingCouncilNameForm()
 
