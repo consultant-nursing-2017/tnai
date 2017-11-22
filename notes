@@ -82,6 +82,7 @@ Exam module
 - email
 - Sessions for logging out users after a certain time.
 - Fix default values
+- add home app to settings.py
 
 ------- Done --------
 Appearance

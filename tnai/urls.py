@@ -30,7 +30,8 @@ urlpatterns = [
 
 urlpatterns += [
     url(r'^accounts/', include('django.contrib.auth.urls'), name="accounts"),
-    url(r'^$', RedirectView.as_view(url="/accounts/login")),
+    url(r'^$', RedirectView.as_view(url="/home/")),
+    url(r'^home/', include('home.urls'), name="home"),
 ]
 
 if settings.DEBUG:
