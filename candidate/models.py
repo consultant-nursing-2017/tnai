@@ -201,6 +201,11 @@ class Experience(models.Model):
 #    total_years = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True)
     proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
 
+class StateNursingCouncilName(models.Model):
+    name = models.CharField(max_length=500, blank=False, unique = True)
+    def __str__(self):
+        return self.name
+
 class StateNursingCouncil(models.Model):
     def media_path(instance, filename):
         return 'candidate/{0}/SNC/{1}/{2}'.format(instance.candidate.candidate_username.username, instance.registration_number, filename)
@@ -211,7 +216,8 @@ class StateNursingCouncil(models.Model):
         COURSE_CHOICES.append((course, course))
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, editable=True)
     course = models.CharField(max_length=10, blank=True, choices=COURSE_CHOICES)
-    state = models.CharField(max_length=200, blank=True)
+#    state = models.CharField(max_length=200, blank=True)
+    state_nursing_council_name = models.ForeignKey(StateNursingCouncilName, on_delete=models.CASCADE, editable=True, blank=True, null=True)
     registration_number = models.CharField(max_length=200, blank=True)
     year = FormYearField(blank=True, null=True)
     proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])

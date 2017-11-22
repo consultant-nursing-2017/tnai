@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience, StateNursingCouncil
+from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience, StateNursingCouncil, StateNursingCouncilName
 #from django.contrib.auth.models import User, Group
 #from django.contrib.admin import widgets 
 
@@ -252,6 +252,11 @@ class PassportAndMiscForm(ModelForm):
             errors.append(forms.ValidationError(_("If preference of work is 'Foreign' or 'Both', passport details are mandatory."), code='invalid_year'))
         if errors:
             raise ValidationError(errors)
+
+class StateNursingCouncilNameForm(ModelForm):
+    class Meta:
+        model = StateNursingCouncilName
+        fields = '__all__'
 
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')

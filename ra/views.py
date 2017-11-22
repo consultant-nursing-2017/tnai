@@ -27,10 +27,11 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
-from candidate.models import Candidate
+from candidate.models import Candidate, StateNursingCouncilName
 from employer.models import Employer
 from employer.models import Advertisement
 from .forms import FilterForm
+from candidate.forms import StateNursingCouncilNameForm
 
 import pdb
 
@@ -96,6 +97,24 @@ def advertisement_list(request):
     # User is allowed to access page
     queryset = Advertisement.objects.all()
     return render(request, 'ra/advertisement_list.html', {'queryset': queryset}, )
+
+def edit_list_state_nursing_council(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+
+    # User is allowed to access page
+    queryset = StateNursingCouncilName.objects.all()
+    if request.method == 'POST':
+        form = StateNursingCouncilNameForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/ra/')
+    else:
+        form = StateNursingCouncilNameForm()
+
+    return render(request, 'ra/edit_list_state_nursing_council.html', {'queryset': queryset, 'form': form, })
 
 def verify_candidate(request):
     username = auth.get_user(request)
