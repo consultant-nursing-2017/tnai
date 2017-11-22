@@ -67,7 +67,7 @@ def exam_list(request):
         return render(request, 'exam/not_allowed.html',)
 
     # User is allowed to access page
-    queryset = Exam.objects.all().order_by('+date')
+    queryset = Exam.objects.all().order_by('date')
     exam_or_interview = "Exam"
     # Filter: TODO
     if request.method == 'POST':
@@ -225,12 +225,12 @@ def candidate_book_time_slot(request):
         if 'exam_id' in request.GET:
             exam_id = request.GET.__getitem__('exam_id')
         else:
-            return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id})
+            return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id, 'exam_or_interview': 'Exam', })
     else:
         if 'exam_id' in request.POST:
             exam_id = request.POST.get('exam_id', "")
         else:
-            return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id})
+            return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id, 'exam_or_interview': 'Exam', })
     try:
         exam = Exam.objects.get(exam_id=exam_id)
         extra_forms = 1
@@ -238,7 +238,7 @@ def candidate_book_time_slot(request):
         qs=ExamTimeSlot.objects.filter(exam=exam).order_by('begin_time')
 
     except ObjectDoesNotExist:
-        return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id})
+        return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id, 'exam_or_interview': 'Exam', })
 
     try:
         booking = CandidateBookTimeSlot.objects.filter(candidate=candidate).get(exam=exam)
@@ -251,7 +251,7 @@ def candidate_book_time_slot(request):
         if booking is not None:
             booking.delete() # cancel old booking
         if 'cancel_booking' in request.POST:
-            return HttpResponseRedirect('/candidate/booked_exam_time_slots/')
+            return HttpResponseRedirect('/candidate/booked_exam_time_slots/?exam_or_interview=' + exam.exam_or_interview)
         else: # must be "book"
             queryset = ExamTimeSlot.objects.filter(exam_id = exam_id).order_by('begin_time')
             form = CandidateBookTimeSlotForm(request.POST, queryset=queryset)
@@ -263,7 +263,7 @@ def candidate_book_time_slot(request):
                 candidate_book_time_slot.exam = exam
                 candidate_book_time_slot.time_slot = exam_time_slot
                 candidate_book_time_slot.save()
-                return HttpResponseRedirect('/candidate/booked_exam_time_slots/')
+                return HttpResponseRedirect('/candidate/booked_exam_time_slots/?exam_or_interview=' + exam.exam_or_interview)
         # check whether it's valid:
         # TODO
 #        exam_time_slot_formset = ExamTimeSlotFormSet(request.POST, request.FILES, instance=exam, queryset=qs)#, initial={'user': username,})

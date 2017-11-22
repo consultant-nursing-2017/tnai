@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'exam/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+    <h2> {{exam_or_interview}} module </h2>
+    <h2> {{exam_or_interview}} id: {{exam_id}} not found. </h2>
+    <input type="hidden" name="exam_or_interview" value="{{exam_or_interview}}">
+    <a href="/exam/exam_list/?exam_or_interview={{exam_or_interview}}">List {{exam_or_interview.lower}}.</a>
+{% endblock %}

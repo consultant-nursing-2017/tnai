@@ -534,9 +534,10 @@ def booked_exam_time_slots(request):
     if not allowed:
         return render(request, 'candidate/not_allowed.html',)
     candidate = Candidate.objects.get(candidate_username=username)
+    exam_or_interview = request.GET.__getitem__('exam_or_interview')
 
-    queryset = CandidateBookTimeSlot.objects.filter(candidate=candidate)
-    return render(request, 'candidate/booked_exam_time_slots.html', {'candidate': candidate, 'queryset': queryset})
+    queryset = CandidateBookTimeSlot.objects.filter(candidate=candidate).select_related('exam').filter(exam__exam_or_interview = exam_or_interview)
+    return render(request, 'candidate/booked_exam_time_slots.html', {'candidate': candidate, 'queryset': queryset, 'exam_or_interview': exam_or_interview})
 
 class DetailView(generic.DetailView):
     model = Candidate
