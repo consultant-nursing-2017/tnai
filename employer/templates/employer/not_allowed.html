@@ -7,7 +7,5 @@
 {% endblock %}
 
 {% block content %}
-    <h2> Employer module </h2>
-    <h2> You are not allowed to access this page. Please login with an employer account </h2>
-    <a href="/accounts/login/">Login page</a>
+<h2> Please <a href="{% url 'login' %}?next={{next}}">login</a> with an employer account to access this page. </h2>
 {% endblock %}

@@ -150,22 +150,6 @@ Exam type
     - domain name
     - CSS
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+------ GoDaddy server -----
+- add bootstrap3, home app to settings.py
+- add LOGOUT_REDIRECT_URL to settings.py

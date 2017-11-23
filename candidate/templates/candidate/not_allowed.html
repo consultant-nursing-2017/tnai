@@ -3,11 +3,9 @@
 
 {% block title %}
 {% load static %}
-<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" /> -->
 {% endblock %}
 
 {% block content %}
-    <h2> Candidate module </h2>
-    <h2> You are not allowed to access this page. Please login with a candidate account </h2>
-    <a href="/accounts/login/">Login page</a>
+<h2> Please <a href="{% url 'login' %}?next={{next}}">login</a> with a candidate account to access this page. </h2>
 {% endblock %}

@@ -96,7 +96,8 @@ def candidate_index(request):
 
     allowed = is_allowed(username, request)
     if not allowed:
-        return render(request, 'candidate/not_allowed.html',)
+        next = request.path
+        return render(request, 'candidate/not_allowed.html', {'next': next})
 
     try:
         if username.is_authenticated():
