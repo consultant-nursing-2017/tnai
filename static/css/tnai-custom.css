@@ -4,3 +4,11 @@
     background-size: auto 100%;
     background-repeat: no-repeat;
 }
+
+.navbar-right {
+    padding-right: 15px;
+}
+
+body {
+    padding-top: 70px;
+}
