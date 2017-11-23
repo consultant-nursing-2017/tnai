@@ -39,6 +39,14 @@
 - Style/Theme
     - Look at unstyled lists
     - Look at .table-responsive
+    - Style forms
+
+- Home page
+    - Contact page
+    - Main page
+        - added jumbotron. what else?
+    - Navbar
+
 - RA
     - add/update/delete candidate/employer
     - verification for employer?
@@ -77,6 +85,7 @@ Exam module
 - Sessions for logging out users after a certain time.
 - Fix default values
 - add home app to settings.py
+- add LOGOUT_REDIRECT_URL to settings.py
 
 ------- Done --------
 - Password reset working

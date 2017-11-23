@@ -9,8 +9,9 @@
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.formset.js' %}"></script>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!--    <link rel="stylesheet" href="{% static 'css/main.css' %}"> -->
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tnai-custom.css' %}">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -24,11 +25,11 @@
         <nav class="navbar navbar-default navbar-static-top" role="navigation">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/"><strong>TNAI Recruitment</strong></a>
-                <ul class="nav navbar-nav">
-                    <li><a href="/candidates">Candidates</a></li>
-                    <li><a href="/employers">Employers</a></li>
-                </ul>
             </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/candidate">Candidates</a></li>
+                <li><a href="/employer">Employers</a></li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if not user.is_authenticated %} 
                     <li><a href="/accounts/login">Login</a></li>
@@ -40,40 +41,41 @@
             </ul>
             </div>
         </nav>
+        {% block jumbotron %} {% endblock %}
 
+    <div class="container">
         <div class="row">
-          <div class="col-sm-2">
+<!--          <div class="col-sm-2">
           {% block sidebar %}
           {% endblock %}
-          </div>
-          <div class="col-sm-10 ">
+</div> -->
+        <div class="col-sm-12">
           {% block content %}{% endblock %}
           </div>
         </div>
 
-    </div>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <ul class="list-unstyled clearfix">
-                        <li><h3>About</h3></li>
-                        <li><a href="/home/about">About TNAI recruitment</a></li>
-                        <li><a href="http://tnaionline.org/">TNAI main</a></li>
-                    <ul>
+        <div class="well">
+            <footer class="footer">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <ul class="list-unstyled clearfix">
+                            <li><h3>About</h3></li>
+                            <li><a href="/home/about">About TNAI recruitment</a></li>
+                            <li><a href="http://tnaionline.org/">TNAI main</a></li>
+                        <ul>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="list-unstyled clearfix">
+                            <li><h3>Resources</h3></li>
+                            <li><a href="/home/contact">Contact</a></li>
+                            <li><a href="/home/media">Media</a></li>
+                        <ul>
+                    </div>
+                    <div class="col-sm-4">
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <ul class="list-unstyled clearfix">
-                        <li><h3>Resources</h3></li>
-                        <li><a href="/home/contact">Contact</a></li>
-                        <li><a href="/home/media">Media</a></li>
-                    <ul>
-                </div>
-                <div class="col-sm-4">
-                </div>
-            </div>
+            </footer>
         </div>
-    </footer>
+    </div>
 </body>
 </html>

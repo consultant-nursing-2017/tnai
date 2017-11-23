@@ -11,6 +11,6 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^about/', views.about, name='about'),
     url(r'^recruitment/', RedirectView.as_view(url="/accounts/login/"), name='recruitment'),
-    url(r'^contact/', views.contact, name='contact'),
-    url(r'^media/', views.media, name='media'),
+    url(r'^contact/', RedirectView.as_view(url="http://tnaionline.org/news/contactus/"), name='contact'),
+    url(r'^media/', RedirectView.as_view(url="http://tnaionline.org/photos/41048-10-photo-gallery.html"), name='media'),
 ]
