@@ -96,8 +96,7 @@ def candidate_index(request):
 
     allowed = is_allowed(username, request)
     if not allowed:
-        next = request.path
-        return render(request, 'candidate/not_allowed.html', {'next': next})
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
     try:
         if username.is_authenticated():
@@ -114,7 +113,7 @@ def submit_candidate_personal(request):
     username=auth.get_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
-        return render(request, 'candidate/not_allowed.html',)
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
     new_profile = True
     if request.method == 'POST':
@@ -149,7 +148,7 @@ def submit_candidate_educational_qualifications(request):
     username=auth.get_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
-        return render(request, 'candidate/not_allowed.html',)
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
     new_profile = False
     error_message = ""
@@ -189,7 +188,7 @@ def submit_candidate_professional_qualifications(request):
     username=auth.get_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
-        return render(request, 'candidate/not_allowed.html',)
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
     new_profile = False
     try:
@@ -228,7 +227,7 @@ def submit_candidate_additional_qualifications(request):
     username=auth.get_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
-        return render(request, 'candidate/not_allowed.html',)
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
     new_profile = False
     try:
@@ -263,7 +262,7 @@ def submit_candidate_experience(request):
     username=auth.get_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
-        return render(request, 'candidate/not_allowed.html',)
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
     new_profile = False
     try:
@@ -294,7 +293,7 @@ def submit_candidate_eligibility_tests(request):
     username=auth.get_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
-        return render(request, 'candidate/not_allowed.html',)
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
     try:
         candidate = Candidate.objects.get(candidate_username=username)
@@ -333,7 +332,7 @@ def submit_candidate_passport(request):
     username=auth.get_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
-        return render(request, 'candidate/not_allowed.html',)
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
     try:
         candidate = Candidate.objects.get(candidate_username=username)
@@ -358,7 +357,7 @@ def submit_candidate_snc(request):
     username=auth.get_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
-        return render(request, 'candidate/not_allowed.html',)
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
     max_snc_per_course = 5
     total_forms = max_snc_per_course * len(snc_course_choices)
@@ -395,14 +394,14 @@ def entire_profile(request):
     updation_allowed = is_candidate_user(username, request)
     ra_user = is_ra_user(username, request)
     if not allowed:
-        return render(request, 'candidate/not_allowed.html',)
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
     try:
         if 'registration_number' in request.GET:
             registration_number = request.GET.__getitem__('registration_number')
             candidate = Candidate.objects.get(registration_number=registration_number)
             if not is_ra_user(username, request) and candidate.candidate_username != username:
-                return render(request, 'candidate/not_allowed.html',)
+                return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
         else:
             candidate = Candidate.objects.get(candidate_username=username)
         personal_data = [['Name', 'name'], ['Father\'s Name', 'fathers_name'], ['Date of Birth', 'date_of_birth'], ['Gender', 'gender'], ['Marital Status', 'marital_status'], ['Phone Number', 'phone_number'], ]
@@ -533,7 +532,7 @@ def booked_exam_time_slots(request):
     allowed = is_allowed(username, request)
     updation_allowed = False
     if not allowed:
-        return render(request, 'candidate/not_allowed.html',)
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
     candidate = Candidate.objects.get(candidate_username=username)
     exam_or_interview = request.GET.__getitem__('exam_or_interview')
 
