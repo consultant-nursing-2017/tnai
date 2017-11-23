@@ -86,6 +86,7 @@ Exam module
 - Fix default values
 - add home app to settings.py
 - add LOGOUT_REDIRECT_URL to settings.py
+- remove LOGIN_REDIRECT_URL from settings.py
 
 ------- Done --------
 - Password reset working
