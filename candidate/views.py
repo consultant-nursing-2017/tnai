@@ -107,7 +107,10 @@ def candidate_index(request):
         candidate = None
         object_does_not_exist = True
 
-    return render(request, 'candidate/index.html', {'candidate': candidate, 'object_does_not_exist': object_does_not_exist, }) 
+    displayed_registration_number = None
+    if candidate.registration_number is not None:
+        displayed_registration_number = candidate.registration_number_display()
+    return render(request, 'candidate/index.html', {'candidate': candidate, 'object_does_not_exist': object_does_not_exist, 'displayed_registration_number': displayed_registration_number, }) 
 
 def submit_candidate_personal(request):
     username=auth.get_user(request)

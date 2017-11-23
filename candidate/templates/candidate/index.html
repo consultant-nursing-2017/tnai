@@ -10,11 +10,9 @@
     {% if not object_does_not_exist %}
         <h2> Welcome {{candidate.name}}! </h2>
         {% if candidate.photograph %}
-            <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}"></img>
-        {% else %}
-            No photo uploaded.
+            <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}" class="img_responsive"></img>
         {% endif %}
-        <table>
+        <table class="table table-striped">
             <tr>
                 <th>Email:</th>
                 <td>{{candidate.candidate_username}}</td>
@@ -27,22 +25,29 @@
                 <th>Location:</th>
                 <td>{{candidate.city}}</td>
             </tr>
+            {% if displayed_registration_number %}
+                <tr>
+                    <th>Registration number:</th>
+                    <td>{{displayed_registration_number}}</td>
+                </tr>
+            {% endif %}
         </table>
     {% else %}
-        No candidate details found!
+        <h2>No candidate details found!</h2>
     {% endif %}
-    <ul>
-        {% if not object_does_not_exist %}
-            <li><a href="candidate_profile">View full profile</a></li>
-        {% endif %}
-        <li><a href="submit_candidate_personal">Update profile</a></li>
-        <li><a href="/exam/exam_list?exam_or_interview=Exam">Book exam time slots</a></li>
-        <li><a href="booked_exam_time_slots?exam_or_interview=Exam">View booked exam time slots</a></li>
-        <li><a href="/exam/exam_list?exam_or_interview=Interview">Book interview time slots</a></li>
-        <li><a href="booked_exam_time_slots?exam_or_interview=Interview">View booked interview time slots</a></li>
-        <li>Search for employees</li>
-        <li>Search for jobs</li>
-        <li>Useful links</li>
-    </ul>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
+        <ul class="list-unstyled">
+            {% if not object_does_not_exist %}
+                <li><a href="candidate_profile">View full profile</a></li>
+            {% endif %}
+            <li><a href="submit_candidate_personal">Update profile</a></li>
+            <li><a href="/exam/exam_list?exam_or_interview=Exam">Book exam time slots</a></li>
+            <li><a href="booked_exam_time_slots?exam_or_interview=Exam">View booked exam time slots</a></li>
+            <li><a href="/exam/exam_list?exam_or_interview=Interview">Book interview time slots</a></li>
+            <li><a href="booked_exam_time_slots?exam_or_interview=Interview">View booked interview time slots</a></li>
+            <li>Search for jobs</li>
+        </ul>
+    </div>
 {% endblock %}
 
