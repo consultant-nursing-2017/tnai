@@ -8,32 +8,42 @@
 
 {% block content %}
     {% if not object_does_not_exist %}
-        <h2> Welcome {{candidate.name}}! </h2>
-        {% if candidate.photograph %}
-            <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}" class="img_responsive"></img>
-        {% endif %}
-        <table class="table table-striped">
-            <tr>
-                <th>Email:</th>
-                <td>{{candidate.candidate_username}}</td>
-            </tr>
-            <tr>
-                <th>Phone:</th>
-                <td>{{candidate.phone_number}}</td>
-            </tr>
-            <tr>
-                <th>Location:</th>
-                <td>{{candidate.city}}</td>
-            </tr>
-            {% if displayed_registration_number %}
-                <tr>
-                    <th>Registration number:</th>
-                    <td>{{displayed_registration_number}}</td>
-                </tr>
-            {% endif %}
-        </table>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="text-center">{{candidate.name}}</h2>
+                {% if candidate.photograph %}
+                    <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}" class="img_responsive"></img>
+                {% endif %}
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Email:</th>
+                        <td>{{candidate.candidate_username}}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone:</th>
+                        <td>{{candidate.phone_number}}</td>
+                    </tr>
+                    <tr>
+                        <th>Location:</th>
+                        <td>{{candidate.city}}</td>
+                    </tr>
+                    {% if displayed_registration_number %}
+                        <tr>
+                            <th>Registration number:</th>
+                            <td>{{displayed_registration_number}}</td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
     {% else %}
-        <h2>No candidate details found!</h2>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>No candidate details found!</h2>
+            </div>
+        </div>
     {% endif %}
 
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
