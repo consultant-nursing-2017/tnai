@@ -1,4 +1,5 @@
 {% extends "base_generic.html" %}
+{% load bootstrap3 %}
 
 {% block title %}
 {# {% load static %} #}
@@ -6,50 +7,53 @@
 {% endblock %}
 
 {% block content %}
-<h1>Candidate form</h1>
-<form enctype="multipart/form-data" action="/candidate/submit_candidate_passport/" method="post">
+<form enctype="multipart/form-data" action="/candidate/submit_candidate_passport/" method="post" class="form form-horizontal">
     {% csrf_token %}
-    <h2> Passport and Miscellaneous Details </h2>
-    <h3>Instructions</h3>
-    <ul>
-        <li> "Valid From" should be at most "Valid To".</li>
-        <li> If preference of work is "Foreign" or "Both", passport details are mandatory. </li>
-        <li> If not a member of TNAI, leave the "TNAI number" field blank.
-    </ul>
-    <div class="row">
-        <div class="6u">
-            <h3> Passport Details </h3>
-            <div class="error_msg">{{passport_form.non_field_errors}}</div>
-            <table>
-                {% for field in passport_form.visible_fields|slice:":-2" %}
-                    <tr> 
-                        <th> {{field.label_tag}} </th>
-                        <td>{{field}} <div class="error_msg">{{field.errors}}</div> </td>
-                    </tr>
-                {% endfor %}
-            </table>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="text-center"> Passport and Miscellaneous Details </h2>
         </div>
+        <div class="panel-body">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3>Instructions</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li> "Valid From" should be at most "Valid To".</li>
+                        <li> If preference of work is "Foreign" or "Both", passport details are mandatory. </li>
+                        <li> If not a member of TNAI, leave the "TNAI number" field blank.
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3> Passport Details </h3>
+                    <div class="error_msg">{{passport_form.non_field_errors}}</div>
+                    <table class="table table-striped">
+                        {% bootstrap_form passport_form exclude='TNAI_number, preference_of_work' layout='horizontal' %}
+                    </table>
+                </div>
 
-        <div class="6u">
-            <h3> Miscellaneous Details </h3>
-            <table>
-                {% for field in passport_form.visible_fields|slice:"-2:" %}
-                    <tr> 
-                        <th> {{field.label_tag}} </th>
-                        <td>{{field}} <div class="error_msg">{{field.errors}}</div> </td>
-                    </tr>
-                {% endfor %}
-            </table>
+                <div class="col-sm-6">
+                    <h3> Miscellaneous Details </h3>
+                    <table class="table table-striped">
+                        {% bootstrap_form passport_form exclude='passport_number, passport_valid_from, passport_valid_to, passport_place_of_issue' layout='horizontal' %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" name="save_personal" value="Save and go to Personal Details" />
+            <input type="submit" name="save_educational" value="Save and go to Educational Details" />
+            <input type="submit" name="save_professional" value="Save and go to Professional Details" />
+            <input type="submit" name="save_additional" value="Save and go to Additional Details" />
+            <input type="submit" name="save_experience" value="Save and go to Experience Details" />
+            <input type="submit" name="save_eligibility" value="Save and go to Eligibility Details" />
+            <input type="submit" name="save_state_nursing_council" value="Save and go to SNC Details" />
+            <input type="submit" name="save_passport" value="Save and stay at Passport/Misc. Details" />
+            <input type="submit" name="save_done" value="Done" />
         </div>
     </div>
-    <input type="submit" name="save_personal" value="Save and go to Personal Details" />
-    <input type="submit" name="save_educational" value="Save and go to Educational Details" />
-    <input type="submit" name="save_professional" value="Save and go to Professional Details" />
-    <input type="submit" name="save_additional" value="Save and go to Additional Details" />
-    <input type="submit" name="save_experience" value="Save and go to Experience Details" />
-    <input type="submit" name="save_eligibility" value="Save and go to Eligibility Details" />
-    <input type="submit" name="save_state_nursing_council" value="Save and go to SNC Details" />
-    <input type="submit" name="save_passport" value="Save and stay at Passport/Misc. Details" />
-    <input type="submit" name="save_done" value="Done" />
 </form>
 {% endblock %}
