@@ -1,46 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block title %}<title>TNAI</title>{% endblock %}
     <!-- Add additional CSS in static file -->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.formset.js' %}"></script>
-<!--    {# Load the tag library #}
-    {% load bootstrap3 %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--    <link rel="stylesheet" href="{% static 'css/main.css' %}"> -->
 
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    {% bootstrap_messages %} -->
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/"><strong>TNAI Recruitment</strong></a>
+                <ul class="nav navbar-nav">
+                    <li><a href="/candidates">Candidates</a></li>
+                    <li><a href="/employers">Employers</a></li>
+                </ul>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                {% if not user.is_authenticated %} 
+                    <li><a href="/accounts/login">Login</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <li><a>User: {{ user.get_username }}</a></li>
+                    <li><a href="/accounts/logout">Logout</a></li>
+                {% endif %}
+            </ul>
+            </div>
+        </nav>
 
-  <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-2">
+          {% block sidebar %}
+          {% endblock %}
+          </div>
+          <div class="col-sm-10 ">
+          {% block content %}{% endblock %}
+          </div>
+        </div>
 
-    <div class="row">
-      <div class="col-sm-2">
-      {% block sidebar %}
-      <ul class="sidebar-nav">
-          {% if user.is_authenticated %} 
-          <li>User: {{ user.get_username }}</li>
-          <li><a href="/accounts/logout">Logout</a></li>
-          {% else %}
-          <li><a href="/accounts/login">Login</a></li>
-          {% endif %}
-      </ul>
-     {% endblock %}
-      </div>
-      <div class="col-sm-10 ">
-      {% block content %}{% endblock %}
-      </div>
     </div>
 
-  </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <ul class="list-unstyled clearfix">
+                        <li><h3>About</h3></li>
+                        <li><a href="/home/about">About TNAI recruitment</a></li>
+                        <li><a href="http://tnaionline.org/">TNAI main</a></li>
+                    <ul>
+                </div>
+                <div class="col-sm-4">
+                    <ul class="list-unstyled clearfix">
+                        <li><h3>Resources</h3></li>
+                        <li><a href="/home/contact">Contact</a></li>
+                        <li><a href="/home/media">Media</a></li>
+                    <ul>
+                </div>
+                <div class="col-sm-4">
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
-

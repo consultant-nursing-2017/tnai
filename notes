@@ -1,41 +1,33 @@
 -- TODO --
-- Files should be all be in pdf. Photo can be in jpg or pdf.
 - Make username field disabled, but still save it while POSTing form.
-    - Partly done
-- District names dropdown
-- SNC names dropdown
-- JavaScript
-- Validation
-    - Partially done
-- Button size
+- District names dropdown (won't do)
+- Validation (Partially done)
+- Button size (won't do)
 - Appearance:
+    - More attractive index page
     - background image
     - fix large length of uploaded field
+    - Reduce padding for text input field in CSS
 - Instruction
     -- File upload explanation
     -- Fields on forms should grow in height not width
-- Password reset not working
-    - Partially done
 - Use login_required() for various views -- maybe not necessary
-- More attractive index page
-- Remove non-working links
-- University/Council dropdown
-- Reduce padding for text input field in CSS
+- Remove non-working links (won't do)
+- University/Council dropdown (not yet)
 - Photograph size
-- Tests
-- Shorten file upload text
+- Tests (Partially done)
 
 - Candidate module
     - AHA courses American Heart Association. Additional Qualification.
 - Employer module
     - Display full employer profile.
 - Exam module
+    - Check 
     - Validation for time slots (should be non-overlapping).
     - Booking time slots for candidates
         - check race condition: see F() in django (https://docs.djangoproject.com/en/1.8/ref/models/instances/#updating-attributes-based-on-existing-fields).
     - Display time slots in 24-hour format
-    - Template for Exam ID not found, Booking not found
-    - Also add interview page. Use JavaScript to hide irrelevant fields.
+    - Template for Booking not found
 - RA is also allowed to book slots
 - RA filters
     ProfessionalQualifications, Experience, Eligibility
@@ -45,6 +37,8 @@
 
 ************
 - Style/Theme
+    - Look at unstyled lists
+    - Look at .table-responsive
 - RA
     - add/update/delete candidate/employer
     - verification for employer?
@@ -85,11 +79,14 @@ Exam module
 - add home app to settings.py
 
 ------- Done --------
+- Password reset working
+- Files should be all be in pdf. Photo can be in jpg or pdf, or jpeg, or gif or png.
 Appearance
     - serve photograph in profile
     - fix css
     - fix hidden columns
     - alternate color for rows
+    - Shorten file upload text
 - Remove grade column
 - SNC names (in flux)
 - Add photograph to candidate model.
@@ -117,6 +114,7 @@ Appearance
     - email verification
         - when "done" and assigned a registration number
     - tweak personal form display: use two-column format
+    - SNC names dropdown
 - Employer
     - Check authorization
 RA module
@@ -128,6 +126,8 @@ RA module
     - add SNC (probably no remove)
 Exam module
     - Hall ticket number
+    - Also add interview page.
+    - Template for Exam ID not found
 
 - Write email to Shailendra
 - Print out forms for TNAI
