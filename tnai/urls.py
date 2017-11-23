@@ -29,6 +29,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
+    url(r'^accounts/profile/', RedirectView.as_view(url="/candidate/"), name="profile"),
     url(r'^accounts/', include('django.contrib.auth.urls'), name="accounts"),
     url(r'^$', RedirectView.as_view(url="/home/")),
     url(r'^home/', include('home.urls'), name="home"),

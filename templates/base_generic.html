@@ -41,7 +41,7 @@
                     <li><a href="{% url 'login' %}?next=/candidate/">Login</a></li>
                 {% endif %}
                 {% if user.is_authenticated %}
-                    <li><a>User: {{ user.get_username }}</a></li>
+                    <li><a href="{% url 'profile' %}">User: {{ user.get_username }}</a></li>
                     <li><a href="/accounts/logout">Logout</a></li>
                 {% endif %}
             </ul>
