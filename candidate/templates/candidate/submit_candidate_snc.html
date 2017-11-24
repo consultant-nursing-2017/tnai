@@ -1,4 +1,5 @@
 {% extends "base_generic.html" %}
+{% load bootstrap3 %}
 
 {% block title %}
 {% load static %}
@@ -15,70 +16,97 @@
    })
 </script>
 
-<h1>Candidate form</h1>
-<form id="myForm" enctype="multipart/form-data" action="/candidate/submit_candidate_snc/" method="post">
+<form id="myForm" enctype="multipart/form-data" action="/candidate/submit_candidate_snc/" method="post" class="form form-inline">
     {% csrf_token %}
     {{ snc_formset.management_form }}
-    <h2>State Nursing Council Details</h2>
-    <h3>Instructions</h3>
-    <ul>
-        <li> Enter details for each course and for each state on a separate row. Leave extra rows blank. </li>
-    </ul>
-    <table>
-        <div id="items-form-container">
-            <thead>
-            <tr>
-                {% if snc_formset.errors %}
-                    <th>Errors</th>
-                {% endif %}
-
-                {% for field in snc_form_instance %}
-                {% if field.is_hidden %}
-                    <th style="display:none">{{ field.label }}</th>
-                {% else %}
-                    <th>{{ field.label }}</th>
-                {% endif %}
-                {% endfor %}
-            </tr>
-            </thead>
-            <tbody>
-            {% for form in snc_formset %}
-            <tr>
-                {% if form.errors %}
-                    <td> 
-                        <div class="error_msg">
-                            &#x2718
-                            {% if form.non_field_errors %}
-                                {{form.non_field_errors}}
-                            {% endif %}
-                        </div> 
-                    </td>
-                {% elif snc_formset.errors %}
-                    <td> </td>
-                {% endif %}
-
-                {% for field in form %}
-                    {% if field.is_hidden %}
-                        <td style="display:none"> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
-                    {% else %}
-                        <td> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
-                    {% endif %}
-                {% endfor %}
-
-            </tr>
-            {% endfor %}
-            </tbody>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="text-center">State Nursing Council Details</h2>
         </div>
-    </table>
+        <div class="panel-body">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3>Instructions</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li> Enter details for each course and for each state on a separate row. Leave extra rows blank. </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="table-responsive">
+                {% bootstrap_formset_errors snc_formset %}
+                <table class="table table-striped">
+                    <div id="items-form-container">
+                        <thead>
+                            <tr>
+                                {% if snc_formset.errors %}
+                                    <th>Errors</th>
+                                {% endif %}
 
-    <input type="submit" name="save_personal" value="Save and go to Personal Details" />
-    <input type="submit" name="save_educational" value="Save and go to Educational Details" />
-    <input type="submit" name="save_professional" value="Save and go to Professional Details" />
-    <input type="submit" name="save_additional" value="Save and go to Additional Details" />
-    <input type="submit" name="save_experience" value="Save and go to Experience Details" />
-    <input type="submit" name="save_eligibility" value="Save and go to Eligibility Details" />
-    <input type="submit" name="save_state_nursing_council" value="Save and stay at SNC Details" />
-    <input type="submit" name="save_passport" value="Save and go to Passport/Misc. Details" />
-    <input type="submit" name="save_done" value="Done" />
+                                {% for field in snc_form_instance.visible_fields %}
+                                    <th>{% bootstrap_label field.label %}</th>
+                                    <!--
+                                {% if field.is_hidden %}
+                                    <th style="display:none">{{ field.label }}</th>
+                                {% else %}
+                                    <th>{{ field.label }}</th>
+                                {% endif %}
+                                    -->
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for form in snc_formset %}
+                            <tr>
+                                {% if form.errors %}
+                                    <td> 
+                                        {% bootstrap_form_errors form layout='inline' %}
+                                        <!--
+                                        <div class="error_msg">
+                                            &#x2718
+                                            {% if form.non_field_errors %}
+                                                {{form.non_field_errors}}
+                                            {% endif %}
+                                        </div> 
+                                        -->
+                                    </td>
+                                {% elif snc_formset.errors %}
+                                    <td> </td>
+                                {% endif %}
+
+                                {% for field in form %}
+                                    <td>
+                                        {% bootstrap_field field layout="inline" %}
+                                    </td>
+                                    <!--
+                                    {% if field.is_hidden %}
+                                        <td style="display:none"> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
+                                    {% else %}
+                                        <td> {{field}} <div class="error_msg">{{field.errors}}</div> </td>
+                                    {% endif %}
+                                    -->
+                                {% endfor %}
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </div>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel-footer text-center">
+            {% bootstrap_button "Personal Details" button_type="submit" name="save_personal" value="Save and go to Personal Details" %}
+            {% bootstrap_button "Educational Details" button_type="submit" name="save_educational" value="Save and go to Educational Details" %}
+            {% bootstrap_button "Professional Details" button_type="submit" name="save_professional" value="Save and go to Professional Details" %}
+            {% bootstrap_button "Additional Details" button_type="submit" name="save_additional" value="Save and go to Additional Details" %}
+            {% bootstrap_button "Experience Details" button_type="submit" name="save_experience" value="Save and go to Experience Details" %}
+            {% bootstrap_button "Eligibility Details" button_type="submit" name="save_eligibility" value="Save and go to Eligibility Details" %}
+            {% bootstrap_button "State Nursing Council Details" button_type="submit" name="save_state_nursing_council" value="Save and go to SNC Details" %}
+            {% bootstrap_button "Passport/Misc. Details" button_type="submit" name="save_passport" value="Save and stay at Passport/Misc. Details" %}
+            {% bootstrap_button "Done" button_type="submit" name="save_done" value="Done" %}
+        </div>
+    </div>
 </form>
 {% endblock %}
