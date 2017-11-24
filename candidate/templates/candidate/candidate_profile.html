@@ -5,275 +5,275 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="text-center"> Candidate Profile</h2>
-{% if candidate %}
-<!--    <h2> Candidate username: {{ candidate.candidate_username }} </h2> -->
-    {% if candidate.photograph %}
-        <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}"></img>
-    {% else %}
-    <h3 class="text-center">No photograph uploaded.</h3>
-    {% endif %}
-    <div class="row">
+    <h2 class="text-center"> Candidate Profile</h2>
+    {% if candidate %}
+    <!--    <h2> Candidate username: {{ candidate.candidate_username }} </h2> -->
+        {% if candidate.photograph %}
+            <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}"></img>
+        {% else %}
+        <h3 class="text-center">No photograph uploaded.</h3>
+        {% endif %}
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center"> Personal Details 
+                        {% if updation_allowed %}
+                        <a href="../submit_candidate_personal">[Update]</a>
+                        {% endif %}
+                    </h3> 
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-6">
+                        <table class="table table-striped table-bordered">
+                            {% for data in personal_data %}
+                                <tr>
+                                    <th>{{ data.0 }}</th>
+                                    <td>{{ data.2|upper }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <th>Registration number</th>
+                                <td>
+                                    {{ displayed_registration_number }}
+                                    {% if ra_user and candidate.is_provisional_registration_number %}
+                                        <a href="/ra/verify_candidate/?registration_number={{ registration_number }}">[Verify]</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <table class="table table-striped table-bordered">
+                            {% for data in address_data %}
+                                <tr>
+                                    <th>{{ data.0 }}</th>
+                                    <td>{{ data.2|upper }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="text-center"> Personal Details 
+                <h3 class="text-center"> Educational Qualifications 
                     {% if updation_allowed %}
-                    <a href="../submit_candidate_personal">[Update]</a>
+                    <a href="../submit_candidate_educational_qualifications">[Update]</a>
                     {% endif %}
-                </h3> 
+                </h3>
             </div>
             <div class="panel-body">
-                <div class="col-sm-6">
-                    <table class="table table-striped table-bordered">
-                        {% for data in personal_data %}
-                            <tr>
-                                <th>{{ data.0 }}</th>
-                                <td>{{ data.2|upper }}</td>
-                            </tr>
-                        {% endfor %}
+                {% if educational_qualifications_collection %}
+                    <table class="table table-striped">
                         <tr>
-                            <th>Registration number</th>
-                            <td>
-                                {{ displayed_registration_number }}
-                                {% if ra_user and candidate.is_provisional_registration_number %}
-                                    <a href="/ra/verify_candidate/?registration_number={{ registration_number }}">[Verify]</a>
-                                {% endif %}
-                            </td>
+                            {% for field in educational_qualifications_collection_fields %}
+                                <th>{{ field.0 }}</th>
+                            {% endfor %}
                         </tr>
-                    </table>
-                </div>
-                <div class="col-sm-6">
-                    <table class="table table-striped table-bordered">
-                        {% for data in address_data %}
+                        {% for educational_qualifications in educational_qualifications_collection %}
                             <tr>
-                                <th>{{ data.0 }}</th>
-                                <td>{{ data.2|upper }}</td>
+                                {% for value in educational_qualifications %}
+                                    <td>{{ value|upper }} </td>
+                                {% endfor %}
                             </tr>
                         {% endfor %}
                     </table>
+                {% else %}
+                    No qualifications.
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="text-center"> Professional Qualifications 
+                    {% if updation_allowed %}
+                    <a href="../submit_candidate_professional_qualifications">[Update]</a>
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                {% if professional_qualifications_collection %}
+                    <table class="table table-striped">
+                        <tr>
+                            {% for field in professional_qualifications_collection_fields %}
+                                <th>{{ field.0 }}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for professional_qualifications in professional_qualifications_collection %}
+                            <tr>
+                                {% for value in professional_qualifications %}
+                                    <td>{{ value|upper }} </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    No qualifications.
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="text-center"> Additional Qualifications 
+                    {% if updation_allowed %}
+                    <a href="../submit_candidate_additional_qualifications">[Update]</a> 
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                {% if additional_qualifications_collection %}
+                    <table class="table table-striped">
+                        <tr>
+                            {% for field in additional_qualifications_collection_fields %}
+                                <th>{{ field.0 }}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for additional_qualifications in additional_qualifications_collection %}
+                            <tr>
+                                {% for value in additional_qualifications %}
+                                    <td>{{ value|upper }} </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    No qualifications.
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="text-center"> Eligibility Tests 
+                    {% if updation_allowed %}
+                    <a href="../submit_candidate_eligibility_tests">[Update]</a> 
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                {% if eligibility_tests_collection %}
+                    <table class="table table-striped">
+                        <tr>
+                            {% for field in eligibility_tests_collection_fields %}
+                                <th>{{ field.0 }}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for eligibility_tests in eligibility_tests_collection %}
+                            <tr>
+                                {% for value in eligibility_tests %}
+                                    <td>{{ value|upper }} </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    No qualifications.
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="text-center"> Experience 
+                    {% if updation_allowed %}
+                    <a href="../submit_candidate_experience">[Update]</a> 
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                {% if experience_collection %}
+                    <table class="table table-striped">
+                        <tr>
+                            {% for field in experience_collection_fields %}
+                                <th>{{ field.0 }}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for experience in experience_collection %}
+                            <tr>
+                                {% for value in experience %}
+                                    <td>{{ value|upper }} </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    No qualifications.
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="text-center"> SNC Qualifications 
+                    {% if updation_allowed %}
+                    <a href="../submit_candidate_snc">[Update]</a> 
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                {% if state_nursing_council_collection %}
+                    <table class="table table-striped">
+                        <tr>
+                            {% for field in state_nursing_council_collection_fields %}
+                                <th>{{ field.0 }}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for state_nursing_council in state_nursing_council_collection %}
+                            <tr>
+                                {% for value in state_nursing_council %}
+                                    <td>{{ value|upper }} </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    No qualifications.
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="text-center"> Passport and Miscellaneous Details 
+                    {% if updation_allowed %}
+                    <a href="../submit_candidate_passport">[Update]</a> 
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4> Passport Details </h4>
+                        <table class="table table-striped">
+                            {% for data in passport_misc_data|slice:"-2" %}
+                                <tr>
+                                    <th>{{ data.0 }}</th>
+                                    <td>{{ data.2|upper }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>Miscellaneous Details</h4>
+                        <table class="table table-striped">
+                            {% for data in passport_misc_data|slice:"-2:" %}
+                                <tr>
+                                    <th>{{ data.0 }}</th>
+                                    <td>{{ data.2|upper }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center"> Educational Qualifications 
-                {% if updation_allowed %}
-                <a href="../submit_candidate_educational_qualifications">[Update]</a>
-                {% endif %}
-            </h3>
-        </div>
-        <div class="panel-body">
-            {% if educational_qualifications_collection %}
-                <table class="table table-striped">
-                    <tr>
-                        {% for field in educational_qualifications_collection_fields %}
-                            <th>{{ field.0 }}</th>
-                        {% endfor %}
-                    </tr>
-                    {% for educational_qualifications in educational_qualifications_collection %}
-                        <tr>
-                            {% for value in educational_qualifications %}
-                                <td>{{ value|upper }} </td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% else %}
-                No qualifications.
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center"> Professional Qualifications 
-                {% if updation_allowed %}
-                <a href="../submit_candidate_professional_qualifications">[Update]</a>
-                {% endif %}
-            </h3>
-        </div>
-        <div class="panel-body">
-            {% if professional_qualifications_collection %}
-                <table class="table table-striped">
-                    <tr>
-                        {% for field in professional_qualifications_collection_fields %}
-                            <th>{{ field.0 }}</th>
-                        {% endfor %}
-                    </tr>
-                    {% for professional_qualifications in professional_qualifications_collection %}
-                        <tr>
-                            {% for value in professional_qualifications %}
-                                <td>{{ value|upper }} </td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% else %}
-                No qualifications.
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center"> Additional Qualifications 
-                {% if updation_allowed %}
-                <a href="../submit_candidate_additional_qualifications">[Update]</a> 
-                {% endif %}
-            </h3>
-        </div>
-        <div class="panel-body">
-            {% if additional_qualifications_collection %}
-                <table class="table table-striped">
-                    <tr>
-                        {% for field in additional_qualifications_collection_fields %}
-                            <th>{{ field.0 }}</th>
-                        {% endfor %}
-                    </tr>
-                    {% for additional_qualifications in additional_qualifications_collection %}
-                        <tr>
-                            {% for value in additional_qualifications %}
-                                <td>{{ value|upper }} </td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% else %}
-                No qualifications.
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center"> Eligibility Tests 
-                {% if updation_allowed %}
-                <a href="../submit_candidate_eligibility_tests">[Update]</a> 
-                {% endif %}
-            </h3>
-        </div>
-        <div class="panel-body">
-            {% if eligibility_tests_collection %}
-                <table class="table table-striped">
-                    <tr>
-                        {% for field in eligibility_tests_collection_fields %}
-                            <th>{{ field.0 }}</th>
-                        {% endfor %}
-                    </tr>
-                    {% for eligibility_tests in eligibility_tests_collection %}
-                        <tr>
-                            {% for value in eligibility_tests %}
-                                <td>{{ value|upper }} </td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% else %}
-                No qualifications.
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center"> Experience 
-                {% if updation_allowed %}
-                <a href="../submit_candidate_experience">[Update]</a> 
-                {% endif %}
-            </h3>
-        </div>
-        <div class="panel-body">
-            {% if experience_collection %}
-                <table class="table table-striped">
-                    <tr>
-                        {% for field in experience_collection_fields %}
-                            <th>{{ field.0 }}</th>
-                        {% endfor %}
-                    </tr>
-                    {% for experience in experience_collection %}
-                        <tr>
-                            {% for value in experience %}
-                                <td>{{ value|upper }} </td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% else %}
-                No qualifications.
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center"> SNC Qualifications 
-                {% if updation_allowed %}
-                <a href="../submit_candidate_snc">[Update]</a> 
-                {% endif %}
-            </h3>
-        </div>
-        <div class="panel-body">
-            {% if state_nursing_council_collection %}
-                <table class="table table-striped">
-                    <tr>
-                        {% for field in state_nursing_council_collection_fields %}
-                            <th>{{ field.0 }}</th>
-                        {% endfor %}
-                    </tr>
-                    {% for state_nursing_council in state_nursing_council_collection %}
-                        <tr>
-                            {% for value in state_nursing_council %}
-                                <td>{{ value|upper }} </td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% else %}
-                No qualifications.
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center"> Passport and Miscellaneous Details 
-                {% if updation_allowed %}
-                <a href="../submit_candidate_passport">[Update]</a> 
-                {% endif %}
-            </h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h4> Passport Details </h4>
-                    <table class="table table-striped">
-                        {% for data in passport_misc_data|slice:"-2" %}
-                            <tr>
-                                <th>{{ data.0 }}</th>
-                                <td>{{ data.2|upper }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-                <div class="col-sm-6">
-                    <h4>Miscellaneous Details</h4>
-                    <table class="table table-striped">
-                        {% for data in passport_misc_data|slice:"-2:" %}
-                            <tr>
-                                <th>{{ data.0 }}</th>
-                                <td>{{ data.2|upper }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-{% else %}
-    <p>No candidates are available.</p>
-{% endif %}
-<br>
-<!-- <a href={% url 'candidate:index' %}>Back to Candidate index page.</a> -->
+    {% else %}
+        <p>No candidates are available.</p>
+    {% endif %}
+    <br>
+    <!-- <a href={% url 'candidate:index' %}>Back to Candidate index page.</a> -->
 {% endblock %}

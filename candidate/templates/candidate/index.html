@@ -11,11 +11,11 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h2 class="text-center">{{candidate.name}}</h2>
+            </div>
+            <div class="panel-body">
                 {% if candidate.photograph %}
                     <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}" class="img_responsive"></img>
                 {% endif %}
-            </div>
-            <div class="panel-body">
                 <table class="table table-striped">
                     <tr>
                         <th>Email:</th>
