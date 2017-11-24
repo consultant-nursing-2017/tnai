@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<form enctype="multipart/form-data" action="/candidate/submit_candidate_professional_qualifications/" method="post">
+<form enctype="multipart/form-data" action="/candidate/submit_candidate_professional_qualifications/" method="post" class="form form-inline">
     {% csrf_token %}
     {{ professional_qualifications_formset.management_form }}
 
