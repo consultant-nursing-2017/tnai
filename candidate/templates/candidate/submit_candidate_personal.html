@@ -1,4 +1,5 @@
 {% extends "base_generic.html" %}
+{% load bootstrap3 %}
 
 {% block title %}
 {% load static %}
@@ -6,89 +7,76 @@
 {% endblock %}
 
 {% block content %}
-<h1>Candidate form</h1>
-<form enctype="multipart/form-data" action="/candidate/submit_candidate_personal/" method="post">
+<form enctype="multipart/form-data" action="/candidate/submit_candidate_personal/" method="post" class="form form-horizontal">
     {% csrf_token %}
-
-<!--    <div class="row">
-    </div>
-    <div class="row">
-        <div class="3u">
-            <input type="submit" name="save_personal" value="Save and stay at Personal Details" />
+<!--
+    <div class="panel panel-primary">
+        <div class="panel-heading">
         </div>
-        <div class="3u">
-            <input type="submit" name="save_educational" value="Save and go to Educational Details" />
+        <div class="panel-body">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                </div>
+            </div>
         </div>
-        <div class="3u">
-            <input type="submit" name="save_professional" value="Save and go to Professional Details" />
-        </div>
-        <div class="3u">
-            <input type="submit" name="save_additional" value="Save and go to Additional Details" />
-        </div>
-    <div class="row">
-        <div class="3u">
-            <input type="submit" name="save_experience" value="Save and go to Experience Details" />
-        </div>
-        <div class="3u">
-            <input type="submit" name="save_eligibility" value="Save and go to Eligibility Details" />
-        </div>
-        <div class="3u">
-            <input type="submit" name="save_state_nursing_council" value="Save and go to SNC Details" />
-        </div>
-        <div class="3u">
-            <input type="submit" name="save_passport" value="Save and go to Passport/Misc. Details" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="3u -6u">
-        <input type="submit" name="save_done" value="Done" />
+        <div class="panel-footer text-center">
         </div>
     </div>
 -->
-        {% if new_profile %}
-        <h2>New profile</h2>
-        {% else %}
-        <h2>Update profile</h2>
-        {% endif %}
-        <h3>Instructions</h3>
-        <ul>
-            <li> Date should be in DD/MM/YY or DD/MM/YYYY format. <span class="ok_msg">Valid: 01/06/15 OR 01/06/2015</span> <span class="error_msg">Invalid: 06/17</span></li>
-            <li> For dates, use "/" (slash), "-" (dash) or "." (period) as separator. <span class="ok_msg">Valid: 01/09/16 OR 02-01-17 OR 03.02.15</span> <span class="error_msg">Invalid: 01\06\17</span></li>
-            <li> Photograph is mandatory. Maximum size: 200x200 </li>
-        </ul>
-        <div class="error_msg">{{passport_form.non_field_errors}}</div>
-        <div class="row">
-            <div class="6u">
-            <h3>Personal Details</h3>
-                <table>
-                {% for field in personal_form.visible_fields|slice:"9" %}
-                    <tr> 
-                        <th> {{field.label_tag}} </th>
-                        <td> {{field}}<div class="error_msg">{{field.errors}}</div> </td>
-                    </tr>
-                {% endfor %}
-                </table>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="text-center">Personal Details 
+                {% if new_profile %}
+                (New profile)
+                {% else %}
+                (Update profile)
+                {% endif %}
+            </h2>
+        </div>
+        <div class="panel-body">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3>Instructions</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li> Date should be in DD/MM/YY or DD/MM/YYYY format. <span class="ok_msg">Valid: 01/06/15 OR 01/06/2015</span> <span class="error_msg">Invalid: 06/17</span></li>
+                        <li> For dates, use "/" (slash), "-" (dash) or "." (period) as separator. <span class="ok_msg">Valid: 01/09/16 OR 02-01-17 OR 03.02.15</span> <span class="error_msg">Invalid: 01\06\17</span></li>
+                        <li> Photograph is mandatory. Maximum size: 200x200 </li>
+                    </ul>
+                </div>
             </div>
-            <div class="6u">
-            <h3>Permanent Address</h3>
-                <table>
-                {% for field in personal_form.visible_fields|slice:"9:18" %}
-                    <tr> 
-                        <th> {{field.label_tag}} </th>
-                        <td>{{field}} <div class="error_msg">{{field.errors}}</div> </td>
-                    </tr>
-                {% endfor %}
-                </table>
+            <!--
+            <div class="error_msg">{{passport_form.non_field_errors}}</div>
+            -->
+            <div class="row">
+                <div class="col-sm-6">
+                <h3>Personal Details</h3>
+                    <table class="table table-striped">
+                        {% bootstrap_form personal_form exclude='house_number, area_locality, street_name, village_PS_PO, country, state, city, district, pin_code' layout='horizontal' %}
+                    </table>
+                </div>
+                <div class="col-sm-6">
+                <h3>Permanent Address</h3>
+                    <table class="table table-striped">
+                        {% bootstrap_form personal_form exclude='candidate_username, photograph, curriculum_vitae, name, fathers_name, date_of_birth, gender, marital_status, phone_number' layout='horizontal' %}
+                    </table>
+                </div>
             </div>
         </div>
-        <input type="submit" name="save_personal" value="Save and stay at Personal Details" />
-        <input type="submit" name="save_educational" value="Save and go to Educational Details" />
-        <input type="submit" name="save_professional" value="Save and go to Professional Details" />
-        <input type="submit" name="save_additional" value="Save and go to Additional Details" />
-        <input type="submit" name="save_experience" value="Save and go to Experience Details" />
-        <input type="submit" name="save_eligibility" value="Save and go to Eligibility Details" />
-        <input type="submit" name="save_state_nursing_council" value="Save and go to SNC Details" />
-        <input type="submit" name="save_passport" value="Save and go to Passport/Misc. Details" />
-        <input type="submit" name="save_done" value="Done" />
+        <div class="panel-footer text-center">
+            {% bootstrap_button "Personal Details" button_type="submit" name="save_personal" value="Save and go to Personal Details" %}
+            {% bootstrap_button "Educational Details" button_type="submit" name="save_educational" value="Save and go to Educational Details" %}
+            {% bootstrap_button "Professional Details" button_type="submit" name="save_professional" value="Save and go to Professional Details" %}
+            {% bootstrap_button "Additional Details" button_type="submit" name="save_additional" value="Save and go to Additional Details" %}
+            {% bootstrap_button "Experience Details" button_type="submit" name="save_experience" value="Save and go to Experience Details" %}
+            {% bootstrap_button "Eligibility Details" button_type="submit" name="save_eligibility" value="Save and go to Eligibility Details" %}
+            {% bootstrap_button "State Nursing Council Details" button_type="submit" name="save_state_nursing_council" value="Save and go to SNC Details" %}
+            {% bootstrap_button "Passport/Misc. Details" button_type="submit" name="save_passport" value="Save and stay at Passport/Misc. Details" %}
+            {% bootstrap_button "Done" button_type="submit" name="save_done" value="Done" %}
+        </div>
+    </div>
 </form>
 {% endblock %}
