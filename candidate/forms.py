@@ -91,6 +91,7 @@ class EducationalQualificationsForm(ModelForm):
                 'marks_obtained': forms.TextInput(attrs={'size':'5'}),
                 'total_marks': forms.TextInput(attrs={'size':'5'}),
                 'percentage': forms.TextInput(attrs={'size':'5'}),
+                'proof': CustomClearableFileInput,
 #                'grade': forms.TextInput(attrs={'size':'5'}),
                 }
 
@@ -122,6 +123,7 @@ class ProfessionalQualificationsForm(ModelForm):
                 'marks_obtained': forms.TextInput(attrs={'size':'5'}),
                 'total_marks': forms.TextInput(attrs={'size':'5'}),
                 'percentage': forms.TextInput(attrs={'size':'5'}),
+                'proof': CustomClearableFileInput,
 #                'date_from': forms.DateInput(format=('%m/%y'), attrs={'size':'15'}),
 #                'date_to': forms.DateInput(format=('%m/%y'), attrs={'size':'15'}),
 #                'grade': forms.TextInput(attrs={'size':'5'}),
@@ -154,6 +156,7 @@ class AdditionalQualificationsForm(ModelForm):
                 'marks_obtained': forms.TextInput(attrs={'size':'5'}),
                 'total_marks': forms.TextInput(attrs={'size':'5'}),
                 'percentage': forms.TextInput(attrs={'size':'5'}),
+                'proof': CustomClearableFileInput,
 #                'date_from': forms.DateInput(attrs={'size':'15'}),
 #                'date_to': forms.DateInput(attrs={'size':'15'}),
 #                'grade': forms.TextInput(attrs={'size':'5'}),
@@ -182,6 +185,7 @@ class EligibilityTestsForm(ModelForm):
         labels = {'eligibility_tests': 'Test/Exam', 'completed_on': 'Completed on (DD/MM/YY)', 'valid_up_to': 'Valid up to (DD/MM/YY)', 'score_grade_marks': 'Score/Grade/Marks', }
         widgets = {
                 'eligibility_tests': forms.TextInput(attrs={'size':'25', 'placeholder':'Other (specify)'}),
+                'proof': CustomClearableFileInput,
                 }
 
     def clean(self):
@@ -206,6 +210,9 @@ class ExperienceForm(ModelForm):
         model = Experience
         exclude = ['candidate']
         labels = {'date_from': 'From (DD/MM/YY)', 'date_to': 'To (DD/MM/YY)'}
+        widgets = {
+                'proof': CustomClearableFileInput,
+                }
     def clean(self):
         cleaned_data = super (ModelForm, self).clean()
         date_from = cleaned_data.get("date_from")
@@ -223,6 +230,9 @@ class StateNursingCouncilForm(ModelForm):
     class Meta:
         model = StateNursingCouncil
         exclude = ['candidate']
+        widgets = {
+                'proof': CustomClearableFileInput,
+                }
 #        fields = ['course', 'state', 'registration_number', 'year', 'proof', ]
 
 class PassportAndMiscForm(ModelForm):

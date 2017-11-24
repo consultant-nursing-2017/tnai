@@ -177,7 +177,7 @@ class EligibilityTests(models.Model):
     score_grade_marks = models.CharField(max_length=20, blank=True, null=True)
     completed_on = models.DateField(blank=True, null=True)
     valid_up_to = models.DateField(blank=True, null=True)
-    eligibility_proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
+    proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
 
     @staticmethod
     def eligibility_tests_choices():
