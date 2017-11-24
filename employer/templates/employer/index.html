@@ -8,32 +8,45 @@
 
 {% block content %}
     {% if not object_does_not_exist %}
-        <h2> Welcome {{employer.name}}! </h2>
-        <table>
-            <tr>
-                <th>Email:</th>
-                <td>{{employer.employer_username}}</td>
-            </tr>
-            <tr>
-                <th>Location:</th>
-                <td>{{employer.country}}</td>
-            </tr>
-            <tr>
-                <th>Authorized signatory:</th>
-                <td>{{employer.authorized_signatory}}</td>
-            </tr>
-        </table>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2> {{employer.name}} </h2>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Email:</th>
+                        <td>{{employer.employer_username}}</td>
+                    </tr>
+                    <tr>
+                        <th>Location:</th>
+                        <td>{{employer.country}}</td>
+                    </tr>
+                    <tr>
+                        <th>Authorized signatory:</th>
+                        <td>{{employer.authorized_signatory}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     {% else %}
-        No employer details found!
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>No employer details found!</h2>
+            </div>
+        </div>
     {% endif %}
-    <ul>
-        {% if not object_does_not_exist %}
-            <li><a href="employer_profile">View full profile</a> (not implemented)</li>
-        {% endif %}
-        <li><a href="submit_employer">Update profile</a></li>
-        <li>List advertisements created by this employer</li>
-        <li>Search for employees</li>
-        <li>Search for jobs</li>
-        <li>Useful links</li>
-    </ul>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
+        <ul class="list-unstyled">
+            {% if not object_does_not_exist %}
+                <li><a href="employer_profile">View full profile</a> (not implemented)</li>
+            {% endif %}
+            <li><a href="submit_employer">Update profile</a></li>
+            <li>List advertisements created by this employer</li>
+            <li>Search for employees</li>
+            <li>Search for jobs</li>
+            <li>Useful links</li>
+        </ul>
+    </div>
 {% endblock %}
