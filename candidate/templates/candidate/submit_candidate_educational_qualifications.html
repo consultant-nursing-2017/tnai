@@ -32,6 +32,7 @@
             </div>
 
             <div class="table-responsive">
+                {% bootstrap_formset_errors educational_qualifications_formset %}
                 <table class="table table-striped">
                     <tr>
                         {% if educational_qualifications_formset.errors %}
@@ -48,10 +49,6 @@
                             -->
                         {% endfor %}
                     </tr>
-        <!--
-                    {% bootstrap_formset_errors educational_qualifications_formset layout='inline' %}
-                    {% bootstrap_formset educational_qualifications_formset layout='inline' %}
-        -->
 
                     {% for form in educational_qualifications_formset %}
                         <tr>

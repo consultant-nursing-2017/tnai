@@ -119,9 +119,9 @@ class Qualifications(models.Model):
     class_degree = models.CharField(max_length=200, blank=True)
     institute_name = models.CharField(max_length=200, blank=True)
     university_board_council = models.CharField(max_length=200, blank=True)
-    marks_obtained = models.PositiveSmallIntegerField(default=0, blank=True)
-    total_marks = models.PositiveSmallIntegerField(default=100, blank=True)
-    percentage = models.PositiveSmallIntegerField(default=0, blank=True)
+    marks_obtained = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
+    total_marks = models.PositiveSmallIntegerField(default=100, blank=True, null=True)
+    percentage = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
 #    grade = models.CharField(max_length=20, default="", blank=True)
     proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
 
