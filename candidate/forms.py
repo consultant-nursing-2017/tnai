@@ -252,14 +252,14 @@ class PassportAndMiscForm(ModelForm):
         passport_valid_to = cleaned_data.get("passport_valid_to")
         passport_place_of_issue = cleaned_data.get("passport_valid_to")
 
-        return (passport_number is not None) and (passport_number != "")
+        return (passport_number is not None) and (passport_number != "") and (passport_valid_to >= passport_valid_from)
 
     def clean(self):
         cleaned_data = super (ModelForm, self).clean()
         preference_of_work = cleaned_data.get("preference_of_work")
         errors = []
         if preference_of_work is not None and len(preference_of_work) > 0 and preference_of_work != 'India' and not self.check_passport_data(cleaned_data):
-            errors.append(forms.ValidationError(_("If preference of work is 'Foreign' or 'Both', passport details are mandatory."), code='invalid_year'))
+            errors.append(forms.ValidationError(_("If preference of work is 'Foreign' or 'Both', passport details should be valid."), code='invalid_year'))
         if errors:
             raise ValidationError(errors)
 
