@@ -8,7 +8,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime
-from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience, StateNursingCouncil
+from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience, StateNursingCouncil, StateNursingCouncilName
 from .forms import SubmitForm, PersonalForm, StateNursingCouncilForm, EducationalQualificationsForm, ProfessionalQualificationsForm, AdditionalQualificationsForm, EligibilityTestsForm, ExperienceForm, PassportAndMiscForm, StateNursingCouncilForm
 from employer.models import Employer
 from exam.models import ExamTimeSlot, CandidateBookTimeSlot
@@ -467,11 +467,16 @@ def entire_profile(request):
             state_nursing_council_collection_fields.append([form.fields[field].label, field])
 #        state_nursing_council_collection_fields = [['Class / Degree', 'class_degree'], ['Institute Name', 'institute_name'], ['University/Board/Council', 'university_board_council'], ['From', 'year_from'], ['To', 'year_to'], ['Marks Obtained', 'marks_obtained'], ['Total Marks', 'total_marks'], ['Percentage', 'percentage'], ['Proof', 'proof']]
         state_nursing_council_list = StateNursingCouncil.objects.select_related('state_nursing_council_name').exclude(state_nursing_council_name__name__isnull=True).exclude(state_nursing_council_name__name__exact="").filter(candidate=candidate).order_by('course', 'id').values()
+#        pdb.set_trace()
         state_nursing_council_collection = []
         for index, state_nursing_council in enumerate(state_nursing_council_list):
             state_nursing_council_collection.append([])
             for field in state_nursing_council_collection_fields:
-                state_nursing_council_collection[index].append(state_nursing_council_list[index].get(field[1]))
+                if field[1].lower() == 'state_nursing_council_name':
+                    state_nursing_council_name_id = state_nursing_council_list[index].get('state_nursing_council_name_id')
+                    state_nursing_council_collection[index].append(StateNursingCouncilName.objects.get(pk=state_nursing_council_name_id).name)
+                else:
+                    state_nursing_council_collection[index].append(state_nursing_council_list[index].get(field[1]))
 
         form = EligibilityTestsForm()
         eligibility_tests_collection_fieldnames = form.fields
