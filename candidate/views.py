@@ -9,8 +9,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime
 from .models import Candidate, EducationalQualifications, ProfessionalQualifications, AdditionalQualifications, EligibilityTests, Experience, StateNursingCouncil, StateNursingCouncilName
-from .forms import SubmitForm, PersonalForm, StateNursingCouncilForm, EducationalQualificationsForm, ProfessionalQualificationsForm, AdditionalQualificationsForm, EligibilityTestsForm, ExperienceForm, PassportAndMiscForm, StateNursingCouncilForm
-from employer.models import Employer
+from .forms import SubmitForm, PersonalForm, StateNursingCouncilForm, EducationalQualificationsForm, ProfessionalQualificationsForm, AdditionalQualificationsForm, EligibilityTestsForm, ExperienceForm, PassportAndMiscForm, StateNursingCouncilForm, CandidateFindJobsForm
+from employer.models import Employer, Advertisement
 from exam.models import ExamTimeSlot, CandidateBookTimeSlot
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
@@ -532,8 +532,25 @@ def entire_profile(request):
         fields = None
         return render(request, 'candidate/index.html', {'candidate': None})
 
-def find_exam(request):
-    pass
+def find_jobs(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    updation_allowed = False
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
+
+    queryset = []
+    if request.method == 'POST':
+        form = CandidateFindJobsForm(request.POST)
+        if form.is_valid():
+            queryset = Advertisement.objects.all()
+            country = form.cleaned_data['country']
+            if country is not None and len(country) > 0:
+                queryset = Advertisement.objects.filter(country__icontains=country)
+    else:
+        form = CandidateFindJobsForm()
+
+    return render(request, 'candidate/find_jobs.html', {'form': form, 'queryset': queryset, }, )
 
 def booked_exam_time_slots(request):
     username = auth.get_user(request)

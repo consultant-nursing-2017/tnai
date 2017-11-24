@@ -268,6 +268,10 @@ class StateNursingCouncilNameForm(ModelForm):
         model = StateNursingCouncilName
         fields = '__all__'
 
+class CandidateFindJobsForm(forms.Form):
+                
+    country = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'size':'25', 'placeholder':'Leave blank if desired', }))
+
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')
 
