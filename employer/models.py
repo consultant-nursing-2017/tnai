@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from candidate.models import EligibilityTests
 from tnai.validators import ValidateFileExtension
+from hashid_field import HashidAutoField, HashidField
+from django.conf import settings
 
 import datetime
 import uuid
@@ -87,7 +89,13 @@ class Advertisement(models.Model):
     other_notes = models.CharField(max_length=500, blank=True, )
     life_insurance = models.IntegerField(blank=False, default=0)
     life_insurance_currency = models.CharField(max_length=20, blank=False, default="AED")
-    ad_uuid = models.CharField(max_length=12, unique=True, editable=False)
+    obfuscated_id = HashidField(salt=settings.HASHID_FIELD_SALT+"Advertisement", allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEF", null=True)
+
+    def save(self, *args, **kwargs):
+        super(Advertisement, self).save(*args, **kwargs)
+        if not self.obfuscated_id:
+            self.obfuscated_id = self.pk
+        super(Advertisement, self).save(*args, **kwargs)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='employer_profile') #1 to 1 link with Django User
