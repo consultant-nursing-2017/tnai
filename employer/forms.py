@@ -11,13 +11,14 @@ from django.template import Context
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from tnai.widgets import CustomClearableFileInput
     
 class EmployerForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super (EmployerForm,self ).__init__(*args, **kwargs) # populates the post
-        self.fields['registration_certification'].required = False
-        self.fields['authorized_signatory_id_proof'].required = False
-        self.fields['total_employees'].required = False
+#    def __init__(self, *args, **kwargs):
+#        super (EmployerForm,self ).__init__(*args, **kwargs) # populates the post
+#        self.fields['registration_certification'].required = False
+#        self.fields['authorized_signatory_id_proof'].required = False
+#        self.fields['total_employees'].required = False
 #        self.fields['authorized_signatory_ID_proof'].required = False
 #        self.fields['authorized_signatory_ID_proof'].required = False
 #        sponsorsQS = Group.objects.filter(name='Sponsors')
@@ -28,6 +29,7 @@ class EmployerForm(ModelForm):
     class Meta:
         model = Employer
         fields = '__all__' #['contributor', 'sponsor', 'url', 'date_submitted', 'approved']
+        widgets = {'authorized_signatory_id_proof': CustomClearableFileInput, 'registration_certification': CustomClearableFileInput, }
 #        widgets={'date_submitted': forms.DateTimeInput(format='%Y-%m-%d %H:%M')}
  
 class AdvertisementForm(ModelForm):

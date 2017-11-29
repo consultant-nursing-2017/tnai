@@ -1,13 +1,36 @@
 {% extends "base_generic.html" %}
+{% load bootstrap3 %}
 
 {% block content %}
-<h1>Employer form</h1>
-<form enctype="multipart/form-data" action="/employer/submit_employer/" method="post">
-    {% csrf_token %}
-    <table>
-    {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit" />
+<form enctype="multipart/form-data" action="/employer/submit_employer/" method="post" class="form form-horizontal">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="text-center">Employer profile</h1>
+        </div>
+        <div class="panel-body">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-6">
+                    <table class="table">
+                        {% bootstrap_form form layout='horizontal' exclude='registration_certification, authorized_signatory_id_proof, total_employees, annual_recruitment_of_indians, nurses_degree, nurses_diploma, doctors, lab_technicians, pathologists' %}
+                    </table>
+                </div>
+                <div class="col-sm-6">
+                    <table class="table">
+                        {% bootstrap_form form layout='horizontal' exclude='employer_username, country, name, registration, type, authorized_signatory, sector, address, website, phone' %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-center">
+            {% buttons %}
+                {% if new_profile %} 
+                    {% bootstrap_button "Submit new profile" button_type="submit" value="Submit" %}
+                {% else %} 
+                    {% bootstrap_button "Update profile" button_type="submit" value="Submit" %}
+                {% endif %}
+            {% endbuttons %}
+        </div>
 </form>
 {% endblock %}
 

@@ -57,8 +57,7 @@ def employer_index(request):
     username=auth.get_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
-        next = request.path
-        return render(request, 'employer/not_allowed.html', {'next': next})
+        return render(request, 'employer/not_allowed.html', {'next': request.path})
 
     object_does_not_exist = False
     if username.groups.filter(name="Candidate").count() > 0:
@@ -79,7 +78,7 @@ def submit_employer(request):
     username=auth.get_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
-        return render(request, 'employer/not_allowed.html',)
+        return render(request, 'employer/not_allowed.html', {'next': request.path})
 
     new_profile = True
     if request.method == 'POST':

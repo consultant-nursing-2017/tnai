@@ -110,7 +110,7 @@ class CandidateViewTests(TestCase):
         registration_number = str(candidate2.registration_number)
         response = self.client.get('/candidate/candidate_profile/?registration_number=' + str(registration_number), follow=True)
 #        pdb.set_trace()
-        self.assertContains(response, "not allowed")
+        self.assertContains(response, "with a candidate account")
 
     def test_candidate_passport_view_preference_of_work(self):
         #TODO: doesn't work. Dunno why
