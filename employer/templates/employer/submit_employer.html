@@ -11,11 +11,11 @@
             {% csrf_token %}
             <div class="row">
                 <div class="col-sm-6">
-                    <table class="table">
+                    <table class="table table-striped">
                         {% bootstrap_form form layout='horizontal' exclude='registration_certification, authorized_signatory_id_proof, total_employees, annual_recruitment_of_indians, nurses_degree, nurses_diploma, doctors, lab_technicians, pathologists' %}
                     </table>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6 table-striped">
                     <table class="table">
                         {% bootstrap_form form layout='horizontal' exclude='employer_username, country, name, registration, type, authorized_signatory, sector, address, website, phone' %}
                     </table>

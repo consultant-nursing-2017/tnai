@@ -108,11 +108,34 @@ def submit_employer(request):
 
     return render(request, 'employer/submit_employer.html', {'new_profile': new_profile, 'form': form,}) 
 
+def entire_profile(request):
+    username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'employer/not_allowed.html', {'next': request.path})
+
+    employer = Employer.objects.get(employer_username=username)
+    form = EmployerForm()
+    fields_part1 = EmployerForm.fields_part1()
+    fields_part2 = EmployerForm.fields_part2()
+
+    data_part1 = []
+    for field in fields_part1:
+        data_part1.append((form.fields[field].label, getattr(employer, field)))
+
+    data_part2 = []
+    for field in fields_part2:
+        data_part2.append((form.fields[field].label, getattr(employer, field)))
+
+#    pdb.set_trace()
+
+    return render(request, 'employer/entire_profile.html', {'fields_part1': fields_part1, 'data_part1': data_part1, 'fields_part2': fields_part2, 'data_part2': data_part2})
+
 def submit_advertisement(request):
     username=auth.get_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
-        return render(request, 'employer/not_allowed.html',)
+        return render(request, 'employer/not_allowed.html', {'next': request.path})
 
     new_advertisement = True
     if request.method == 'POST':

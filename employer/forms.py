@@ -26,11 +26,20 @@ class EmployerForm(ModelForm):
 #        contributorsQS = Group.objects.filter(name='Contributors')
 #        self.fields['contributor'].queryset = User.objects.filter(groups__in=contributorsQS)
 
+    @staticmethod
+    def fields_part1():
+        return ['employer_username', 'name', 'country', 'registration', 'type', 'authorized_signatory', 'sector', 'address', 'website', 'phone']
+
+    @staticmethod
+    def fields_part2():
+        return ['registration_certification', 'authorized_signatory_id_proof', 'total_employees', 'annual_recruitment_of_indians', 'nurses_degree', 'nurses_diploma', 'doctors', 'lab_technicians', 'pathologists']
+
     class Meta:
         model = Employer
         fields = '__all__' #['contributor', 'sponsor', 'url', 'date_submitted', 'approved']
         widgets = {'authorized_signatory_id_proof': CustomClearableFileInput, 'registration_certification': CustomClearableFileInput, }
 #        widgets={'date_submitted': forms.DateTimeInput(format='%Y-%m-%d %H:%M')}
+
  
 class AdvertisementForm(ModelForm):
     class Meta:

@@ -40,9 +40,9 @@
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
         <ul class="list-unstyled">
             {% if not object_does_not_exist %}
-                <li><a href="employer_profile">View full profile</a> (not implemented)</li>
+                <li><a href="{% url 'employer:entire_profile' %}">View full profile</a></li>
             {% endif %}
-            <li><a href="submit_employer">Update profile</a></li>
+            <li><a href="{% url 'employer:submit_employer' %}">Update profile</a></li>
             <li>List advertisements created by this employer</li>
             <li>Search for employees</li>
             <li>Search for jobs</li>
