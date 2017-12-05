@@ -4,8 +4,10 @@
 {% block content %}
 <form enctype="multipart/form-data" action="/employer/submit_advertisement/" method="post" class="form form-horizontal">
     {% csrf_token %}
+    <!--
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
+    -->
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h1 class="text-center">Submit advertisement</h1>
@@ -28,8 +30,10 @@
                     {% endbuttons %}
                 </div>
             </div>
+            <!--
         </div>
     </div>
+            -->
 </form>
 {% endblock %}
 
