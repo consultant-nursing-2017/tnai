@@ -43,7 +43,8 @@
                 <li><a href="{% url 'employer:entire_profile' %}">View full profile</a></li>
             {% endif %}
             <li><a href="{% url 'employer:submit_employer' %}">Update profile</a></li>
-            <li>List advertisements created by this employer</li>
+            <li><a href="{% url 'employer:submit_advertisement' %}">Submit advertisement</a></li>
+            <li><a href="{% url 'employer:list_advertisements' %}">List advertisements by you</a></li>
             <li>Search for employees</li>
             <li>Search for jobs</li>
             <li>Useful links</li>

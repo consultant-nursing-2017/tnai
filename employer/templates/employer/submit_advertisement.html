@@ -1,13 +1,35 @@
 {% extends "base_generic.html" %}
+{% load bootstrap3 %}
 
 {% block content %}
-<h1>Employer form</h1>
-<form enctype="multipart/form-data" action="/employer/submit_advertisement/" method="post">
+<form enctype="multipart/form-data" action="/employer/submit_advertisement/" method="post" class="form form-horizontal">
     {% csrf_token %}
-    <table>
-    {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit" />
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h1 class="text-center">Submit advertisement</h1>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        {{ form.as_table }}
+                    </table>
+                </div>
+                <div class="panel-footer text-center">
+                    <input type="hidden" value="{{advertisement_id}}" name="advertisement_id" />
+                    <input type="hidden" value="{{new_advertisement}}" name="new_advertisement" />
+                    {% buttons %}
+                    {% if new_advertisement %}
+                        {% bootstrap_button "Submit new advertisement" button_type="submit" %}
+                    {% else %}
+                        {% bootstrap_button "Update advertisement" button_type="submit" %}
+                    {% endif %}
+                    <!--            <input type="submit" value="Submit" /> -->
+                    {% endbuttons %}
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 {% endblock %}
 

@@ -7,25 +7,33 @@
 {% endblock %}
 
 {% block content %}
-    <h2> RA module </h2>
-    <h3>Welcome {{ username.username }}! </h3>
-    <h3>List of employers</h3>
-    <table>
-        <tr>
-            <th> Advertiser username </th>
-            <th> Job role </th>
-            <th> Closing date </th>
-            <th> Full advertisement </th>
-        </tr>
-        {% for record in queryset %}
-        <tr>
-            <td> {{ record.employer_advert }} </td>
-            <td> {{ record.job_role }} </td>
-            <td> {{ record.closing_date }} </td>
-            <td> Not implemented yet </td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <a href="../">Back to RA index page</a>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="text-center">List of advertisements</h1>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <tr>
+                    <th> Advertisement ID </th>
+                    {% if not employer_restricted %}
+                        <th> Advertiser username </th>
+                    {% endif %}
+                    <th> Job role </th>
+                    <th> Closing date </th>
+                    <th> Full advertisement </th>
+                </tr>
+                {% for record in queryset %}
+                <tr>
+                    <td> {{ record.obfuscated_id }} <a href="{% url 'employer:submit_advertisement'%}?advertisement_id={{record.obfuscated_id}}">[Click to update]</a></td>
+                    {% if not employer_restricted %}
+                        <td> {{ record.employer_advert }} </td>
+                    {% endif %}
+                    <td> {{ record.job_role }} </td>
+                    <td> {{ record.closing_date }} </td>
+                    <td> Not implemented yet </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 {% endblock %}

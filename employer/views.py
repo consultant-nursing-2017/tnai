@@ -137,36 +137,52 @@ def submit_advertisement(request):
     if not allowed:
         return render(request, 'employer/not_allowed.html', {'next': request.path})
 
+    employer = Employer.objects.get(employer_username=username)
     new_advertisement = True
-    if request.method == 'POST':
+    advertisement_id = None
+
+    if request.method == 'GET':
+#        pdb.set_trace()
+        if 'advertisement_id' in request.GET:
+            advertisement_id = request.GET.__getitem__('advertisement_id')
+            try:
+                advertisement = Advertisement.objects.filter(employer_advert=employer).get(obfuscated_id=advertisement_id)
+            except ObjectDoesNotExist:
+                return render(request, 'employer/invalid_advertisement_id.html', {'advertisement_id': advertisement_id}, )
+            form = AdvertisementForm(instance=advertisement)
+            new_advertisement = False
+        else:
+            advertisement_id = None
+            form = AdvertisementForm(initial={'employer_advert':employer})
+    else:
         # check whether it's valid:
         # TODO
-
-        try:
-            employer = Employer.objects.get(employer_username=username)
-            advertisement = Advertisement.objects.get(employer_advert=employer)
-            new_advertisement = False
+        new_advertisement = request.POST.get('new_advertisement')
+        if not new_advertisement:
+            advertisement_id = request.POST.get('advertisement_id')
+            try:
+                advertisement = Advertisement.objects.get(obfuscated_id=advertisement_id)
+            except ObjectDoesNotExist:
+                return render(request, 'employer/invalid_advertisement_id.html', {'advertisement_id': advertisement_id}, )
             form = AdvertisementForm(request.POST, request.FILES, instance=advertisement)
-        except ObjectDoesNotExist:
-            # TODO what if employer object doesn't exist
-            new_advertisement = True
+        else:
             form = AdvertisementForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/employer/')
-    else:
-        # if a GET (or any other method) we'll create a blank form
-        try:
-            employer = Employer.objects.get(employer_username=username)
-            advertisement = Advertisement.objects.get(employer_advert=employer)
-            form = AdvertisementForm(instance=advertisement)
-            new_advertisement = False
-        except ObjectDoesNotExist:
-            new_advertisement = True
-            form = AdvertisementForm(initial={'employer_advert': employer,})
+            return HttpResponseRedirect('/employer/list_advertisements/')
 
-    return render(request, 'employer/submit_advertisement.html', {'new_advertisement': new_advertisement, 'form': form,}) 
+    return render(request, 'employer/submit_advertisement.html', {'new_advertisement': new_advertisement, 'form': form, 'advertisement_id': advertisement_id }) 
+
+def list_advertisements(request):
+    username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'employer/not_allowed.html', {'next': request.path})
+
+    employer = Employer.objects.get(employer_username=username)
+    queryset = Advertisement.objects.filter(employer_advert=employer)
+    return render(request, 'ra/advertisement_list.html', {'queryset': queryset, 'employer_restricted': True}, )
 
 class DetailView(generic.DetailView):
     model = Employer
