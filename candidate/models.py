@@ -94,7 +94,7 @@ class Candidate(models.Model):
     sent_email_notification_provisional_registration_number = models.BooleanField(default=False, editable=False)
 
     def __str__(self):
-        return self.candidate_username.username
+        return self.candidate_username.username + " (Candidate)"
 
     def registration_number_display(self):
         if self.is_provisional_registration_number:

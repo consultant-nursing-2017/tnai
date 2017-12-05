@@ -32,6 +32,8 @@ from employer.models import Employer
 from employer.models import Advertisement
 from .forms import FilterForm
 from candidate.forms import StateNursingCouncilNameForm
+from .models import RA
+from .forms import ActAsForm
 
 import pdb
 
@@ -48,7 +50,12 @@ def ra_index(request):
     if not allowed:
         return render(request, 'ra/not_allowed.html',)
     else:
-        return render(request, 'ra/index.html', {'username': username,}) 
+        ra_not_found = False
+        try:
+            ra = RA.objects.get(logged_in_as=username)
+        except ObjectDoesNotExist:
+            ra = RA.objects.create(logged_in_as=username, acting_as=None)
+        return render(request, 'ra/index.html', {'ra': ra, }) 
 
 def candidate_list(request):
     username = auth.get_user(request)
@@ -139,3 +146,20 @@ def verify_candidate(request):
             return HttpResponseRedirect('/candidate/candidate_profile?registration_number='+str(registration_number))
         else:
             return HttpResponseRedirect('/ra/')
+
+def act_as(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+    ra = RA.objects.get(logged_in_as=username)
+
+    if request.method == 'POST':
+        form = ActAsForm(request.POST, instance=ra)
+        if form.is_valid():
+            form.save() 
+            return HttpResponseRedirect('/ra/')
+    else:
+        form = ActAsForm(instance=ra)
+
+    return render(request, 'ra/act_as.html', {'form': form}, )

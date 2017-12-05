@@ -46,7 +46,7 @@ class Employer(models.Model):
     pathologists = models.IntegerField(default=0, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return self.name + " (Employer)"
 
 class Advertisement(models.Model):
     DURATION_UNITS_CHOICES = (
