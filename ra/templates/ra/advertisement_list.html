@@ -30,7 +30,7 @@
                     {% endif %}
                     <td> {{ record.job_role }} </td>
                     <td> {{ record.closing_date }} </td>
-                    <td> Not implemented yet </td>
+                    <td> <a href="{% url 'employer:full_advertisement'%}?advertisement_id={{record.obfuscated_id}}">Click to view</a></td>
                 </tr>
                 {% endfor %}
             </table>

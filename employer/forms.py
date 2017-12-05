@@ -42,6 +42,9 @@ class EmployerForm(ModelForm):
 
  
 class AdvertisementForm(ModelForm):
+    def get_fields(self):
+        return list(self.fields.keys())
+
     class Meta:
         model = Advertisement
         fields = '__all__'

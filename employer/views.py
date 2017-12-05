@@ -184,6 +184,31 @@ def list_advertisements(request):
     queryset = Advertisement.objects.filter(employer_advert=employer)
     return render(request, 'ra/advertisement_list.html', {'queryset': queryset, 'employer_restricted': True}, )
 
+def full_advertisement(request):
+    username=auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'employer/not_allowed.html', {'next': request.path})
+
+    employer = Employer.objects.get(employer_username=username)
+    advertisement_id = None
+    try:
+        advertisement_id = request.GET.__getitem__('advertisement_id')
+    except ObjectDoesNotExist:
+        return render(request, 'employer/invalid_advertisement_id.html', {'advertisement_id': advertisement_id}, )
+    advertisement = Advertisement.objects.get(obfuscated_id=advertisement_id)
+
+    form = AdvertisementForm()
+    fields = form.get_fields()
+
+    data_full = []
+    for field in fields:
+        data_full.append((form.fields[field].label, getattr(advertisement, field)))
+
+#    pdb.set_trace()
+
+    return render(request, 'employer/full_advertisement.html', {'fields': fields, 'data_full': data_full, })
+
 class DetailView(generic.DetailView):
     model = Employer
     template_name = 'employer/detail.html'
