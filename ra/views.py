@@ -129,8 +129,7 @@ def verify_candidate(request):
         except ObjectDoesNotExist:
             return render(request, 'ra/invalid_registration_number.html', {'registration_number': registration_number}, )
 
-        form = AdvertisementForm(instance=advertisement)
-        return render(request, 'employer/submit_advertisement.html', {'new_advertisement': new_advertisement, 'form': form,}) 
+        return render(request, 'ra/verify_candidate.html', {'candidate': candidate}, )
     else:
         if 'verify_yes' in request.POST:
             registration_number = request.POST.get('registration_number')
