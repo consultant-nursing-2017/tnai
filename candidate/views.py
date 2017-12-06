@@ -29,6 +29,7 @@ from django.contrib.auth.models import Group
 from django.forms import inlineformset_factory
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
+from ra.models import RA
 
 import pdb
 import os
@@ -44,6 +45,13 @@ import random
 #class IndexView(generic.ListView):
 #    template_name = 'candidate/index.html'
 #    context_object_name = 'candidate_list'
+
+def is_employer_user(username, request):
+    employer_user = True
+    if username.groups.filter(name="Employer").count() <= 0:
+        employer_user = False
+    
+    return employer_user
 
 def is_candidate_user(username, request):
     candidate_user = True
@@ -66,6 +74,15 @@ def is_allowed(username, request):
     
     return allowed
 
+def get_acting_user(request):
+    username=auth.get_user(request)
+    if is_ra_user(username, request):
+        ra = RA.objects.get(logged_in_as=username)
+        if ra.acting_as is not None:
+            username = ra.acting_as
+
+    return username
+
 def redirect_to_tab(request):
     if 'save_personal' in request.POST:
         return HttpResponseRedirect('/candidate/submit_candidate_personal/')
@@ -87,17 +104,18 @@ def redirect_to_tab(request):
         return HttpResponseRedirect('/candidate/candidate_profile/')
 
 def candidate_index(request):
-    username=auth.get_user(request)
-    object_does_not_exist = False
-    if username.groups.filter(name="Employer").count() > 0:
+    actual_user = auth.get_user(request)
+    username = get_acting_user(request)
+    if is_employer_user(username, request):
         return HttpResponseRedirect('/employer/')
-    elif username.groups.filter(name="TNAI").count() > 0:
+    elif is_ra_user(username, request) and username == actual_user:
         return HttpResponseRedirect('/ra/')
 
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
+    object_does_not_exist = False
     try:
         if username.is_authenticated():
             candidate = Candidate.objects.get(candidate_username=username)
@@ -113,7 +131,7 @@ def candidate_index(request):
     return render(request, 'candidate/index.html', {'candidate': candidate, 'object_does_not_exist': object_does_not_exist, 'displayed_registration_number': displayed_registration_number, }) 
 
 def submit_candidate_personal(request):
-    username=auth.get_user(request)
+    username=get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
@@ -148,7 +166,7 @@ def submit_candidate_personal(request):
     return render(request, 'candidate/submit_candidate_personal.html', {'new_profile': new_profile, 'personal_form': personal_form,}) 
 
 def submit_candidate_educational_qualifications(request):
-    username=auth.get_user(request)
+    username=get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
@@ -188,7 +206,7 @@ def submit_candidate_educational_qualifications(request):
     return render(request, 'candidate/submit_candidate_educational_qualifications.html', {'educational_qualifications_formset': educational_qualifications_formset, 'educational_qualifications_form_instance': educational_qualifications_form_instance, 'error_message': error_message})
 
 def submit_candidate_professional_qualifications(request):
-    username=auth.get_user(request)
+    username=get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
@@ -227,7 +245,7 @@ def submit_candidate_professional_qualifications(request):
     return render(request, 'candidate/submit_candidate_professional_qualifications.html', {'professional_qualifications_formset': professional_qualifications_formset, 'professional_qualifications_form_instance': professional_qualifications_form_instance, })
 
 def submit_candidate_additional_qualifications(request):
-    username=auth.get_user(request)
+    username=get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
@@ -262,7 +280,7 @@ def submit_candidate_additional_qualifications(request):
     return render(request, 'candidate/submit_candidate_additional_qualifications.html', {'additional_qualifications_formset': additional_qualifications_formset, 'additional_qualifications_form_instance': additional_qualifications_form_instance, })
 
 def submit_candidate_experience(request):
-    username=auth.get_user(request)
+    username=get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
@@ -293,7 +311,7 @@ def submit_candidate_experience(request):
     return render(request, 'candidate/submit_candidate_experience.html', {'experience_formset': experience_formset, 'experience_form_instance': experience_form_instance, })
 
 def submit_candidate_eligibility_tests(request):
-    username=auth.get_user(request)
+    username=get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
@@ -332,7 +350,7 @@ def submit_candidate_eligibility_tests(request):
     return render(request, 'candidate/submit_candidate_eligibility_tests.html', {'eligibility_tests_formset': eligibility_tests_formset, 'eligibility_tests_form_instance': eligibility_tests_form_instance, })
 
 def submit_candidate_passport(request):
-    username=auth.get_user(request)
+    username=get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
@@ -356,12 +374,12 @@ def submit_candidate_passport(request):
     return render(request, 'candidate/submit_candidate_passport.html', {'passport_form': passport_form,}) 
 
 def submit_candidate_snc(request):
-    snc_course_choices = StateNursingCouncil.course_choices()
-    username=auth.get_user(request)
+    username=get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
+    snc_course_choices = StateNursingCouncil.course_choices()
     max_snc_per_course = 5
     total_forms = max_snc_per_course * len(snc_course_choices)
     try:
@@ -392,7 +410,7 @@ def submit_candidate_snc(request):
     return render(request, 'candidate/submit_candidate_snc.html', {'snc_formset': snc_formset, 'snc_form_instance': snc_form_instance, 'snc_course_choices': snc_course_choices, 'total_forms': total_forms, 'max_snc_per_course': max_snc_per_course, })
 
 def entire_profile(request):
-    username = auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_allowed(username, request)
     updation_allowed = is_candidate_user(username, request)
     ra_user = is_ra_user(username, request)
@@ -533,7 +551,7 @@ def entire_profile(request):
         return render(request, 'candidate/index.html', {'candidate': None})
 
 def find_jobs(request):
-    username = auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_allowed(username, request)
     updation_allowed = False
     if not allowed:
@@ -553,7 +571,7 @@ def find_jobs(request):
     return render(request, 'candidate/find_jobs.html', {'form': form, 'queryset': queryset, }, )
 
 def booked_exam_time_slots(request):
-    username = auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_allowed(username, request)
     updation_allowed = False
     if not allowed:
@@ -571,7 +589,7 @@ class DetailView(generic.DetailView):
         """
         Excludes any questions that aren't published yet.
         """
-        username=auth.get_user(self.request)
+        username=get_acting_user(self.request)
         return Candidate.objects.filter(candidate_username=username)
 
 def signup(request):

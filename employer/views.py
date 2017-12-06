@@ -32,6 +32,8 @@ from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
+from ra.models import RA
+
 ##from django.contrib.auth.decorators import permission_required
 
 
@@ -46,15 +48,35 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Employer.objects.all()
 
-def is_allowed(username, request):
-    allowed = True
+def is_employer_user(username, request):
+    employer_user = True
     if username.groups.filter(name="Employer").count() <= 0:
-        allowed = False
+        employer_user = False
     
+    return employer_user
+
+def is_ra_user(username, request):
+    ra_user = True
+    if username.groups.filter(name="TNAI").count() <= 0:
+        ra_user = False
+    
+    return ra_user
+
+def is_allowed(username, request):
+    allowed = is_employer_user(username, request) or is_ra_user(username, request)
     return allowed
 
-def employer_index(request):
+def get_acting_user(request):
     username=auth.get_user(request)
+    if is_ra_user(username, request):
+        ra = RA.objects.get(logged_in_as=username)
+        if ra.acting_as is not None:
+            username = ra.acting_as
+
+    return username
+
+def employer_index(request):
+    username = get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'employer/not_allowed.html', {'next': request.path})
@@ -75,7 +97,7 @@ def employer_index(request):
     return render(request, 'employer/index.html', {'employer': employer, 'object_does_not_exist': object_does_not_exist, }) 
 
 def submit_employer(request):
-    username=auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'employer/not_allowed.html', {'next': request.path})
@@ -109,7 +131,7 @@ def submit_employer(request):
     return render(request, 'employer/submit_employer.html', {'new_profile': new_profile, 'form': form,}) 
 
 def entire_profile(request):
-    username=auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'employer/not_allowed.html', {'next': request.path})
@@ -132,7 +154,7 @@ def entire_profile(request):
     return render(request, 'employer/entire_profile.html', {'fields_part1': fields_part1, 'data_part1': data_part1, 'fields_part2': fields_part2, 'data_part2': data_part2})
 
 def submit_advertisement(request):
-    username=auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'employer/not_allowed.html', {'next': request.path})
@@ -175,7 +197,7 @@ def submit_advertisement(request):
     return render(request, 'employer/submit_advertisement.html', {'new_advertisement': new_advertisement, 'form': form, 'advertisement_id': advertisement_id }) 
 
 def list_advertisements(request):
-    username=auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'employer/not_allowed.html', {'next': request.path})
@@ -185,7 +207,7 @@ def list_advertisements(request):
     return render(request, 'ra/advertisement_list.html', {'queryset': queryset, 'employer_restricted': True}, )
 
 def full_advertisement(request):
-    username=auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'employer/not_allowed.html', {'next': request.path})
