@@ -23,7 +23,7 @@
                     <tr>
                         <td> {{ record.candidate_username }} </td>
                         <td> {{ record.name }} </td>
-                        <td> <a href="/candidate/candidate_profile/?registration_number={{record.registration_number}}">Click here</a> </td>
+                        <td> <a href="{% url 'ra:act_as' %}?acting_as_username={{record.candidate_username}}">Act as this user</a> </td>
                     </tr>
                     {% endfor %}
                 </table>

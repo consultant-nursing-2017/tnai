@@ -77,9 +77,12 @@ def is_allowed(username, request):
 def get_acting_user(request):
     username=auth.get_user(request)
     if is_ra_user(username, request):
-        ra = RA.objects.get(logged_in_as=username)
-        if ra.acting_as is not None:
-            username = ra.acting_as
+        try:
+            ra = RA.objects.get(logged_in_as=username)
+            if ra.acting_as is not None:
+                username = ra.acting_as
+        except ObjectDoesNotExist:
+            pass
 
     return username
 

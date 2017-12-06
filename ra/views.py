@@ -160,6 +160,12 @@ def act_as(request):
             form.save() 
             return HttpResponseRedirect('/ra/')
     else:
+        try:
+            acting_as_username = request.GET.__getitem__('acting_as_username')
+            acting_as = User.objects.get(username=acting_as_username)
+            ra.acting_as = acting_as
+        except KeyError:
+            pass
         form = ActAsForm(instance=ra)
 
-    return render(request, 'ra/act_as.html', {'form': form}, )
+    return render(request, 'ra/act_as.html', {'form': form, 'next': next}, )
