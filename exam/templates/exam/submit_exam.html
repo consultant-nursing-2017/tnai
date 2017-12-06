@@ -1,24 +1,46 @@
 {% extends "base_generic.html" %}
+{% load bootstrap3 %}
 {% block content %}
 
-<h1>Exam/interview form</h1>
-{% if missing_exam_or_interview %}
-    <h2>Missing option: submit exam or interview? </h2>
-{% else %}
-    <form enctype="multipart/form-data" action="/exam/submit_exam/" method="post">
-        {% csrf_token %}
-        {% if new_entry %}
-            <h2> New entry</h2>
-        {% else %}
-            <h2> Update entry</h2>
-        {% endif %}
-        <table>
-            {{exam_form.as_table}}
-        </table>
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="text-center">Exam/interview form</h1>
+        </div>
+        <div class="panel-body">
+            {% if missing_exam_or_interview %}
+                <h2>Missing option: submit exam or interview? </h2>
+            {% else %}
+                <form enctype="multipart/form-data" action="/exam/submit_exam/" method="post" class="form form-horizontal">
+                    {% csrf_token %}
+                    <!--
+                    {% if new_entry %}
+                        <h2> New entry</h2>
+                    {% else %}
+                        <h2> Update entry</h2>
+                    {% endif %}
+                    <table>
+                        {{exam_form.as_table}}
+                    </table>
+                    -->
+                    <table class="table table-striped">
+                        {% bootstrap_form exam_form layout='horizontal' %}
+                    </table>
 
-        <input type="hidden" name="exam_id" value="{{exam_id}}">
-        <input type="submit" name="submit" value="Submit" />
-    </form>
-{% endif %}
+                    <input type="hidden" name="exam_id" value="{{exam_id}}">
+                    {% if new_entry %}
+                        {% bootstrap_button "Create new entry" button_type="submit" name="submit" %}
+                    {% else %}
+                        {% bootstrap_button "Update entry" button_type="submit" name="submit" %}
+                    {% endif %}
+
+                    <!--
+                    <input type="submit" name="submit" value="Submit" />
+                    -->
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
 
