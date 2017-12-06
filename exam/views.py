@@ -125,6 +125,7 @@ def submit_exam(request):
             exam = Exam.objects.get(exam_id=exam_id)
             exam_form = ExamForm(instance=exam)
         else:
+            exam_id = ""
             if 'exam_or_interview' in request.GET:
                 exam_or_interview = request.GET.__getitem__('exam_or_interview')
             else:
