@@ -171,15 +171,15 @@ def submit_advertisement(request):
                 advertisement = Advertisement.objects.filter(employer_advert=employer).get(obfuscated_id=advertisement_id)
             except ObjectDoesNotExist:
                 return render(request, 'employer/invalid_advertisement_id.html', {'advertisement_id': advertisement_id}, )
-            form = AdvertisementForm(instance=advertisement)
             new_advertisement = False
+            form = AdvertisementForm(instance=advertisement)
         else:
             advertisement_id = None
             form = AdvertisementForm(initial={'employer_advert':employer})
     else:
         # check whether it's valid:
         # TODO
-        new_advertisement = request.POST.get('new_advertisement')
+        new_advertisement = (request.POST.get('new_advertisement') == "True")
         if not new_advertisement:
             advertisement_id = request.POST.get('advertisement_id')
             try:
