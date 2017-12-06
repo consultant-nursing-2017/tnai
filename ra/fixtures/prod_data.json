@@ -96,7 +96,7 @@
     "pk": 26,
     "fields": {
         "password": "pbkdf2_sha256$36000$UWiUT7mOaPzQ$GHnjtH3WbDzhMGgn4sZKKggrvyJPyIPqPVf2mQiaj1M=",
-        "last_login": "2017-11-24T11:16:59.061Z",
+        "last_login": "2017-12-06T08:06:39.744Z",
         "is_superuser": false,
         "username": "anand.42@gmail.com",
         "first_name": "",
@@ -212,7 +212,7 @@
     "pk": 32,
     "fields": {
         "password": "pbkdf2_sha256$36000$gurOSAMlR8fH$4/syKBvt5YpShIQx25YXeZbG1u4ugy+yHZxu8GlCVxY=",
-        "last_login": "2017-11-22T09:24:38.296Z",
+        "last_login": "2017-12-06T09:26:06.695Z",
         "is_superuser": false,
         "username": "ra-user1",
         "first_name": "RA User1",
@@ -232,7 +232,7 @@
     "pk": 33,
     "fields": {
         "password": "pbkdf2_sha256$36000$2ZrWwc1LSWUR$84brGz7V1Wlc9lpMMksUK8v9iFEGTv+yaXpJszF6gOc=",
-        "last_login": "2017-11-29T12:36:20.577Z",
+        "last_login": "2017-12-06T07:54:42.747Z",
         "is_superuser": false,
         "username": "belrogue4@gmail.com",
         "first_name": "",
@@ -305,14 +305,6 @@
 },
 {
     "model": "sessions.session",
-    "pk": "ozb253crzuo3e9pb9p15avvwfcdhehc0",
-    "fields": {
-        "session_data": "OTc1MGE5N2FiMzlmZTU3MmM3YmY3ZmIxOGM2ODA2NDkzNTQ1MTU0Zjp7Il9hdXRoX3VzZXJfaWQiOiIzMyIsIl9hdXRoX3VzZXJfYmFja2VuZCI6InRuYWkuYmFja2VuZHMuQ2FzZUluc2Vuc2l0aXZlTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiMzdkMTUzNDlhZWU2MWNkNjQwYTJkNTYxNjM2YzY3ZDlkNWU1YmI3NCJ9",
-        "expire_date": "2017-12-13T12:36:20.660Z"
-    }
-},
-{
-    "model": "sessions.session",
     "pk": "qc0xgdloq0j8nlvn0u4g407fomp2si67",
     "fields": {
         "session_data": "YzkxNzllMDkwYzYzMjM2NzUwMjQ4YWEzOGJlMzk2ZWZlNzRjYzUzYjp7Il9hdXRoX3VzZXJfaWQiOiI2IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI3MDE2MGExMjMyMWNjMTExNDM5MTY2MjUwMWE2YWExYmZmOGUyNmJiIn0=",
@@ -337,6 +329,14 @@
 },
 {
     "model": "sessions.session",
+    "pk": "xbqc6v5l55yhsruqnkrd8cnw86a53ft9",
+    "fields": {
+        "session_data": "MmY2MGZhNDBmZTU1Y2U4N2I3OTM1ZmE0Y2FhZjA0ODkzZDc3YjIzYzp7Il9hdXRoX3VzZXJfYmFja2VuZCI6InRuYWkuYmFja2VuZHMuQ2FzZUluc2Vuc2l0aXZlTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiNzNjNTAyMDZiNmM5NzQ0YzdjNzQxYTAxOWJjNjRmNjlhOTRiZjQ4YyIsIl9hdXRoX3VzZXJfaWQiOiIzMiJ9",
+        "expire_date": "2017-12-20T09:26:06.706Z"
+    }
+},
+{
+    "model": "sessions.session",
     "pk": "ywkvtqsrsfuyvytf4bnz6gj47kyh4457",
     "fields": {
         "session_data": "MmY5ODMyYThhMzcxZTc3NmE4NzU5ZGIyOTYzOGY5YTY4MzA5YTY3ZTp7Il9hdXRoX3VzZXJfaGFzaCI6ImMyNzM3NTQ0YjFmNjVhMWUzMWRhNTQ4YWIxMTVkMzk1ZjNkZjM4YzgiLCJfYXV0aF91c2VyX2lkIjoiMjYiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCJ9",
@@ -349,7 +349,7 @@
     "fields": {
         "employer_username": 33,
         "country": "Foreign",
-        "name": "Employer1 belrogue",
+        "name": "Employer1 XYZ",
         "registration": "ABC-1234",
         "type": "Private",
         "authorized_signatory": "Auth 123",
@@ -375,7 +375,7 @@
         "employer_advert": 10,
         "job_role": "Nurse",
         "closing_date": "2017-10-26",
-        "number_of_vacancies": 20,
+        "number_of_vacancies": 15,
         "educational_qualifications": "ANM required",
         "eligibility_tests": "HAAD",
         "experience": "2 years",
@@ -401,7 +401,43 @@
         "other_notes": "",
         "life_insurance": 0,
         "life_insurance_currency": "AED",
-        "ad_uuid": ""
+        "obfuscated_id": "6A9D894"
+    }
+},
+{
+    "model": "employer.advertisement",
+    "pk": 2,
+    "fields": {
+        "employer_advert": 10,
+        "job_role": "Nurse",
+        "closing_date": "2017-12-05",
+        "number_of_vacancies": 25,
+        "educational_qualifications": "ANM required",
+        "eligibility_tests": "HAAD",
+        "experience": "2 years",
+        "name_of_hospital": "Hospital1",
+        "city": "Delhi",
+        "country": "India",
+        "start_date": "2017-12-05",
+        "duration_of_assignment": 5,
+        "duration_of_assignment_units": "Months",
+        "salary_number": 1200,
+        "salary_currency": "AED",
+        "allowances": "Travel",
+        "personal_accomodation": false,
+        "family_accomodation": false,
+        "accomodation_allowance": 0,
+        "accomodation_allowance_currency": "AED",
+        "maternity_leave": false,
+        "medical_facilities": "Self",
+        "visa_cost": false,
+        "air_ticket_for_joining": false,
+        "air_ticket_for_vacation": false,
+        "annual_leave_days": 14,
+        "other_notes": "",
+        "life_insurance": 0,
+        "life_insurance_currency": "AED",
+        "obfuscated_id": "8296D9B"
     }
 },
 {
@@ -500,7 +536,7 @@
         "preference_of_work": "Both",
         "registration_number": "EPY9V2X",
         "is_provisional_registration_number": true,
-        "sent_email_notification_provisional_registration_number": false
+        "sent_email_notification_provisional_registration_number": true
     }
 },
 {
@@ -3069,6 +3105,14 @@
         "registration_number": "def355",
         "year": 2012,
         "proof": ""
+    }
+},
+{
+    "model": "ra.ra",
+    "pk": 18,
+    "fields": {
+        "logged_in_as": 32,
+        "acting_as": 33
     }
 },
 {
