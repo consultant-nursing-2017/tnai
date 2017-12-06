@@ -157,7 +157,7 @@ class AdditionalQualifications(Qualifications):
 class EligibilityTests(models.Model):
     ELIGIBILITY_TESTS_CHOICES = (
             ('Prometric (Saudi Arabia)', 'Prometric (Saudi Arabia)'),
-            ('Prometric (UAE)', 'Prometric (UAE)'),
+            ('Prometric (Oman)', 'Prometric (Oman)'),
             ('Prometric (Qatar)', 'Prometric (Qatar)'),
             ('HAAD', 'HAAD'),
             ('DHA', 'DHA'),

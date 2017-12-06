@@ -13,9 +13,12 @@
                     <h1 class="text-center">Submit advertisement</h1>
                 </div>
                 <div class="panel-body">
+                    {% bootstrap_form form layout='horizontal' %}
+                    <!--
                     <table class="table table-striped">
                         {{ form.as_table }}
                     </table>
+                    -->
                 </div>
                 <div class="panel-footer text-center">
                     <input type="hidden" value="{{advertisement_id}}" name="advertisement_id" />
