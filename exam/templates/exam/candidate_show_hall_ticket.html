@@ -7,33 +7,44 @@
 {% endblock %}
 
 {% block content %}
-    <h2> Hall ticket </h2>
-    <table>
-        <tr>
-            <th> Candidate name </th> <td> {{candidate.name}} </td>
-        </tr>
-        <tr>
-            <th> Registration number</th> <td> {{displayed_registration_number}} </td>
-        </tr>
-        <tr>
-            <th> Exam name </th>
-            <td> {{exam.name}}</td>
-        </tr>
-        <tr>
-            <th> Exam date </th>
-            <td> {{exam.date}} </td>
-        </tr>
-        <tr>
-            <th> Exam type </th>
-            <td> {{exam.exam_type}} </td>
-        </tr>
-        <tr>
-            <th> Time slot </th>
-            <td> {{booking.time_slot.begin_time}} to {{booking.time_slot.end_time}}</td>
-        </tr>
-        <tr>
-            <th> Hall ticket number </th>
-            <td> {{booking.hall_ticket_number}}</td>
-        </tr>
-    </table>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1> Hall ticket </h1>
+        </div>
+        <div class="panel-body">
+            {% if candidate.photograph %}
+                <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}"></img>
+            {% else %}
+            <h3 class="text-center">No photograph uploaded.</h3>
+            {% endif %}
+            <table class="table table-striped">
+                <tr>
+                    <th> Candidate name </th> <td> {{candidate.name}} </td>
+                </tr>
+                <tr>
+                    <th> Registration number</th> <td> {{displayed_registration_number}} </td>
+                </tr>
+                <tr>
+                    <th> Exam name </th>
+                    <td> {{exam.name}}</td>
+                </tr>
+                <tr>
+                    <th> Exam date </th>
+                    <td> {{exam.date}} </td>
+                </tr>
+                <tr>
+                    <th> Exam type </th>
+                    <td> {{exam.exam_type}} </td>
+                </tr>
+                <tr>
+                    <th> Time slot </th>
+                    <td> {{booking.time_slot.begin_time}} to {{booking.time_slot.end_time}}</td>
+                </tr>
+                <tr>
+                    <th> Hall ticket number </th>
+                    <td> {{booking.hall_ticket_number}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 {% endblock %}
