@@ -19,8 +19,13 @@
                         <th> Advertiser username </th>
                     {% endif %}
                     <th> Job role </th>
+                    <th> Gender </th>
+                    <th> Experience </th>
+                    <th> Educational Qualifications </th>
+                    <th> Eligibility </th>
                     <th> Closing date </th>
                     <th> Full advertisement </th>
+                    <th> Candidates </th>
                 </tr>
                 {% for record in queryset %}
                 <tr>
@@ -29,8 +34,13 @@
                         <td> {{ record.employer_advert }} </td>
                     {% endif %}
                     <td> {{ record.job_role }} </td>
+                    <td> NYI </td>
+                    <td> {{ record.experience }} </td>
+                    <td> {{ record.educational_qualifications }} </td>
+                    <td> {{ record.eligibility_tests }} </td>
                     <td> {{ record.closing_date }} </td>
                     <td> <a href="{% url 'employer:full_advertisement'%}?advertisement_id={{record.obfuscated_id}}">Click to view</a></td>
+                    <td> <a href="#">Filter candidates for ad</a></td>
                 </tr>
                 {% endfor %}
             </table>

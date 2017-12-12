@@ -129,7 +129,7 @@ def candidate_index(request):
         object_does_not_exist = True
 
     displayed_registration_number = None
-    if candidate.registration_number is not None:
+    if candidate is not None and candidate.registration_number is not None:
         displayed_registration_number = candidate.registration_number_display()
     return render(request, 'candidate/index.html', {'candidate': candidate, 'object_does_not_exist': object_does_not_exist, 'displayed_registration_number': displayed_registration_number, }) 
 
