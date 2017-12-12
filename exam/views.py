@@ -110,8 +110,11 @@ def submit_exam(request):
             exam_id = request.POST.get('exam_id')
         else:
             exam_id = ""
-        exam = Exam.objects.get(exam_id = exam_id)
-        exam_form = ExamForm(request.POST, request.FILES, instance = exam)
+        if len(exam_id) > 0:
+            exam = Exam.objects.get(exam_id = exam_id)
+            exam_form = ExamForm(request.POST, request.FILES, instance = exam)
+        else:
+            exam_form = ExamForm(request.POST, request.FILES)
 
         if exam_form.is_valid():
             exam = exam_form.save()
