@@ -5,40 +5,38 @@
 {% endblock %}
 
 {% block content %}
-<h2> Booked {{exam_or_interview}} Time Slots</h2>
-    <h2> Candidate username: {{ candidate.candidate_username }} </h2> 
-    <h2> Registration number: {{ candidate.registration_number }} </h2> 
-    {% if candidate.photograph %}
-        <img src="{{MEDIA_URL}}{{ candidate.photograph.url }}"></img>
-    {% else %}
-        No photograph uploaded.
-    {% endif %}
-    <table>
-        {% if queryset %}
-            <tr>
-                <th>{{exam_or_interview}} name</th>
-                <th>Date</th>
-                <th>Booked time slot</th>
-                {% ifnotequal exam_or_interview "Interview" %}
-                    <th>Hall ticket</th>
-                {% endifnotequal %}
-                <th>Room number</th>
-            </tr>
-            {% for record in queryset %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h1 class="text-center"> Booked {{exam_or_interview}} Time Slots</h1>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            {% if queryset %}
                 <tr>
-                    <td>{{record.time_slot.exam.name}}</td>
-                    <td>{{record.time_slot.exam.date}}</td>
-                    <td>{{record.time_slot.begin_time}} to {{record.time_slot.end_time}} <a href="/exam/candidate_book_time_slot?exam_id={{record.time_slot.exam.exam_id}}">[Change]</a></td>
+                    <th>{{exam_or_interview}} name</th>
+                    <th>Date</th>
+                    <th>Booked time slot</th>
                     {% ifnotequal exam_or_interview "Interview" %}
-                        <td> <a href="/exam/candidate_show_hall_ticket?exam_id={{record.time_slot.exam.exam_id}}">View hall ticket</td>
+                        <th>Hall ticket</th>
                     {% endifnotequal %}
-                    <td> Not assigned yet </td>
+                    <th>Room number</th>
                 </tr>
-            {% endfor %}
-        {% else %}
-            <h3>No booked {{exam_or_interview.lower}} found</h3>
-        {% endif %}
-    </table>
-    <a href="../">Back to Candidate index page</a>
+                {% for record in queryset %}
+                    <tr>
+                        <td>{{record.time_slot.exam.name}}</td>
+                        <td>{{record.time_slot.exam.date}}</td>
+                        <td>{{record.time_slot.begin_time}} to {{record.time_slot.end_time}} <a href="/exam/candidate_book_time_slot?exam_id={{record.time_slot.exam.exam_id}}">[Change]</a></td>
+                        {% ifnotequal exam_or_interview "Interview" %}
+                            <td> <a href="/exam/candidate_show_hall_ticket?exam_id={{record.time_slot.exam.exam_id}}">View hall ticket</td>
+                        {% endifnotequal %}
+                        <td> Not assigned yet </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <h3>No booked {{exam_or_interview.lower}} found</h3>
+            {% endif %}
+        </table>
+    </div>
+</div>
 {% endblock %}
 
