@@ -80,7 +80,7 @@ class CandidateBookTimeSlotForm(forms.Form):
         super(CandidateBookTimeSlotForm, self).__init__(*args, **kwargs)
         choices = []
         for record in queryset:
-            time_slot_string = str(record.begin_time) + ' to ' + str(record.end_time)
+            time_slot_string = str(record.begin_time.strftime('%H:%M')) + ' to ' + str(record.end_time.strftime('%H:%M'))
             choices.append((record.pk, time_slot_string))
 
         self.fields['time_slot'].choices = choices
