@@ -63,7 +63,7 @@ class PersonalForm(ModelForm):
 
 #    candidate_username=forms.CharField(widget=forms.HiddenInput())
 #    dummy_candidate_username=forms.CharField(disabled=True, label='Username')
-    date_of_birth = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%y', '%d.%m.%Y'], required=False, label='Date of Birth (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}), validators=[validate_date_of_birth])
+    date_of_birth = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%y', '%d.%m.%Y'], required=True, label='Date of Birth (DD/MM/YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}), validators=[validate_date_of_birth])
     class Meta:
         model = Candidate
         fields = ['candidate_username', 'photograph', 'curriculum_vitae', 'name', 'fathers_name', 'date_of_birth', 'gender', 'marital_status', 'phone_number', 

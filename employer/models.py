@@ -60,9 +60,14 @@ class Advertisement(models.Model):
             ("Family", "Family"),
             ("None", "None"),
     )
+    GENDER_CHOICES = (
+            ("Male", "Male"),
+            ("Female", "Female")
+    )
     employer_advert = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='employer_advert', blank=False, null=True)
     job_role = models.CharField(max_length=200, blank=False, default="Nurse")
     closing_date = models.DateField(blank=False, default=timezone.now)
+#    gender = models.CharField(max_length=200, choices=GENDER_CHOICES, default="Male")
     number_of_vacancies = models.IntegerField(blank=False, default=5)
     educational_qualifications = models.CharField(max_length=500, blank=False, default="ANM required")
     eligibility_tests = models.CharField(max_length=500, blank=False, choices=EligibilityTests.eligibility_tests_choices(), default="HAAD")

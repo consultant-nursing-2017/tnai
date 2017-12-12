@@ -52,7 +52,7 @@ class Candidate(models.Model):
     curriculum_vitae = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
     name = models.CharField(max_length=200, default="Name")
     fathers_name = models.CharField(max_length=200, default="Father's Name")
-    date_of_birth = models.DateField(default=timezone.now)
+    date_of_birth = models.DateField(default=timezone.now, blank=False, null=False)
     gender = models.CharField(max_length=200, choices=GENDER_CHOICES, default="Male")
     marital_status = models.CharField(max_length=200, choices=MARITAL_STATUS_CHOICES, default="Single")
 #    email = models.CharField(max_length=200, default="consultant.nursing.2017@gmail.com")
