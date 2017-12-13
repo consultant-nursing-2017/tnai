@@ -146,6 +146,7 @@ def submit_exam_time_slot(request):
 
 #    max_snc_per_course = 5
 #    total_forms = max_snc_per_course * len(snc_course_choices)
+    exam_id = None
     if request.method == 'GET':
         if 'exam_id' in request.GET:
             exam_id = request.GET.__getitem__('exam_id')
@@ -170,6 +171,7 @@ def submit_exam_time_slot(request):
         # TODO
         exam_time_slot_formset = ExamTimeSlotFormSet(request.POST, request.FILES, instance=exam, queryset=qs)#, initial={'user': username,})
 #        snc_form_instance = StateNursingCouncilForm()
+#        pdb.set_trace()
         if exam_time_slot_formset.is_valid():
             exam_time_slot_formset.save()
             return HttpResponseRedirect('/exam/exam_list/?exam_or_interview=' + exam.exam_or_interview)

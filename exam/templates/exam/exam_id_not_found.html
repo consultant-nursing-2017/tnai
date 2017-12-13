@@ -7,8 +7,13 @@
 {% endblock %}
 
 {% block content %}
-    <h2> {{exam_or_interview}} module </h2>
-    <h2> {{exam_or_interview}} id: {{exam_id}} not found. </h2>
-    <input type="hidden" name="exam_or_interview" value="{{exam_or_interview}}">
-    <a href="/exam/exam_list/?exam_or_interview={{exam_or_interview}}">List {{exam_or_interview.lower}}.</a>
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h1 class="text-center">Error</h1>
+        </div>
+        <div class="panel-body">
+            <h2> Exam or Interview Id: "{{exam_id}}" not found. </h2>
+            <input type="hidden" name="exam_or_interview" value="{{exam_or_interview}}">
+        </div>
+    </div>
 {% endblock %}
