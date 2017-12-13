@@ -32,7 +32,7 @@ class ExamForm(ModelForm):
                 exam_or_interview = self.instance.exam_or_interview
         if exam_or_interview == "Interview":
             self.fields['exam_type'].widget = forms.HiddenInput()
-            self.fields['hall_ticket_download_minimum_number_of_days'].widget = forms.HiddenInput()
+#            self.fields['hall_ticket_download_minimum_number_of_days'].widget = forms.HiddenInput()
 
 class ExamTimeSlotForm(ModelForm):
     begin_time = forms.TimeField(input_formats=['%H:%M'], required=False, label='Begin', widget=forms.TimeInput(format=('%H:%M'), attrs={'size':'15'}))

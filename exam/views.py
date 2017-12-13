@@ -136,7 +136,7 @@ def submit_exam(request):
 
             exam_form = ExamForm(initial={'exam_or_interview': exam_or_interview})
 
-    return render(request, 'exam/submit_exam.html', {'new_entry': new_entry, 'exam_form': exam_form, 'missing_exam_or_interview': False, 'exam_id': exam_id, }) 
+    return render(request, 'exam/submit_exam.html', {'new_entry': new_entry, 'exam_form': exam_form, 'missing_exam_or_interview': False, 'exam_id': exam_id, 'exam_or_interview': exam_or_interview, }) 
 
 def submit_exam_time_slot(request):
     username=auth.get_user(request)
