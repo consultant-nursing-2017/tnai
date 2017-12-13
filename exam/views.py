@@ -29,6 +29,8 @@ from django.forms import inlineformset_factory
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
+from ra.models import RA
+
 import pdb
 import os
 import hashlib
@@ -58,8 +60,17 @@ def is_ra_user(username, request):
     
     return ra_user
 
+def get_acting_user(request):
+    username=auth.get_user(request)
+    if is_ra_user(username, request):
+        ra = RA.objects.get(logged_in_as=username)
+        if ra.acting_as is not None:
+            username = ra.acting_as
+
+    return username
+
 def exam_list(request):
-    username = auth.get_user(request)
+    username = get_acting_user(request)
     candidate_user_type = is_candidate_user(username, request)
     ra_user_type = is_ra_user(username, request)
     allowed = candidate_user_type or ra_user_type
@@ -97,7 +108,7 @@ def exam_list(request):
     return render(request, 'exam/exam_list.html', {'username': username, 'queryset': queryset, 'filter_form': filter_form, 'candidate_user_type': candidate_user_type, 'ra_user_type': ra_user_type, 'exam_or_interview': exam_or_interview, 'missing_exam_or_interview': False, })
 
 def submit_exam(request):
-    username=auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_ra_user(username, request)
     if not allowed:
         return render(request, 'exam/not_allowed.html', {'not_member_of_group': 'TNAI'})
@@ -139,7 +150,7 @@ def submit_exam(request):
     return render(request, 'exam/submit_exam.html', {'new_entry': new_entry, 'exam_form': exam_form, 'missing_exam_or_interview': False, 'exam_id': exam_id, 'exam_or_interview': exam_or_interview, }) 
 
 def submit_exam_time_slot(request):
-    username=auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_ra_user(username, request)
     if not allowed:
         return render(request, 'exam/not_allowed.html', {'not_member_of_group': 'TNAI'})
@@ -183,7 +194,7 @@ def submit_exam_time_slot(request):
     return render(request, 'exam/submit_exam_time_slot.html', {'exam_time_slot_formset': exam_time_slot_formset, 'exam_time_slot_form_instance': exam_time_slot_form_instance, 'exam_id': exam_id, })
 
 def candidate_show_hall_ticket(request):
-    username=auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_candidate_user(username, request)
     if not allowed:
         return render(request, 'exam/not_allowed.html', {'not_member_of_group': 'Candidate'})
@@ -219,7 +230,7 @@ def candidate_show_hall_ticket(request):
     return render(request, 'exam/candidate_show_hall_ticket.html', {'candidate': candidate, 'displayed_registration_number': displayed_registration_number, 'exam_id': exam_id, 'exam': exam, 'booking': booking, })
 
 def candidate_book_time_slot(request):
-    username=auth.get_user(request)
+    username = get_acting_user(request)
     allowed = is_candidate_user(username, request)
     if not allowed:
         return render(request, 'exam/not_allowed.html', {'not_member_of_group': 'Candidate'})
