@@ -147,6 +147,36 @@ def verify_candidate(request):
         else:
             return HttpResponseRedirect('/ra/')
 
+def verify_employer(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+
+    if request.method == 'GET':
+        registration_number = request.GET.__getitem__('registration_number')
+        try:
+            employer = Employer.objects.get(registration_number=registration_number)
+        except ObjectDoesNotExist:
+            return render(request, 'ra/invalid_registration_number.html', {'registration_number': registration_number}, )
+
+        return render(request, 'ra/verify_employer.html', {'employer': employer}, )
+    else:
+        if 'verify_yes' in request.POST:
+            registration_number = request.POST.get('registration_number')
+            employer = Employer.objects.get(registration_number=registration_number)
+            employer.is_provisional_registration_number = False
+            employer.save()
+            return HttpResponseRedirect('/employer/entire_profile?registration_number='+str(registration_number))
+        elif 'verify_no' in request.POST:
+            registration_number = request.POST.get('registration_number')
+            employer = Employer.objects.get(registration_number=registration_number)
+            employer.is_provisional_registration_number = True
+            employer.save()
+            return HttpResponseRedirect('/employer/entire_profile?registration_number='+str(registration_number))
+        else:
+            return HttpResponseRedirect('/ra/')
+
 def act_as(request):
     username = auth.get_user(request)
     allowed = is_allowed(username, request)

@@ -20,6 +20,19 @@
             <div class="panel-body">
                 <div class="col-sm-6">
                     <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>TNAI Registration number</th>
+                            <td>
+                                {{ displayed_registration_number }}
+                                {% if ra_user %}
+                                    {% if employer.is_provisional_registration_number %}
+                                        <a href="/ra/verify_employer/?registration_number={{ registration_number }}">[Verify]</a>
+                                    {% else %}
+                                        <a href="/ra/verify_employer/?registration_number={{ registration_number }}">[Un-Verify]</a>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
                         {% for data in data_part1 %}
                             <tr>
                                 <th>{{ data.0 }}</th>

@@ -26,6 +26,12 @@
                         <th>Authorized signatory:</th>
                         <td>{{employer.authorized_signatory}}</td>
                     </tr>
+                    {% if displayed_registration_number %}
+                        <tr>
+                            <th>TNAI Registration number:</th>
+                            <td>{{displayed_registration_number}}</td>
+                        </tr>
+                    {% endif %}
                 </table>
             </div>
         </div>

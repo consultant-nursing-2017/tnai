@@ -8,6 +8,7 @@ from django.conf import settings
 
 import datetime
 import uuid
+import pdb
 
 class Employer(models.Model):
     COUNTRY_CHOICES = (
@@ -45,8 +46,27 @@ class Employer(models.Model):
     lab_technicians = models.IntegerField(default=0, blank=True, null=True)
     pathologists = models.IntegerField(default=0, blank=True, null=True)
 
+    registration_number = HashidField(salt=settings.HASHID_FIELD_SALT+"Employer", allow_int_lookup=True, null=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", default=None)
+    is_provisional_registration_number = models.BooleanField(default=True, editable=False)
+    sent_email_notification_provisional_registration_number = models.BooleanField(default=False, editable=False)
+
     def __str__(self):
         return self.name + " (Employer)"
+
+    def registration_number_display(self):
+        if self.is_provisional_registration_number:
+            displayed_registration_number = "TNAI/REC/PROV/" + str(self.registration_number)
+        else:
+            displayed_registration_number = "TNAI/REC/PERM/" + str(self.registration_number)
+
+        return displayed_registration_number
+
+    def save(self, *args, **kwargs):
+#        pdb.set_trace()
+        super(Employer, self).save(*args, **kwargs)
+        if not self.registration_number:
+            self.registration_number = self.pk
+        super(Employer, self).save(*args, **kwargs)
 
 class Advertisement(models.Model):
     DURATION_UNITS_CHOICES = (

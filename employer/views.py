@@ -94,7 +94,10 @@ def employer_index(request):
         employer = None
         object_does_not_exist = True
 
-    return render(request, 'employer/index.html', {'employer': employer, 'object_does_not_exist': object_does_not_exist, }) 
+    displayed_registration_number = None
+    if employer is not None and employer.registration_number is not None:
+        displayed_registration_number = employer.registration_number_display()
+    return render(request, 'employer/index.html', {'employer': employer, 'object_does_not_exist': object_does_not_exist, 'displayed_registration_number': displayed_registration_number, }) 
 
 def submit_employer(request):
     username = get_acting_user(request)
@@ -135,23 +138,59 @@ def entire_profile(request):
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'employer/not_allowed.html', {'next': request.path})
+    actual_user = auth.get_user(request)
+    ra_user = is_ra_user(actual_user, request)
 
-    employer = Employer.objects.get(employer_username=username)
-    form = EmployerForm()
-    fields_part1 = EmployerForm.fields_part1()
-    fields_part2 = EmployerForm.fields_part2()
+    try:
+        if 'registration_number' in request.GET:
+            registration_number = request.GET.__getitem__('registration_number')
+            employer = Employer.objects.get(registration_number=registration_number)
+            if not is_ra_user(username, request) and employer.employer_username != username:
+                return render(request, 'employer/not_allowed.html', {'next': request.path}, )
+        else:
+            employer = Employer.objects.get(employer_username=username)
+        employer = Employer.objects.get(employer_username=username)
+        form = EmployerForm()
+        fields_part1 = EmployerForm.fields_part1()
+        fields_part2 = EmployerForm.fields_part2()
 
-    data_part1 = []
-    for field in fields_part1:
-        data_part1.append((form.fields[field].label, getattr(employer, field)))
+        data_part1 = []
+        for field in fields_part1:
+            data_part1.append((form.fields[field].label, getattr(employer, field)))
 
-    data_part2 = []
-    for field in fields_part2:
-        data_part2.append((form.fields[field].label, getattr(employer, field)))
+        data_part2 = []
+        for field in fields_part2:
+            data_part2.append((form.fields[field].label, getattr(employer, field)))
 
-#    pdb.set_trace()
+    #    pdb.set_trace()
 
-    return render(request, 'employer/entire_profile.html', {'fields_part1': fields_part1, 'data_part1': data_part1, 'fields_part2': fields_part2, 'data_part2': data_part2})
+        registration_number_raw = employer.registration_number
+        registration_number = registration_number_raw.hashid
+        is_provisional_registration_number = getattr(employer, 'is_provisional_registration_number')
+        displayed_registration_number = employer.registration_number_display()
+
+        if employer.sent_email_notification_provisional_registration_number is False:
+            current_site = get_current_site(request)
+            user = employer.employer_username
+            message = render_to_string('employer/provisional_registration_number_email.html', {
+                'user':user, 
+                'domain':current_site.domain,
+                'registration_number_display': employer.registration_number_display()
+            })
+            mail_subject = 'Your provisional TNAI recruitment registration number'
+            to_email = employer.employer_username.username
+            email = EmailMessage(mail_subject, message, to=[to_email])
+            result = email.send()
+            if result:
+                employer.sent_email_notification_provisional_registration_number = True
+                employer.save()
+
+#        pdb.set_trace()
+        return render(request, 'employer/entire_profile.html', {'employer': employer, 'fields_part1': fields_part1, 'data_part1': data_part1, 'fields_part2': fields_part2, 'data_part2': data_part2, 'registration_number': registration_number, 'displayed_registration_number': displayed_registration_number, 'ra_user': ra_user, })
+
+    except ObjectDoesNotExist:
+        fields = None
+        return render(request, 'employer/index.html', {'employer': None})
 
 def submit_advertisement(request):
     username = get_acting_user(request)

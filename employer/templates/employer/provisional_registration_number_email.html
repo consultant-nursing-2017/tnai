@@ -1,0 +1,4 @@
+{% autoescape off %}
+Hi {{ user.username }},
+Thank you for filling out your employer profile at TNAI recruitment. Your provisional registration number is: {{registration_number_display}}. You can also see this registration number at: http://{{ domain }}{% url 'employer:entire_profile' %}.
+{% endautoescape %}
