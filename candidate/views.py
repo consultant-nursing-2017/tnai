@@ -416,9 +416,10 @@ def entire_profile(request):
     username = get_acting_user(request)
     allowed = is_allowed(username, request)
     updation_allowed = is_candidate_user(username, request)
-    ra_user = is_ra_user(username, request)
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
+    actual_user = auth.get_user(request)
+    ra_user = is_ra_user(actual_user, request)
 
     try:
         if 'registration_number' in request.GET:

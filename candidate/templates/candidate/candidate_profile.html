@@ -35,8 +35,12 @@
                                 <th>Registration number</th>
                                 <td>
                                     {{ displayed_registration_number }}
-                                    {% if ra_user and candidate.is_provisional_registration_number %}
-                                        <a href="/ra/verify_candidate/?registration_number={{ registration_number }}">[Verify]</a>
+                                    {% if ra_user %}
+                                        {% if candidate.is_provisional_registration_number %}
+                                            <a href="/ra/verify_candidate/?registration_number={{ registration_number }}">[Verify]</a>
+                                        {% else %}
+                                            <a href="/ra/verify_candidate/?registration_number={{ registration_number }}">[Un-Verify]</a>
+                                        {% endif %}
                                     {% endif %}
                                 </td>
                             </tr>

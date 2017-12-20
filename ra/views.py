@@ -144,6 +144,12 @@ def verify_candidate(request):
             candidate.is_provisional_registration_number = False
             candidate.save()
             return HttpResponseRedirect('/candidate/candidate_profile?registration_number='+str(registration_number))
+        elif 'verify_no' in request.POST:
+            registration_number = request.POST.get('registration_number')
+            candidate = Candidate.objects.get(registration_number=registration_number)
+            candidate.is_provisional_registration_number = True
+            candidate.save()
+            return HttpResponseRedirect('/candidate/candidate_profile?registration_number='+str(registration_number))
         else:
             return HttpResponseRedirect('/ra/')
 
