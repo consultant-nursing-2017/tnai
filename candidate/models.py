@@ -96,7 +96,7 @@ class Candidate(models.Model):
     is_active = models.BooleanField(default=True, editable=False)
 
     def __str__(self):
-        return self.candidate_username.username + " (Candidate)"
+        return "Name: " + self.name + ", Username: " + self.candidate_username.username
 
     def registration_number_display(self):
         if self.is_provisional_registration_number:

@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
 from candidate.models import ProfessionalQualifications, EligibilityTests
 from .models import RA
+from .models import CandidateList
     
 class FilterForm(forms.Form):
     name = forms.CharField(required=False, )
@@ -23,6 +24,11 @@ class FilterForm(forms.Form):
     minimum_experience = forms.CharField(required=False, )
     ELIGIBILITY_TESTS_CHOICES = [(None, '--- Any ---')] + list(EligibilityTests.eligibility_tests_choices())
     eligibility_tests = forms.ChoiceField(ELIGIBILITY_TESTS_CHOICES, required=False,)
+
+class CandidateListForm(ModelForm):
+    class Meta:
+        model = CandidateList
+        fields = '__all__'
 
 class ActAsForm(ModelForm):
     class Meta:

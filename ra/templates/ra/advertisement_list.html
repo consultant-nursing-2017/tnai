@@ -39,7 +39,7 @@
                     <td> {{ record.educational_qualifications }} </td>
                     <td> {{ record.eligibility_tests }} </td>
                     <td> {{ record.closing_date }} </td>
-                    <td> <a href="{% url 'employer:full_advertisement'%}?advertisement_id={{record.obfuscated_id}}">Act as employer</a></td>
+                    <td> <a href="{% url 'ra:act_as'%}?={{record.obfuscated_id}}">Act as employer</a></td>
                     <td> <a href="#">Filter candidates for ad</a></td>
                 </tr>
                 {% endfor %}

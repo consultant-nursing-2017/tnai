@@ -1,0 +1,35 @@
+{% extends "base_generic.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'candidate/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h1 class="text-center"> Save List </h1>
+    </div>
+    <div class="panel-body">
+        <form action="/ra/save_list/" method="post" class="form">
+            {% csrf_token %}
+            <table class="table">
+                {% bootstrap_form form %}
+            </table>
+
+            <input type="hidden" name="list_id" value="{{candidate_list.list_id}}" />
+            {% bootstrap_button "Update List" button_type="submit" name="update" %} 
+            {% bootstrap_button "Create New List" button_type="submit" name="create" %} 
+            {% bootstrap_button "Discard List" button_type="submit" name="discard" %}
+            {% bootstrap_button "Return to RA index" button_type="submit" name="do_nothing" %}
+            <!--
+            <input type="submit" name="verify_yes" value="Mark as verified" />
+            <input type="submit" name="verify_no" value="Mark as unverified" />
+            -->
+        </form>
+    </div>
+</div>
+
+{% endblock %}
