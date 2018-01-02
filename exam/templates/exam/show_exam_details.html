@@ -1,0 +1,42 @@
+{% extends "base_generic.html" %}
+{% load bootstrap3 %}
+{% block content %}
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="text-center">{{exam_or_interview}} Details</h1>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <tr>
+                    <th> {{exam_or_interview}} Name: </th>
+                    <td> {{ exam.name }} </td>
+                </tr>
+                <tr>
+                    <th> {{exam_or_interview}} ID: </th>
+                    <td> {{ exam.exam_id }} </td>
+                </tr>
+                <tr>
+                    <th> {{exam_or_interview}} Date: </th>
+                    <td> {{ exam.date }} </td>
+                </tr>
+            </table>
+            <form action="/exam/show_exam_details/" method="post" class="form">
+                {% csrf_token %}
+
+                {% bootstrap_form form %}
+
+                <input type="hidden" name="exam_id" value="{{exam.exam_id}}">
+                <!--
+                <input type="hidden" name="interested" value="{{interested}}">
+                -->
+
+                {% bootstrap_button "Update interest" button_type="submit" name="update_interest" %}
+                {% bootstrap_button "Do nothing" button_type="submit" name="do_nothing" %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

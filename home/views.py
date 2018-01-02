@@ -46,3 +46,23 @@ def contact(request):
 
 def media(request):
     return render(request, 'home/media.html')
+
+def success_msg(request):
+    success_msg = "Success message not found!"
+    if request.method == 'GET':
+        try:
+            success_msg = request.GET.get('success_msg')
+        except KeyError:
+            success_msg = "Error message not found!"
+
+    return render(request, 'home/success_msg.html', {'success_msg': success_msg})
+
+def error_msg(request):
+    error_msg = "Error message not found!"
+    if request.method == 'GET':
+        try:
+            error_msg = request.GET.get('error_msg')
+        except KeyError:
+            error_msg = "Error message not found!"
+
+    return render(request, 'home/error_msg.html', {'error_msg': error_msg})

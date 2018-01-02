@@ -37,6 +37,9 @@ class CandidateList(models.Model):
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE, default=None, blank=True, null=True)
     advertisement = models.ForeignKey(Advertisement, on_delete=models.CASCADE, default=None, blank=True, null=True)
 
+    def __str__(self):
+        return ', '.join((self.name, self.exam_list_type, str(self.time_created), str(self.exam), str(self.employer), str(self.advertisement)))
+
 #class CandidateListMembership(models.Model):
 #    candidate_list = models.ForeignKey(CandidateList, on_delete=models.CASCADE)
 #    candidate_list_member = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='candidate_list_member')

@@ -6,6 +6,7 @@ app_name = 'candidate'
 urlpatterns = [
     url(r'^$', views.candidate_index, name='index'),
     url(r'^candidate_profile/', views.entire_profile, name='candidate_profile'),
+    url(r'^candidate_show_interest_in_exam_interview/', views.show_interest_in_exam_interview, name='show_interest_in_exam_interview'),
 #    url(r'^submit_candidate/', views.submit_candidate, name='submit'),
     url(r'^submit_candidate_personal/', views.submit_candidate_personal, name='submit_candidate_personal'),
     url(r'^submit_candidate_educational_qualifications/', views.submit_candidate_educational_qualifications, name='submit_candidate_educational_qualifications'),

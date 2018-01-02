@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 import datetime
 from candidate.models import Candidate
 from .models import Exam, ExamTimeSlot, CandidateBookTimeSlot
-from .forms import ExamForm, ExamTimeSlotForm, FilterExamListForm, CandidateBookTimeSlotForm
+from .forms import ExamForm, ExamTimeSlotForm, FilterExamListForm, CandidateBookTimeSlotForm, ShowInterestInExamForm
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 from django.shortcuts import render, redirect
@@ -29,7 +29,7 @@ from django.forms import inlineformset_factory
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
-from ra.models import RA
+from ra.models import RA, CandidateList
 
 import pdb
 import os
@@ -69,6 +69,80 @@ def get_acting_user(request):
 
     return username
 
+def show_exam_details(request):
+    username = get_acting_user(request)
+    candidate_user_type = is_candidate_user(username, request)
+    ra_user_type = is_ra_user(username, request)
+    allowed = candidate_user_type or ra_user_type
+    error_msg = ""
+    if candidate_user_type:
+        candidate = Candidate.objects.get(candidate_username = username)
+        allowed = candidate.is_candidate_verified()
+        if not allowed:
+            error_msg = "Candidate not verified."
+
+    if not allowed:
+        return render(request, 'exam/not_allowed.html', {'error_msg': error_msg})
+
+    exam_id = None
+    interested = False
+
+    if request.method == 'GET':
+        try:
+            exam_id = request.GET.__getitem__('exam_id')
+        except KeyError:
+            error_msg = "Exam ID not specified."
+            return HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg)
+
+        try:
+            exam = Exam.objects.get(exam_id = exam_id)
+        except ObjectDoesNotExist:
+            error_msg = "Exam ID: " + str(exam_id) + " invalid."
+            return HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg)
+
+        if candidate_user_type:
+            (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Showed interest", defaults = {'name': "Exam: " + str(exam) + " interested candidates list", 'time_created': timezone.now(), })
+            candidate = Candidate.objects.get(candidate_username = username)
+            candidate_is_member_of_candidate_list = candidate_list in candidate.candidatelist_set.all()
+            if candidate_is_member_of_candidate_list:
+                form = ShowInterestInExamForm(initial = {'interested': True})
+            else:
+                form = ShowInterestInExamForm(initial = {'interested': False})
+        else:
+            form = ShowInterestInExamForm()
+    else:
+        try:
+            exam_id = request.POST.get('exam_id')
+        except KeyError:
+            error_msg = "Exam ID not specified."
+            return HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg)
+
+        try:
+            exam = Exam.objects.get(exam_id = exam_id)
+        except ObjectDoesNotExist:
+            error_msg = "Exam ID: " + str(exam_id) + " invalid."
+            return HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg)
+
+        form = ShowInterestInExamForm(request.POST)
+        if form.is_valid():
+            if candidate_user_type and 'update_interest' in request.POST:
+                interested = form.cleaned_data['interested']
+                if interested:
+                    (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Showed interest", defaults = {'name': "Exam: " + str(exam) + " interested candidates list", 'time_created': timezone.now(), })
+                    candidate = Candidate.objects.get(candidate_username = username)
+                    candidate_list.members.add(candidate)
+                    candidate_list.save()
+                    return HttpResponseRedirect("/home/success_msg/?success_msg=Successfully added to 'Interested' list for Exam ID: " + str(exam.exam_id))
+                else:
+                    (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Showed interest", defaults = {'name': "Exam: " + str(exam) + " interested candidates list", 'time_created': timezone.now(), })
+                    candidate = Candidate.objects.get(candidate_username = username)
+                    candidate_list.members.remove(candidate)
+                    candidate_list.save()
+                    return HttpResponseRedirect("/home/success_msg/?success_msg=Successfully removed from 'Interested' list for Exam ID:" + str(exam.exam_id))
+            else:
+                return HttpResponseRedirect('/')
+    return render(request, 'exam/show_exam_details.html', {'exam': exam, 'interested': interested, 'candidate_user_type': candidate_user_type, 'form': form, })
+
 def exam_list(request):
     username = get_acting_user(request)
     candidate_user_type = is_candidate_user(username, request)
@@ -98,12 +172,19 @@ def exam_list(request):
                 exam_name = filter_form.cleaned_data['exam_name']
                 if exam_name is not None and len(exam_name) > 0:
                     queryset = queryset.filter(name__icontains=exam_name)
+
                 exam_date = filter_form.cleaned_data['exam_date']
                 if exam_date is not None:
                     queryset = queryset.filter(date=exam_date)
+
                 exam_type = filter_form.cleaned_data['exam_type']
                 if exam_type is not None and len(exam_type) > 0:
                     queryset = queryset.filter(exam_type=exam_type)
+
+                only_show_interesting = filter_form.cleaned_data['only_show_interesting']
+                # TODO
+                if only_show_interesting and candidate_user_type:
+                    queryset = queryset.filter(candidatelist__members = candidate)
     else:
         if 'exam_or_interview' in request.GET:
             exam_or_interview = request.GET.__getitem__('exam_or_interview')

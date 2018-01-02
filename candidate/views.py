@@ -29,7 +29,7 @@ from django.contrib.auth.models import Group
 from django.forms import inlineformset_factory
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
-from ra.models import RA
+from ra.models import RA, CandidateList
 
 import pdb
 import os
@@ -553,6 +553,33 @@ def entire_profile(request):
     except ObjectDoesNotExist:
         fields = None
         return render(request, 'candidate/index.html', {'candidate': None})
+
+def show_interest_in_exam_interview(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    updation_allowed = False
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
+
+    if request.method == GET:
+        try:
+            exam_id = request.GET.__getitem__('exam_id')
+        except KeyError:
+            #TODO
+            return render(request, 'candidate/not_allowed.html', {'error_msg': 'Invalid Exam ID.'}, )
+
+        try:
+            exam = Exam.objects.get(exam_id = exam_id)
+        except ObjectDoesNotExist:
+            #TODO
+            return render(request, 'candidate/not_allowed.html', {'error_msg': 'Invalid Exam ID.'}, )
+
+        try:
+            candidate_list = CandidateList.objects.filter(exam = exam).get(exam_list_type = 'Showed interest')
+        except ObjectDoesNotExist:
+            pass
+    else:
+        return render(request, 'candidate/not_allowed.html', {'error_msg': 'Exam ID not provided.'}, )
 
 def find_jobs(request):
     username = get_acting_user(request)

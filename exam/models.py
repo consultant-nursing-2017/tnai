@@ -27,6 +27,9 @@ class Exam(models.Model):
     date = models.DateField(blank=False, default=timezone.now)
     hall_ticket_download_minimum_number_of_days = models.PositiveSmallIntegerField(blank=True, default=10, null=True)
 
+    def __str__(self):
+        return "Exam: " + self.name + " Exam ID: " + str(self.exam_id)
+
     @staticmethod
     def exam_type_choices():
         return Exam.EXAM_TYPE_CHOICES
