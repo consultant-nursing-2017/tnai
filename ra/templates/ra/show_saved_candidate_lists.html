@@ -1,0 +1,40 @@
+{% extends "base_generic.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="text-center">Saved candidate lists</h2>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <tr>
+                    <th> List ID </th>
+                    <th> Name </th>
+                    <th> Time created </th>
+                    <th> Exam </th>
+                    <th> Exam List Type </th>
+                    <th> Employer </th>
+                    <th> Advertisement </th>
+                </tr>
+                {% for record in queryset %}
+                <tr>
+                    <td> <a href="{% url 'ra:save_list' %}?list_id={{ record.list_id }}">{{ record.list_id }}</a></td>
+                    <td> {{ record.name }} </td>
+                    <td> {{ record.time_created }} </td>
+                    <td> {{ record.exam }} </td>
+                    <td> {{ record.exam_list_type }} </td>
+                    <td> {{ record.employer }} </td>
+                    <td> {{ record.advertisement }} </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

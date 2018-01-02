@@ -6,6 +6,7 @@ app_name = 'ra'
 urlpatterns = [
     url(r'^$', views.ra_index, name='index'),
     url(r'^candidate_list/', views.candidate_list, name='candidate_list'),
+    url(r'^show_saved_candidate_lists/', views.show_saved_candidate_lists, name='show_saved_candidate_lists'),
     url(r'^employer_list/', views.employer_list, name='employer_list'),
     url(r'^advertisement_list/', views.advertisement_list, name='advertisement_list'),
     url(r'^save_list/', views.save_list, name='save_list'),

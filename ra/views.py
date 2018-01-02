@@ -107,6 +107,15 @@ def generate_list_of_exam_candidates(request):
 def manipulate_list(request):
     pass
 
+def show_saved_candidate_lists(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+
+    queryset = CandidateList.objects.all()
+    return render(request, 'ra/show_saved_candidate_lists.html', {'queryset': queryset})
+
 def employer_list(request):
     username = auth.get_user(request)
     allowed = is_allowed(username, request)

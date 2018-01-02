@@ -11,6 +11,8 @@ from django.contrib.auth.models import User, Group
 from candidate.models import ProfessionalQualifications, EligibilityTests
 from .models import RA
 from .models import CandidateList
+
+import pdb
     
 class FilterForm(forms.Form):
     name = forms.CharField(required=False, )
@@ -29,6 +31,14 @@ class CandidateListForm(ModelForm):
     class Meta:
         model = CandidateList
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super (ModelForm, self).__init__(*args, **kwargs)
+        instance = kwargs.pop('instance')
+        qs = instance.members.order_by('name')
+#        pdb.set_trace()
+        self.fields['members'].queryset = qs
+        self.fields['members'].required = False
 
 class ActAsForm(ModelForm):
     class Meta:
