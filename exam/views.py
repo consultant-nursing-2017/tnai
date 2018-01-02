@@ -74,8 +74,15 @@ def exam_list(request):
     candidate_user_type = is_candidate_user(username, request)
     ra_user_type = is_ra_user(username, request)
     allowed = candidate_user_type or ra_user_type
+    error_msg = ""
+    if candidate_user_type:
+        candidate = Candidate.objects.get(candidate_username = username)
+        allowed = candidate.is_candidate_verified()
+        if not allowed:
+            error_msg = "Candidate not verified."
+
     if not allowed:
-        return render(request, 'exam/not_allowed.html',)
+        return render(request, 'exam/not_allowed.html', {'error_msg': error_msg})
 
     # User is allowed to access page
     queryset = Exam.objects.all().order_by('date')

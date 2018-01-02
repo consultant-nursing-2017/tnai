@@ -113,6 +113,9 @@ class Candidate(models.Model):
             self.registration_number = self.pk
         super(Candidate, self).save(*args, **kwargs)
 
+    def is_candidate_verified(self):
+        return not self.is_provisional_registration_number
+
 class Qualifications(models.Model):
     def media_path(instance, filename):
         return 'candidate/{0}/qualifications/{1}/{2}'.format(instance.candidate.candidate_username.username, instance.class_degree, filename)
