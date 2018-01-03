@@ -28,10 +28,10 @@ class FilterForm(forms.Form):
     eligibility_tests = forms.ChoiceField(ELIGIBILITY_TESTS_CHOICES, required=False,)
 
 class CandidateListForm(ModelForm):
-    rest_of_candidates = forms.ModelMultipleChoiceField(required = False, queryset = None)
+    non_members = forms.ModelMultipleChoiceField(required = False, queryset = None, label = "Non-members")
     class Meta:
         model = CandidateList
-        fields = ['name', 'members', 'rest_of_candidates', 'notes', 'exam', 'exam_list_type', 'employer', 'advertisement']
+        fields = ['name', 'members', 'non_members', 'notes', 'exam', 'exam_list_type', 'employer', 'advertisement']
 
     def __init__(self, *args, **kwargs):
         super (ModelForm, self).__init__(*args, **kwargs)
@@ -40,7 +40,7 @@ class CandidateListForm(ModelForm):
         complement_qs = Candidate.objects.exclude(pk__in = qs).order_by('name')
         self.fields['members'].queryset = qs
         self.fields['members'].required = False
-        self.fields['rest_of_candidates'].queryset = complement_qs
+        self.fields['non_members'].queryset = complement_qs
 
 class ActAsForm(ModelForm):
     class Meta:
