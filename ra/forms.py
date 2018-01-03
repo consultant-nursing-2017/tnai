@@ -8,7 +8,7 @@ from django.template import Context
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
-from candidate.models import ProfessionalQualifications, EligibilityTests
+from candidate.models import ProfessionalQualifications, EligibilityTests, Candidate
 from .models import RA
 from .models import CandidateList
 
@@ -28,17 +28,19 @@ class FilterForm(forms.Form):
     eligibility_tests = forms.ChoiceField(ELIGIBILITY_TESTS_CHOICES, required=False,)
 
 class CandidateListForm(ModelForm):
+    rest_of_candidates = forms.ModelMultipleChoiceField(required = False, queryset = None)
     class Meta:
         model = CandidateList
-        fields = '__all__'
+        fields = ['name', 'members', 'rest_of_candidates', 'notes', 'exam', 'exam_list_type', 'employer', 'advertisement']
 
     def __init__(self, *args, **kwargs):
         super (ModelForm, self).__init__(*args, **kwargs)
         instance = kwargs.pop('instance')
         qs = instance.members.order_by('name')
-#        pdb.set_trace()
+        complement_qs = Candidate.objects.exclude(pk__in = qs).order_by('name')
         self.fields['members'].queryset = qs
         self.fields['members'].required = False
+        self.fields['rest_of_candidates'].queryset = complement_qs
 
 class ActAsForm(ModelForm):
     class Meta:
