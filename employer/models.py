@@ -124,7 +124,7 @@ class Advertisement(models.Model):
         super(Advertisement, self).save(*args, **kwargs)
 
     def __str__(self):
-        return "Advertisement ID: " + str(obfuscated_id)
+        return "Advertisement ID: " + str(self.obfuscated_id)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='employer_profile') #1 to 1 link with Django User

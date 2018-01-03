@@ -33,6 +33,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
 from ra.models import RA
+from candidate.models import Candidate
 
 ##from django.contrib.auth.decorators import permission_required
 

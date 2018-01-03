@@ -36,6 +36,7 @@
                         <th>Country</th>
                         <th>Job role</th>
                         <th>Closing date</th>
+                        <th>Advertisement</th>
                     </tr>
                     {% for record in queryset %}
                         <tr>
@@ -43,6 +44,7 @@
                             <td>{{record.country}}</td>
                             <td>{{record.job_role}}</td>
                             <td>{{record.closing_date}}</td>
+                            <td> <a href="{% url 'employer:full_advertisement'%}?advertisement_id={{record.obfuscated_id}}">Full advertisement</a></td>
                         </tr>
                     {% endfor %}
                 </table>

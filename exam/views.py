@@ -129,7 +129,7 @@ def show_exam_details(request):
             return HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg)
 
         if candidate_user_type:
-            (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Showed interest", defaults = {'name': "Exam: " + str(exam) + " interested candidates list", 'time_created': timezone.now(), })
+            (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Showed interest", defaults = {'name': str(exam) + " interested candidates list", 'time_created': timezone.now(), })
             candidate = Candidate.objects.get(candidate_username = username)
             candidate_is_member_of_candidate_list = candidate_list in candidate.candidatelist_set.all()
             if candidate_is_member_of_candidate_list:
@@ -156,13 +156,13 @@ def show_exam_details(request):
             if candidate_user_type and 'update_interest' in request.POST:
                 interested = form.cleaned_data['interested']
                 if interested:
-                    (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Showed interest", defaults = {'name': "Exam: " + str(exam) + " interested candidates list", 'time_created': timezone.now(), })
+                    (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Showed interest", defaults = {'name': str(exam) + " interested candidates list", 'time_created': timezone.now(), })
                     candidate = Candidate.objects.get(candidate_username = username)
                     candidate_list.members.add(candidate)
                     candidate_list.save()
                     return HttpResponseRedirect("/home/success_msg/?success_msg=Successfully added to 'Interested' list for Exam ID: " + str(exam.exam_id))
                 else:
-                    (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Showed interest", defaults = {'name': "Exam: " + str(exam) + " interested candidates list", 'time_created': timezone.now(), })
+                    (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Showed interest", defaults = {'name': str(exam) + " interested candidates list", 'time_created': timezone.now(), })
                     candidate = Candidate.objects.get(candidate_username = username)
                     candidate_list.members.remove(candidate)
                     candidate_list.save()
@@ -432,6 +432,7 @@ def candidate_book_time_slot(request):
     if request.method == 'POST':
         if booking is not None:
             booking.delete() # cancel old booking
+            (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Booked time slot", defaults = {'name': str(exam) + " candidates who have booked time slots", })
         if 'cancel_booking' in request.POST:
             return HttpResponseRedirect('/candidate/booked_exam_time_slots/?exam_or_interview=' + exam.exam_or_interview)
         else: # must be "book"
@@ -445,6 +446,9 @@ def candidate_book_time_slot(request):
                 candidate_book_time_slot.exam = exam
                 candidate_book_time_slot.time_slot = exam_time_slot
                 candidate_book_time_slot.save()
+                (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Booked time slot", defaults = {'name': str(exam) + " candidates who have booked time slots", })
+                candidate_list.members.add(candidate)
+                candidate_list.save()
                 return HttpResponseRedirect('/candidate/booked_exam_time_slots/?exam_or_interview=' + exam.exam_or_interview)
         # check whether it's valid:
         # TODO
