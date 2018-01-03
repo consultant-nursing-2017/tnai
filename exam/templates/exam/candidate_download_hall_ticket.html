@@ -1,0 +1,48 @@
+{% extends "base_generic.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="text-center"> Download Hall ticket </h1>
+        </div>
+        <div class="panel-body">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h2 class="text-center">Warning</h2>
+                </div>
+                <div class="panel-body">
+                    You won't be able to change your booked time slot after downloading hall ticket.
+                </div>
+            </div>
+            <table class="table table-striped">
+                <tr>
+                <tr>
+                    <th> {{exam.exam_or_interview}} name </th>
+                    <td> {{exam.name}}</td>
+                </tr>
+                <tr>
+                    <th> {{exam.exam_or_interview}} date </th>
+                    <td> {{exam.date}} </td>
+                </tr>
+                <tr>
+                    <th> {{exam.exam_or_interview}} type </th>
+                    <td> {{exam.exam_type}} </td>
+                </tr>
+            </table>
+
+            <form action="/exam/candidate_download_hall_ticket/" method="post" class="form">
+                {% csrf_token %}
+                <input type="hidden" value="{{exam.exam_id}}" name="exam_id"/>
+                {% bootstrap_button "Download" button_type="submit" name="download" %}
+                {% bootstrap_button "Don't download" button_type="submit" name="do_nothing" %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

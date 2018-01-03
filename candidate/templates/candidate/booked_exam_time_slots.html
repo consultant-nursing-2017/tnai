@@ -24,7 +24,7 @@
                         <td>{{record.time_slot.exam.name}}</td>
                         <td>{{record.time_slot.exam.date}}</td>
                         <td>{{record.time_slot.begin_time}} to {{record.time_slot.end_time}} <a href="/exam/candidate_book_time_slot?exam_id={{record.time_slot.exam.exam_id}}">[Change]</a></td>
-                        <td> <a href="/exam/candidate_show_hall_ticket?exam_id={{record.time_slot.exam.exam_id}}">View hall ticket</td>
+                        <td> <a href="/exam/candidate_download_hall_ticket?exam_id={{record.time_slot.exam.exam_id}}">Download hall ticket</td>
                         <td> Not assigned yet </td>
                     </tr>
                 {% endfor %}

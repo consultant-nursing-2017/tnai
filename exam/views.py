@@ -69,6 +69,34 @@ def get_acting_user(request):
 
     return username
 
+def get_exam_from_request(request):
+    if request.method == 'GET':
+        try:
+            exam_id = request.GET.__getitem__('exam_id')
+        except KeyError:
+            error_msg = "Exam ID not specified."
+            return (None, None, HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg))
+
+        try:
+            exam = Exam.objects.get(exam_id = exam_id)
+        except ObjectDoesNotExist:
+            error_msg = "Exam ID: " + str(exam_id) + " invalid."
+            return (exam_id, None, HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg))
+    else:
+        try:
+            exam_id = request.POST.get('exam_id')
+        except KeyError:
+            error_msg = "Exam ID not specified."
+            return (None, None, HttpResponseRedirect("/home/error_msg?error_msg=" + error_msg))
+
+        try:
+            exam = Exam.objects.get(exam_id = exam_id)
+        except ObjectDoesNotExist:
+            error_msg = "Exam ID: " + str(exam_id) + " invalid."
+            return (exam_id, None, HttpResponseRedirect("/home/error_msg?error_msg=" + error_msg))
+
+    return (exam_id, exam, None)
+
 def show_exam_details(request):
     username = get_acting_user(request)
     candidate_user_type = is_candidate_user(username, request)
@@ -115,13 +143,13 @@ def show_exam_details(request):
             exam_id = request.POST.get('exam_id')
         except KeyError:
             error_msg = "Exam ID not specified."
-            return HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg)
+            return HttpResponseRedirect("/home/error_msg?error_msg=" + error_msg)
 
         try:
             exam = Exam.objects.get(exam_id = exam_id)
         except ObjectDoesNotExist:
             error_msg = "Exam ID: " + str(exam_id) + " invalid."
-            return HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg)
+            return HttpResponseRedirect("/home/error_msg?error_msg=" + error_msg)
 
         form = ShowInterestInExamForm(request.POST)
         if form.is_valid():
@@ -280,6 +308,55 @@ def submit_exam_time_slot(request):
     exam_time_slot_form_instance = exam_time_slot_formset[0]
 #    pdb.set_trace()
     return render(request, 'exam/submit_exam_time_slot.html', {'exam_time_slot_formset': exam_time_slot_formset, 'exam_time_slot_form_instance': exam_time_slot_form_instance, 'exam_id': exam_id, })
+
+def candidate_download_hall_ticket(request):
+    username = get_acting_user(request)
+    allowed = is_candidate_user(username, request)
+    error_msg = "Not a registered candidate"
+    if allowed:
+        # Add a verification check
+        candidate = Candidate.objects.get(candidate_username=username)
+        displayed_registration_number = candidate.registration_number_display()
+        allowed = candidate.is_candidate_verified()
+        if not allowed:
+            error_msg = "Candidate not verified."
+
+    if not allowed:
+        return HttpResponseRedirect('/home/error_msg/?error_msg=' + error_msg)
+
+    if request.method == 'GET':
+        if 'exam_id' in request.GET:
+            exam_id = request.GET.__getitem__('exam_id')
+        else:
+            return HttpResponseRedirect('/home/error_msg/?error_msg=' + "Required parameter 'Exam ID' not found.")
+
+        try:
+            exam = Exam.objects.get(exam_id = exam_id)
+        except ObjectDoesNotExist:
+            return HttpResponseRedirect('/home/error_msg/?error_msg=' + "Exam ID: " + str(exam_id) + " is invalid.")
+
+        (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Downloaded hall ticket", defaults = {'name': str(exam) + " list of candidates who dowloaded hall tickets", })
+        if candidate in candidate_list.members.all():
+            return HttpResponseRedirect('/home/error_msg/?error_msg=' + "You have already downloaded hall ticket. ")
+
+    else:
+        if 'exam_id' in request.POST:
+            exam_id = request.POST.get('exam_id')
+        else:
+            return HttpResponseRedirect('/home/error_msg/?error_msg=' + "Required parameter 'Exam ID' not found.")
+        try:
+            exam = Exam.objects.get(exam_id = exam_id)
+        except ObjectDoesNotExist:
+            return HttpResponseRedirect('/home/error_msg/?error_msg=' + "Exam ID: " + str(exam_id) + " is invalid.")
+
+        if 'download' in request.POST:
+            (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Downloaded hall ticket", defaults = {'name': str(exam) + " list of candidates who dowloaded hall tickets", })
+            candidate_list.members.add(candidate)
+            return HttpResponseRedirect('/exam/candidate_show_hall_ticket/?exam_id=' + exam_id)
+        else:
+            return HttpResponseRedirect('/candidate/')
+
+    return render(request, 'exam/candidate_download_hall_ticket.html', {'exam': exam, 'candidate': candidate, 'displayed_registration_number': displayed_registration_number, })
 
 def candidate_show_hall_ticket(request):
     username = get_acting_user(request)
