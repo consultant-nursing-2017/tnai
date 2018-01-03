@@ -48,6 +48,24 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Employer.objects.all()
 
+def is_verified_candidate_user(username, request):
+    verified_candidate_user = True
+    if username.groups.filter(name="Candidate").count() <= 0:
+        verified_candidate_user = False
+
+    if verified_candidate_user:
+        candidate = Candidate.objects.get(candidate_username = username)
+        verified_candidate_user = candidate.is_candidate_verified()
+    
+    return verified_candidate_user
+
+def is_candidate_user(username, request):
+    candidate_user = True
+    if username.groups.filter(name="Candidate").count() <= 0:
+        candidate_user = False
+    
+    return candidate_user
+
 def is_employer_user(username, request):
     employer_user = True
     if username.groups.filter(name="Employer").count() <= 0:
@@ -246,12 +264,11 @@ def list_advertisements(request):
     return render(request, 'ra/advertisement_list.html', {'queryset': queryset, 'employer_restricted': True}, )
 
 def full_advertisement(request):
-    username = get_acting_user(request)
-    allowed = is_allowed(username, request)
-    if not allowed:
-        return render(request, 'employer/not_allowed.html', {'next': request.path})
+#    allowed = is_allowed(username, request) or is_candidate_user
+#    if not allowed:
+#        return render(request, 'employer/not_allowed.html', {'next': request.path})
 
-    employer = Employer.objects.get(employer_username=username)
+    username = get_acting_user(request)
     advertisement_id = None
     try:
         advertisement_id = request.GET.__getitem__('advertisement_id')
@@ -260,7 +277,11 @@ def full_advertisement(request):
     advertisement = Advertisement.objects.get(obfuscated_id=advertisement_id)
 
     form = AdvertisementForm()
-    fields = form.get_fields()
+    full_advertisement = is_verified_candidate_user(username, request) or is_allowed(username, request)
+    if full_advertisement:
+        fields = form.get_fields()
+    else:
+        fields = ['job_role', 'closing_date', 'gender', 'number_of_vacancies', 'educational_qualifications', 'eligibility_tests', 'experience', 'country', 'salary_number', 'salary_currency']
 
     data_full = []
     for field in fields:
@@ -268,7 +289,7 @@ def full_advertisement(request):
 
 #    pdb.set_trace()
 
-    return render(request, 'employer/full_advertisement.html', {'fields': fields, 'data_full': data_full, })
+    return render(request, 'employer/full_advertisement.html', {'fields': fields, 'data_full': data_full, 'full_advertisement': full_advertisement})
 
 class DetailView(generic.DetailView):
     model = Employer

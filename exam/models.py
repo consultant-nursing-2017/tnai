@@ -4,6 +4,7 @@ from django.utils import timezone
 from candidate.models import Candidate
 from hashid_field import HashidAutoField, HashidField
 from django.conf import settings
+from employer.models import Advertisement
 
 import datetime
 import uuid
@@ -21,6 +22,7 @@ class Exam(models.Model):
     ]
 
     exam_id = HashidAutoField(salt=settings.HASHID_FIELD_SALT+"Exam", primary_key=True, allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    advertisement = models.ForeignKey(Advertisement, on_delete=models.CASCADE, related_name='advertisement', blank=False, null=True)
     exam_or_interview = models.CharField(max_length=100, choices=EXAM_OR_INTERVIEW_CHOICES, blank=False, default="Exam")
     exam_type = models.CharField(max_length=100, choices=EXAM_TYPE_CHOICES, blank=True, default="Only Interview")
     name = models.CharField(max_length=500, blank=False, default="Exam1")

@@ -106,7 +106,7 @@ class Advertisement(models.Model):
     family_accomodation = models.BooleanField(blank=True, default=False)
     accomodation_allowance = models.IntegerField(blank=False, default=0)
     accomodation_allowance_currency = models.CharField(max_length=20, blank=False, default="AED")
-    maternity_leave = models.BooleanField(blank=True, default=False)
+    maternity_leave_number_of_days = models.IntegerField(blank=True, default=0)
     medical_facilities = models.CharField(max_length=15, blank=True, choices=MEDICAL_FACILITIES_CHOICES, default="Self")
     visa_cost = models.BooleanField(blank=True, default=False)
     air_ticket_for_joining = models.BooleanField(blank=True, default=False)
@@ -122,6 +122,9 @@ class Advertisement(models.Model):
         if not self.obfuscated_id:
             self.obfuscated_id = self.pk
         super(Advertisement, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return "Advertisement ID: " + str(obfuscated_id)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='employer_profile') #1 to 1 link with Django User
