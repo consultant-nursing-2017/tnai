@@ -7,13 +7,13 @@
 {% block content %}
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h1 class="text-center"> Booked {{exam_or_interview}} Time Slots</h1>
+        <h1 class="text-center"> Booked Exam Time Slots</h1>
     </div>
     <div class="panel-body">
         <table class="table table-striped">
             {% if queryset %}
                 <tr>
-                    <th>{{exam_or_interview}} name</th>
+                    <th>Exam name</th>
                     <th>Date</th>
                     <th>Booked time slot</th>
                     <th>Hall ticket</th>
@@ -29,7 +29,7 @@
                     </tr>
                 {% endfor %}
             {% else %}
-                <h3>No booked {{exam_or_interview.lower}} found</h3>
+                <h3>No booked Exams found</h3>
             {% endif %}
         </table>
     </div>

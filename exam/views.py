@@ -188,12 +188,10 @@ def exam_list(request):
 
     # User is allowed to access page
     queryset = Exam.objects.all().order_by('date')
-    exam_or_interview = "Exam"
     # Filter: TODO
     if request.method == 'POST':
-        exam_or_interview = request.POST.get('exam_or_interview')
         if 'clear_all_filters' in request.POST:
-            filter_form = FilterExamListForm(initial={'exam_or_interview': exam_or_interview})
+            filter_form = FilterExamListForm()
         else:
             filter_form = FilterExamListForm(request.POST)
             if filter_form.is_valid():
@@ -214,14 +212,9 @@ def exam_list(request):
                 if candidate_user_type:
                     queryset = queryset.filter(candidatelist__members = candidate)
     else:
-        if 'exam_or_interview' in request.GET:
-            exam_or_interview = request.GET.__getitem__('exam_or_interview')
-        else:
-            exam_or_interview = "Exam"
-        filter_form = FilterExamListForm(initial={'exam_or_interview': exam_or_interview})
+        filter_form = FilterExamListForm()
 
-    queryset = queryset.filter(exam_or_interview=exam_or_interview)
-    return render(request, 'exam/exam_list.html', {'username': username, 'queryset': queryset, 'filter_form': filter_form, 'candidate_user_type': candidate_user_type, 'ra_user_type': ra_user_type, 'exam_or_interview': exam_or_interview, 'missing_exam_or_interview': False, })
+    return render(request, 'exam/exam_list.html', {'username': username, 'queryset': queryset, 'filter_form': filter_form, 'candidate_user_type': candidate_user_type, 'ra_user_type': ra_user_type, })
 
 def submit_exam(request):
     username = get_acting_user(request)
@@ -229,9 +222,7 @@ def submit_exam(request):
     if not allowed:
         return render(request, 'exam/not_allowed.html', {'not_member_of_group': 'TNAI'})
 
-    missing_exam_or_interview = False
     new_entry = True
-    exam_or_interview = "Exam"
     if request.method == 'POST':
         if 'exam_id' in request.POST:
             exam_id = request.POST.get('exam_id')
@@ -245,8 +236,7 @@ def submit_exam(request):
 
         if exam_form.is_valid():
             exam = exam_form.save()
-            exam_or_interview = exam.exam_or_interview
-            return HttpResponseRedirect('/exam/exam_list/?exam_or_interview='+exam_or_interview)
+            return HttpResponseRedirect('/exam/exam_list/')
             # if a GET (or any other method) we'll create a blank form
     else:
         if 'exam_id' in request.GET:
@@ -256,14 +246,9 @@ def submit_exam(request):
             exam_form = ExamForm(instance=exam)
         else:
             exam_id = ""
-            if 'exam_or_interview' in request.GET:
-                exam_or_interview = request.GET.__getitem__('exam_or_interview')
-            else:
-                missing_exam_or_interview = True
+            exam_form = ExamForm()
 
-            exam_form = ExamForm(initial={'exam_or_interview': exam_or_interview})
-
-    return render(request, 'exam/submit_exam.html', {'new_entry': new_entry, 'exam_form': exam_form, 'missing_exam_or_interview': False, 'exam_id': exam_id, 'exam_or_interview': exam_or_interview, }) 
+    return render(request, 'exam/submit_exam.html', {'new_entry': new_entry, 'exam_form': exam_form, 'exam_id': exam_id, }) 
 
 def submit_exam_time_slot(request):
     username = get_acting_user(request)
@@ -301,7 +286,7 @@ def submit_exam_time_slot(request):
 #        pdb.set_trace()
         if exam_time_slot_formset.is_valid():
             exam_time_slot_formset.save()
-            return HttpResponseRedirect('/exam/exam_list/?exam_or_interview=' + exam.exam_or_interview)
+            return HttpResponseRedirect('/exam/exam_list/')
     else:
         exam_time_slot_formset = ExamTimeSlotFormSet(instance=exam, queryset=qs)
 
@@ -407,12 +392,12 @@ def candidate_book_time_slot(request):
         if 'exam_id' in request.GET:
             exam_id = request.GET.__getitem__('exam_id')
         else:
-            return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id, 'exam_or_interview': 'Exam', })
+            return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id, })
     else:
         if 'exam_id' in request.POST:
             exam_id = request.POST.get('exam_id', "")
         else:
-            return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id, 'exam_or_interview': 'Exam', })
+            return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id, })
     try:
         exam = Exam.objects.get(exam_id=exam_id)
         extra_forms = 1
@@ -420,7 +405,7 @@ def candidate_book_time_slot(request):
         qs=ExamTimeSlot.objects.filter(exam=exam).order_by('begin_time')
 
     except ObjectDoesNotExist:
-        return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id, 'exam_or_interview': 'Exam', })
+        return render(request, 'exam/exam_id_not_found.html', {'exam_id': exam_id, })
 
     try:
         booking = CandidateBookTimeSlot.objects.filter(candidate=candidate).get(exam=exam)
@@ -434,7 +419,7 @@ def candidate_book_time_slot(request):
             booking.delete() # cancel old booking
             (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Booked time slot", defaults = {'name': str(exam) + " candidates who have booked time slots", })
         if 'cancel_booking' in request.POST:
-            return HttpResponseRedirect('/candidate/booked_exam_time_slots/?exam_or_interview=' + exam.exam_or_interview)
+            return HttpResponseRedirect('/candidate/booked_exam_time_slots/')
         else: # must be "book"
             queryset = ExamTimeSlot.objects.filter(exam_id = exam_id).order_by('begin_time')
             form = CandidateBookTimeSlotForm(request.POST, queryset=queryset)
@@ -449,7 +434,7 @@ def candidate_book_time_slot(request):
                 (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Booked time slot", defaults = {'name': str(exam) + " candidates who have booked time slots", })
                 candidate_list.members.add(candidate)
                 candidate_list.save()
-                return HttpResponseRedirect('/candidate/booked_exam_time_slots/?exam_or_interview=' + exam.exam_or_interview)
+                return HttpResponseRedirect('/candidate/booked_exam_time_slots/')
         # check whether it's valid:
         # TODO
 #        exam_time_slot_formset = ExamTimeSlotFormSet(request.POST, request.FILES, instance=exam, queryset=qs)#, initial={'user': username,})

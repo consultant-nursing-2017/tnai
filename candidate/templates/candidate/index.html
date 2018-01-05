@@ -51,13 +51,9 @@
             {% if not object_does_not_exist %}
                 <li><a href="candidate_profile">View full profile</a></li>
             {% endif %}
-            <li><a href="submit_candidate_personal">Update profile</a></li>
-            <li><a href="/exam/exam_list?exam_or_interview=Exam">Book exam time slots</a></li>
-            <li><a href="booked_exam_time_slots?exam_or_interview=Exam">View booked exam time slots</a></li>
-            <!--
-            <li><a href="/exam/exam_list?exam_or_interview=Interview">Book interview time slots</a></li>
-            <li><a href="booked_exam_time_slots?exam_or_interview=Interview">View booked interview time slots</a></li>
-            -->
+            <li><a href="submit_candidate_personal/">Update profile</a></li>
+            <li><a href="/exam/exam_list/">Book exam time slots</a></li>
+            <li><a href="booked_exam_time_slots/">View booked exam time slots</a></li>
             <li><a href="{% url 'candidate:find_jobs' %}">Search for jobs</a></li>
         </ul>
     </div>

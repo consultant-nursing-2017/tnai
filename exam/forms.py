@@ -15,24 +15,7 @@ import pdb
 class ExamForm(ModelForm):
     class Meta:
         model = Exam
-        fields = ['exam_or_interview', 'exam_type', 'advertisement', 'name', 'date', 'hall_ticket_download_last_date', ]
-        widgets = {'exam_or_interview': forms.HiddenInput()}
-
-    def __init__(self, *args, **kwargs):
-        super(ExamForm, self).__init__(*args, **kwargs)
-        try:
-            initial = kwargs.pop('initial')
-            exam_or_interview = initial.pop('exam_or_interview')
-        except KeyError:
-            # Either "Get" some particular exam/interview, or POST
-            try:
-                exam_or_interview = self.data['exam_or_interview']
-            except KeyError:
-                # GET some particular exam/interview
-                exam_or_interview = self.instance.exam_or_interview
-        if exam_or_interview == "Interview":
-            self.fields['exam_type'].widget = forms.HiddenInput()
-#            self.fields['hall_ticket_download_minimum_number_of_days'].widget = forms.HiddenInput()
+        fields = ['exam_type', 'advertisement', 'name', 'date', 'hall_ticket_download_last_date', ]
 
 class ExamTimeSlotForm(ModelForm):
     begin_time = forms.TimeField(input_formats=['%H:%M'], required=False, label='Begin', widget=forms.TimeInput(format=('%H:%M'), attrs={'size':'15'}))
@@ -47,23 +30,7 @@ class FilterExamListForm(forms.Form):
     exam_name = forms.CharField(max_length=500, required=False, label='Name')
     exam_date = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%y', '%d.%m.%Y'], required=False, label='Date (DD-MM-YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}), )
     exam_type = forms.ChoiceField(choices=EXAM_TYPE_CHOICES, required=False, label='Type')
-    exam_or_interview = forms.CharField(max_length=100, widget=forms.HiddenInput())
 #    only_show_interesting = forms.BooleanField(initial=False, required = False)
-
-    def __init__(self, *args, **kwargs):
-        super(FilterExamListForm, self).__init__(*args, **kwargs)
-        try:
-            initial = kwargs.pop('initial')
-            exam_or_interview = initial.pop('exam_or_interview')
-        except KeyError:
-            # Either "Get" some particular exam/interview, or POST
-            try:
-                exam_or_interview = self.data['exam_or_interview']
-            except KeyError:
-                # GET some particular exam/interview
-                exam_or_interview = self.instance.exam_or_interview
-        if exam_or_interview == "Interview":
-            self.fields['exam_type'].widget = forms.HiddenInput()
 
 class CandidateBookTimeSlotForm(forms.Form):
     TIME_SLOT_CHOICES = []

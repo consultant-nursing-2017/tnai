@@ -16,14 +16,9 @@ class Exam(models.Model):
             ("Written + Interview", "Written + Interview"),
             ("Only Interview", "Only Interview"),
     ]
-    EXAM_OR_INTERVIEW_CHOICES = [
-            ("Exam", "Exam"),
-            ("Interview", "Interview"),
-    ]
 
     exam_id = HashidAutoField(salt=settings.HASHID_FIELD_SALT+"Exam", primary_key=True, allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     advertisement = models.ForeignKey(Advertisement, on_delete=models.CASCADE, related_name='advertisement', blank=False, null=True)
-    exam_or_interview = models.CharField(max_length=100, choices=EXAM_OR_INTERVIEW_CHOICES, blank=False, default="Exam")
     exam_type = models.CharField(max_length=100, choices=EXAM_TYPE_CHOICES, blank=True, default="Only Interview")
     name = models.CharField(max_length=500, blank=False, default="Exam1")
     date = models.DateField(blank=False, default=timezone.now)
@@ -35,11 +30,6 @@ class Exam(models.Model):
     @staticmethod
     def exam_type_choices():
         return Exam.EXAM_TYPE_CHOICES
-
-    @staticmethod
-    def exam_or_interview_choices():
-        return Exam.EXAM_OR_INTERVIEW_CHOICES
-#    notes = models.CharField(max_length=500, blank=True)
 
 class ExamTimeSlot(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='exam', default=None, blank=True, null=True)
