@@ -584,9 +584,9 @@ def show_interest_in_exam_interview(request):
 def find_jobs(request):
     username = get_acting_user(request)
     allowed = is_allowed(username, request)
-    updation_allowed = False
-    if not allowed:
-        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
+#    updation_allowed = False
+#    if not allowed:
+#        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
     queryset = []
     if request.method == 'POST':
