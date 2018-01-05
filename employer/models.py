@@ -68,6 +68,9 @@ class Employer(models.Model):
             self.registration_number = self.pk
         super(Employer, self).save(*args, **kwargs)
 
+    def is_employer_verified(self):
+        return not self.is_provisional_registration_number
+
 class Advertisement(models.Model):
     DURATION_UNITS_CHOICES = (
             ("Days", "Days"),

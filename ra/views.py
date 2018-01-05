@@ -37,6 +37,19 @@ from .forms import ActAsForm, CandidateListForm
 
 import pdb
 
+def is_verified_employer(username, request):
+    employer_user = True
+    verified = True
+    if username.groups.filter(name="Employer").count() <= 0:
+        employer_user = False
+
+    if employer_user:
+        # check verification
+        employer = Employer.objects.get(employer_username = username)
+        verified = employer.is_employer_verified()
+    
+    return employer_user and verified
+
 def is_allowed(username, request):
     allowed = True
     if username.groups.filter(name="TNAI").count() <= 0:
@@ -66,7 +79,8 @@ def save_candidate_list(name, queryset):
 
 def candidate_list(request):
     username = auth.get_user(request)
-    allowed = is_allowed(username, request)
+    verified_employer = is_verified_employer(username, request)
+    allowed = is_allowed(username, request) or verified_employer
     if not allowed:
         return render(request, 'ra/not_allowed.html',)
 
@@ -96,7 +110,10 @@ def candidate_list(request):
     else:
         filter_form = FilterForm()
 
-    return render(request, 'ra/candidate_list.html', {'queryset': queryset, 'filter_form': filter_form, }, )
+    if verified_employer:
+        queryset = queryset.filter(is_provisional_registration_number = False)
+        count = queryset.count()
+    return render(request, 'ra/candidate_list.html', {'queryset': queryset, 'filter_form': filter_form, 'count': count, 'verified_employer': verified_employer, }, )
 
 def generate_list_of_exam_candidates(request):
     username = auth.get_user(request)
