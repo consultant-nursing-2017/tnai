@@ -20,12 +20,18 @@
                     <tr>
                         <th> Candidate username </th>
                         <th> Name </th>
+                        <th> Verified? </th>
                         <th> Full profile </th>
                     </tr>
                     {% for record in queryset %}
                         <tr>
                             <td> {{ record.candidate_username }} </td>
                             <td> {{ record.name }} </td>
+                            {% if record.is_provisional_registration_number %}
+                                <td> No </td>
+                            {% else %}
+                                <td> Yes </td>
+                            {% endif %}
                             <td> <a href="{% url 'ra:act_as' %}?acting_as_username={{record.candidate_username}}">Act as this user</a> </td>
                         </tr>
                     {% endfor %}

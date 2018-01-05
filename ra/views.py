@@ -86,6 +86,7 @@ def candidate_list(request):
 
     # User is allowed to access page
     queryset = Candidate.objects.all()
+    count = queryset.count()
     if request.method == 'POST':
         if 'clear_all_filters' in request.POST:
             filter_form = FilterForm()
@@ -101,6 +102,9 @@ def candidate_list(request):
                 gender = filter_form.cleaned_data['gender']
                 if gender is not None:
                     queryset = queryset.filter(gender=gender)
+                verified = filter_form.cleaned_data['verified']
+                if verified:
+                    queryset = queryset.filter(is_provisional_registration_number = False)
 
                 if 'save_candidate_list' in request.POST:
                     name = 'Temporary candidate list: ' + str(timezone.datetime.now())
