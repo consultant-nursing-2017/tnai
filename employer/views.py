@@ -286,7 +286,12 @@ def full_advertisement(request):
 
     data_full = []
     for field in fields:
-        data_full.append((form.fields[field].label, getattr(advertisement, field)))
+        (label, value) = (form.fields[field].label, getattr(advertisement, field))
+        if isinstance(value, bool):
+            if value is False:
+                pass
+        else:
+            data_full.append((label, value))
 
 #    pdb.set_trace()
 
