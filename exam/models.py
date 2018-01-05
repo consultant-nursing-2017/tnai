@@ -27,7 +27,7 @@ class Exam(models.Model):
     exam_type = models.CharField(max_length=100, choices=EXAM_TYPE_CHOICES, blank=True, default="Only Interview")
     name = models.CharField(max_length=500, blank=False, default="Exam1")
     date = models.DateField(blank=False, default=timezone.now)
-    hall_ticket_download_minimum_number_of_days = models.PositiveSmallIntegerField(blank=True, default=10, null=True)
+    hall_ticket_download_last_date = models.DateField(blank=False, default=timezone.now)
 
     def __str__(self):
         return "Exam: " + self.name + " Exam ID: " + str(self.exam_id)

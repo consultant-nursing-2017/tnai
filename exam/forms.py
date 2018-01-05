@@ -15,7 +15,7 @@ import pdb
 class ExamForm(ModelForm):
     class Meta:
         model = Exam
-        fields = ['exam_or_interview', 'exam_type', 'hall_ticket_download_minimum_number_of_days', 'name', 'date', ]
+        fields = ['exam_or_interview', 'exam_type', 'advertisement', 'name', 'date', 'hall_ticket_download_last_date', ]
         widgets = {'exam_or_interview': forms.HiddenInput()}
 
     def __init__(self, *args, **kwargs):
@@ -48,7 +48,7 @@ class FilterExamListForm(forms.Form):
     exam_date = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%y', '%d.%m.%Y'], required=False, label='Date (DD-MM-YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}), )
     exam_type = forms.ChoiceField(choices=EXAM_TYPE_CHOICES, required=False, label='Type')
     exam_or_interview = forms.CharField(max_length=100, widget=forms.HiddenInput())
-    only_show_interesting = forms.BooleanField(initial=False, required = False)
+#    only_show_interesting = forms.BooleanField(initial=False, required = False)
 
     def __init__(self, *args, **kwargs):
         super(FilterExamListForm, self).__init__(*args, **kwargs)

@@ -209,9 +209,9 @@ def exam_list(request):
                 if exam_type is not None and len(exam_type) > 0:
                     queryset = queryset.filter(exam_type=exam_type)
 
-                only_show_interesting = filter_form.cleaned_data['only_show_interesting']
-                # TODO
-                if only_show_interesting and candidate_user_type:
+#                only_show_interesting = filter_form.cleaned_data['only_show_interesting']
+#                # TODO
+                if candidate_user_type:
                     queryset = queryset.filter(candidatelist__members = candidate)
     else:
         if 'exam_or_interview' in request.GET:
