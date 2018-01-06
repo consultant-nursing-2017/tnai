@@ -133,6 +133,27 @@ def candidate_index(request):
         displayed_registration_number = candidate.registration_number_display()
     return render(request, 'candidate/index.html', {'candidate': candidate, 'object_does_not_exist': object_does_not_exist, 'displayed_registration_number': displayed_registration_number, }) 
 
+def update_profile(request):
+    username=get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
+
+    candidate = Candidate.objects.get(candidate_username = username)
+
+    if candidate.is_provisional_registration_number:
+        return HttpResponseRedirect('/candidate/submit_candidate_personal')
+
+    if request.method == 'POST':
+        if 'do_update' in request.POST:
+            candidate.is_provisional_registration_number = True
+            candidate.save()
+            return HttpResponseRedirect('/candidate/submit_candidate_personal')
+        else:
+            return HttpResponseRedirect('/candidate/')
+    else:
+        return render(request, 'candidate/update_profile.html')
+
 def submit_candidate_personal(request):
     username=get_acting_user(request)
     allowed = is_allowed(username, request)
