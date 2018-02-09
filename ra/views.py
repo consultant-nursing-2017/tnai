@@ -190,6 +190,21 @@ def save_list(request):
                 form.save()
             elif 'discard' in request.POST:
                 candidate_list.delete()
+            elif 'send_email' in request.POST:
+                form.save()
+                current_site = get_current_site(request)
+#                user = candidate.candidate_username
+                message = form.cleaned_data['notes']
+#                message = render_to_string('candidate/provisional_registration_number_email.html', {
+#                    'user':user, 
+#                    'domain':current_site.domain,
+#                    'registration_number_display': candidate.registration_number_display()
+#                })
+                mail_subject = 'Notification from TNAI'
+                for candidate in candidate_list.members.all():
+                    to_email = candidate.candidate_username.username
+                    email = EmailMessage(mail_subject, message, to=[to_email])
+                    result = email.send()
             elif 'do_nothing' in request.POST:
                 pass
             return HttpResponseRedirect('/ra/')

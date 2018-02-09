@@ -33,6 +33,9 @@ class CandidateListForm(ModelForm):
     class Meta:
         model = CandidateList
         fields = ['name', 'members', 'non_members', 'notes', 'exam', 'exam_list_type', 'employer', 'advertisement']
+        widgets = {
+                'notes': forms.Textarea(attrs = {'cols': 80, 'rows': 5})
+            }
 
     def __init__(self, *args, **kwargs):
         super (ModelForm, self).__init__(*args, **kwargs)
