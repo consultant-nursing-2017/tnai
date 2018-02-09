@@ -73,6 +73,7 @@ def ra_index(request):
 def save_candidate_list(name, queryset):
     candidate_list = CandidateList.objects.create(name=name)
     for candidate in queryset:
+#        pdb.set_trace()
         candidate_list.members.add(candidate)
     candidate_list.save()
     return candidate_list
@@ -100,7 +101,7 @@ def candidate_list(request):
                 if date_of_birth is not None:
                     queryset = queryset.filter(date_of_birth=date_of_birth)
                 gender = filter_form.cleaned_data['gender']
-                if gender is not None:
+                if gender is not None and len(gender) > 0:
                     queryset = queryset.filter(gender=gender)
                 verified = filter_form.cleaned_data['verified']
                 if verified:
