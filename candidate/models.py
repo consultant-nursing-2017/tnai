@@ -107,7 +107,6 @@ class Candidate(models.Model):
         return displayed_registration_number
 
     def save(self, *args, **kwargs):
-#        pdb.set_trace()
         super(Candidate, self).save(*args, **kwargs)
         if not self.registration_number:
             self.registration_number = self.pk

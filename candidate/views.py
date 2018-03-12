@@ -139,7 +139,10 @@ def update_profile(request):
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
-    candidate = Candidate.objects.get(candidate_username = username)
+    try:
+        candidate = Candidate.objects.get(candidate_username=username)
+    except ObjectDoesNotExist:
+        return HttpResponseRedirect('/candidate/submit_candidate_personal')
 
     if candidate.is_provisional_registration_number:
         return HttpResponseRedirect('/candidate/submit_candidate_personal')
@@ -673,6 +676,7 @@ def first_activation(request):
     return render(request, 'candidate/first_activation.html', )
 
 def activate(request, uidb64, token):
+#    pdb.set_trace()
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
