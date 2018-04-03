@@ -187,7 +187,7 @@ def save_list(request):
 
         form = CandidateListForm(request.POST, instance = candidate_list)
         if form.is_valid():
-            if 'save' in request.POST:
+            if 'update' in request.POST:
                 form.save()
             elif 'discard' in request.POST:
                 candidate_list.delete()
