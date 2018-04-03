@@ -13,7 +13,7 @@
         <h1 class="text-center"> Save/Update List </h1>
     </div>
     <div class="panel-body">
-        <form action="/ra/save_list/" method="post" class="form">
+        <form enctype="multipart/form-data" action="/ra/save_list/" method="post" class="form">
             {% csrf_token %}
             <table class="table">
                 {% bootstrap_form form %}

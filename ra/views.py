@@ -205,6 +205,10 @@ def save_list(request):
                 for candidate in candidate_list.members.all():
                     to_email = candidate.candidate_username.username
                     email = EmailMessage(mail_subject, message, to=[to_email])
+#                    pdb.set_trace()
+                    if len(request.FILES) > 0:
+                        attachment = request.FILES['attachment']
+                        email.attach(attachment.name, attachment.read(), attachment.content_type)
                     result = email.send()
             elif 'do_nothing' in request.POST:
                 pass
