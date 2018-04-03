@@ -14,6 +14,8 @@ import hashlib
 import random
 from django.utils.crypto import get_random_string
 from django.contrib import auth
+from django.db.models import Q
+from django.db.models.functions import Length
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
@@ -97,12 +99,24 @@ def candidate_list(request):
                 name = filter_form.cleaned_data['name']
                 if name is not None and len(name) > 0:
                     queryset = queryset.filter(name__icontains=name)
+
                 date_of_birth = filter_form.cleaned_data['date_of_birth']
                 if date_of_birth is not None:
                     queryset = queryset.filter(date_of_birth=date_of_birth)
+
                 gender = filter_form.cleaned_data['gender']
                 if gender is not None and len(gender) > 0:
                     queryset = queryset.filter(gender=gender)
+
+                professional_qualifications = filter_form.cleaned_data['professional_qualifications']
+                if professional_qualifications is not None and len(professional_qualifications) > 0:
+                    queryset = queryset.filter(professionalqualifications__class_degree__iexact = professional_qualifications).annotate(institute_name_length=Length('professionalqualifications__institute_name')).filter(institute_name_length__gt=0)
+
+                eligibility_tests = filter_form.cleaned_data['eligibility_tests']
+                if eligibility_tests is not None and len(eligibility_tests) > 0:
+                    queryset = queryset.filter(eligibilitytests__eligibility_tests__iexact = eligibility_tests).annotate(score_grade_marks_length=Length('eligibilitytests__score_grade_marks')).filter(score_grade_marks_length__gt=0)
+
+
                 temp = filter_form.cleaned_data['verified']
                 if temp is not None and len(temp) > 0:
                     verified = not temp in ['False', 'No']

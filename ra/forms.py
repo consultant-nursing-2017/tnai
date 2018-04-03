@@ -34,8 +34,9 @@ class CandidateListForm(ModelForm):
     attachment = forms.FileField(required = False)
     class Meta:
         model = CandidateList
-        fields = ['name', 'members', 'non_members', 'notes', 'exam', 'exam_list_type', 'employer', 'advertisement']
+        fields = ['name', 'members', 'notes', 'exam', 'exam_list_type', 'employer', 'advertisement']
         widgets = {
+                'members': forms.CheckboxSelectMultiple(),
                 'notes': forms.Textarea(attrs = {'cols': 80, 'rows': 5})
             }
 
