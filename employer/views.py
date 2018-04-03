@@ -217,6 +217,9 @@ def submit_advertisement(request):
     if not allowed:
         return render(request, 'employer/not_allowed.html', {'next': request.path})
 
+    if not is_employer_user(username, request):
+        return render(request, 'employer/not_allowed.html', {'next': request.path})
+
     employer = Employer.objects.get(employer_username=username)
     new_advertisement = True
     advertisement_id = None
