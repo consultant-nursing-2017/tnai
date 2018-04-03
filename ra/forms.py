@@ -26,7 +26,8 @@ class FilterForm(forms.Form):
     minimum_experience = forms.CharField(required=False, )
     ELIGIBILITY_TESTS_CHOICES = [(None, '--- Any ---')] + list(EligibilityTests.eligibility_tests_choices())
     eligibility_tests = forms.ChoiceField(ELIGIBILITY_TESTS_CHOICES, required=False,)
-    verified = forms.BooleanField(initial = False, required = False)
+    verified = forms.ChoiceField(((None, '--- Either ---'), (False, 'Verified'), (True, 'Unverified') ), required=False, )
+#    verified = forms.BooleanField(initial = False, required = False)
 
 class CandidateListForm(ModelForm):
     non_members = forms.ModelMultipleChoiceField(required = False, queryset = None, label = "Non-members")

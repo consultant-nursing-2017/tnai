@@ -103,9 +103,10 @@ def candidate_list(request):
                 gender = filter_form.cleaned_data['gender']
                 if gender is not None and len(gender) > 0:
                     queryset = queryset.filter(gender=gender)
-                verified = filter_form.cleaned_data['verified']
-                if verified:
-                    queryset = queryset.filter(is_provisional_registration_number = False)
+                temp = filter_form.cleaned_data['verified']
+                if temp is not None and len(temp) > 0:
+                    verified = not temp in ['False', 'No']
+                    queryset = queryset.filter(is_provisional_registration_number = verified)
 
                 if 'save_candidate_list' in request.POST:
                     name = 'Temporary candidate list: ' + str(timezone.datetime.now())
