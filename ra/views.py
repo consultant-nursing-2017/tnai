@@ -207,7 +207,6 @@ def save_list(request):
             elif 'discard' in request.POST:
                 candidate_list.delete()
             elif 'send_email' in request.POST:
-                form.save()
                 current_site = get_current_site(request)
 #                user = candidate.candidate_username
                 message = form.cleaned_data['notes']
@@ -225,6 +224,7 @@ def save_list(request):
                         attachment = request.FILES['attachment']
                         email.attach(attachment.name, attachment.read(), attachment.content_type)
                     result = email.send()
+                form.save()
             elif 'do_nothing' in request.POST:
                 pass
             return HttpResponseRedirect('/ra/')
