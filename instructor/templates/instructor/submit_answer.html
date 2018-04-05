@@ -1,0 +1,84 @@
+{% extends "base_instructor.html" %}
+{% load bootstrap3 %}
+
+{% load static %}
+
+{% block title %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'instructor/style.css' %}" />
+{% endblock %}
+
+{% block content %}
+{# <script src="{% static "candidate/js/exam_time_slot-jquery.js" %}"></script> #}
+<script type="text/javascript">
+   $(function() {
+       $('#myForm tbody tr').formset({
+           prefix: '{{formset.prefix}}'
+       });
+   })
+</script>
+
+<form id="myForm" enctype="multipart/form-data" action="/instructor/submit_answer/" method="post" class="form form-inline">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="text-center">Submit Answers</h2>
+        </div>
+        <div class="panel-body">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3>Question</h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        {{question.text}}
+                    </p>
+                </div>
+            </div>
+
+            <h3>Answers</h3>
+            <div class="table-responsive">
+                {% bootstrap_formset_errors formset %}
+                <table class="table table-striped">
+                    <div id="items-form-container">
+                        <thead>
+                            <tr>
+                                {% if formset.errors %}
+                                    <th>Errors</th>
+                                {% endif %}
+                                {% for field in form.visible_fields %}
+                                    <th>{% bootstrap_label field.label %}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for form in formset %}
+                                <tr>
+                                    {% if form.errors %}
+                                        <td> 
+                                            {% bootstrap_form_errors form error_types='all' layout='inline' %}
+                                        </td>
+                                    {% elif formset.errors %}
+                                        <td> </td>
+                                    {% endif %}
+                                    {% for field in form %}
+                                        <td>
+                                            {% bootstrap_field field layout="inline" %}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </div>
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer text-center">
+            {% bootstrap_button "Done" button_type="submit" name="save_done" value="Done" %}
+            <input type="hidden" name="question_id" value="{{question_id}}"/>
+        </div>
+    </div>
+</form>
+{% endblock %}

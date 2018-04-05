@@ -22,6 +22,7 @@ from django.views.generic import RedirectView
 urlpatterns = [
     url(r'^employer/', include('employer.urls')),
     url(r'^candidate/', include('candidate.urls')),
+    url(r'^instructor/', include('instructor.urls')),
     url(r'^ra/', include('ra.urls')),
     url(r'^exam/', include('exam.urls'), name="exam"),
     url(r'^interview/', RedirectView.as_view(url="/exam/"), name="interview"),

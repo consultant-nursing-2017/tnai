@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block title %}<title>Learning</title>{% endblock %}
+    <!-- Add additional CSS in static file -->
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.formset.js' %}"></script>
+    <!-- Latest compiled and minified CSS -->
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    {# Load the tag library #}
+    {% load bootstrap3 %}
+
+    {# Load CSS and JavaScript #}
+    {#    {% bootstrap_css %} #}
+    {# {% bootstrap_javascript %} #}
+
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tnai-custom.css' %}">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/"><strong>Learning</strong></a>
+            </div>
+            <ul class="nav navbar-nav">
+                <!--
+                <li><a href="/candidate">Candidates</a></li>
+                <li><a href="/employer">Employers</a></li>
+                -->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if not user.is_authenticated %} 
+                <!--
+                    <li><a href="{% url 'instructor:signup' %}">Candidate sign-up</a></p>
+                    <li><a href="{% url 'student:signup' %}">Employer sign-up</a></p>
+                -->
+                    <li><a href="{% url 'login' %}?next=/candidate/">Login</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'instructor:index' %}">User: {{ user.get_username }}</a></li>
+                    <li><a href="/accounts/logout">Logout</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% block jumbotron %} {% endblock %}
+
+    <div class="container-fluid">
+        <div class="row">
+<!--          <div class="col-sm-2">
+          {% block sidebar %}
+          {% endblock %}
+</div> -->
+        <div class="col-sm-12">
+          {% block content %}{% endblock %}
+        </div>
+        </div>
+
+        <!--
+        <div class="well">
+            <footer class="footer">
+                <div class="row">
+                    <div class="col-sm-2">
+                    </div>
+                    <div class="col-sm-4">
+                        <ul class="list-unstyled">
+                            <li><h3>About</h3></li>
+                            <li><a href="/home/about">About TNAI recruitment</a></li>
+                            <li><a href="http://tnaionline.org/">TNAI homepage</a></li>
+                        <ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <ul class="list-unstyled">
+                            <li><h3>Resources</h3></li>
+                            <li><a href="/home/contact">Contact</a></li>
+        -->
+                            <!--
+                            <li><a href="/home/media">Media</a></li>
+                            -->
+        <!--
+                            <li><a href="/ra/">RA page</a></li>
+                        <ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <a href="#top">Back to Top</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        -->
+    </div>
+</body>
+</html>

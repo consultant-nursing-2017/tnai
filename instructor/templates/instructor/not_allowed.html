@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+<h2> Please <a href="{% url 'login' %}?next={{next}}">login</a> with an instructor account to access this page. </h2>
+{% endblock %}
