@@ -213,6 +213,28 @@ def list_questions(request):
     queryset = Question.objects.all()
     return render(request, 'instructor/question_list.html', {'queryset': queryset, }, )
 
+def display_all_questions(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'instructor/not_allowed.html', {'next': request.path})
+
+    question_queryset = Question.objects.all().order_by('question_id')
+    values = []
+    count_question = 1
+    for question in question_queryset:
+        question_answer_pair = [question, []]
+        answer_queryset = Answer.objects.filter(question = question)
+        count_answer = 0
+        for answer in answer_queryset:
+            question_answer_pair[1].append([str(chr(ord('A')+count_answer)), answer])
+            count_answer = count_answer + 1
+
+        values.append([count_question, question_answer_pair])
+        count_question = count_question + 1
+    
+    return render(request, 'instructor/display_all_questions.html', {'values': values, }, )
+
 def full_question(request):
     pass
 

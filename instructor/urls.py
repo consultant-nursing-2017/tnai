@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^submit_answer/', views.submit_answer, name='submit_answer'),
     url(r'^entire_profile/', views.index, name='entire_profile'),
     url(r'^list_questions/', views.list_questions, name='list_questions'),
+    url(r'^display_all_questions/', views.display_all_questions, name='display_all_questions'),
 #    url(r'^full_question/', views.submit_answer, name='full_question'),
 #    url(r'^submit_advertisement/', views.submit_advertisement, name='submit_advertisement'),
 #    url(r'^list_advertisements/', views.list_advertisements, name='list_advertisements'),
