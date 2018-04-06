@@ -137,30 +137,30 @@ def submit_question(request):
         return render(request, 'instructor/not_allowed.html', {'next': request.path})
 
     question_id = None
-    try:
-        if request.method == 'POST':
+    if request.method == 'POST':
+        try:
             if 'question_id' in request.POST:
                 question_id = request.POST.get('question_id')
                 question = Question.objects.get(question_id = question_id)
                 form = QuestionForm(request.POST, request.FILES, instance = question)
             else:
                 form = QuestionForm(request.POST, request.FILES)
+        except ObjectDoesNotExist:
+            form = QuestionForm(request.POST, request.FILES)
 
-            if form.is_valid():
-    #            pdb.set_trace()
-    #            if 'add_topic' in request.POST:
-                instance = form.save()
-                return HttpResponseRedirect('/instructor/submit_answer?question_id=' + str(instance.question_id))
+        if form.is_valid():
+#            pdb.set_trace()
+#            if 'add_topic' in request.POST:
+            instance = form.save()
+            return HttpResponseRedirect('/instructor/submit_answer?question_id=' + str(instance.question_id))
+    else:
+        # if a GET (or any other method) we'll create a blank form
+        if 'question_id' in request.GET:
+            question_id = request.GET.get('question_id')
+            question = Question.objects.get(question_id = question_id)
+            form = QuestionForm(instance = question)
         else:
-            # if a GET (or any other method) we'll create a blank form
-            if 'question_id' in request.GET:
-                question_id = request.GET.get('question_id')
-                question = Question.objects.get(question_id = question_id)
-                form = QuestionForm(instance = question)
-            else:
-                form = QuestionForm()
-    except ObjectDoesNotExist:
-        return render(request, 'exam/exam_id_not_found.html', {'question_id': question_id, })
+            form = QuestionForm()
 
     return render(request, 'instructor/submit_question.html', {'form': form, 'question_id': question_id, }) 
 
