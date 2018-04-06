@@ -219,15 +219,16 @@ def display_all_questions(request):
     if not allowed:
         return render(request, 'instructor/not_allowed.html', {'next': request.path})
 
-    question_queryset = Question.objects.all().order_by('question_id')
+    question_queryset = Question.objects.exclude(text__iexact='').order_by('question_id')
     values = []
     count_question = 1
     for question in question_queryset:
         question_answer_pair = [question, []]
-        answer_queryset = Answer.objects.filter(question = question)
+        answer_queryset = Answer.objects.filter(question = question).order_by('text')
         count_answer = 0
         for answer in answer_queryset:
-            question_answer_pair[1].append([str(chr(ord('A')+count_answer)), answer])
+#            question_answer_pair[1].append([str(chr(ord('A')+count_answer)), answer])
+            question_answer_pair[1].append(answer)
             count_answer = count_answer + 1
 
         values.append([count_question, question_answer_pair])

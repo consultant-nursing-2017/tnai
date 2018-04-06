@@ -22,10 +22,10 @@
                     </tr>
                     <tr>
                         {% for answer in value.1.1 %}
-                            {% if answer.1.correct %}
-                                <td class="success"> <b>({{ answer.0 }})</b>: {{ answer.1.text }} </td>
+                            {% if answer.correct %}
+                                <td class="success"> {{ answer.text }} </td>
                             {% else %}
-                                <td> <b>({{ answer.0 }})</b>: {{ answer.1.text }} </td>
+                                <td> {{ answer.text }} </td>
                             {% endif %}
                         {% endfor %}
                     </tr>
