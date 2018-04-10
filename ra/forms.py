@@ -31,7 +31,7 @@ class FilterForm(forms.Form):
 
 class CandidateListForm(ModelForm):
     non_members = forms.ModelMultipleChoiceField(required = False, queryset = None, label = "Non-members")
-    attachment = forms.FileField(required = False)
+    attachment = forms.FileField(required = False, max_length = 500)
     class Meta:
         model = CandidateList
         fields = ['name', 'members', 'notes', 'exam', 'exam_list_type', 'employer', 'advertisement']
