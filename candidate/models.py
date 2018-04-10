@@ -48,8 +48,8 @@ class Candidate(models.Model):
 
 #   Tab 1: Personal details
     candidate_username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='candidate_username', default=None, blank=True, null=True)
-    photograph = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_image])
-    curriculum_vitae = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
+    photograph = models.FileField(max_length = 500, default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_image])
+    curriculum_vitae = models.FileField(max_length = 500, default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
     name = models.CharField(max_length=200, default="Name")
     fathers_name = models.CharField(max_length=200, default="Father's Name")
     date_of_birth = models.DateField(default=timezone.now, blank=False, null=False)
@@ -72,7 +72,7 @@ class Candidate(models.Model):
 #    state_nursing_council_name = models.CharField(max_length=200, choices=STATE_NURSING_COUNCIL_CHOICES, default="SNC1", blank=True)
 #    state_nursing_council_registration_number = models.CharField(max_length=200, default="", blank=True)
 #    state_nursing_council_registration_date = models.DateField(default=timezone.now, blank=True)
-#    state_nursing_council_proof = models.FileField(default=None, blank=True, null=True)
+#    state_nursing_council_proof = models.FileField(max_length = 500, default=None, blank=True, null=True)
 
 #   Tab 3: Educational qualifications
     # See model below
@@ -127,7 +127,7 @@ class Qualifications(models.Model):
     total_marks = models.PositiveSmallIntegerField(default=100, blank=True, null=True)
     percentage = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
 #    grade = models.CharField(max_length=20, default="", blank=True)
-    proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
+    proof = models.FileField(max_length = 500, default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
 
     def __str__(self):
         return self.class_degree
@@ -156,7 +156,7 @@ class AdditionalQualifications(Qualifications):
 #    course_name = models.CharField(max_length=200, blank=True)
 #    score_marks_grade = models.CharField(max_length=20, default="", blank=True)
 #    completed_on = models.DateField(blank=True, null=True)
-#    proof = models.FileField(default=None, blank=True, null=True)
+#    proof = models.FileField(max_length = 500, default=None, blank=True, null=True)
 
 class EligibilityTests(models.Model):
     ELIGIBILITY_TESTS_CHOICES = (
@@ -181,7 +181,7 @@ class EligibilityTests(models.Model):
     score_grade_marks = models.CharField(max_length=20, blank=True, null=True)
     completed_on = models.DateField(blank=True, null=True)
     valid_up_to = models.DateField(blank=True, null=True)
-    proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
+    proof = models.FileField(max_length = 500, default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
 
     @staticmethod
     def eligibility_tests_choices():
@@ -203,7 +203,7 @@ class Experience(models.Model):
     date_from = models.DateField(blank=True, null=True)
     date_to = models.DateField(blank=True, null=True)
 #    total_years = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, blank=True)
-    proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
+    proof = models.FileField(max_length = 500, default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
 
 class StateNursingCouncilName(models.Model):
     name = models.CharField(max_length=500, blank=False, unique = True)
@@ -224,7 +224,7 @@ class StateNursingCouncil(models.Model):
     state_nursing_council_name = models.ForeignKey(StateNursingCouncilName, on_delete=models.CASCADE, editable=True, blank=True, null=True)
     registration_number = models.CharField(max_length=200, blank=True)
     year = FormYearField(blank=True, null=True)
-    proof = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
+    proof = models.FileField(max_length = 500, default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
 
     def __str__(self):
         return self.candidate.candidate_username.username + self.course + self.state + self.registration_number
