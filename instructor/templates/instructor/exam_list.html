@@ -1,0 +1,33 @@
+{% extends "base_instructor.html" %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="text-center">List of exams</h1>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <tr>
+                    <th> Exam ID </th>
+                    <th> Name </th>
+                    <th> Date </th>
+                    <th> Starting Time </th>
+                </tr>
+                {% for record in queryset %}
+                <tr>
+                    <td> {{ record.exam_id }} <a href="{% url 'instructor:submit_exam'%}?exam_id={{record.exam_id}}">[Click to update]</a></td>
+                    <td> {{ record.name }}</td>
+                    <td> {{ record.date }}</td>
+                    <td> {{ record.starting_time }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

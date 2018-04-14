@@ -14,3 +14,12 @@ class Student(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student_username', default=None, blank=True, null=True)
     name = models.CharField(max_length=200, default="Student One", blank=False)
     phone = models.CharField(max_length=200, default="9810117638", blank=False)
+
+    def __str__(self):
+        return self.name
+
+class TakeExam(models.Model):
+    exam = models.OneToOneField('instructor.Exam', on_delete=models.CASCADE, related_name='exam_taken')
+    current_question = models.PositiveSmallIntegerField(default = 0)
+    answers_given = models.ManyToManyField('instructor.Answer')
+    completed = models.BooleanField(default = False)

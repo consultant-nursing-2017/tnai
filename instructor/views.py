@@ -8,8 +8,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
-from .models import Instructor, Topic, Question, Answer, QuestionBank
-from .forms import InstructorForm, TopicForm, QuestionForm, AnswerForm, QuestionBankForm
+from .models import Instructor, Topic, Question, Answer, QuestionBank, Exam
+from .forms import InstructorForm, TopicForm, QuestionForm, AnswerForm, QuestionBankForm, ExamForm
 #from .forms import RegistrationForm
 from django.core.mail import send_mail
 import hashlib
@@ -196,6 +196,38 @@ def submit_question(request):
 
     return render(request, 'instructor/submit_question.html', {'form': form, 'question_id': question_id, }) 
 
+def submit_exam(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'instructor/not_allowed.html', {'next': request.path})
+
+    exam_id = None
+    if request.method == 'POST':
+        try:
+            if 'exam_id' in request.POST:
+                exam_id = request.POST.get('exam_id')
+                exam = Exam.objects.get(exam_id = exam_id)
+                form = ExamForm(request.POST, request.FILES, instance = exam)
+            else:
+                form = ExamForm(request.POST, request.FILES)
+        except ObjectDoesNotExist:
+            form = ExamForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            instance = form.save()
+            return HttpResponseRedirect('/instructor/')
+    else:
+        # if a GET (or any other method) we'll create a blank form
+        if 'exam_id' in request.GET:
+            exam_id = request.GET.get('exam_id')
+            exam = Exam.objects.get(exam_id = exam_id)
+            form = ExamForm(instance = exam)
+        else:
+            form = ExamForm()
+
+    return render(request, 'instructor/submit_exam.html', {'form': form, 'exam_id': exam_id, }) 
+
 def submit_answer(request):
     username = get_acting_user(request)
     allowed = is_allowed(username, request)
@@ -276,6 +308,15 @@ def display_all_questions(request):
         count_question = count_question + 1
     
     return render(request, 'instructor/display_all_questions.html', {'values': values, }, )
+
+def list_exams(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'instructor/not_allowed.html', {'next': request.path})
+
+    queryset = Exam.objects.all()
+    return render(request, 'instructor/exam_list.html', {'queryset': queryset, }, )
 
 def full_question(request):
     pass

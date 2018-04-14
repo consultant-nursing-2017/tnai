@@ -54,7 +54,22 @@ class Answer(models.Model):
     image = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_image])
     correct = models.BooleanField(default = False)
 
+    def __str__(self):
+        return self.text
+
 class QuestionBank(models.Model):
     question_bank_id = HashidAutoField(salt=settings.HASHID_FIELD_SALT+"QuestionBank", allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", primary_key = True)
     name = models.CharField(max_length=200, default="Question Bank One", blank=False, unique = True)
     questions = models.ManyToManyField(Question)
+
+class Exam(models.Model):
+    exam_id = HashidAutoField(salt=settings.HASHID_FIELD_SALT+"Exam", allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", primary_key = True)
+    name = models.CharField(max_length=200, default="Exam One", blank=False, unique = True)
+    date = models.DateField(blank = False)
+    starting_time = models.TimeField(blank = False)
+    duration = models.IntegerField(default = 30, blank = False)
+    students = models.ManyToManyField(Student)
+    questions = models.ManyToManyField(Question)
+
+    def __str__(self):
+        return str(self.exam_id) + ": Exam name: " + self.name

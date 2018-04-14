@@ -8,8 +8,9 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
-from .models import Student
-from .forms import StudentForm
+from instructor.models import Exam
+from .models import Student, TakeExam
+from .forms import StudentForm, TakeExamForm, ShowQuestionInExamForm
 #from .forms import RegistrationForm
 from django.core.mail import send_mail
 import hashlib
@@ -100,3 +101,70 @@ def submit_student(request):
             form = StudentForm(initial={'username': username,})
 
     return render(request, 'student/submit_student.html', {'new_profile': new_profile, 'form': form,}) 
+
+def choose_exam(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'student/not_allowed.html', {'next': request.path})
+
+    if request.method == 'POST':
+        form = TakeExamForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            instance = form.save()
+            return HttpResponseRedirect('/student/')
+    else:
+        # if a GET (or any other method) we'll create a blank form
+        form = TakeExamForm()
+
+    return render(request, 'student/choose_exam.html', {'form': form, }) 
+
+def take_exam(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'student/not_allowed.html', {'next': request.path})
+
+    exam_id = None
+    take_exam = None
+    if request.method == 'POST':
+        try:
+            if 'exam_id' in request.POST:
+                exam_id = request.POST.get('exam_id')
+                exam = Exam.objects.get(exam_id = exam_id)
+                take_exam = TakeExam.objects.get(exam = exam)
+                form = ShowQuestionInExamForm(request.POST, request.FILES, instance = take_exam)
+            else:
+                return render(request, 'student/not_allowed.html', {'next': request.path})
+        except ObjectDoesNotExist:
+            return render(request, 'student/not_allowed.html', {'next': request.path})
+
+        if form.is_valid():
+            instance = form.save(commit = False)
+            pdb.set_trace()
+            instance.current_question = instance.current_question + 1
+            if instance.current_question >= instance.exam.questions.count():
+                instance.completed = True
+            form.save()
+
+            if instance.completed:
+                return HttpResponseRedirect('/student/')
+            else:
+                return HttpResponseRedirect('/student/take_exam/?exam_id=' + exam_id)
+    else:
+        # if a GET (or any other method) we'll create a blank form
+        if 'exam_id' in request.GET:
+            exam_id = request.GET.get('exam_id')
+            exam = Exam.objects.get(exam_id = exam_id)
+            take_exam = TakeExam.objects.get(exam = exam)
+            if take_exam.current_question >= take_exam.exam.questions.count():
+                return HttpResponseRedirect('/student/')
+            else:
+                form = ShowQuestionInExamForm(instance = take_exam)
+        else:
+            return render(request, 'student/not_allowed.html', {'next': request.path})
+
+    question = take_exam.exam.questions.all()[take_exam.current_question]
+    return render(request, 'student/take_exam.html', {'form': form, 'exam_id': exam_id, 'question': question}) 
+
