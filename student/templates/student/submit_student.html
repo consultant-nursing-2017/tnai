@@ -1,0 +1,31 @@
+{% extends "base_instructor.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+<form enctype="multipart/form-data" action="/student/submit_student/" method="post" class="form form-horizontal">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="text-center">Student profile</h1>
+        </div>
+        <div class="panel-body">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-6 table-striped">
+                    <table class="table">
+                        {% bootstrap_form form layout='horizontal' %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-center">
+            {% buttons %}
+                {% if new_profile %} 
+                    {% bootstrap_button "Submit new profile" button_type="submit" value="Submit" %}
+                {% else %} 
+                    {% bootstrap_button "Update profile" button_type="submit" value="Submit" %}
+                {% endif %}
+            {% endbuttons %}
+        </div>
+</form>
+{% endblock %}
+

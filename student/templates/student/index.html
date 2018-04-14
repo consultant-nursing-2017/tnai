@@ -1,0 +1,44 @@
+{% extends "base_instructor.html" %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'student/style.css' %}" />
+{% endblock %}
+
+{% block content %}
+    {% if not object_does_not_exist %}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2> {{student.name}} </h2>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Name:</th>
+                        <td>{{student.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Student ID:</th>
+                        <td>{{student.student_id}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>No student details found!</h2>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
+        <ul class="list-unstyled">
+            {% if not object_does_not_exist %}
+                <li><a href="{% url 'student:entire_profile' %}">View full profile</a></li>
+            {% endif %}
+            <li><a href="{% url 'student:submit_student' %}">Update profile</a></li>
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base_instructor.html" %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="text-center">Questions</h1>
+        </div>
+        <div class="panel-body">
+            <!--
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
+            -->
+            <table class="table table-striped">
+                {% for value in values %}
+                    <tr>
+                        <td colspan="100%"><b>Q{{value.0}}.</b> {{value.1.0.text}}</td>
+                    </tr>
+                    <tr>
+                        {% for answer in value.1.1 %}
+                            {% if answer.correct %}
+                                <td class="success"> {{ answer.text }} </td>
+                            {% else %}
+                                <td> {{ answer.text }} </td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <!--
+            </div>
+            -->
+        </div>
+    </div>
+{% endblock %}

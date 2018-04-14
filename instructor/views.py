@@ -62,8 +62,8 @@ def index(request):
         return render(request, 'instructor/not_allowed.html', {'next': request.path})
 
     object_does_not_exist = False
-    if username.groups.filter(name="Candidate").count() > 0:
-        return HttpResponseRedirect('/candidate/')
+    if username.groups.filter(name="Student").count() > 0:
+        return HttpResponseRedirect('/Student/')
 
     try:
         if username.is_authenticated():

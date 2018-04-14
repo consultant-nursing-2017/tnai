@@ -52,3 +52,7 @@ class Answer(models.Model):
     text = models.CharField(max_length = 2000, blank=True)
     image = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_image])
     correct = models.BooleanField(default = False)
+
+class QuestionBank(models.Model):
+    question_bank_id = HashidAutoField(salt=settings.HASHID_FIELD_SALT+"Question Bank", allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", primary_key = True)
+    questions = models.ManyToManyField(Question)
