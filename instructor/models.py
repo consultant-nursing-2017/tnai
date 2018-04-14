@@ -5,6 +5,7 @@ from candidate.models import EligibilityTests
 from tnai.validators import ValidateFileExtension
 from hashid_field import HashidAutoField, HashidField
 from django.conf import settings
+from student.models import Student
 
 import datetime
 import uuid
@@ -38,7 +39,7 @@ class Question(models.Model):
     image = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_image])
 
     def __str__(self):
-        return str(self.question_id)
+        return str(self.question_id) + ": " + self.truncated_text()
 
     def truncated_text(self):
         return self.text[:80]
@@ -54,5 +55,6 @@ class Answer(models.Model):
     correct = models.BooleanField(default = False)
 
 class QuestionBank(models.Model):
-    question_bank_id = HashidAutoField(salt=settings.HASHID_FIELD_SALT+"Question Bank", allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", primary_key = True)
+    question_bank_id = HashidAutoField(salt=settings.HASHID_FIELD_SALT+"QuestionBank", allow_int_lookup=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", primary_key = True)
+    name = models.CharField(max_length=200, default="Question Bank One", blank=False, unique = True)
     questions = models.ManyToManyField(Question)

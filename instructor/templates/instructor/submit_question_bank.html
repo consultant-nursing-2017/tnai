@@ -1,0 +1,29 @@
+{% extends "base_instructor.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+<form enctype="multipart/form-data" action="/instructor/submit_question_bank/" method="post" class="form form-horizontal">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="text-center">Question Bank Form</h1>
+        </div>
+        <div class="panel-body">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-6 table-striped">
+                    <table class="table">
+                        {% bootstrap_form form layout='horizontal' %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-center">
+            {% buttons %}
+                {% bootstrap_button "Submit Question Bank" button_type="submit" value="add_question_bank" %}
+                {% bootstrap_button "Cancel" button_type="link" value="cancel" %}
+            {% endbuttons %}
+            <input type="hidden" name="question_bank_id" value="{{question_bank_id}}"/>
+        </div>
+</form>
+{% endblock %}
+

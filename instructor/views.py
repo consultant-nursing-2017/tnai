@@ -8,8 +8,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
-from .models import Instructor, Topic, Question, Answer
-from .forms import InstructorForm, TopicForm, QuestionForm, AnswerForm
+from .models import Instructor, Topic, Question, Answer, QuestionBank
+from .forms import InstructorForm, TopicForm, QuestionForm, AnswerForm, QuestionBankForm
 #from .forms import RegistrationForm
 from django.core.mail import send_mail
 import hashlib
@@ -109,6 +109,38 @@ def submit_instructor(request):
             form = InstructorForm(initial={'username': username,})
 
     return render(request, 'instructor/submit_instructor.html', {'new_profile': new_profile, 'form': form,}) 
+
+def submit_question_bank(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'instructor/not_allowed.html', {'next': request.path})
+
+    question_bank_id = None
+    if request.method == 'POST':
+        try:
+            if 'question_bank_id' in request.POST:
+                question_bank_id = request.POST.get('question_bank_id')
+                question_bank = QuestionBank.objects.get(question_bank_id = question_bank_id)
+                form = QuestionBankForm(request.POST, request.FILES, instance = question_bank)
+            else:
+                form = QuestionBankForm(request.POST, request.FILES)
+        except ObjectDoesNotExist:
+            form = QuestionBankForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/instructor/')
+    else:
+        # if a GET (or any other method) we'll create a blank form
+        if 'question_bank_id' in request.GET:
+            question_bank_id = request.GET.get('question_bank_id')
+            question_bank = QuestionBank.objects.get(question_bank_id = question_bank_id)
+            form = QuestionBankForm(instance = question_bank)
+        else:
+            form = QuestionBankForm()
+
+    return render(request, 'instructor/submit_question_bank.html', {'form': form, 'question_bank_id': question_bank_id}) 
 
 def submit_topic(request):
     username = get_acting_user(request)
@@ -212,6 +244,15 @@ def list_questions(request):
 
     queryset = Question.objects.all()
     return render(request, 'instructor/question_list.html', {'queryset': queryset, }, )
+
+def list_question_banks(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'instructor/not_allowed.html', {'next': request.path})
+
+    queryset = QuestionBank.objects.all()
+    return render(request, 'instructor/question_bank_list.html', {'queryset': queryset, }, )
 
 def display_all_questions(request):
     username = get_acting_user(request)

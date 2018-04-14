@@ -1,0 +1,27 @@
+{% extends "base_instructor.html" %}
+{% load static %}
+
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="text-center">List of Question Banks</h1>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <tr>
+                    <th> Question Bank ID </th>
+                </tr>
+                {% for record in queryset %}
+                <tr>
+                    <td> {{ record.question_bank_id }} <a href="{% url 'instructor:submit_question_bank'%}?question_bank_id={{record.question_bank_id}}">[Click to update]</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

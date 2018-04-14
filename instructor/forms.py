@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Instructor, Topic, Question, Answer
+from .models import Instructor, Topic, Question, Answer, QuestionBank
 #from django.contrib.auth.models import User, Group
 #from django.contrib.admin import widgets 
 
@@ -35,6 +35,12 @@ class AnswerForm(ModelForm):
     class Meta:
         model = Answer
         exclude = ['question']
+
+class QuestionBankForm(ModelForm):
+    class Meta:
+        model = QuestionBank
+        fields = '__all__'
+        widgets = {'questions': forms.CheckboxSelectMultiple(), }
 
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')
