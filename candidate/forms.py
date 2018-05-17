@@ -269,8 +269,13 @@ class StateNursingCouncilNameForm(ModelForm):
         fields = '__all__'
 
 class CandidateFindJobsForm(forms.Form):
-                
     country = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'size':'25', 'placeholder':'Leave blank if desired', }))
+
+#class DownloadFilesForm(forms.Form):
+#    FILES_CHOICES = (
+#            (('candidate', 'curriculum_vitae', 'application/pdf'), "Curriculum Vitae")
+#    )
+#    files = forms.ChoiceField(choices = FILES_CHOICES)
 
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')

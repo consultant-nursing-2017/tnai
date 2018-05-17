@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
@@ -446,6 +446,7 @@ def entire_profile(request):
     ra_user = is_ra_user(actual_user, request)
 
     try:
+        form = PersonalForm()
         if 'registration_number' in request.GET:
             registration_number = request.GET.__getitem__('registration_number')
             candidate = Candidate.objects.get(registration_number=registration_number)
@@ -453,9 +454,10 @@ def entire_profile(request):
                 return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
         else:
             candidate = Candidate.objects.get(candidate_username=username)
-        personal_data = [['Name', 'name'], ['Father\'s Name', 'fathers_name'], ['Date of Birth', 'date_of_birth'], ['Gender', 'gender'], ['Marital Status', 'marital_status'], ['Phone Number', 'phone_number'], ]
+        personal_data = [['Name', 'name'], ['Father\'s Name', 'fathers_name'], ['Date of Birth', 'date_of_birth'], ['Gender', 'gender'], ['Marital Status', 'marital_status'], ['Phone Number', 'phone_number'], ['Curriculum Vitae', 'curriculum_vitae']]
         for i, field in enumerate(personal_data):
-            personal_data[i].append(getattr(candidate, field[1]))
+#            pdb.set_trace()
+            personal_data[i].append([getattr(candidate, field[1]), isinstance(form.fields[field[1]], forms.fields.FileField)])
 
         address_data = [['House Number', 'house_number'], ['Area', 'area_locality'], ['Street', 'street_name'], ['Village', 'village_PS_PO'], ['Country', 'country'], ['State', 'state'], ['City', 'city'], ['District', 'district'], ['Pin Code', 'pin_code']]
         for i, field in enumerate(address_data):
@@ -478,7 +480,8 @@ def entire_profile(request):
         for index, educational_qualifications in enumerate(educational_qualifications_list):
             educational_qualifications_collection.append([])
             for field in educational_qualifications_collection_fields:
-                educational_qualifications_collection[index].append(educational_qualifications_list[index].get(field[1]))
+                educational_qualifications_collection[index].append([educational_qualifications_list[index].get(field[1]), isinstance(form.fields[field[1]], forms.fields.FileField)])
+#        pdb.set_trace()
 
         form = ProfessionalQualificationsForm()
         professional_qualifications_collection_fieldnames = form.fields
@@ -491,7 +494,7 @@ def entire_profile(request):
         for index, professional_qualifications in enumerate(professional_qualifications_list):
             professional_qualifications_collection.append([])
             for field in professional_qualifications_collection_fields:
-                professional_qualifications_collection[index].append(professional_qualifications_list[index].get(field[1]))
+                professional_qualifications_collection[index].append([professional_qualifications_list[index].get(field[1]), isinstance(form.fields[field[1]], forms.fields.FileField)])
 
         form = AdditionalQualificationsForm()
         additional_qualifications_collection_fieldnames = form.fields
@@ -504,7 +507,7 @@ def entire_profile(request):
         for index, additional_qualifications in enumerate(additional_qualifications_list):
             additional_qualifications_collection.append([])
             for field in additional_qualifications_collection_fields:
-                additional_qualifications_collection[index].append(additional_qualifications_list[index].get(field[1]))
+                additional_qualifications_collection[index].append([additional_qualifications_list[index].get(field[1]), isinstance(form.fields[field[1]], forms.fields.FileField)])
 
         form = StateNursingCouncilForm()
         state_nursing_council_collection_fieldnames = form.fields
@@ -518,11 +521,12 @@ def entire_profile(request):
         for index, state_nursing_council in enumerate(state_nursing_council_list):
             state_nursing_council_collection.append([])
             for field in state_nursing_council_collection_fields:
+#                pdb.set_trace()
                 if field[1].lower() == 'state_nursing_council_name':
                     state_nursing_council_name_id = state_nursing_council_list[index].get('state_nursing_council_name_id')
-                    state_nursing_council_collection[index].append(StateNursingCouncilName.objects.get(pk=state_nursing_council_name_id).name)
+                    state_nursing_council_collection[index].append([StateNursingCouncilName.objects.get(pk=state_nursing_council_name_id).name, False])
                 else:
-                    state_nursing_council_collection[index].append(state_nursing_council_list[index].get(field[1]))
+                    state_nursing_council_collection[index].append([state_nursing_council_list[index].get(field[1]), isinstance(form.fields[field[1]], forms.fields.FileField)])
 
         form = EligibilityTestsForm()
         eligibility_tests_collection_fieldnames = form.fields
@@ -535,7 +539,7 @@ def entire_profile(request):
         for index, eligibility_tests in enumerate(eligibility_tests_list):
             eligibility_tests_collection.append([])
             for field in eligibility_tests_collection_fields:
-                eligibility_tests_collection[index].append(eligibility_tests_list[index].get(field[1]))
+                eligibility_tests_collection[index].append([eligibility_tests_list[index].get(field[1]), isinstance(form.fields[field[1]], forms.fields.FileField)])
 
         form = ExperienceForm()
         experience_collection_fieldnames = form.fields
@@ -548,7 +552,7 @@ def entire_profile(request):
         for index, experience in enumerate(experience_list):
             experience_collection.append([])
             for field in experience_collection_fields:
-                experience_collection[index].append(experience_list[index].get(field[1]))
+                experience_collection[index].append([experience_list[index].get(field[1]), isinstance(form.fields[field[1]], forms.fields.FileField)])
 
         registration_number_raw = candidate.registration_number
         registration_number = registration_number_raw.hashid
@@ -572,11 +576,44 @@ def entire_profile(request):
                 candidate.save()
 
 #        pdb.set_trace()
-        return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, 'registration_number': registration_number, 'displayed_registration_number': displayed_registration_number, 'updation_allowed': updation_allowed, 'ra_user': ra_user, })
+        return render(request, 'candidate/candidate_profile.html', {'candidate': candidate, 'personal_data': personal_data, 'address_data': address_data, 'passport_misc_data': passport_misc_data, 'educational_qualifications_collection_fields': educational_qualifications_collection_fields, 'educational_qualifications_collection': educational_qualifications_collection, 'professional_qualifications_collection_fields': professional_qualifications_collection_fields, 'professional_qualifications_collection': professional_qualifications_collection, 'additional_qualifications_collection_fields': additional_qualifications_collection_fields, 'additional_qualifications_collection': additional_qualifications_collection, 'state_nursing_council_collection_fields': state_nursing_council_collection_fields, 'state_nursing_council_collection': state_nursing_council_collection, 'eligibility_tests_collection_fields': eligibility_tests_collection_fields, 'eligibility_tests_collection': eligibility_tests_collection, 'experience_collection_fields': experience_collection_fields, 'experience_collection': experience_collection, 'registration_number': registration_number, 'displayed_registration_number': displayed_registration_number, 'updation_allowed': updation_allowed, 'ra_user': ra_user, 'media_url': settings.MEDIA_URL, })
 
     except ObjectDoesNotExist:
         fields = None
         return render(request, 'candidate/index.html', {'candidate': None})
+
+#def download_files(request):
+#    username = get_acting_user(request)
+#    allowed = is_allowed(username, request)
+#    if not allowed:
+#        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
+#
+#    if request.method == 'GET':
+#        form = DownloadFilesForm()
+#    else:
+#        form = DownloadFielsForm(request.POST)
+#        return download_specific_file(request, f, content_type)
+#    return render(request, 'candidate/download_files.html')
+#
+#def download_specific_file(request, f, content_type):
+#    username = get_acting_user(request)
+#    allowed = is_allowed(username, request)
+#    if not allowed:
+#        return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
+#
+#    if request.method == 'GET':
+#        candidate = Candidate.objects.get(candidate_username=username)
+#
+#        file_path = f
+##        file_path = candidate.curriculum_vitae.path
+#        if os.path.exists(file_path):
+#            with open(file_path, 'rb') as fh:
+#                response = HttpResponse(fh.read(), content_type=content_type)
+#                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+#                return response
+#        raise Http404
+#    else:
+#        return render(request, 'candidate/not_allowed.html', {'error_msg': 'Exam ID not provided.'}, )
 
 def show_interest_in_exam_interview(request):
     username = get_acting_user(request)
@@ -585,7 +622,7 @@ def show_interest_in_exam_interview(request):
     if not allowed:
         return render(request, 'candidate/not_allowed.html', {'next': request.path}, )
 
-    if request.method == GET:
+    if request.method == 'GET':
         try:
             exam_id = request.GET.__getitem__('exam_id')
         except KeyError:

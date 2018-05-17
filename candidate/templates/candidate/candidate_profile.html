@@ -28,7 +28,17 @@
                             {% for data in personal_data %}
                                 <tr>
                                     <th>{{ data.0 }}</th>
-                                    <td>{{ data.2|upper }}</td>
+                                    {% with data.2 as value %}
+                                        {% if value.1 %}
+                                            {% if value.0 and value.0.strip %}
+                                                <td><a href="{{media_url}}{{ value.0 }}">DOWNLOAD</a> </td>
+                                            {% else %}
+                                                <td>NONE</td>
+                                            {% endif %}
+                                        {%else %}
+                                            <td>{{ value.0|upper }} </td>
+                                        {% endif %}
+                                    {% endwith %}
                                 </tr>
                             {% endfor %}
                             <tr>
@@ -79,7 +89,15 @@
                         {% for educational_qualifications in educational_qualifications_collection %}
                             <tr>
                                 {% for value in educational_qualifications %}
-                                    <td>{{ value|upper }} </td>
+                                    {% if value.1 %}
+                                        {% if value.0 and value.0.strip %}
+                                            <td><a href="{{media_url}}{{ value.0 }}">DOWNLOAD</a> </td>
+                                        {% else %}
+                                            <td>NONE</td>
+                                        {% endif %}
+                                    {%else %}
+                                        <td>{{ value.0|upper }} </td>
+                                    {% endif %}
                                 {% endfor %}
                             </tr>
                         {% endfor %}
@@ -109,7 +127,15 @@
                         {% for professional_qualifications in professional_qualifications_collection %}
                             <tr>
                                 {% for value in professional_qualifications %}
-                                    <td>{{ value|upper }} </td>
+                                    {% if value.1 %}
+                                        {% if value.0 and value.0.strip %}
+                                            <td><a href="{{media_url}}{{ value.0 }}">DOWNLOAD</a> </td>
+                                        {% else %}
+                                            <td>NONE</td>
+                                        {% endif %}
+                                    {%else %}
+                                        <td>{{ value.0|upper }} </td>
+                                    {% endif %}
                                 {% endfor %}
                             </tr>
                         {% endfor %}
@@ -139,7 +165,15 @@
                         {% for additional_qualifications in additional_qualifications_collection %}
                             <tr>
                                 {% for value in additional_qualifications %}
-                                    <td>{{ value|upper }} </td>
+                                    {% if value.1 %}
+                                        {% if value.0 and value.0.strip %}
+                                            <td><a href="{{media_url}}{{ value.0 }}">DOWNLOAD</a> </td>
+                                        {% else %}
+                                            <td>NONE</td>
+                                        {% endif %}
+                                    {%else %}
+                                        <td>{{ value.0|upper }} </td>
+                                    {% endif %}
                                 {% endfor %}
                             </tr>
                         {% endfor %}
@@ -169,7 +203,15 @@
                         {% for eligibility_tests in eligibility_tests_collection %}
                             <tr>
                                 {% for value in eligibility_tests %}
-                                    <td>{{ value|upper }} </td>
+                                    {% if value.1 %}
+                                        {% if value.0 and value.0.strip %}
+                                            <td><a href="{{media_url}}{{ value.0 }}">DOWNLOAD</a> </td>
+                                        {% else %}
+                                            <td>NONE</td>
+                                        {% endif %}
+                                    {%else %}
+                                        <td>{{ value.0|upper }} </td>
+                                    {% endif %}
                                 {% endfor %}
                             </tr>
                         {% endfor %}
@@ -199,7 +241,15 @@
                         {% for experience in experience_collection %}
                             <tr>
                                 {% for value in experience %}
-                                    <td>{{ value|upper }} </td>
+                                    {% if value.1 %}
+                                        {% if value.0 and value.0.strip %}
+                                            <td><a href="{{media_url}}{{ value.0 }}">DOWNLOAD</a> </td>
+                                        {% else %}
+                                            <td>NONE</td>
+                                        {% endif %}
+                                    {%else %}
+                                        <td>{{ value.0|upper }} </td>
+                                    {% endif %}
                                 {% endfor %}
                             </tr>
                         {% endfor %}
@@ -229,7 +279,15 @@
                         {% for state_nursing_council in state_nursing_council_collection %}
                             <tr>
                                 {% for value in state_nursing_council %}
-                                    <td>{{ value|upper }} </td>
+                                    {% if value.1 %}
+                                        {% if value.0 and value.0.strip %}
+                                            <td><a href="{{media_url}}{{ value.0 }}">DOWNLOAD</a> </td>
+                                        {% else %}
+                                            <td>NONE</td>
+                                        {% endif %}
+                                    {%else %}
+                                        <td>{{ value.0|upper }} </td>
+                                    {% endif %}
                                 {% endfor %}
                             </tr>
                         {% endfor %}
