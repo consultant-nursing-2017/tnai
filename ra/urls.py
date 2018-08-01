@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^verify_employer/', views.verify_employer, name='verify_employer'),
     url(r'^edit_list_state_nursing_council/', views.edit_list_state_nursing_council, name='edit_list_state_nursing_council'),
     url(r'^act_as/', views.act_as, name='act_as'),
+    url(r'^activate_candidate/', views.activate_candidate, name='activate_candidate'),
+#    url(r'^activate_employer/', views.activate_employer, name='activate_employer'),
 #    url(r'^$', views.IndexView.as_view(), name='index'),
 ]
 #    url(r'^$', views.IndexView.as_view(), name='index'),

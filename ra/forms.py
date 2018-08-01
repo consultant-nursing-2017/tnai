@@ -61,6 +61,15 @@ class ActAsForm(ModelForm):
         qs = Group.objects.get(name='Employer').user_set.all() | Group.objects.get(name='Candidate').user_set.all()
         self.fields['acting_as'].queryset = qs
 
+class ActivateCandidateForm(forms.Form):
+#    user = forms.TextField(required = True, label = "User")
+    user = forms.ModelChoiceField(required = False, queryset = User.objects.filter(is_active = False), label = "User")
+
+#    def __init__(self, *args, **kwargs):
+#        super (ActivateCandidateForm,self ).__init__(*args, **kwargs) # populates the post
+#        qs = User.objects.filter(is_active=False)
+#        self.fields['user'].queryset = qs
+
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')
 

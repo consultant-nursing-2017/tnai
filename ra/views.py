@@ -35,7 +35,7 @@ from employer.models import Advertisement
 from .forms import FilterForm
 from candidate.forms import StateNursingCouncilNameForm
 from .models import RA, CandidateList
-from .forms import ActAsForm, CandidateListForm
+from .forms import ActAsForm, CandidateListForm, ActivateCandidateForm
 
 import pdb
 
@@ -345,3 +345,32 @@ def act_as(request):
         form = ActAsForm(instance=ra)
 
     return render(request, 'ra/act_as.html', {'form': form, 'next': next}, )
+
+def activate_candidate(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+    ra = RA.objects.get(logged_in_as=username)
+
+    if request.method == 'POST':
+        form = ActivateCandidateForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            try:
+#                user_to_be_activated = User.objects.get(username=username_to_be_activated)
+                if not user.is_active:
+                    pass
+                    user.is_active = True
+                    user.save()
+                    g = Group.objects.get(name='Candidate') 
+                    g.user_set.add(user)
+                else:
+                    return render(request, 'ra/username_already_activated.html', {'username': user.username }, )
+            except ObjectDoesNotExist:
+                return render(request, 'ra/invalid_username.html', {'username': user.username }, )
+            return HttpResponseRedirect('/ra/')
+    else:
+        form = ActivateCandidateForm()
+
+    return render(request, 'ra/activate_candidate.html', {'form': form, 'next': next}, )

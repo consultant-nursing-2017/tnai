@@ -48,6 +48,9 @@ class ExamForm(ModelForm):
         fields = '__all__'
         widgets = {'students': forms.CheckboxSelectMultiple(), 'questions': forms.CheckboxSelectMultiple(), }
 
+class FilterForm(forms.Form):
+    topic = forms.ModelChoiceField(queryset = Topic.objects.all(), required = False)
+
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')
 
