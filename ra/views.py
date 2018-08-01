@@ -360,11 +360,13 @@ def activate_candidate(request):
             try:
 #                user_to_be_activated = User.objects.get(username=username_to_be_activated)
                 if not user.is_active:
-                    pass
-                    user.is_active = True
-                    user.save()
-                    g = Group.objects.get(name='Candidate') 
-                    g.user_set.add(user)
+                    if 'activate' in request.POST:
+                        user.is_active = True
+                        user.save()
+                        g = Group.objects.get(name='Candidate') 
+                        g.user_set.add(user)
+                    elif 'delete' in request.POST:
+                        user.delete()
                 else:
                     return render(request, 'ra/username_already_activated.html', {'username': user.username }, )
             except ObjectDoesNotExist:
