@@ -720,13 +720,16 @@ def activate(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-#        login(request, user)
-        # return redirect('home')
+        if user.is_active:
+            return render(request, 'ra/username_already_activated.html', {'username': user.username }, )
+        else:
+            user.is_active = True
+            user.save()
+    #        login(request, user)
+            # return redirect('home')
 
-        g = Group.objects.get(name='Candidate') 
-        g.user_set.add(user)
+            g = Group.objects.get(name='Candidate') 
+            g.user_set.add(user)
 
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
