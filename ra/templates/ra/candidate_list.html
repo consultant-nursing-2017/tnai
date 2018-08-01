@@ -18,6 +18,7 @@
             {% else %}
                 <table class="table table-striped">
                     <tr>
+                        <th> No. </th>
                         <th> Candidate username </th>
                         <th> Name </th>
                         <th> Verified? </th>
@@ -25,6 +26,7 @@
                     </tr>
                     {% for record in queryset %}
                         <tr>
+                            <td> {{ forloop.counter }}</td>
                             <td> {{ record.candidate_username }} </td>
                             <td> {{ record.name }} </td>
                             {% if record.is_provisional_registration_number %}
