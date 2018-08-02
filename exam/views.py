@@ -322,7 +322,7 @@ def candidate_download_hall_ticket(request):
 
         (candidate_list, created) = CandidateList.objects.get_or_create(exam = exam, exam_list_type = "Downloaded hall ticket", defaults = {'name': str(exam) + " list of candidates who dowloaded hall tickets", })
         if candidate in candidate_list.members.all():
-            return HttpResponseRedirect('/home/error_msg/?error_msg=' + "You have already downloaded hall ticket. ")
+            return HttpResponseRedirect('/exam/candidate_show_hall_ticket/?exam_id=' + exam_id)
 
     else:
         if 'exam_id' in request.POST:
