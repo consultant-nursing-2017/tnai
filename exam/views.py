@@ -105,7 +105,7 @@ def show_exam_details(request):
     error_msg = ""
     if candidate_user_type:
         candidate = Candidate.objects.get(candidate_username = username)
-        allowed = candidate.is_candidate_verified()
+#        allowed = candidate.is_candidate_verified()
         if not allowed:
             error_msg = "Candidate not verified."
 
@@ -179,7 +179,7 @@ def exam_list(request):
     error_msg = ""
     if candidate_user_type:
         candidate = Candidate.objects.get(candidate_username = username)
-        allowed = candidate.is_candidate_verified()
+#        allowed = candidate.is_candidate_verified()
         if not allowed:
             error_msg = "Candidate not verified."
 
@@ -302,7 +302,7 @@ def candidate_download_hall_ticket(request):
         # Add a verification check
         candidate = Candidate.objects.get(candidate_username=username)
         displayed_registration_number = candidate.registration_number_display()
-        allowed = candidate.is_candidate_verified()
+#        allowed = candidate.is_candidate_verified()
         if not allowed:
             error_msg = "Candidate not verified."
 
