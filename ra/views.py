@@ -221,13 +221,19 @@ def save_list(request):
 #                    'registration_number_display': candidate.registration_number_display()
 #                })
                 mail_subject = 'Notification from TNAI'
+                attachment = None
+                if len(request.FILES) > 0:
+                    attachment = request.FILES['attachment']
+                    attachment_name = attachment.name
+                    attachment_data = attachment.read()
+                    attachment_content_type = attachment.content_type
+
                 for candidate in candidate_list.members.all():
                     to_email = candidate.candidate_username.username
                     email = EmailMessage(mail_subject, message, to=[to_email])
 #                    pdb.set_trace()
-                    if len(request.FILES) > 0:
-                        attachment = request.FILES['attachment']
-                        email.attach(attachment.name, attachment.read(), attachment.content_type)
+                    if attachment is not None:
+                        email.attach(attachment_name, attachment_data, attachment_content_type)
                     result = email.send()
                 form.save()
             elif 'do_nothing' in request.POST:
