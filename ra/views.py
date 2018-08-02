@@ -36,6 +36,7 @@ from .forms import FilterForm
 from candidate.forms import StateNursingCouncilNameForm
 from .models import RA, CandidateList
 from .forms import ActAsForm, CandidateListForm, ActivateCandidateForm
+from .forms import DeleteExamForm, DeleteAdvertisementForm
 
 import pdb
 
@@ -380,3 +381,39 @@ def activate_candidate(request):
         form = ActivateCandidateForm()
 
     return render(request, 'ra/activate_candidate.html', {'form': form, 'next': next}, )
+
+def delete_advertisement(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+    ra = RA.objects.get(logged_in_as=username)
+
+    if request.method == 'POST':
+        form = DeleteAdvertisementForm(request.POST)
+        if form.is_valid():
+            pdb.set_trace()
+            advertisement = form.cleaned_data['advertisement']
+            return HttpResponseRedirect('/ra/')
+    else:
+        form = DeleteAdvertisementForm()
+
+    return render(request, 'ra/delete_advertisement.html', {'form': form, 'next': next}, )
+
+def delete_exam(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+    ra = RA.objects.get(logged_in_as=username)
+
+    if request.method == 'POST':
+        form = DeleteExamForm(request.POST)
+        if form.is_valid():
+            exam = form.cleaned_data['exam']
+            exam.delete()
+            return HttpResponseRedirect('/ra/')
+    else:
+        form = DeleteExamForm()
+
+    return render(request, 'ra/delete_exam.html', {'form': form, 'next': next}, )

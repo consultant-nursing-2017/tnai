@@ -9,7 +9,8 @@ from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
 from candidate.models import ProfessionalQualifications, EligibilityTests, Candidate
-from .models import RA
+from employer.models import Advertisement
+from .models import RA, Exam
 from .models import CandidateList
 
 import pdb
@@ -63,13 +64,13 @@ class ActAsForm(ModelForm):
         self.fields['acting_as'].queryset = qs
 
 class ActivateCandidateForm(forms.Form):
-#    user = forms.TextField(required = True, label = "User")
     user = forms.ModelChoiceField(required = False, queryset = User.objects.filter(is_active = False), label = "User")
 
-#    def __init__(self, *args, **kwargs):
-#        super (ActivateCandidateForm,self ).__init__(*args, **kwargs) # populates the post
-#        qs = User.objects.filter(is_active=False)
-#        self.fields['user'].queryset = qs
+class DeleteAdvertisementForm(forms.Form):
+    advertisement = forms.ModelChoiceField(required = False, queryset = Advertisement.objects.all(), label = "Advertisement")
+
+class DeleteExamForm(forms.Form):
+    exam = forms.ModelChoiceField(required = False, queryset = Exam.objects.all(), label = "Exam")
 
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')
