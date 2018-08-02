@@ -49,7 +49,7 @@ class Candidate(models.Model):
 #   Tab 1: Personal details
     candidate_username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='candidate_username', default=None, blank=True, null=True)
     photograph = models.FileField(max_length = 500, default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_image])
-    curriculum_vitae = models.FileField(max_length = 500, default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file])
+    curriculum_vitae = models.FileField(max_length = 500, default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_file_doc_or_pdf])
     name = models.CharField(max_length=200, default="Name")
     fathers_name = models.CharField(max_length=200, default="Father's Name")
     date_of_birth = models.DateField(default=timezone.now, blank=False, null=False)

@@ -9,6 +9,12 @@ class ValidateFileExtension(object):
         if not ext.lower() in valid_extensions:
             raise ValidationError(u'Unsupported file extension. Must be: ' + ','.join(valid_extensions) + '.')
 
+    def validate_file_doc_or_pdf(object):
+        ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
+        valid_extensions = ['.pdf', '.doc', '.docx']
+        if not ext.lower() in valid_extensions:
+            raise ValidationError(u'Unsupported file extension. Must be: ' + ','.join(valid_extensions) + '.')
+
     def validate_image(value):
         ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
         valid_extensions = ['.pdf', '.jpg', '.jpeg', '.gif', '.png']
