@@ -31,7 +31,7 @@ class CandidateList(models.Model):
     name = models.CharField(max_length = 200, blank=False)
     members = models.ManyToManyField(Candidate) #, through='CandidateListMembership')
     time_created = models.DateTimeField(default=timezone.datetime.now, editable = False)
-    notes = models.CharField(max_length = 500, blank=True)
+    notes = models.CharField(max_length = 10000, blank=True)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE, default=None, blank=True, null=True)
     exam_list_type = models.CharField(max_length = 100, choices = EXAM_LIST_TYPE_CHOICES, blank = True)
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE, default=None, blank=True, null=True)
