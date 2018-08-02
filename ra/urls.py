@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^edit_list_state_nursing_council/', views.edit_list_state_nursing_council, name='edit_list_state_nursing_council'),
     url(r'^act_as/', views.act_as, name='act_as'),
     url(r'^activate_candidate/', views.activate_candidate, name='activate_candidate'),
+    url(r'^delete_user/', views.delete_user, name='delete_user'),
     url(r'^delete_advertisement/', views.delete_advertisement, name='delete_advertisement'),
     url(r'^delete_exam/', views.delete_exam, name='delete_exam'),
 #    url(r'^activate_employer/', views.activate_employer, name='activate_employer'),

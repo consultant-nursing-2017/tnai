@@ -64,13 +64,16 @@ class ActAsForm(ModelForm):
         self.fields['acting_as'].queryset = qs
 
 class ActivateCandidateForm(forms.Form):
-    user = forms.ModelChoiceField(required = False, queryset = User.objects.filter(is_active = False), label = "User")
+    user = forms.ModelChoiceField(required = True, queryset = User.objects.filter(is_active = False), label = "User")
+
+class DeleteUserForm(forms.Form):
+    username = forms.CharField(required = True, max_length = 150, label = "Username")
 
 class DeleteAdvertisementForm(forms.Form):
-    advertisement = forms.ModelChoiceField(required = False, queryset = Advertisement.objects.all(), label = "Advertisement")
+    advertisement = forms.ModelChoiceField(required = True, queryset = Advertisement.objects.all(), label = "Advertisement")
 
 class DeleteExamForm(forms.Form):
-    exam = forms.ModelChoiceField(required = False, queryset = Exam.objects.all(), label = "Exam")
+    exam = forms.ModelChoiceField(required = True, queryset = Exam.objects.all(), label = "Exam")
 
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')

@@ -36,7 +36,7 @@ from .forms import FilterForm
 from candidate.forms import StateNursingCouncilNameForm
 from .models import RA, CandidateList
 from .forms import ActAsForm, CandidateListForm, ActivateCandidateForm
-from .forms import DeleteExamForm, DeleteAdvertisementForm
+from .forms import DeleteExamForm, DeleteAdvertisementForm, DeleteUserForm
 
 import pdb
 
@@ -362,25 +362,40 @@ def activate_candidate(request):
         form = ActivateCandidateForm(request.POST)
         if form.is_valid():
             user = form.cleaned_data['user']
-            try:
-#                user_to_be_activated = User.objects.get(username=username_to_be_activated)
-                if not user.is_active:
-                    if 'activate' in request.POST:
-                        user.is_active = True
-                        user.save()
-                        g = Group.objects.get(name='Candidate') 
-                        g.user_set.add(user)
-                    elif 'delete' in request.POST:
-                        user.delete()
-                else:
-                    return render(request, 'ra/username_already_activated.html', {'username': user.username }, )
-            except ObjectDoesNotExist:
-                return render(request, 'ra/invalid_username.html', {'username': user.username }, )
+            if not user.is_active:
+                user.is_active = True
+                user.save()
+                g = Group.objects.get(name='Candidate') 
+                g.user_set.add(user)
+            else:
+                return render(request, 'ra/username_already_activated.html', {'username': user.username }, )
             return HttpResponseRedirect('/ra/')
     else:
         form = ActivateCandidateForm()
 
     return render(request, 'ra/activate_candidate.html', {'form': form, 'next': next}, )
+
+def delete_user(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+    ra = RA.objects.get(logged_in_as=username)
+
+    if request.method == 'POST':
+        form = DeleteUserForm(request.POST)
+        if form.is_valid():
+            username_to_be_deleted = form.cleaned_data['username']
+            try:
+                user_to_be_deleted = User.objects.get(username = username_to_be_deleted)
+                user_to_be_deleted.delete()
+            except ObjectDoesNotExist:
+                return render(request, 'ra/invalid_username.html', {'username': username_to_be_deleted }, )
+            return HttpResponseRedirect('/ra/')
+    else:
+        form = DeleteUserForm()
+
+    return render(request, 'ra/delete_advertisement.html', {'form': form, 'next': next}, )
 
 def delete_advertisement(request):
     username = auth.get_user(request)
@@ -392,7 +407,6 @@ def delete_advertisement(request):
     if request.method == 'POST':
         form = DeleteAdvertisementForm(request.POST)
         if form.is_valid():
-            pdb.set_trace()
             advertisement = form.cleaned_data['advertisement']
             return HttpResponseRedirect('/ra/')
     else:

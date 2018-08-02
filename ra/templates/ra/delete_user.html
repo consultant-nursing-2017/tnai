@@ -3,12 +3,12 @@
 
 {% block content %}
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
-    <h1>Activate Candidate</h1>
+    <h1>Delete Advertisement</h1>
         <form method="post" class="form">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
-                <button type="submit" class="btn" name="activate">Activate</button>
+                <button type="submit" class="btn" name="delete" onclick="return confirm('Are you sure?')">Delete</button>
             {% endbuttons %}
         </form>
     </div>
