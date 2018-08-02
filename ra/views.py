@@ -414,6 +414,7 @@ def delete_advertisement(request):
         form = DeleteAdvertisementForm(request.POST)
         if form.is_valid():
             advertisement = form.cleaned_data['advertisement']
+            advertisement.delete()
             return HttpResponseRedirect('/ra/')
     else:
         form = DeleteAdvertisementForm()
