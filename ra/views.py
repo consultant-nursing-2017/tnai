@@ -104,6 +104,10 @@ def candidate_list(request):
                 if date_of_birth is not None:
                     queryset = queryset.filter(date_of_birth=date_of_birth)
 
+                date_created = filter_form.cleaned_data['date_created']
+                if date_created is not None:
+                    queryset = queryset.filter(candidate_username__date_joined__date=date_created)
+
                 gender = filter_form.cleaned_data['gender']
                 if gender is not None and len(gender) > 0:
                     queryset = queryset.filter(gender=gender)

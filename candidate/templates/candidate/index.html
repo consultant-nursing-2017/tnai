@@ -18,6 +18,10 @@
                 {% endif %}
                 <table class="table table-striped">
                     <tr>
+                        <th>Date joined:</th>
+                        <td>{{candidate.candidate_username.date_joined|date}}</td>
+                    </tr>
+                    <tr>
                         <th>Email:</th>
                         <td>{{candidate.candidate_username}}</td>
                     </tr>
