@@ -13,6 +13,8 @@ from django.conf import settings
 import pdb
     
 class ExamForm(ModelForm):
+    date = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%y', '%d.%m.%Y'], required=False, label='Date (DD-MM-YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}), )
+    hall_ticket_download_last_date = forms.DateField(input_formats=['%d/%m/%y', '%d-%m-%y', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%y', '%d.%m.%Y'], required=False, label='Hall ticket download last date (DD-MM-YY)', widget=forms.DateInput(format=('%d/%m/%y'), attrs={'size':'15'}), )
     class Meta:
         model = Exam
         fields = ['exam_type', 'advertisement', 'name', 'date', 'hall_ticket_download_last_date', ]
