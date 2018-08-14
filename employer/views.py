@@ -281,7 +281,8 @@ def full_advertisement(request):
     advertisement = Advertisement.objects.get(obfuscated_id=advertisement_id)
 
     form = AdvertisementForm()
-    full_advertisement = is_verified_candidate_user(username, request) or is_allowed(username, request)
+#    full_advertisement = is_verified_candidate_user(username, request) or is_allowed(username, request)
+    full_advertisement = True
     if full_advertisement:
         fields = form.get_fields()
     else:
