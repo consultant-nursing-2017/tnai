@@ -88,7 +88,7 @@ class Advertisement(models.Model):
             ("Male", "Male"),
             ("Female", "Female")
     )
-    employer_advert = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='employer_advert', blank=False, null=True)
+    employer_advert = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='employer_advert', blank=True, null=True)
     dummy_employer_name = models.CharField(max_length=200, blank=True, default="")
     job_role = models.CharField(max_length=200, blank=True, default="Nurse")
     closing_date = models.DateField(blank=True, default=timezone.now)
