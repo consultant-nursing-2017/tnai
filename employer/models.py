@@ -95,7 +95,7 @@ class Advertisement(models.Model):
     gender = models.CharField(max_length=200, choices=GENDER_CHOICES, default="Any", blank=True)
     number_of_vacancies = models.IntegerField(blank=True, default=5)
     educational_qualifications = models.CharField(max_length=500, blank=True, default="ANM required")
-    eligibility_tests = models.CharField(max_length=500, blank=True, choices=EligibilityTests.eligibility_tests_choices(), default="HAAD")
+    eligibility_tests = models.CharField(max_length=500, blank=True, default="HAAD")
     experience = models.CharField(max_length=500, blank=True, default="2 years")
     name_of_hospital = models.CharField(max_length=200, blank=True, default="Hospital1")
     city = models.CharField(max_length=200, blank=True, default="Delhi")
