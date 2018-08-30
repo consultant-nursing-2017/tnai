@@ -23,3 +23,4 @@ class TakeExam(models.Model):
     current_question = models.PositiveSmallIntegerField(default = 0)
     answers_given = models.ManyToManyField('instructor.Answer')
     completed = models.BooleanField(default = False)
+    completion_time = models.DateTimeField(default = None, null = True)

@@ -8,7 +8,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
-from instructor.models import Exam
+from instructor.models import Exam, Question, Answer
 from .models import Student, TakeExam
 from .forms import StudentForm, TakeExamForm, ShowQuestionInExamForm
 #from .forms import RegistrationForm
@@ -113,7 +113,8 @@ def choose_exam(request):
 
         if form.is_valid():
             instance = form.save()
-            return HttpResponseRedirect('/student/')
+            exam = form.cleaned_data['exam']
+            return HttpResponseRedirect('/student/take_exam/?exam_id=' + str(exam.exam_id))
     else:
         # if a GET (or any other method) we'll create a blank form
         form = TakeExamForm()
@@ -142,8 +143,11 @@ def take_exam(request):
 
         if form.is_valid():
             instance = form.save(commit = False)
+            answer = form.cleaned_data['answer']
             pdb.set_trace()
+            instance.answers_given.add(answer)
             instance.current_question = instance.current_question + 1
+            instance.save()
             if instance.current_question >= instance.exam.questions.count():
                 instance.completed = True
             form.save()
@@ -168,3 +172,40 @@ def take_exam(request):
     question = take_exam.exam.questions.all()[take_exam.current_question]
     return render(request, 'student/take_exam.html', {'form': form, 'exam_id': exam_id, 'question': question}) 
 
+def exam_result(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'student/not_allowed.html', {'next': request.path})
+
+    exam_id = None
+    take_exam = None
+
+    if request.method == 'GET':
+        if 'exam_id' in request.GET:
+            exam_id = request.GET.get('exam_id')
+            exam = Exam.objects.get(exam_id = exam_id)
+            take_exam = TakeExam.objects.get(exam = exam)
+            answers_given = take_exam.answers_given.all()
+            question_queryset = exam.questions.all()
+            values = []
+            count_question = 1
+            for question in question_queryset:
+                question_answer_pair = [question, []]
+                answer_queryset = Answer.objects.filter(question = question).order_by('text')
+                count_answer = 0
+                for answer in answer_queryset:
+                    answer_key = 0
+                    if answer.correct:
+                        answer_key = answer_key + 1
+                    if answer in answers_given:
+                        answer_key = answer_key + 2
+                    question_answer_pair[1].append([answer, answer_key])
+                    count_answer = count_answer + 1
+
+                values.append([count_question, question_answer_pair])
+                count_question = count_question + 1
+    else:
+        return HttpResponseRedirect('/student/')
+
+    return render(request, 'student/exam_result.html', {'values': values}) 
