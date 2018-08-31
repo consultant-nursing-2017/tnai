@@ -140,9 +140,15 @@ def candidate_list(request):
                     return HttpResponseRedirect('/ra/save_list?list_id='+str(candidate_list.list_id))
 
     else:
-        gender = request.GET.__getitem__('gender')
-        experience = request.GET.__getitem__('experience')
-        eligibility_tests = request.GET.__getitem__('eligibility_tests')
+        gender = 'Any'
+        experience = ''
+        eligibility_tests = ''
+        try:
+            gender = request.GET.__getitem__('gender')
+            experience = request.GET.__getitem__('experience')
+            eligibility_tests = request.GET.__getitem__('eligibility_tests')
+        except KeyError:
+            pass
         filter_form = FilterForm(initial = {'gender': gender, 'minimum_experience': experience, 'eligibility_tests': eligibility_tests})
 
     if verified_employer:
@@ -163,7 +169,7 @@ def filter_candidates(request):
             gender = advertisement.gender
             experience = advertisement.experience
             eligibility_tests = advertisement.eligibility_tests
-            return HttpResponseRedirect('/ra/candidate_list/?gender=' + gender + '&experience=' + experience + '&eligibility_tests=' + eligibility_tests)
+            return HttpResponseRedirect('/ra/candidate_list/?gender=' + gender + '&experience=' + experience + '&eligibility_tests=' + eligibility_tests + '#filter')
         except KeyError:
             return render(request, 'home/error_msg.html', {'error_msg': 'Missing advertisement ID'})
         except ObjectDoesNotExist:
