@@ -14,7 +14,7 @@ import hashlib
 import random
 from django.utils.crypto import get_random_string
 from django.contrib import auth
-from django.db.models import Q
+from django.db.models import Q, F, ExpressionWrapper, fields, Sum
 from django.db.models.functions import Length
 
 from django.shortcuts import render, redirect
@@ -116,6 +116,13 @@ def candidate_list(request):
                 professional_qualifications = filter_form.cleaned_data['professional_qualifications']
                 if professional_qualifications is not None and len(professional_qualifications) > 0:
                     queryset = queryset.filter(professionalqualifications__class_degree__iexact = professional_qualifications).annotate(institute_name_length=Length('professionalqualifications__institute_name')).filter(institute_name_length__gt=0)
+
+                minimum_experience = filter_form.cleaned_data['minimum_experience']
+                if minimum_experience is not None and len(minimum_experience) > 0:
+                    duration = ExpressionWrapper(F('experience__date_to') - F('experience__date_from'), output_field=fields.DurationField())
+                    queryset = queryset.annotate(experience_duration = duration).annotate(total_experience = Sum('experience_duration'))
+                    entered_xp_duration = datetime.timedelta(days = int(minimum_experience) * 30)
+                    queryset = queryset.filter(total_experience__gt = entered_xp_duration)
 
                 eligibility_tests = filter_form.cleaned_data['eligibility_tests']
                 if eligibility_tests is not None and len(eligibility_tests) > 0:

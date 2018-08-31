@@ -26,7 +26,7 @@ class FilterForm(forms.Form):
     for course in COURSES:
         COURSE_CHOICES.append((course, course))
     professional_qualifications = forms.ChoiceField(COURSE_CHOICES, required=False, )
-    minimum_experience = forms.CharField(required=False, )
+    minimum_experience = forms.CharField(required=False, label='Minimum Experience (Months)')
     ELIGIBILITY_TESTS_CHOICES = [(None, '--- Any ---')] + list(EligibilityTests.eligibility_tests_choices())
     eligibility_tests = forms.ChoiceField(ELIGIBILITY_TESTS_CHOICES, required=False,)
     verified = forms.ChoiceField(((None, '--- Either ---'), (False, 'Verified'), (True, 'Unverified') ), required=False, )
