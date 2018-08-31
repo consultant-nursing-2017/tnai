@@ -50,6 +50,9 @@ class AdvertisementForm(ModelForm):
         fields = '__all__'
 #        widgets={'': forms.DateTimeInput(format='%Y-%m-%d %H:%M')}
 
+class ShowInterestInAdvertisementForm(forms.Form):
+    interested = forms.BooleanField(initial = True, required = False, label="Interested in notifications for advertisement?")
+
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')
 

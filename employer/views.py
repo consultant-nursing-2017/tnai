@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
 from .models import Employer, Advertisement
-from .forms import EmployerForm, AdvertisementForm
+from .forms import EmployerForm, AdvertisementForm, ShowInterestInAdvertisementForm
 #from .forms import RegistrationForm
 from django.core.mail import send_mail
 import hashlib
@@ -32,7 +32,7 @@ from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
-from ra.models import RA
+from ra.models import RA, CandidateList
 from candidate.models import Candidate
 
 ##from django.contrib.auth.decorators import permission_required
@@ -305,7 +305,83 @@ def full_advertisement(request):
 
 #    pdb.set_trace()
 
-    return render(request, 'employer/full_advertisement.html', {'fields': fields, 'data_full': data_full, 'full_advertisement': full_advertisement})
+    return render(request, 'employer/full_advertisement.html', {'fields': fields, 'data_full': data_full, 'full_advertisement': full_advertisement, 'advertisement_id': advertisement_id, })
+
+def show_interest_in_advertisement(request):
+    username = get_acting_user(request)
+    candidate_user_type = is_candidate_user(username, request)
+    ra_user_type = is_ra_user(username, request)
+    allowed = candidate_user_type or ra_user_type
+    error_msg = ""
+    if candidate_user_type:
+        candidate = Candidate.objects.get(candidate_username = username)
+#        allowed = candidate.is_candidate_verified()
+        if not allowed:
+            error_msg = "Candidate not verified."
+
+    if not allowed:
+        return render(request, 'advertisement/not_allowed.html', {'error_msg': error_msg})
+
+    advertisement_id = None
+    interested = False
+
+    if request.method == 'GET':
+        try:
+            advertisement_id = request.GET.__getitem__('advertisement_id')
+        except KeyError:
+            error_msg = "Advertisement ID not specified."
+            return HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg)
+
+        try:
+            advertisement = Advertisement.objects.get(obfuscated_id = advertisement_id)
+        except ObjectDoesNotExist:
+            error_msg = "Advertisement ID: " + str(advertisement_id) + " invalid."
+            return HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg)
+
+        if candidate_user_type:
+            (candidate_list, created) = CandidateList.objects.get_or_create(advertisement = advertisement, defaults = {'name': str(advertisement) + " interested candidates list", 'time_created': timezone.now(), })
+            candidate = Candidate.objects.get(candidate_username = username)
+            candidate_is_member_of_candidate_list = candidate_list in candidate.candidatelist_set.all()
+            if candidate_is_member_of_candidate_list:
+                form = ShowInterestInAdvertisementForm(initial = {'interested': True})
+            else:
+                form = ShowInterestInAdvertisementForm(initial = {'interested': False})
+        else:
+            form = ShowInterestInAdvertisementForm()
+    else:
+        try:
+            advertisement_id = request.POST.get('advertisement_id')
+        except KeyError:
+            error_msg = "Advertisement ID not specified."
+            return HttpResponseRedirect("/home/error_msg?error_msg=" + error_msg)
+
+        try:
+            advertisement = Advertisement.objects.get(obfuscated_id = advertisement_id)
+        except ObjectDoesNotExist:
+            error_msg = "Advertisement ID: " + str(advertisement_id) + " invalid."
+            return HttpResponseRedirect("/home/error_msg?error_msg=" + error_msg)
+
+        form = ShowInterestInAdvertisementForm(request.POST)
+        if form.is_valid():
+            if candidate_user_type and 'update_interest' in request.POST:
+                interested = form.cleaned_data['interested']
+                if interested:
+                    (candidate_list, created) = CandidateList.objects.get_or_create(advertisement = advertisement, defaults = {'name': str(advertisement) + " interested candidates list", 'time_created': timezone.now(), })
+                    candidate = Candidate.objects.get(candidate_username = username)
+                    candidate_list.members.add(candidate)
+                    candidate_list.save()
+                    return HttpResponseRedirect("/home/success_msg/?success_msg=Successfully added to 'Interested' list for Advertisement ID: " + str(advertisement.obfuscated_id))
+                else:
+                    (candidate_list, created) = CandidateList.objects.get_or_create(advertisement = advertisement, defaults = {'name': str(advertisement) + " interested candidates list", 'time_created': timezone.now(), })
+                    candidate = Candidate.objects.get(candidate_username = username)
+                    candidate_list.members.remove(candidate)
+                    candidate_list.save()
+                    return HttpResponseRedirect("/home/success_msg/?success_msg=Successfully removed from 'Interested' list for Advertisement ID:" + str(advertisement.obfuscated_id))
+            else:
+                return HttpResponseRedirect('/')
+
+#    pdb.set_trace()
+    return render(request, 'employer/show_interest_in_advertisement.html', {'advertisement': advertisement, 'interested': interested, 'candidate_user_type': candidate_user_type, 'form': form, })
 
 class DetailView(generic.DetailView):
     model = Employer
