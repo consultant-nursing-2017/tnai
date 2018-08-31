@@ -293,9 +293,15 @@ def full_advertisement(request):
         (label, value) = (form.fields[field].label, getattr(advertisement, field))
         if isinstance(value, bool):
             if value is False:
-                pass
-        else:
-            data_full.append((label, value))
+                continue
+        elif isinstance(value, int):
+            if value == 0:
+                continue
+        elif isinstance(value, str):
+            if len(value) == 0:
+                continue
+
+        data_full.append((label, value))
 
 #    pdb.set_trace()
 
