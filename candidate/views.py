@@ -615,7 +615,7 @@ def entire_profile(request):
 #    else:
 #        return render(request, 'candidate/not_allowed.html', {'error_msg': 'Exam ID not provided.'}, )
 
-def show_interest_in_exam_interview(request):
+def show_interest_in_advertisement(request):
     username = get_acting_user(request)
     allowed = is_allowed(username, request)
     updation_allowed = False
