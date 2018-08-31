@@ -12,6 +12,7 @@ import datetime #for checking renewal date range.
 from django.core.mail import send_mail
 import hashlib
 import random
+import csv
 from django.utils.crypto import get_random_string
 from django.contrib import auth
 from django.db.models import Q, F, ExpressionWrapper, fields, Sum
@@ -273,6 +274,17 @@ def save_list(request):
                         email.attach(attachment_name, attachment_data, attachment_content_type)
                     result = email.send()
                 form.save()
+            elif 'export_csv' in request.POST:
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = 'attachment; filename="candidate-list-"' + str(list_id) + '.csv"'
+
+                writer = csv.writer(response)
+                writer.writerow(['Username', 'Name'])
+                for candidate in candidate_list.members.all():
+                    candidate_username = candidate.candidate_username.username
+                    candidate_name = candidate.name
+                    writer.writerow([candidate_username, candidate_name])
+                return response
             elif 'do_nothing' in request.POST:
                 pass
             return HttpResponseRedirect('/ra/')
