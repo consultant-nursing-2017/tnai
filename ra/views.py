@@ -140,12 +140,36 @@ def candidate_list(request):
                     return HttpResponseRedirect('/ra/save_list?list_id='+str(candidate_list.list_id))
 
     else:
-        filter_form = FilterForm()
+        gender = request.GET.__getitem__('gender')
+        experience = request.GET.__getitem__('experience')
+        eligibility_tests = request.GET.__getitem__('eligibility_tests')
+        filter_form = FilterForm(initial = {'gender': gender, 'minimum_experience': experience, 'eligibility_tests': eligibility_tests})
 
     if verified_employer:
         queryset = queryset.filter(is_provisional_registration_number = False)
         count = queryset.count()
     return render(request, 'ra/candidate_list.html', {'queryset': queryset, 'filter_form': filter_form, 'count': count, 'verified_employer': verified_employer, }, )
+
+def filter_candidates(request):
+    username = auth.get_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'ra/not_allowed.html',)
+
+    if request.method == 'GET':
+        try:
+            advertisement_id = request.GET.__getitem__('advertisement_id')
+            advertisement = Advertisement.objects.get(obfuscated_id = advertisement_id)
+            gender = advertisement.gender
+            experience = advertisement.experience
+            eligibility_tests = advertisement.eligibility_tests
+            return HttpResponseRedirect('/ra/candidate_list/?gender=' + gender + '&experience=' + experience + '&eligibility_tests=' + eligibility_tests)
+        except KeyError:
+            return render(request, 'home/error_msg.html', {'error_msg': 'Missing advertisement ID'})
+        except ObjectDoesNotExist:
+            return render(request, 'home/error_msg.html', {'error_msg': 'Invalid advertisement ID: ' + advertisement_id})
+    else:
+        return HttpResponseRedirect('/ra/')
 
 def generate_list_of_exam_candidates(request):
     username = auth.get_user(request)

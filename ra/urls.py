@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^show_saved_candidate_lists/', views.show_saved_candidate_lists, name='show_saved_candidate_lists'),
     url(r'^employer_list/', views.employer_list, name='employer_list'),
     url(r'^advertisement_list/', views.advertisement_list, name='advertisement_list'),
+    url(r'^filter_candidates/', views.filter_candidates, name='filter_candidates'),
     url(r'^save_list/', views.save_list, name='save_list'),
     url(r'^manipulate_list/', views.manipulate_list, name='manipulate_list'),
     url(r'^generate_list_of_exam_candidates/', views.generate_list_of_exam_candidates, name='generate_list_of_exam_candidates'),
