@@ -144,12 +144,12 @@ def take_exam(request):
         if form.is_valid():
             instance = form.save(commit = False)
             answer = form.cleaned_data['answer']
-            pdb.set_trace()
             instance.answers_given.add(answer)
             instance.current_question = instance.current_question + 1
             instance.save()
             if instance.current_question >= instance.exam.questions.count():
                 instance.completed = True
+                instance.completion_time = datetime.timezone.now()
             form.save()
 
             if instance.completed:
@@ -171,6 +171,15 @@ def take_exam(request):
 
     question = take_exam.exam.questions.all()[take_exam.current_question]
     return render(request, 'student/take_exam.html', {'form': form, 'exam_id': exam_id, 'question': question}) 
+
+def exam_history(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'student/not_allowed.html', {'next': request.path})
+
+    queryset = TakeExam.objects.filter(completed = True)
+    return render(request, 'student/exam_history.html', {'queryset': queryset, })
 
 def exam_result(request):
     username = get_acting_user(request)
