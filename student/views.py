@@ -149,7 +149,7 @@ def take_exam(request):
             instance.save()
             if instance.current_question >= instance.exam.questions.count():
                 instance.completed = True
-                instance.completion_time = datetime.timezone.now()
+                instance.completion_time = timezone.now()
             form.save()
 
             if instance.completed:
