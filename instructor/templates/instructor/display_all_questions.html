@@ -22,7 +22,7 @@
                     </tr>
                     <tr>
                         {% for answer in value.1.1 %}
-                            {% if answer.correct %}
+                            {% if answer.correct and display_answers %}
                                 <td class="success"> {{ answer.text }} </td>
                             {% else %}
                                 <td> {{ answer.text }} </td>

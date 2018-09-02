@@ -40,6 +40,13 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Employer.objects.all()
 
+def is_student_user(username, request):
+    student_user = True
+    if username.groups.filter(name="Student").count() <= 0:
+        student_user = False
+    
+    return student_user
+
 def is_instructor_user(username, request):
     instructor_user = True
     if username.groups.filter(name="Instructor").count() <= 0:
@@ -288,13 +295,14 @@ def list_question_banks(request):
 
 def display_all_questions(request):
     username = get_acting_user(request)
-    allowed = is_allowed(username, request)
+    allowed = is_allowed(username, request) or is_student_user(username, request)
     if not allowed:
         return render(request, 'instructor/not_allowed.html', {'next': request.path})
 
     question_queryset = Question.objects.exclude(text__iexact='').order_by('question_id')
     values = []
     count_question = 1
+    display_answers = not is_student_user(username, request)
     for question in question_queryset:
         question_answer_pair = [question, []]
         answer_queryset = Answer.objects.filter(question = question).order_by('text')
@@ -307,7 +315,7 @@ def display_all_questions(request):
         values.append([count_question, question_answer_pair])
         count_question = count_question + 1
     
-    return render(request, 'instructor/display_all_questions.html', {'values': values, }, )
+    return render(request, 'instructor/display_all_questions.html', {'values': values, 'display_answers': display_answers }, )
 
 def list_exams(request):
     username = get_acting_user(request)
