@@ -189,6 +189,8 @@ def exam_result(request):
 
     exam_id = None
     take_exam = None
+    correct_answers = 0
+    count_question = 1
 
     if request.method == 'GET':
         if 'exam_id' in request.GET:
@@ -198,7 +200,6 @@ def exam_result(request):
             answers_given = take_exam.answers_given.all()
             question_queryset = exam.questions.all()
             values = []
-            count_question = 1
             for question in question_queryset:
                 question_answer_pair = [question, []]
                 answer_queryset = Answer.objects.filter(question = question).order_by('text')
@@ -208,6 +209,7 @@ def exam_result(request):
                     if answer.correct:
                         answer_key = answer_key + 1
                     if answer in answers_given:
+                        correct_answers = correct_answers + (4.0/3.0) * answer_key - (1.0/3.0)
                         answer_key = answer_key + 2
                     question_answer_pair[1].append([answer, answer_key])
                     count_answer = count_answer + 1
@@ -217,4 +219,4 @@ def exam_result(request):
     else:
         return HttpResponseRedirect('/student/')
 
-    return render(request, 'student/exam_result.html', {'values': values}) 
+    return render(request, 'student/exam_result.html', {'values': values, 'correct_answers': correct_answers, 'total_questions': count_question - 1 }) 
