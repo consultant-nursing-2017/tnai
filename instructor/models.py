@@ -68,6 +68,7 @@ class Exam(models.Model):
     date = models.DateField(blank = False)
     starting_time = models.TimeField(blank = False)
     duration = models.IntegerField(default = 30, blank = False)
+    is_public = models.BooleanField(default = False, blank = False)
     students = models.ManyToManyField(Student)
     questions = models.ManyToManyField(Question)
 

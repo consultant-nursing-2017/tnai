@@ -108,6 +108,8 @@ def choose_exam(request):
     if not allowed:
         return render(request, 'student/not_allowed.html', {'next': request.path})
 
+    student = Student.objects.get(username = username)
+
     if request.method == 'POST':
         form = TakeExamForm(request.POST, request.FILES)
 
@@ -117,7 +119,7 @@ def choose_exam(request):
             return HttpResponseRedirect('/student/take_exam/?exam_id=' + str(exam.exam_id))
     else:
         # if a GET (or any other method) we'll create a blank form
-        form = TakeExamForm()
+        form = TakeExamForm(student = student)
 
     return render(request, 'student/choose_exam.html', {'form': form, }) 
 

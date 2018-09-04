@@ -13,7 +13,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from tnai.widgets import CustomClearableFileInput
 
-from instructor.models import Answer
+from instructor.models import Answer, Exam
 import pdb
     
 class StudentForm(ModelForm):
@@ -23,8 +23,11 @@ class StudentForm(ModelForm):
 
 class TakeExamForm(ModelForm):
     def __init__(self, *args, **kwargs):
+        student = kwargs.pop('student', None)
         super (TakeExamForm,self ).__init__(*args, **kwargs) # populates the post
-#        self.fields['exam'].queryset = instructor.Exam.objects.filter()
+        private_exam_queryset = Exam.objects.filter(students__in=[student])
+        public_exam_queryset = Exam.objects.filter(is_public = True)
+        self.fields['exam'].queryset = (private_exam_queryset | public_exam_queryset).distinct()
 
     class Meta:
         model = TakeExam
