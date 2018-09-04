@@ -31,7 +31,7 @@ class TakeExamForm(ModelForm):
         fields = ['exam']
 
 class ShowQuestionInExamForm(ModelForm):
-    answer = forms.ModelChoiceField(queryset = Answer.objects.all())
+    answer = forms.ModelChoiceField(queryset = Answer.objects.all(), required = False)
 
     def __init__(self, *args, **kwargs):
         super (ShowQuestionInExamForm,self ).__init__(*args, **kwargs) # populates the post

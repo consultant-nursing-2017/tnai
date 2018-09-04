@@ -142,12 +142,13 @@ def take_exam(request):
             return render(request, 'student/not_allowed.html', {'next': request.path})
 
         if form.is_valid():
-            instance = form.save(commit = False)
-            answer = form.cleaned_data['answer']
-            instance.answers_given.add(answer)
-            instance.current_question = instance.current_question + 1
-            instance.save()
-            if instance.current_question >= instance.exam.questions.count():
+            if 'submit' in request.POST:
+                instance = form.save(commit = False)
+                answer = form.cleaned_data['answer']
+                instance.answers_given.add(answer)
+                instance.current_question = instance.current_question + 1
+                instance.save()
+            if 'exit_exam' in request.POST or instance.current_question >= instance.exam.questions.count():
                 instance.completed = True
                 instance.completion_time = timezone.now()
             form.save()
