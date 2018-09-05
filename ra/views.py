@@ -123,7 +123,7 @@ def candidate_list(request):
                     duration = ExpressionWrapper(F('experience__date_to') - F('experience__date_from'), output_field=fields.DurationField())
                     queryset = queryset.annotate(experience_duration = duration).annotate(total_experience = Sum('experience_duration'))
                     entered_xp_duration = datetime.timedelta(days = int(minimum_experience) * 30)
-                    queryset = queryset.filter(total_experience__gt = entered_xp_duration)
+                    queryset = queryset.filter(total_experience__gt = entered_xp_duration).distinct()
 
                 eligibility_tests = filter_form.cleaned_data['eligibility_tests']
                 if eligibility_tests is not None and len(eligibility_tests) > 0:

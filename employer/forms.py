@@ -48,6 +48,7 @@ class AdvertisementForm(ModelForm):
     class Meta:
         model = Advertisement
         fields = '__all__'
+        labels = {'experience': 'Experience (in months) '}
 #        widgets={'': forms.DateTimeInput(format='%Y-%m-%d %H:%M')}
 
 class ShowInterestInAdvertisementForm(forms.Form):
