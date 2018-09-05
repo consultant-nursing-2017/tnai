@@ -111,7 +111,7 @@ def choose_exam(request):
     student = Student.objects.get(username = username)
 
     if request.method == 'POST':
-        form = TakeExamForm(request.POST, request.FILES)
+        form = TakeExamForm(request.POST, request.FILES, student = student, )
 
         if form.is_valid():
             instance = form.save()
@@ -150,10 +150,10 @@ def take_exam(request):
                 instance.answers_given.add(answer)
                 instance.current_question = instance.current_question + 1
                 instance.save()
-            if 'exit_exam' in request.POST or instance.current_question >= instance.exam.questions.count():
-                instance.completed = True
-                instance.completion_time = timezone.now()
-            form.save()
+                if instance.current_question >= instance.exam.questions.count():
+                    instance.completed = True
+                    instance.completion_time = timezone.now()
+                form.save()
 
             if instance.completed:
                 return HttpResponseRedirect('/student/')
@@ -173,7 +173,7 @@ def take_exam(request):
             return render(request, 'student/not_allowed.html', {'next': request.path})
 
     question = take_exam.exam.questions.all()[take_exam.current_question]
-    return render(request, 'student/take_exam.html', {'form': form, 'exam_id': exam_id, 'question': question}) 
+    return render(request, 'student/take_exam.html', {'form': form, 'exam_id': exam_id, 'question': question, 'question_number': take_exam.current_question, }) 
 
 def exam_history(request):
     username = get_acting_user(request)
