@@ -34,7 +34,7 @@ class TakeExamForm(ModelForm):
         fields = ['exam']
 
 class ShowQuestionInExamForm(ModelForm):
-    answer = forms.ModelChoiceField(queryset = Answer.objects.all(), required = False)
+    answer = forms.ModelChoiceField(queryset = Answer.objects.all(), required = False, widget = forms.RadioSelect())
 
     def __init__(self, *args, **kwargs):
         super (ShowQuestionInExamForm,self ).__init__(*args, **kwargs) # populates the post
@@ -45,6 +45,7 @@ class ShowQuestionInExamForm(ModelForm):
 
         question = instance.exam.questions.all()[question_number]
         self.fields['answer'].queryset = Answer.objects.filter(question = question).order_by('text')
+        self.fields['answer'].empty_label = "Leave Answer Blank"
 
     class Meta:
         model = TakeExam
