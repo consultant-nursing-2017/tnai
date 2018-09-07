@@ -44,7 +44,7 @@ class ShowQuestionInExamForm(ModelForm):
             raise ValidationError(_("Question number exceeds total number of questions in exam."), code='question_number_out_of_bounds')
 
         question = instance.exam.questions.all()[question_number]
-        self.fields['answer'].queryset = Answer.objects.filter(question = question).order_by('text')
+        self.fields['answer'].queryset = Answer.objects.filter(question = question).order_by('answer_id')
         self.fields['answer'].empty_label = "Leave Answer Blank"
 
     class Meta:
