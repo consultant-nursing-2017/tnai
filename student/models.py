@@ -19,7 +19,7 @@ class Student(models.Model):
         return self.name
 
 class TakeExam(models.Model):
-    exam = models.ForeignKey('instructor.Exam', on_delete=models.CASCADE, related_name='exam_taken')
+    exam = models.OneToOneField('instructor.Exam', on_delete=models.CASCADE, related_name='exam_taken')
     current_question = models.PositiveSmallIntegerField(default = 0)
     answers_given = models.ManyToManyField('instructor.Answer')
     completed = models.BooleanField(default = False)

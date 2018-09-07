@@ -144,6 +144,7 @@ def take_exam(request):
             return render(request, 'student/not_allowed.html', {'next': request.path})
 
         if form.is_valid():
+            pdb.set_trace()
             if 'submit' in request.POST:
                 instance = form.save(commit = False)
                 answer = form.cleaned_data['answer']
