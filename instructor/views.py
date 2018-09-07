@@ -302,20 +302,21 @@ def display_all_questions(request):
     question_queryset = Question.objects.exclude(text__iexact='').order_by('question_id')
     values = []
     count_question = 1
+    answer_format = ['(a)', '(b)', '(c)', '(d)']
     display_answers = not is_student_user(username, request)
     for question in question_queryset:
         question_answer_pair = [question, []]
         answer_queryset = Answer.objects.filter(question = question).order_by('text')
         count_answer = 0
         for answer in answer_queryset:
-#            question_answer_pair[1].append([str(chr(ord('A')+count_answer)), answer])
-            question_answer_pair[1].append(answer)
+            question_answer_pair[1].append([answer_format[count_answer], answer])
+#            question_answer_pair[1].append(answer)
             count_answer = count_answer + 1
 
         values.append([count_question, question_answer_pair])
         count_question = count_question + 1
     
-    return render(request, 'instructor/display_all_questions.html', {'values': values, 'display_answers': display_answers }, )
+    return render(request, 'instructor/display_all_questions.html', {'values': values, 'display_answers': display_answers, }, )
 
 def list_exams(request):
     username = get_acting_user(request)

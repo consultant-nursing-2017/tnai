@@ -21,11 +21,11 @@
                         <td colspan="100%"><b>Q{{value.0}}.</b> {{value.1.0.text}}</td>
                     </tr>
                     <tr>
-                        {% for answer in value.1.1 %}
+                        {% for answer_format, answer in value.1.1 %}
                             {% if answer.correct and display_answers %}
-                                <td class="success"> {{ answer.text }} </td>
+                                <td class="success"> <b>{{answer_format}}</b> {{ answer.text }} </td>
                             {% else %}
-                                <td> {{ answer.text }} </td>
+                                <td> <b>{{answer_format}}</b> {{ answer.text }} </td>
                             {% endif %}
                         {% endfor %}
                     </tr>
