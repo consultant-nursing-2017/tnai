@@ -144,20 +144,19 @@ def take_exam(request):
             return render(request, 'student/not_allowed.html', {'next': request.path})
 
         if form.is_valid():
-            pdb.set_trace()
+            instance = form.save(commit = False)
             if 'submit' in request.POST:
-                instance = form.save(commit = False)
                 answer = form.cleaned_data['answer']
                 instance.answers_given.add(answer)
                 instance.current_question = instance.current_question + 1
                 instance.save()
-                if instance.current_question >= instance.exam.questions.count():
-                    instance.completed = True
-                    instance.completion_time = timezone.now()
                 form.save()
+            if 'exit_exam' in request.POST or instance.current_question >= instance.exam.questions.count():
+                instance.completed = True
+                instance.completion_time = timezone.now()
 
             if instance.completed:
-                return HttpResponseRedirect('/student/')
+                return HttpResponseRedirect('/student/exam_result/?exam_id=' + exam_id)
             else:
                 return HttpResponseRedirect('/student/take_exam/?exam_id=' + exam_id)
     else:
@@ -174,7 +173,7 @@ def take_exam(request):
             return render(request, 'student/not_allowed.html', {'next': request.path})
 
     question = take_exam.exam.questions.all()[take_exam.current_question]
-    return render(request, 'student/take_exam.html', {'form': form, 'exam_id': exam_id, 'question': question, 'question_number': take_exam.current_question, }) 
+    return render(request, 'student/take_exam.html', {'form': form, 'exam_id': exam_id, 'question': question, 'question_number': take_exam.current_question + 1, }) 
 
 def exam_history(request):
     username = get_acting_user(request)

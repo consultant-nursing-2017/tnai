@@ -30,9 +30,9 @@
         </div>
         <div class="panel-footer text-center">
             {% buttons %}
-                {% bootstrap_button "Submit Answer and go to next question" button_type="submit" value="Submit" %}
-                {% bootstrap_button "Skip Question for now and go to next question" button_type="submit" value="skip_for_now" %}
-                {% bootstrap_button "Leave Answer Blank and go to next question" button_type="submit" value="leave_answer_blank" %}
+                {% bootstrap_button "Submit Answer and go to next question" button_type="submit" name='submit' %}
+                {% bootstrap_button "Skip Question for now and go to next question" button_type="submit" name='skip_for_now' %}
+                {% bootstrap_button "Leave Answer Blank and go to next question" button_type="submit" name='leave_answer_blank' %}
                 <button type="submit" class="btn" name="exit_exam" onclick="return confirm('Are you sure?')">Leave Answer Blank and Exit</button>
             {% endbuttons %}
             <input type="hidden" name="exam_id" value="{{exam_id}}"/>
