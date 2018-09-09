@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
+<h1>Student Sign up</h1>
+    {# Display a form #}
+    <form method="post" class="form">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+        <button type="submit" class="btn btn-primary">
+            Sign up
+        </button>
+      {% endbuttons %}
+    </form>
+</div>
+{% endblock %}

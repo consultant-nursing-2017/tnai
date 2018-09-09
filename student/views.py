@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
 from instructor.models import Exam, Question, Answer
 from .models import Student, TakeExam
-from .forms import StudentForm, TakeExamForm, ShowQuestionInExamForm
+from .forms import StudentForm, TakeExamForm, ShowQuestionInExamForm, StudentSignupForm
 #from .forms import RegistrationForm
 from django.core.mail import send_mail
 import hashlib
@@ -101,6 +101,30 @@ def submit_student(request):
             form = StudentForm(initial={'username': username,})
 
     return render(request, 'student/submit_student.html', {'new_profile': new_profile, 'form': form,}) 
+
+def signup(request):
+    if request.method == 'POST':
+        form = StudentSignupForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = True
+            email = form.cleaned_data['email']
+            user.email = email
+            user.save()
+            g = Group.objects.get(name='Student') 
+            g.user_set.add(user)
+            name = form.cleaned_data['name']
+            phone = form.cleaned_data['phone']
+            username = user
+            if len(name) == 0:
+                name = username.username
+            student = Student.objects.create(username = username, name = name, email = email, phone = phone)
+            return HttpResponseRedirect('/accounts/login/')
+    
+    else:
+        form = StudentSignupForm()
+    
+    return render(request, 'student/signup.html', {'form': form})
 
 def choose_exam(request):
     username = get_acting_user(request)

@@ -14,6 +14,8 @@ class Student(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student_username', default=None, blank=True, null=True)
     name = models.CharField(max_length=200, default="Student One", blank=False)
     phone = models.CharField(max_length=200, default="9810117638", blank=False)
+    roll_number = models.CharField(max_length = 100, blank = True)
+    email = models.CharField(max_length = 500, blank = True)
 
     def __str__(self):
         return self.name

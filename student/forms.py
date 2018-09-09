@@ -50,3 +50,13 @@ class ShowQuestionInExamForm(ModelForm):
     class Meta:
         model = TakeExam
         fields = ['answer']
+
+class StudentSignupForm(UserCreationForm):
+    name = forms.CharField(max_length = 200, required = False)
+    email = forms.EmailField(required = False)
+    phone = forms.CharField(max_length = 50, required = False)
+
+    class Meta:
+        model = User
+        fields = ('username', 'password1', 'password2', 'email', 'name', 'phone')
+        labels = {'username': 'Choose a username (can be your roll number)'}
