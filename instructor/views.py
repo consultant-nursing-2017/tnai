@@ -302,7 +302,7 @@ def display_all_questions(request):
     question_queryset = Question.objects.exclude(text__iexact='').order_by('question_id')
     values = []
     count_question = 1
-    answer_format = ['(a)', '(b)', '(c)', '(d)', '(e)', '(f)', '(g)']
+    answer_format = ['(a)', '(b)', '(c)', '(d)', '(e)', '(f)', '(g)', '(h)', '(i)', '(j)', '(k)']
     display_answers = not is_student_user(username, request)
     for question in question_queryset:
         question_answer_pair = [question, []]
