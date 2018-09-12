@@ -21,8 +21,15 @@ class Student(models.Model):
         return self.name
 
 class TakeExam(models.Model):
-    exam = models.OneToOneField('instructor.Exam', on_delete=models.CASCADE, related_name='exam_taken')
+    take_exam_id = HashidField(salt=settings.HASHID_FIELD_SALT+"Exam", allow_int_lookup=True, null=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", default=None)
+    exam = models.ForeignKey('instructor.Exam', on_delete=models.CASCADE, related_name='exam_taken')
     current_question = models.PositiveSmallIntegerField(default = 0)
     answers_given = models.ManyToManyField('instructor.Answer')
     completed = models.BooleanField(default = False)
     completion_time = models.DateTimeField(default = None, null = True)
+
+    def save(self, *args, **kwargs):
+        super(TakeExam, self).save(*args, **kwargs)
+        if not self.take_exam_id:
+            self.take_exam_id = self.pk
+        super(TakeExam, self).save(*args, **kwargs)
