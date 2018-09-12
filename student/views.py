@@ -174,10 +174,11 @@ def take_exam(request):
                 instance.answers_given.add(answer)
                 instance.current_question = instance.current_question + 1
                 instance.save()
-                form.save()
             if 'exit_exam' in request.POST or instance.current_question >= instance.exam.questions.count():
                 instance.completed = True
                 instance.completion_time = timezone.now()
+                instance.save()
+            form.save()
 
             if instance.completed:
                 return HttpResponseRedirect('/student/exam_result/?exam_id=' + exam_id)

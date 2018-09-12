@@ -21,7 +21,7 @@
                 </tr>
                 {% for record in queryset %}
                 <tr>
-                    <td> {{ record.exam.take_exam_id }} </td>
+                    <td> {{ record.take_exam_id }} </td>
                     <td> {{ record.exam.name }} </td>
                     <td> {{ record.completion_time }} </td>
                     <td> <a href="{% url 'student:exam_result'%}?exam_id={{record.exam.exam_id}}">Click for full results</a></td>
