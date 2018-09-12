@@ -206,7 +206,11 @@ def exam_history(request):
     if not allowed:
         return render(request, 'student/not_allowed.html', {'next': request.path})
 
-    queryset = TakeExam.objects.filter(completed = True)
+    student = Student.objects.get(username = username)
+    temp_queryset = TakeExam.objects.filter(completed = True)
+    queryset_private = temp_queryset#.filter(exam__students__in = student)
+    queryset_public = temp_queryset.filter(exam__is_public = True)
+    queryset = (queryset_private | queryset_public).distinct()
     return render(request, 'student/exam_history.html', {'queryset': queryset, })
 
 def exam_result(request):
@@ -237,7 +241,7 @@ def exam_result(request):
                     if answer.correct:
                         answer_key = answer_key + 1
                     if answer in answers_given:
-                        correct_answers = correct_answers + (4.0/3.0) * answer_key - (1.0/3.0)
+#                        correct_answers = correct_answers + (4.0/3.0) * answer_key - (1.0/3.0)
                         answer_key = answer_key + 2
                     question_answer_pair[1].append([answer, answer_key])
                     count_answer = count_answer + 1
@@ -246,5 +250,7 @@ def exam_result(request):
                 count_question = count_question + 1
     else:
         return HttpResponseRedirect('/student/')
+
+    correct_answers = take_exam.score()
 
     return render(request, 'student/exam_result.html', {'values': values, 'correct_answers': correct_answers, 'total_questions': count_question - 1 }) 

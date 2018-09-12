@@ -33,3 +33,23 @@ class TakeExam(models.Model):
         if not self.take_exam_id:
             self.take_exam_id = self.pk
         super(TakeExam, self).save(*args, **kwargs)
+
+    def score(self):
+        take_exam = self
+        exam = self.exam
+        answers_given = self.answers_given.all()
+        question_queryset = exam.questions.all()
+        score = 0
+        for question in question_queryset:
+            count_answer = 0
+            answer_queryset = question.answers()
+            for answer in answer_queryset:
+                answer_key = 0
+                if answer.correct:
+                    answer_key = answer_key + 1
+                if answer in answers_given:
+                    score = score + (4.0/3.0) * answer_key - (1.0/3.0)
+                    answer_key = answer_key + 2
+                count_answer = count_answer + 1
+
+        return score

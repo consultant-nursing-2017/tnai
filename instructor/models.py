@@ -44,6 +44,9 @@ class Question(models.Model):
     def truncated_text(self):
         return self.text[:80]
 
+    def answers(self):
+        return Answer.objects.filter(question = self).order_by('text')
+
 class Answer(models.Model):
     def media_path(instance, filename):
         return 'instructor/answers/{0}/{1}'.format(str(instance.answer_id), filename)
