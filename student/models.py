@@ -22,6 +22,7 @@ class Student(models.Model):
 
 class TakeExam(models.Model):
     take_exam_id = HashidField(salt=settings.HASHID_FIELD_SALT+"Exam", allow_int_lookup=True, null=True, editable=False, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", default=None)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='exam_student', null = True)
     exam = models.ForeignKey('instructor.Exam', on_delete=models.CASCADE, related_name='exam_taken')
     current_question = models.PositiveSmallIntegerField(default = 0)
     answers_given = models.ManyToManyField('instructor.Answer')

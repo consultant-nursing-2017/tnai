@@ -34,7 +34,7 @@
                 {% bootstrap_button "Skip Question for now and go to next question" button_type="submit" name='skip_for_now' %}
                 <button type="submit" class="btn" name="exit_exam" onclick="return confirm('Are you sure?')">Leave Answer Blank and Exit</button>
             {% endbuttons %}
-            <input type="hidden" name="exam_id" value="{{exam_id}}"/>
+            <input type="hidden" name="take_exam_id" value="{{take_exam_id}}"/>
         </div>
 </form>
 {% endblock %}

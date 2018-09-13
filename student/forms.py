@@ -23,15 +23,17 @@ class StudentForm(ModelForm):
 
 class TakeExamForm(ModelForm):
     def __init__(self, *args, **kwargs):
-        student = kwargs.pop('student', None)
+        student = kwargs.pop('student')
         super (TakeExamForm,self ).__init__(*args, **kwargs) # populates the post
         private_exam_queryset = Exam.objects.filter(students__in=[student])
         public_exam_queryset = Exam.objects.filter(is_public = True)
         self.fields['exam'].queryset = (private_exam_queryset | public_exam_queryset).distinct()
+        self.fields['student'].initial = student
 
     class Meta:
         model = TakeExam
-        fields = ['exam']
+        fields = [ 'student', 'exam',]
+        widgets = {'student': forms.HiddenInput(), }
 
 class ShowQuestionInExamForm(ModelForm):
     answer = forms.ModelChoiceField(queryset = Answer.objects.all(), required = False, widget = forms.RadioSelect())

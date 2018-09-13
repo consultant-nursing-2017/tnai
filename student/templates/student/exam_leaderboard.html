@@ -9,24 +9,22 @@
 {% block content %}
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h1 class="text-center">Exam History</h1>
+            <h1 class="text-center">Exam Leaderboard: {{exam.name}} </h1>
         </div>
         <div class="panel-body">
             <table class="table table-striped">
                 <tr>
-                    <th> Exam Attempt ID </th>
-                    <th> Exam Name </th>
+                    <th> Student Name </th>
                     <th> Completed on </th>
                     <th> Score </th>
-                    <th> Full Exam Result </th>
                 </tr>
-                {% for record in queryset %}
+                {% for student, record in take_exam_queryset %}
                 <tr>
-                    <td> {{ record.take_exam_id }} </td>
+                    <td> {{ student.name}} </td>
                     <td> {{ record.exam.name }} </td>
                     <td> {{ record.completion_time }} </td>
                     <td> {{ record.score }} </td>
-                    <td> <a href="{% url 'student:exam_result'%}?take_exam_id={{record.take_exam_id}}">Click for full results</a></td>
+                    <td> <a href="{% url 'student:exam_result'%}?exam_id={{record.exam.exam_id}}">Click for full results</a></td>
                 </tr>
                 {% endfor %}
             </table>

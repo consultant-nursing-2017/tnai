@@ -135,12 +135,12 @@ def choose_exam(request):
     student = Student.objects.get(username = username)
 
     if request.method == 'POST':
-        form = TakeExamForm(request.POST, request.FILES, student = student, )
+        form = TakeExamForm(request.POST, request.FILES, student = student)
 
         if form.is_valid():
             instance = form.save()
             exam = form.cleaned_data['exam']
-            return HttpResponseRedirect('/student/take_exam/?exam_id=' + str(exam.exam_id))
+            return HttpResponseRedirect('/student/take_exam/?take_exam_id=' + str(instance.take_exam_id))
     else:
         # if a GET (or any other method) we'll create a blank form
         form = TakeExamForm(student = student)
@@ -155,12 +155,14 @@ def take_exam(request):
 
     exam_id = None
     take_exam = None
+    take_exam_id = None
     if request.method == 'POST':
         try:
-            if 'exam_id' in request.POST:
-                exam_id = request.POST.get('exam_id')
-                exam = Exam.objects.get(exam_id = exam_id)
-                take_exam = TakeExam.objects.get(exam = exam)
+            if 'take_exam_id' in request.POST:
+                take_exam_id = request.POST.get('take_exam_id')
+                take_exam = TakeExam.objects.get(take_exam_id = take_exam_id)
+                exam = take_exam.exam
+                exam_id = exam.exam_id
                 form = ShowQuestionInExamForm(request.POST, request.FILES, instance = take_exam)
             else:
                 return render(request, 'student/not_allowed.html', {'next': request.path})
@@ -181,15 +183,16 @@ def take_exam(request):
             form.save()
 
             if instance.completed:
-                return HttpResponseRedirect('/student/exam_result/?exam_id=' + exam_id)
+                return HttpResponseRedirect('/student/exam_result/?take_exam_id=' + take_exam_id)
             else:
-                return HttpResponseRedirect('/student/take_exam/?exam_id=' + exam_id)
+                return HttpResponseRedirect('/student/take_exam/?take_exam_id=' + take_exam_id)
     else:
         # if a GET (or any other method) we'll create a blank form
-        if 'exam_id' in request.GET:
-            exam_id = request.GET.get('exam_id')
-            exam = Exam.objects.get(exam_id = exam_id)
-            take_exam = TakeExam.objects.get(exam = exam)
+        if 'take_exam_id' in request.GET:
+            take_exam_id = request.GET.get('take_exam_id')
+            take_exam = TakeExam.objects.get(take_exam_id = take_exam_id)
+            exam = take_exam.exam
+            exam_id = exam.exam_id
             if take_exam.current_question >= take_exam.exam.questions.count():
                 return HttpResponseRedirect('/student/')
             else:
@@ -198,7 +201,7 @@ def take_exam(request):
             return render(request, 'student/not_allowed.html', {'next': request.path})
 
     question = take_exam.exam.questions.all()[take_exam.current_question]
-    return render(request, 'student/take_exam.html', {'form': form, 'exam_id': exam_id, 'question': question, 'question_number': take_exam.current_question + 1, }) 
+    return render(request, 'student/take_exam.html', {'form': form, 'take_exam_id': take_exam_id, 'question': question, 'question_number': take_exam.current_question + 1, }) 
 
 def exam_history(request):
     username = get_acting_user(request)
@@ -225,10 +228,11 @@ def exam_result(request):
     count_question = 1
 
     if request.method == 'GET':
-        if 'exam_id' in request.GET:
-            exam_id = request.GET.get('exam_id')
-            exam = Exam.objects.get(exam_id = exam_id)
-            take_exam = TakeExam.objects.get(exam = exam)
+        if 'take_exam_id' in request.GET:
+            take_exam_id = request.GET.get('take_exam_id')
+            take_exam = TakeExam.objects.get(take_exam_id = take_exam_id)
+            exam = take_exam.exam
+            exam_id = exam.exam_id
             answers_given = take_exam.answers_given.all()
             question_queryset = exam.questions.all()
             values = []
@@ -254,3 +258,13 @@ def exam_result(request):
     correct_answers = take_exam.score()
 
     return render(request, 'student/exam_result.html', {'values': values, 'correct_answers': correct_answers, 'total_questions': count_question - 1 }) 
+
+def exam_leaderboard(request):
+    if request.method == 'GET':
+        exam_id = request.GET.get('exam_id')
+        exam = Exam.objects.get(exam_id = exam_id)
+        take_exam_queryset = TakeExam.objects.filter(exam = exam).order_by('score')
+    else:
+        return HttpResponseRedirect('/student/')
+
+    return render(request, 'student/exam_leaderboard.html', {'take_exam_queryset': take_exam_queryset, 'exam': exam, }) 
