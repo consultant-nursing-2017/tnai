@@ -45,7 +45,7 @@ class ShowQuestionInExamForm(ModelForm):
         if question_number >= instance.exam.questions.count():
             raise ValidationError(_("Question number exceeds total number of questions in exam."), code='question_number_out_of_bounds')
 
-        question = instance.exam.questions.all()[question_number]
+        question = instance.exam.questions.all().order_by('topic')[question_number]
         self.fields['answer'].queryset = Answer.objects.filter(question = question).order_by('answer_id')
         self.fields['answer'].empty_label = "Leave Answer Blank"
 
@@ -54,11 +54,11 @@ class ShowQuestionInExamForm(ModelForm):
         fields = ['answer']
 
 class StudentSignupForm(UserCreationForm):
-    name = forms.CharField(max_length = 200, required = False)
-    email = forms.EmailField(required = False)
-    phone = forms.CharField(max_length = 50, required = False)
+    name = forms.CharField(max_length = 200, required = False, )
+    email = forms.EmailField(required = False, )
+    phone = forms.CharField(max_length = 50, required = False, )
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'email', 'name', 'phone')
-        labels = {'username': 'Choose a username (can be your roll number)'}
+        fields = ('username', 'password1', 'password2', 'name', 'email', 'phone', )
+#        labels = {'username': 'Choose username', }
