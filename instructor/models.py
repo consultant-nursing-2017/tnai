@@ -39,7 +39,7 @@ class Question(models.Model):
     image = models.FileField(default=None, blank=True, null=True, upload_to=media_path, validators=[ValidateFileExtension.validate_image])
 
     def __str__(self):
-        return str(self.question_id) + ": " + self.truncated_text()
+        return self.truncated_text()
 
     def truncated_text(self):
         return self.text[:80]
