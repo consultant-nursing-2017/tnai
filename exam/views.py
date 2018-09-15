@@ -386,6 +386,11 @@ def candidate_book_time_slot(request):
         return render(request, 'exam/not_allowed.html', {'not_member_of_group': 'Candidate'})
     candidate = Candidate.objects.get(candidate_username=username)
 
+    candidate_list = CandidateList.objects.get(exam = exam, exam_list_type = "Downloaded hall ticket")
+    if candidate in candidate_list.members.all():
+        error_msg = "Hall ticket already downloaded. Exam time slot cannot be changed."
+        return (None, None, HttpResponseRedirect("/home/error_msg?error_msg="+ error_msg))
+
     exam_id = None
     booking = None
     if request.method == 'GET':
