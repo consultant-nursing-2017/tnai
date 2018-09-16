@@ -5,6 +5,7 @@ from . import views
 app_name = 'student'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^learning-index/', views.learning_index, name='learning_index'),
     url(r'^entire_profile/', views.index, name='entire_profile'),
     url(r'^signup/', views.signup, name='signup'),
     url(r'^submit_student/', views.submit_student, name='submit_student'),

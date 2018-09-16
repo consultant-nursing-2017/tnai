@@ -76,4 +76,7 @@ class Exam(models.Model):
     questions = models.ManyToManyField(Question)
 
     def __str__(self):
-        return str(self.exam_id) + ": Exam name: " + self.name
+        public_string = ""
+        if self.is_public:
+            public_string = " (Public)"
+        return str(self.exam_id) + ": Exam name: " + self.name + public_string

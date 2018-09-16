@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+{% load bootstrap3 %}
+{% block title %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'employer/style.css' %}" /> -->
+{% endblock %}
+
+{% block jumbotron %}
+    <div class="container">
+        <div class="jumbotron">
+            <h2>Search for tests</h2>
+            <form method="post" class="form form-inline">
+              {% csrf_token %}
+              {% bootstrap_form form layout='inline'%}
+              {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Search
+                </button>
+              {% endbuttons %}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2> Sample Exams </h2>
+        </div>
+        <div class="panel-body">
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2> Take a Mock Test </h2>
+        </div>
+        <div class="panel-body">
+        </div>
+    </div>
+
+{% endblock %}

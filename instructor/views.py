@@ -296,10 +296,22 @@ def list_question_banks(request):
 def display_all_questions(request):
     username = get_acting_user(request)
     allowed = is_allowed(username, request) or is_student_user(username, request)
+    allowed = True
     if not allowed:
         return render(request, 'instructor/not_allowed.html', {'next': request.path})
 
-    question_queryset = Question.objects.exclude(text__iexact='').order_by('question_id')
+    question_queryset = Question.objects.exclude(text__iexact='')
+    exam = None
+    if request.method == 'GET':
+        try:
+            exam_id = request.GET.get('exam_id')
+            exam = Exam.objects.get(exam_id = exam_id)
+            question_queryset = exam.questions.all()
+        except KeyError:
+            pass
+        except ObjectDoesNotExist:
+            return HttpResponseRedirect('/student/learning-index')
+    question_queryset = question_queryset.order_by('question_id')
     values = []
     count_question = 1
     answer_format = ['(a)', '(b)', '(c)', '(d)', '(e)', '(f)', '(g)', '(h)', '(i)', '(j)', '(k)']

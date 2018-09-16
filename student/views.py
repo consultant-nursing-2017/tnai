@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
 from instructor.models import Exam, Question, Answer
 from .models import Student, TakeExam
-from .forms import StudentForm, TakeExamForm, ShowQuestionInExamForm, StudentSignupForm
+from .forms import StudentForm, TakeExamForm, ShowQuestionInExamForm, StudentSignupForm, LearningIndexSearchTestsForm
 #from .forms import RegistrationForm
 from django.core.mail import send_mail
 import hashlib
@@ -268,3 +268,15 @@ def exam_leaderboard(request):
         return HttpResponseRedirect('/student/')
 
     return render(request, 'student/exam_leaderboard.html', {'take_exam_queryset': take_exam_queryset, 'exam': exam, }) 
+
+def learning_index(request):
+    if request.method == 'POST':
+        form = LearningIndexSearchTestsForm(request.POST)
+        if form.is_valid():
+            exam = form.cleaned_data['list_exams']
+            exam_id = str(exam.exam_id)
+            return HttpResponseRedirect('/instructor/display_all_questions/?exam_id=' + exam_id)
+    else:
+        form = LearningIndexSearchTestsForm()
+
+    return render(request, 'student/learning_index.html', {'form': form, }) 

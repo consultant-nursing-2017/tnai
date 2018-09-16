@@ -20,7 +20,7 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
-        widgets = {'username': field.HiddenInput(), }
+        widgets = {'username': forms.HiddenInput(), }
 
 class TakeExamForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -63,3 +63,7 @@ class StudentSignupForm(UserCreationForm):
         model = User
         fields = ('username', 'password1', 'password2', 'name', 'email', 'phone', )
 #        labels = {'username': 'Choose username', }
+
+class LearningIndexSearchTestsForm(forms.Form):
+#    exam_name = forms.CharField(max_length = 200, required = False)
+    list_exams = forms.ModelChoiceField(queryset = Exam.objects.filter(is_public = True), required = False,)
