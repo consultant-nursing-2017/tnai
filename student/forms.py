@@ -20,6 +20,7 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
+        widgets = {'username': field.HiddenInput(), }
 
 class TakeExamForm(ModelForm):
     def __init__(self, *args, **kwargs):
