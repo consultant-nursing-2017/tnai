@@ -302,6 +302,7 @@ def display_all_questions(request):
 
     question_queryset = Question.objects.exclude(text__iexact='')
     exam = None
+#    pdb.set_trace()
     if request.method == 'GET':
         try:
             exam_id = request.GET.get('exam_id')
@@ -310,7 +311,7 @@ def display_all_questions(request):
         except KeyError:
             pass
         except ObjectDoesNotExist:
-            return HttpResponseRedirect('/student/learning-index')
+            pass
     question_queryset = question_queryset.order_by('question_id')
     values = []
     count_question = 1
