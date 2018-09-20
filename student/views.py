@@ -49,6 +49,9 @@ def get_acting_user(request):
 
 def index(request):
     username = get_acting_user(request)
+    if username.groups.filter(name="Instructor").count() > 0:
+        return HttpResponseRedirect('/instructor/')
+
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'student/not_allowed.html', {'next': request.path})

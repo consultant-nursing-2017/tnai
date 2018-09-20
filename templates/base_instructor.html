@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{% static 'css/tnai-custom.css' %}">
 </head>
 
+{% load has_group %}
+
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-default navbar-static-top" role="navigation">
@@ -41,7 +43,11 @@
                     <li><a href="{% url 'login' %}?next=/instructor/">Login</a></li>
                 {% endif %}
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'instructor:index' %}">User: {{ user.get_username }}</a></li>
+                    {% if user|has_group:"Instructor" %}
+                        <li><a href="{% url 'instructor:index' %}">User: {{ user.get_username }}</a></li>
+                    {% elif user|has_group:"Student" %}
+                        <li><a href="{% url 'student:index' %}">User: {{ user.get_username }}</a></li>
+                    {% endif %}
                     <li><a href="/accounts/logout">Logout</a></li>
                 {% endif %}
             </ul>
