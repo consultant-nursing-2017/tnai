@@ -384,7 +384,7 @@ def display_all_questions(request):
             pass
 
 #    question_queryset = question_queryset.order_by('question_id')
-    question_queryset = question_queryset.order_by('topic')
+    question_queryset = question_queryset.order_by('topic', 'question_id')
     values = []
     count_question = 1
     answer_format = ['(a)', '(b)', '(c)', '(d)', '(e)', '(f)', '(g)', '(h)', '(i)', '(j)', '(k)']

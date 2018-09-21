@@ -203,7 +203,7 @@ def take_exam(request):
         else:
             return render(request, 'student/not_allowed.html', {'next': request.path})
 
-    question = take_exam.exam.questions.all().order_by('topic')[take_exam.current_question]
+    question = take_exam.exam.questions.all().order_by('topic', 'question_id')[take_exam.current_question]
     return render(request, 'student/take_exam.html', {'form': form, 'take_exam_id': take_exam_id, 'question': question, 'question_number': take_exam.current_question + 1, }) 
 
 def exam_history(request):
@@ -238,7 +238,7 @@ def exam_result(request):
             exam_id = exam.exam_id
             answers_given = take_exam.answers_given.all()
             question_queryset = exam.questions.all()
-            question_queryset = question_queryset.order_by('topic')
+            question_queryset = question_queryset.order_by('topic', 'question_id')
             values = []
             for question in question_queryset:
                 question_answer_pair = [question, []]
