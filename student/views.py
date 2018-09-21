@@ -237,7 +237,8 @@ def exam_result(request):
             exam = take_exam.exam
             exam_id = exam.exam_id
             answers_given = take_exam.answers_given.all()
-            question_queryset = exam.questions.all().order_by('topic')
+            question_queryset = exam.questions.all()
+            question_queryset = question_queryset.order_by('topic')
             values = []
             for question in question_queryset:
                 question_answer_pair = [question, []]
