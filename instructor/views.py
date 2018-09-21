@@ -393,7 +393,10 @@ def display_all_questions(request):
         answer_queryset = Answer.objects.filter(question = question).order_by('text')
         count_answer = 0
         for answer in answer_queryset:
-            question_answer_pair[1].append([answer_format[count_answer], answer])
+            answer_index = count_answer
+            if answer_index >= len[answer_format]:
+                answer_index = len[answer_format] - 1
+            question_answer_pair[1].append([answer_format[answer_index], answer])
 #            question_answer_pair[1].append(answer)
             count_answer = count_answer + 1
 
