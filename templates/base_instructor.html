@@ -30,7 +30,7 @@
     <div class="container-fluid">
         <nav class="navbar navbar-default navbar-static-top" role="navigation">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/"><strong>Learning</strong></a>
+                <a class="navbar-brand" href="/"><strong>Your Online Classroom</strong></a>
             </div>
             <ul class="nav navbar-nav">
                 <!--
@@ -44,9 +44,9 @@
                 {% endif %}
                 {% if user.is_authenticated %}
                     {% if user|has_group:"Instructor" %}
-                        <li><a href="{% url 'instructor:index' %}">{{ user.name }} [User: {{ user.get_username }}]</a></li>
+                        <li><a href="{% url 'instructor:index' %}">{{ user.name }} [Username: {{ user.get_username }}]</a></li>
                     {% elif user|has_group:"Student" %}
-                        <li><a href="{% url 'student:index' %}">User: {{ user.name }} [User: {{ user.get_username }}]</a></li>
+                        <li><a href="{% url 'student:index' %}">{{ user.name }} [Username: {{ user.get_username }}]</a></li>
                     {% endif %}
                     <li><a href="/accounts/logout">Logout</a></li>
                 {% endif %}
