@@ -33,7 +33,7 @@ import random
 
 
 def index(request):
-    current_site = get_host(request)
+    current_site = request.get_host()
     if '132.148.247.155' in current_site:
         return HttpResponseRedirect('/student/learning-index/')
     return render(request, 'home/index.html')
