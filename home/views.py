@@ -35,7 +35,7 @@ import random
 
 def index(request):
     current_site = get_current_site(request)
-    if current_site == 'http://132.148.247.155':
+    if '132.148.247.155'in current_site:
         return HttpResponseRedirect('/student/learning-index/')
     return render(request, 'home/index.html')
 
