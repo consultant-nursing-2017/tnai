@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.views.static import serve
 from django.conf import settings
 from django.views.generic import RedirectView
+from .views import CustomLoginView, CustomLogoutView
 
 urlpatterns = [
     url(r'^employer/', include('employer.urls')),
@@ -32,6 +33,8 @@ urlpatterns = [
 
 urlpatterns += [
     url(r'^accounts/profile/', RedirectView.as_view(url="/candidate/"), name="profile"),
+    url(r'^accounts/login', CustomLoginView.as_view(), name="login"),
+    url(r'^accounts/logout', CustomLogoutView.as_view(), name="logout"),
     url(r'^accounts/', include('django.contrib.auth.urls'), name="accounts"),
     url(r'^$', RedirectView.as_view(url="/home/")),
     url(r'^home/', include('home.urls'), name="home"),
