@@ -383,7 +383,8 @@ def display_all_questions(request):
         except ObjectDoesNotExist:
             pass
 
-    question_queryset = question_queryset.order_by('question_id')
+#    question_queryset = question_queryset.order_by('question_id')
+    queustion_queryset = question_queryset.order_by('topic')
     values = []
     count_question = 1
     answer_format = ['(a)', '(b)', '(c)', '(d)', '(e)', '(f)', '(g)', '(h)', '(i)', '(j)', '(k)']
