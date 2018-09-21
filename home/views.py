@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
@@ -23,7 +23,6 @@ from django.contrib.auth.models import Group
 from django.forms import inlineformset_factory
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
 
 import pdb
 import os
@@ -34,8 +33,8 @@ import random
 
 
 def index(request):
-    current_site = get_current_site(request)
-    if '132.148.247.155'in current_site:
+    current_site = get_host(request)
+    if '132.148.247.155' in current_site:
         return HttpResponseRedirect('/student/learning-index/')
     return render(request, 'home/index.html')
 
