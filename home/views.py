@@ -23,6 +23,7 @@ from django.contrib.auth.models import Group
 from django.forms import inlineformset_factory
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
 
 import pdb
 import os
@@ -33,6 +34,9 @@ import random
 
 
 def index(request):
+    current_site = get_current_site(request)
+    if current_site == 'http://132.148.247.155':
+        return HttpResponseRedirect('/student/learning-index/')
     return render(request, 'home/index.html')
 
 def about(request):
