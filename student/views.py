@@ -203,7 +203,7 @@ def take_exam(request):
         else:
             return render(request, 'student/not_allowed.html', {'next': request.path})
 
-    question = take_exam.exam.questions.all()[take_exam.current_question]
+    question = take_exam.exam.questions.all().order_by('topic')[take_exam.current_question]
     return render(request, 'student/take_exam.html', {'form': form, 'take_exam_id': take_exam_id, 'question': question, 'question_number': take_exam.current_question + 1, }) 
 
 def exam_history(request):

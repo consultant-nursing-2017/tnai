@@ -44,9 +44,9 @@
                 {% endif %}
                 {% if user.is_authenticated %}
                     {% if user|has_group:"Instructor" %}
-                        <li><a href="{% url 'instructor:index' %}">User: {{ user.get_username }}</a></li>
+                        <li><a href="{% url 'instructor:index' %}">{{ user.name }} [User: {{ user.get_username }}]</a></li>
                     {% elif user|has_group:"Student" %}
-                        <li><a href="{% url 'student:index' %}">User: {{ user.get_username }}</a></li>
+                        <li><a href="{% url 'student:index' %}">User: {{ user.name }} [User: {{ user.get_username }}]</a></li>
                     {% endif %}
                     <li><a href="/accounts/logout">Logout</a></li>
                 {% endif %}
