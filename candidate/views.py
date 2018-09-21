@@ -67,6 +67,20 @@ def is_ra_user(username, request):
     
     return ra_user
 
+def is_instructor_user(username, request):
+    instructor_user = True
+    if username.groups.filter(name="Instructor").count() <= 0:
+        instructor_user = False
+    
+    return instructor_user
+
+def is_student_user(username, request):
+    student_user = True
+    if username.groups.filter(name="Student").count() <= 0:
+        student_user = False
+    
+    return student_user
+
 def is_allowed(username, request):
     allowed = True
     if not is_candidate_user(username, request) and not is_ra_user(username, request):
@@ -113,6 +127,10 @@ def candidate_index(request):
         return HttpResponseRedirect('/employer/')
     elif is_ra_user(username, request) and username == actual_user:
         return HttpResponseRedirect('/ra/')
+    elif is_instructor_user(username, request) and username == actual_user:
+        return HttpResponseRedirect('/instructor/')
+    elif is_student_user(username, request) and username == actual_user:
+        return HttpResponseRedirect('/student/')
 
     allowed = is_allowed(username, request)
     if not allowed:
