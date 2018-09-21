@@ -48,8 +48,19 @@ class ExamForm(ModelForm):
         fields = '__all__'
         widgets = {'students': forms.CheckboxSelectMultiple(), 'questions': forms.CheckboxSelectMultiple(), }
 
-class FilterForm(forms.Form):
-    topic = forms.ModelChoiceField(queryset = Topic.objects.all(), required = False)
+class FilterByTopicForm(forms.Form):
+    topic = forms.ModelChoiceField(queryset = Topic.objects.all(), required = False, empty_label = "All Topics")
+
+class FilterExamByTopicForm(FilterByTopicForm):
+    exam = forms.ModelChoiceField(queryset = Exam.objects.all(), required = True)
+
+class ExamQuestionsForm(forms.Form):
+    questions = forms.ModelChoiceField(queryset = Question.objects.all(), widget = forms.CheckboxSelectMultiple())
+    def __init__(self, *args, **kwargs):
+        topic = kwargs.pop('topic')
+        exam = kwargs.pop('exam')
+        super (ExamQuestionsForm,self ).__init__(*args, **kwargs) # populates the post
+        self.fields['questions'].queryset = exam.questions.all().filter(topic = topic)
 
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')

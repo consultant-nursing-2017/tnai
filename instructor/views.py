@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
 from .models import Instructor, Topic, Question, Answer, QuestionBank, Exam
-from .forms import InstructorForm, TopicForm, QuestionForm, AnswerForm, QuestionBankForm, ExamForm
+from .forms import InstructorForm, TopicForm, QuestionForm, AnswerForm, QuestionBankForm, ExamForm, FilterByTopicForm, ExamQuestionsForm
 #from .forms import RegistrationForm
 from django.core.mail import send_mail
 import hashlib
@@ -238,6 +238,56 @@ def submit_exam(request):
 
     return render(request, 'instructor/submit_exam.html', {'form': form, 'exam_id': exam_id, }) 
 
+def choose_topic_for_exam_questions(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'instructor/not_allowed.html', {'next': request.path})
+
+    if request.method == 'POST':
+        form = FilterExamByTopicForm(request.POST)
+        if form.is_valid():
+            topic = form.cleaned_data['topic']
+            exam = form.cleaned_data['exam']
+            return HttpResponseRedirect('/instructor/submit_exam_questions/?exam_id=' + str(exam.exam_id) + '&topic_id=' + str(topic.topic_id))
+    else:
+        form = FilterExamByTopicForm()
+
+    return render(request, 'instructor/choose_topic_for_exam_questions.html', {'form': form, }) 
+
+def submit_exam_questions(request):
+    username = get_acting_user(request)
+    allowed = is_allowed(username, request)
+    if not allowed:
+        return render(request, 'instructor/not_allowed.html', {'next': request.path})
+
+    exam = None
+    topic = None
+    if request.method == 'POST':
+        try:
+            exam = request.POST.get('exam')
+            topic = request.POST.get('topic')
+        except KeyError:
+            return render(request, 'instructor/error_msg.html', {'error_msg': 'Exam ID or Topic ID not found!'})
+        form = ExamQuestionsForm(request.POST, exam = exam, topic = topic)
+        if form.is_valid():
+            exam_questions_not_in_topic = exam.questions.exclude(topic = topic)
+            new_questions_in_topic = form.cleaned_data['questions']
+            return HttpResponseRedirect('/instructor/')
+    else:
+        try:
+            exam_id = request.GET.get('exam_id')
+            topic_id = request.GET.get('topic_id')
+            exam = Exam.objects.get(exam_id = exam_id)
+            topic = Topic.objects.get(topic_id = topic_id)
+        except KeyError:
+            return render(request, 'instructor/error_msg.html', {'error_msg': 'Exam ID or Topic ID not found!'})
+        except ObjectDoesNotExist:
+            return render(request, 'instructor/error_msg.html', {'error_msg': 'Exam or Topic does not exist!'})
+        form = ExamQuestionsForm(instance = exam, topic = topic)
+
+    return render(request, 'instructor/submit_exam_questions.html', {'form': form, 'exam': exam, 'topic': topic, }) 
+
 def submit_answer(request):
     username = get_acting_user(request)
     allowed = is_allowed(username, request)
@@ -305,8 +355,25 @@ def display_all_questions(request):
 
     question_queryset = Question.objects.exclude(text__iexact='')
     exam = None
-#    pdb.set_trace()
-    if request.method == 'GET':
+    topic_selected = None
+    exam_id = None
+    if request.method == 'POST':
+        form = FilterByTopicForm(request.POST)
+#        pdb.set_trace()
+        if form.is_valid():
+            try:
+                exam_id = request.POST.get('exam_id')
+                exam = Exam.objects.get(exam_id = exam_id)
+                question_queryset = exam.questions.all()
+            except KeyError:
+                pass
+            except ObjectDoesNotExist:
+                pass
+            topic_selected = form.cleaned_data['topic']
+            if topic_selected is not None:
+                question_queryset = question_queryset.filter(topic = topic_selected)
+    else:
+        form = FilterByTopicForm()
         try:
             exam_id = request.GET.get('exam_id')
             exam = Exam.objects.get(exam_id = exam_id)
@@ -315,6 +382,7 @@ def display_all_questions(request):
             pass
         except ObjectDoesNotExist:
             pass
+
     question_queryset = question_queryset.order_by('question_id')
     values = []
     count_question = 1
@@ -332,7 +400,7 @@ def display_all_questions(request):
         values.append([count_question, question_answer_pair])
         count_question = count_question + 1
     
-    return render(request, 'instructor/display_all_questions.html', {'values': values, 'display_answers': display_answers, }, )
+    return render(request, 'instructor/display_all_questions.html', {'values': values, 'display_answers': display_answers, 'form': form, 'exam_id': exam_id, 'topic_selected': topic_selected, }, )
 
 def list_exams(request):
     username = get_acting_user(request)

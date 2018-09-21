@@ -1,5 +1,6 @@
 {% extends "base_instructor.html" %}
 {% load static %}
+{% load bootstrap3 %}
 
 {% block title %}
 {% load static %}
@@ -12,14 +13,31 @@
             <h2 class="text-center">Take Free Mock Test: <a href="{% url 'student:signup' %}">click here to register</a></h2>
         </div>
     </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="text-center"><a href="#filter">Filter questions</a></h2>
+        </div>
+        <div class="panel-body">
+            <form action="/instructor/display_all_questions/" method="post" class="form form-horizontal">
+                {% csrf_token %}
+                    <table class="table table-striped">
+                        {% bootstrap_form form layout='horizontal' %}
+                    </table>
+                    {% buttons %}
+                        {% bootstrap_button "Filter" button_type="submit" name="filter" extra_classes="center-block" %}
+                    {% endbuttons %}
+                    <input type="hidden" name="exam_id" value="{{exam_id}}"/>
+            </form>
+        </div>
+    </div>
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h1 class="text-center">Questions</h1>
+            {% if topic_selected %}
+                <h2 class="text-center">Topic: {{topic_selected}} </h1>
+            {% endif %}
         </div>
         <div class="panel-body">
-            <!--
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-push-3 col-md-push-3 col-lg-push-4">
-            -->
             <table class="table table-striped">
                 {% for value in values %}
                     <tr>

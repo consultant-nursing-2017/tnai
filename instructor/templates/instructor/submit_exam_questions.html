@@ -1,0 +1,30 @@
+{% extends "base_instructor.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+<form enctype="multipart/form-data" action="/instructor/submit_exam_questions/" method="post" class="form form-horizontal">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="text-center">Add/Remove Exam Questions</h1>
+            <h2 class="text-center">Topic: {{topic.name}}</h2>
+        </div>
+        <div class="panel-body">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-6 table-striped">
+                    <table class="table">
+                        {% bootstrap_form form layout='horizontal' %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-center">
+            {% buttons %}
+                {% bootstrap_button "Submit exam questions" button_type="submit" value="submit" %}
+            {% endbuttons %}
+            <input type="hidden" name="exam_id" value="{{exam}}"/>
+            <input type="hidden" name="topic_id" value="{{topic}}"/>
+        </div>
+</form>
+{% endblock %}
+
