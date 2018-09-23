@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
 from .models import Instructor, Topic, Question, Answer, QuestionBank, Exam
-from .forms import InstructorForm, TopicForm, QuestionForm, AnswerForm, QuestionBankForm, ExamForm, FilterByTopicForm, ExamQuestionsForm
+from .forms import InstructorForm, TopicForm, QuestionForm, AnswerForm, QuestionBankForm, ExamForm, FilterByTopicForm, FilterExamByTopicForm, ExamQuestionsForm
 #from .forms import RegistrationForm
 from django.core.mail import send_mail
 import hashlib
@@ -249,44 +249,53 @@ def choose_topic_for_exam_questions(request):
         if form.is_valid():
             topic = form.cleaned_data['topic']
             exam = form.cleaned_data['exam']
-            return HttpResponseRedirect('/instructor/submit_exam_questions/?exam_id=' + str(exam.exam_id) + '&topic_id=' + str(topic.topic_id))
+            if topic is None or exam is None:
+                return render(request, 'instructor/error_msg.html', {'error_msg': 'Choose a valid Exam and Topic'})
+            else:
+                return HttpResponseRedirect('/instructor/add_exam_questions/?exam_id=' + str(exam.exam_id) + '&topic_id=' + str(topic.topic_id))
     else:
         form = FilterExamByTopicForm()
 
     return render(request, 'instructor/choose_topic_for_exam_questions.html', {'form': form, }) 
 
-def submit_exam_questions(request):
+def add_exam_questions(request):
     username = get_acting_user(request)
     allowed = is_allowed(username, request)
     if not allowed:
         return render(request, 'instructor/not_allowed.html', {'next': request.path})
 
-    exam = None
-    topic = None
+    chosen_exam = None
+    chosen_topic = None
     if request.method == 'POST':
         try:
-            exam = request.POST.get('exam')
-            topic = request.POST.get('topic')
+            chosen_exam_id = request.POST.get('chosen_exam_id')
+            chosen_topic_id = request.POST.get('chosen_topic_id')
+            chosen_exam = Exam.objects.get(exam_id = chosen_exam_id)
+            chosen_topic = Topic.objects.get(topic_id = chosen_topic_id)
         except KeyError:
             return render(request, 'instructor/error_msg.html', {'error_msg': 'Exam ID or Topic ID not found!'})
-        form = ExamQuestionsForm(request.POST, exam = exam, topic = topic)
+        except ObjectDoesNotExist:
+            return render(request, 'instructor/error_msg.html', {'error_msg': 'Exam or Topic does not exist!'})
+        form = ExamQuestionsForm(request.POST, arg_topic = chosen_topic, arg_exam = chosen_exam)
         if form.is_valid():
-            exam_questions_not_in_topic = exam.questions.exclude(topic = topic)
-            new_questions_in_topic = form.cleaned_data['questions']
+            questions_to_be_added = form.cleaned_data['questions']
+            for question in questions_to_be_added:
+                chosen_exam.questions.add(question)
+            chosen_exam.save()
             return HttpResponseRedirect('/instructor/')
     else:
         try:
             exam_id = request.GET.get('exam_id')
             topic_id = request.GET.get('topic_id')
-            exam = Exam.objects.get(exam_id = exam_id)
-            topic = Topic.objects.get(topic_id = topic_id)
+            chosen_exam = Exam.objects.get(exam_id = exam_id)
+            chosen_topic = Topic.objects.get(topic_id = topic_id)
         except KeyError:
             return render(request, 'instructor/error_msg.html', {'error_msg': 'Exam ID or Topic ID not found!'})
         except ObjectDoesNotExist:
             return render(request, 'instructor/error_msg.html', {'error_msg': 'Exam or Topic does not exist!'})
-        form = ExamQuestionsForm(instance = exam, topic = topic)
+        form = ExamQuestionsForm(arg_exam = chosen_exam, arg_topic = chosen_topic)
 
-    return render(request, 'instructor/submit_exam_questions.html', {'form': form, 'exam': exam, 'topic': topic, }) 
+    return render(request, 'instructor/add_exam_questions.html', {'form': form, 'chosen_exam': chosen_exam, 'chosen_topic': chosen_topic, }) 
 
 def submit_answer(request):
     username = get_acting_user(request)

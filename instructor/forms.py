@@ -12,6 +12,8 @@ from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from tnai.widgets import CustomClearableFileInput
+
+import pdb
     
 class InstructorForm(ModelForm):
     class Meta:
@@ -49,18 +51,19 @@ class ExamForm(ModelForm):
         widgets = {'students': forms.CheckboxSelectMultiple(), 'questions': forms.CheckboxSelectMultiple(), }
 
 class FilterByTopicForm(forms.Form):
-    topic = forms.ModelChoiceField(queryset = Topic.objects.all(), required = False, empty_label = "All Topics")
+    topic = forms.ModelChoiceField(queryset = Topic.objects.all(), required = True) #, empty_label = "")
 
 class FilterExamByTopicForm(FilterByTopicForm):
     exam = forms.ModelChoiceField(queryset = Exam.objects.all(), required = True)
 
 class ExamQuestionsForm(forms.Form):
-    questions = forms.ModelChoiceField(queryset = Question.objects.all(), widget = forms.CheckboxSelectMultiple())
+    questions = forms.ModelMultipleChoiceField(queryset = Question.objects.all(), widget = forms.CheckboxSelectMultiple())
     def __init__(self, *args, **kwargs):
-        topic = kwargs.pop('topic')
-        exam = kwargs.pop('exam')
+        arg_topic = kwargs.pop('arg_topic')
+        arg_exam = kwargs.pop('arg_exam')
+        already_chosen_questions = arg_exam.questions.all()
         super (ExamQuestionsForm,self ).__init__(*args, **kwargs) # populates the post
-        self.fields['questions'].queryset = exam.questions.all().filter(topic = topic)
+        self.fields['questions'].queryset = self.fields['questions'].queryset.filter(topic = arg_topic).difference(already_chosen_questions)
 
 class SignupForm(UserCreationForm):
 #    email = forms.EmailField(max_length=200, help_text='Required')
