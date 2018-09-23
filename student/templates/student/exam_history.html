@@ -14,7 +14,7 @@
         <div class="panel-body">
             <table class="table table-striped">
                 <tr>
-                    <th> Exam Attempt ID </th>
+                    <!-- <th> Exam Attempt ID </th> -->
                     <th> Exam Name </th>
                     <th> Completed on </th>
                     <th> Score </th>
@@ -22,10 +22,12 @@
                 </tr>
                 {% for record in queryset %}
                 <tr>
+                    <!--
                     <td> {{ record.take_exam_id }} </td>
+                    -->
                     <td> {{ record.exam.name }} </td>
                     <td> {{ record.completion_time }} </td>
-                    <td> {{ record.score }} </td>
+                    <td> {{ record.score|floatformat:2 }} </td>
                     <td> <a href="{% url 'student:exam_result'%}?take_exam_id={{record.take_exam_id}}">Click for full results</a></td>
                 </tr>
                 {% endfor %}

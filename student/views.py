@@ -218,6 +218,7 @@ def exam_history(request):
     queryset_private = temp_queryset#.filter(exam__students__in = student)
     queryset_public = temp_queryset.filter(exam__is_public = True)
     queryset = (queryset_private | queryset_public).distinct()
+    queryset = queryset.order_by('-completion_time')
     return render(request, 'student/exam_history.html', {'queryset': queryset, })
 
 def exam_result(request):
