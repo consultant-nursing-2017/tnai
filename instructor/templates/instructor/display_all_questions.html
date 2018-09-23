@@ -14,6 +14,12 @@
                 <h2 class="text-center">Take Free Mock Test: <a href="{% url 'student:signup' %}">click here to register</a></h2>
             </div>
         </div>
+    {% else %}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2 class="text-center"><a href="{% url 'student:choose_exam' %}">Click here to take mock test</a></h2>
+            </div>
+        </div>
     {% endif %}
     <div class="panel panel-default">
         <div class="panel-heading">
