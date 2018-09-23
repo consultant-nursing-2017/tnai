@@ -49,6 +49,8 @@
                         <li><a href="{% url 'student:index' %}">{{ user.name }} [Username: {{ user.get_username }}]</a></li>
                     {% endif %}
                     <li><a href="/accounts/logout">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'student:signup' %}">Register</a></li>
                 {% endif %}
             </ul>
         </nav>
