@@ -176,7 +176,8 @@ def take_exam(request):
             instance = form.save(commit = False)
             if 'submit' in request.POST:
                 answer = form.cleaned_data['answer']
-                instance.answers_given.add(answer)
+                if answer is not None:
+                    instance.answers_given.add(answer)
                 instance.current_question = instance.current_question + 1
                 instance.save()
             if 'exit_exam' in request.POST or instance.current_question >= instance.exam.questions.count():
