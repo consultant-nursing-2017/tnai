@@ -4,9 +4,11 @@
 {% block content %}
 <form enctype="multipart/form-data" action="/student/take_exam/" method="post" class="form form-horizontal">
     <div class="panel panel-primary">
+        <!--
         <div class="panel-heading">
             <h1 class="text-center">Take Exam</h1>
         </div>
+        -->
         <div class="panel-body">
             {% csrf_token %}
             <div class="panel panel-info">
@@ -32,7 +34,7 @@
             {% buttons %}
                 {% bootstrap_button "Submit Answer and go to next question" button_type="submit" name='submit' %}
                 {# {% bootstrap_button "Skip Question for now and go to next question" button_type="submit" name='skip_for_now' %} #}
-                <button type="submit" class="btn" name="exit_exam" onclick="return confirm('Are you sure?')">Leave Answer Blank and Exit</button>
+                <button type="submit" class="btn" name="exit_exam" onclick="return confirm('Are you sure?')">Exit Exam</button>
             {% endbuttons %}
             <input type="hidden" name="take_exam_id" value="{{take_exam_id}}"/>
         </div>

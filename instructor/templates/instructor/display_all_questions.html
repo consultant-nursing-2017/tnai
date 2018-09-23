@@ -8,19 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    {% if not user.is_authenticated %}
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h2 class="text-center">Take Free Mock Test: <a href="{% url 'student:signup' %}">click here to register</a></h2>
-            </div>
-        </div>
-    {% else %}
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h2 class="text-center"><a href="{% url 'student:choose_exam' %}">Click here to take mock test</a></h2>
-            </div>
-        </div>
-    {% endif %}
+    <!--
     <div class="panel panel-default">
         <div class="panel-heading">
             <h2 class="text-center"><a href="#filter">Filter questions</a></h2>
@@ -38,9 +26,16 @@
             </form>
         </div>
     </div>
+    -->
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h1 class="text-center">Questions</h1>
+
+            <h2 class="text-center"> See all questions with answers below (सभी प्रश्न उत्तर सहित नीचे देखें) </h2>
+            {% if not user.is_authenticated %}
+                <h2 class="text-center"><a href="{% url 'student:signup' %}"> Or Start an online test (अथवा स्वयं अोनलाइन परीक्षा आरम्भ करें)</a></h2>
+            {% else %}
+                <h2 class="text-center"><a href="{% url 'student:choose_exam' %}"> Or Start an online test (अथवा स्वयं अोनलाइन परीक्षा आरम्भ करें)</a></h2>
+            {% endif %}
             {% if topic_selected %}
                 <h2 class="text-center">Topic: {{topic_selected}} </h1>
             {% endif %}
