@@ -51,7 +51,7 @@ class ExamForm(ModelForm):
         widgets = {'students': forms.CheckboxSelectMultiple(), 'questions': forms.CheckboxSelectMultiple(), }
 
 class FilterByTopicForm(forms.Form):
-    topic = forms.ModelChoiceField(queryset = Topic.objects.all(), required = True) #, empty_label = "")
+    topic = forms.ModelChoiceField(queryset = Topic.objects.all(), required = False) #, empty_label = "")
     def __init__(self, *args, **kwargs):
         exam = None
         try:
@@ -63,7 +63,8 @@ class FilterByTopicForm(forms.Form):
             exam_topics = exam.questions.all().values('topic').distinct()
             self.fields['topic'].queryset = self.fields['topic'].queryset.filter(topic_for_question__in=exam_topics)
 
-class FilterExamByTopicForm(FilterByTopicForm):
+class FilterExamByTopicForm(forms.Form):
+    topic = forms.ModelChoiceField(queryset = Topic.objects.all(), required = True) #, empty_label = "")
     exam = forms.ModelChoiceField(queryset = Exam.objects.all(), required = True)
 
 class ExamQuestionsForm(forms.Form):
