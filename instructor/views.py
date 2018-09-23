@@ -375,7 +375,7 @@ def display_all_questions(request):
             pass
         except ObjectDoesNotExist:
             pass
-        form = FilterByTopicForm(request.POST)
+        form = FilterByTopicForm(request.POST, exam = exam)
 #        pdb.set_trace()
         if form.is_valid():
             topic_selected = form.cleaned_data['topic']
