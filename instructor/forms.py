@@ -52,6 +52,16 @@ class ExamForm(ModelForm):
 
 class FilterByTopicForm(forms.Form):
     topic = forms.ModelChoiceField(queryset = Topic.objects.all(), required = True) #, empty_label = "")
+    def __init__(self, *args, **kwargs):
+        exam = None
+        try:
+            exam = kwargs.pop('exam')
+        except KeyError:
+            pass
+        super (FilterByTopicForm,self ).__init__(*args, **kwargs) # populates the post
+        if exam is not None:
+            exam_topics = exam.questions.all().values('topic').distinct()
+            self.fields['topic'].queryset = self.fields['topic'].queryset.filter(topic_for_question__in=exam_topics)
 
 class FilterExamByTopicForm(FilterByTopicForm):
     exam = forms.ModelChoiceField(queryset = Exam.objects.all(), required = True)

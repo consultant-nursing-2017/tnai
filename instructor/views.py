@@ -367,22 +367,21 @@ def display_all_questions(request):
     topic_selected = None
     exam_id = None
     if request.method == 'POST':
+        try:
+            exam_id = request.POST.get('exam_id')
+            exam = Exam.objects.get(exam_id = exam_id)
+            question_queryset = exam.questions.all()
+        except KeyError:
+            pass
+        except ObjectDoesNotExist:
+            pass
         form = FilterByTopicForm(request.POST)
 #        pdb.set_trace()
         if form.is_valid():
-            try:
-                exam_id = request.POST.get('exam_id')
-                exam = Exam.objects.get(exam_id = exam_id)
-                question_queryset = exam.questions.all()
-            except KeyError:
-                pass
-            except ObjectDoesNotExist:
-                pass
             topic_selected = form.cleaned_data['topic']
             if topic_selected is not None:
                 question_queryset = question_queryset.filter(topic = topic_selected)
     else:
-        form = FilterByTopicForm()
         try:
             exam_id = request.GET.get('exam_id')
             exam = Exam.objects.get(exam_id = exam_id)
@@ -391,6 +390,7 @@ def display_all_questions(request):
             pass
         except ObjectDoesNotExist:
             pass
+        form = FilterByTopicForm(exam = exam)
 
 #    question_queryset = question_queryset.order_by('question_id')
     question_queryset = question_queryset.order_by('topic', 'question_id')
