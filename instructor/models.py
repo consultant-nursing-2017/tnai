@@ -79,4 +79,4 @@ class Exam(models.Model):
         public_string = ""
         if self.is_public:
             public_string = " (Public)"
-        return str(self.exam_id) + ": Exam name: " + self.name + public_string
+        return self.name + public_string
