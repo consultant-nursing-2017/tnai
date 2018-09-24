@@ -398,6 +398,7 @@ def display_all_questions(request):
     count_question = 1
     answer_format = ['(a)', '(b)', '(c)', '(d)', '(e)', '(f)', '(g)', '(h)', '(i)', '(j)', '(k)']
     display_answers = True
+    is_instructor = is_instructor_user(username, request)
 #    display_answers = not is_student_user(username, request) and username.is_authenticated()
     for question in question_queryset:
         question_answer_pair = [question, []]
@@ -414,7 +415,7 @@ def display_all_questions(request):
         values.append([count_question, question_answer_pair])
         count_question = count_question + 1
     
-    return render(request, 'instructor/display_all_questions.html', {'values': values, 'display_answers': display_answers, 'form': form, 'exam_id': exam_id, 'topic_selected': topic_selected, }, )
+    return render(request, 'instructor/display_all_questions.html', {'values': values, 'display_answers': display_answers, 'form': form, 'exam_id': exam_id, 'topic_selected': topic_selected, 'is_instructor': is_instructor}, )
 
 def list_exams(request):
     username = get_acting_user(request)
