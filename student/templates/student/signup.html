@@ -9,8 +9,10 @@
       {% csrf_token %}
       {% bootstrap_form form layout='horizontal' exclude='name, email, phone'%}
       <hr />
+      <!--
       <h4> Your Profile (Optional) </h4>
       {% bootstrap_form form layout='horizontal' exclude='username, password1, password2'%}
+      -->
       {% buttons %}
         <button type="submit" class="btn btn-primary">
             Submit
