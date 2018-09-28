@@ -24,6 +24,7 @@ class StudentForm(ModelForm):
 
 class TakeExamForm(ModelForm):
     def __init__(self, *args, **kwargs):
+#        pdb.set_trace()
         student = kwargs.pop('student')
         super (TakeExamForm,self ).__init__(*args, **kwargs) # populates the post
         private_exam_queryset = Exam.objects.filter(students__in=[student])
